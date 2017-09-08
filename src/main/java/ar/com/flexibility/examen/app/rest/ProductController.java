@@ -23,20 +23,20 @@ import ar.com.flexibility.examen.domain.service.ProductService;
 /**
  * 
  * @author hackma
- * @version 0.1
- * Servicio de productos 
+ * @version 0.1 Servicio de productos
  */
 @RestController
 @RequestMapping(path = "/product")
 public class ProductController {
 
 	private static final Logger log = LoggerFactory.getLogger(ProductController.class);
-	
+
 	@Autowired
 	private ProductService productService;
-	
+
 	/**
 	 * Metodo para la creación de productos
+	 * 
 	 * @param product
 	 * @return
 	 */
@@ -44,8 +44,8 @@ public class ProductController {
 	public ResponseEntity<?> createProduct(@RequestBody Product Product) {
 		log.info("Entrada de metodo {createProduct}");
 		try {
-			ResponseEntity<Product> responseEntity = new ResponseEntity<Product>(
-					productService.createProduct(Product), HttpStatus.OK);
+			ResponseEntity<Product> responseEntity = new ResponseEntity<Product>(productService.createProduct(Product),
+					HttpStatus.OK);
 			log.info("Salida de metodo {createProduct} Producto creado exitosamente");
 			return responseEntity;
 		} catch (Exception e) {
@@ -56,6 +56,7 @@ public class ProductController {
 
 	/**
 	 * Metodo para actualizar al producto por el id
+	 * 
 	 * @param Product
 	 * @return
 	 */
@@ -63,8 +64,8 @@ public class ProductController {
 	public ResponseEntity<?> updateProduct(@RequestBody Product Product) {
 		log.info("Entrada de metodo {updateProduct}");
 		try {
-			ResponseEntity<Product> responseEntity = new ResponseEntity<Product>(
-					productService.updateProduct(Product), HttpStatus.OK);
+			ResponseEntity<Product> responseEntity = new ResponseEntity<Product>(productService.updateProduct(Product),
+					HttpStatus.OK);
 			log.info("Salida de metodo {updateProduct} Producto actualizado exitosamente");
 			return responseEntity;
 		} catch (Exception e) {
@@ -75,6 +76,7 @@ public class ProductController {
 
 	/**
 	 * Metodo para eliminar al producto por el id
+	 * 
 	 * @param Product
 	 * @return
 	 */
@@ -82,8 +84,8 @@ public class ProductController {
 	public ResponseEntity<?> deleteProduct(@RequestBody Product Product) {
 		log.info("Entrada de metodo {deleteProduct}");
 		try {
-			ResponseEntity<Product> responseEntity = new ResponseEntity<Product>(
-					productService.deleteProduct(Product), HttpStatus.OK);
+			ResponseEntity<Product> responseEntity = new ResponseEntity<Product>(productService.deleteProduct(Product),
+					HttpStatus.OK);
 			log.info("Salida de metodo {deleteProduct} Producto eliminado exitosamente");
 			return responseEntity;
 		} catch (Exception e) {
@@ -94,6 +96,7 @@ public class ProductController {
 
 	/**
 	 * Metodo para listar a todos los productos
+	 * 
 	 * @return
 	 */
 	@GetMapping(path = "/")
@@ -113,6 +116,7 @@ public class ProductController {
 
 	/**
 	 * Metodo para encontrar un producto especifico por el id
+	 * 
 	 * @param id
 	 * @return
 	 */
@@ -120,8 +124,8 @@ public class ProductController {
 	public ResponseEntity<?> findProductById(@PathVariable String id) {
 		log.info("Entrada de metodo {findProductById}");
 		try {
-			ResponseEntity<Product> responseEntity = new ResponseEntity<Product>(productService.findProductById(id),
-					HttpStatus.OK);
+			ResponseEntity<Product> responseEntity = new ResponseEntity<Product>(
+					productService.findProductById(Long.valueOf(id)), HttpStatus.OK);
 			log.info("Salida de metodo {findProductById} Producto encontrado exitosamente");
 			return responseEntity;
 		} catch (Exception e) {

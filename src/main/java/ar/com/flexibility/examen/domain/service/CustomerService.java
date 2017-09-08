@@ -8,11 +8,11 @@ public interface CustomerService  {
 
 	public Customer createCustomer(Customer customer);
 	
-	public Customer findCustomerById(String id);
+	public Customer findCustomerById(Long id);
 	
 	public List<Customer> findAllCustomers();
 	
 	public Customer updateCustomer(Customer customer);
 	
-	public Customer deleteCustomer(Customer customer);
+	public void deleteCustomer(Customer customer) throws Exception;
 }

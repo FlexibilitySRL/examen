@@ -25,18 +25,18 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public Customer findCustomerById(String id) {
-		return customerRepository.findOne(Long.valueOf(id));
+	public Customer findCustomerById(Long id) {
+		return customerRepository.findOne(id);
 	}
 
 	@Override
 	public Customer updateCustomer(Customer customer) {
 		return customerRepository.exists(customer.getId()) ? customerRepository.save(customer) : null;
+		
 	}
 
 	@Override
-	public Customer deleteCustomer(Customer customer) {
+	public void deleteCustomer(Customer customer) {
 		customerRepository.delete(customer);
-		return customer;
 	}
 }

@@ -22,8 +22,7 @@ import ar.com.flexibility.examen.domain.service.CustomerService;
 /**
  * 
  * @author hackma
- * @version 0.1
- * Servicio de Clientes 
+ * @version 0.1 Servicio de Clientes
  */
 @RestController
 @RequestMapping(path = "/customer")
@@ -33,9 +32,10 @@ public class CustomerController {
 
 	@Autowired
 	private CustomerService customerService;
-	
+
 	/**
 	 * Metodo para la creación de clientes
+	 * 
 	 * @param customer
 	 * @return
 	 */
@@ -55,6 +55,7 @@ public class CustomerController {
 
 	/**
 	 * Metodo para actualizar al cliente por el id
+	 * 
 	 * @param customer
 	 * @return
 	 */
@@ -74,6 +75,7 @@ public class CustomerController {
 
 	/**
 	 * Metodo para eliminar al cliente por el id
+	 * 
 	 * @param customer
 	 * @return
 	 */
@@ -81,8 +83,8 @@ public class CustomerController {
 	public ResponseEntity<?> deleteCustomer(@RequestBody Customer customer) {
 		log.info("Entrada de metodo {deleteCustomer}");
 		try {
-			ResponseEntity<Customer> responseEntity = new ResponseEntity<Customer>(
-					customerService.deleteCustomer(customer), HttpStatus.OK);
+			customerService.deleteCustomer(customer);
+			ResponseEntity<Boolean> responseEntity = new ResponseEntity<Boolean>(Boolean.TRUE,HttpStatus.OK);
 			log.info("Salida de metodo {deleteCustomer} customer eliminado exitosamente");
 			return responseEntity;
 		} catch (Exception e) {
@@ -93,6 +95,7 @@ public class CustomerController {
 
 	/**
 	 * Metodo para listar a todos los clientes
+	 * 
 	 * @return
 	 */
 	@GetMapping(path = "/")
@@ -112,6 +115,7 @@ public class CustomerController {
 
 	/**
 	 * Metodo para encontrar un cliente especifico por el id
+	 * 
 	 * @param id
 	 * @return
 	 */
@@ -119,8 +123,8 @@ public class CustomerController {
 	public ResponseEntity<?> findCustomerById(@PathVariable String id) {
 		log.info("Entrada de metodo {findCustomerById}");
 		try {
-			ResponseEntity<Customer> responseEntity = new ResponseEntity<Customer>(customerService.findCustomerById(id),
-					HttpStatus.OK);
+			ResponseEntity<Customer> responseEntity = new ResponseEntity<Customer>(
+					customerService.findCustomerById(Long.valueOf(id)), HttpStatus.OK);
 			log.info("Salida de metodo {findCustomerById} customer encontrado exitosamente");
 			return responseEntity;
 		} catch (Exception e) {

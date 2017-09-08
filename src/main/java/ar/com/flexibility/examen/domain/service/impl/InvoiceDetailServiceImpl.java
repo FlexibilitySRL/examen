@@ -24,10 +24,10 @@ public class InvoiceDetailServiceImpl implements InvoiceDetailService {
 	@Override
 	public InvoiceDetail createInvoice(InvoiceDetail invoiceDetail) {
 		InvoiceDetail invoiceDetailSaved = null;
-		if(invoiceDetail.getInvoice() != null) {
-			Invoice invoiceSaved = invoiceRepository.save(invoiceDetail.getInvoice());
+		Invoice invoice = invoiceDetail.getInvoice();
+		if(invoice != null) {
+			Invoice invoiceSaved = invoiceRepository.save(invoice);
 			invoiceDetail.setInvoice(invoiceSaved);
-			System.out.println("guardado exitoso de factura");
 			invoiceDetailSaved = invoiceDetailRepository.save(invoiceDetail);
 		}
 		return invoiceDetailSaved;

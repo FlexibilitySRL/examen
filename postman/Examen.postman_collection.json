@@ -1,0 +1,224 @@
+{
+	"id": "90bec8ad-249b-6d07-03af-5c06138ad540",
+	"name": "Examen",
+	"description": "",
+	"order": [
+		"3f6c6d48-0016-e50a-21b5-37eccc2c312e",
+		"458c25cb-a8da-f8ad-54c3-e76aebb6fd90",
+		"0cf8da33-db08-3e50-a3fc-bccd9477b1a2",
+		"c42a8588-c07f-afb1-4b4a-515db659dd69",
+		"d77128b4-1958-4293-d809-7351004c425d",
+		"cca025b3-6c95-ce9e-2e9c-24ef19efb952",
+		"e0f1f8b9-7b6c-3329-19c1-4149e749748e"
+	],
+	"folders": [],
+	"folders_order": [],
+	"timestamp": 1504809743342,
+	"owner": 0,
+	"public": false,
+	"requests": [
+		{
+			"id": "0cf8da33-db08-3e50-a3fc-bccd9477b1a2",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "localhost:8080/product/delete",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "DELETE",
+			"data": [],
+			"dataMode": "raw",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1504810597804,
+			"name": "product delete",
+			"description": "",
+			"collectionId": "90bec8ad-249b-6d07-03af-5c06138ad540",
+			"responses": [],
+			"rawModeData": "{\"id\":\"1\"}"
+		},
+		{
+			"id": "3f6c6d48-0016-e50a-21b5-37eccc2c312e",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "localhost:8080/product/create",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1504810195702,
+			"name": "product create",
+			"description": "",
+			"collectionId": "90bec8ad-249b-6d07-03af-5c06138ad540",
+			"responses": [],
+			"rawModeData": "{\"name\": \"macbook pro\", \"code\": \"001\", \"price\": 3242222}"
+		},
+		{
+			"id": "458c25cb-a8da-f8ad-54c3-e76aebb6fd90",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "localhost:8080/product/update",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "PUT",
+			"data": [],
+			"dataMode": "raw",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1504810570267,
+			"name": "product update",
+			"description": "",
+			"collectionId": "90bec8ad-249b-6d07-03af-5c06138ad540",
+			"responses": [],
+			"rawModeData": "{\"id\":\"1\", \"name\": \"macbook pro 1\", \"code\": \"001\", \"price\": 3242222}"
+		},
+		{
+			"id": "c42a8588-c07f-afb1-4b4a-515db659dd69",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "localhost:8080/product/",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": [],
+			"dataMode": "raw",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1504810240187,
+			"name": "product listAll",
+			"description": "",
+			"collectionId": "90bec8ad-249b-6d07-03af-5c06138ad540",
+			"responses": [],
+			"rawModeData": "{\"name\": \"macbook pro\", \"code\": \"001\", \"price\": 3242222}"
+		},
+		{
+			"id": "cca025b3-6c95-ce9e-2e9c-24ef19efb952",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "localhost:8080/invoice/",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": [],
+			"dataMode": "raw",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1504810726140,
+			"name": "invoice listAll",
+			"description": "",
+			"collectionId": "90bec8ad-249b-6d07-03af-5c06138ad540",
+			"responses": [],
+			"rawModeData": "{\"name\": \"macbook pro\", \"code\": \"001\", \"price\": 3242222}"
+		},
+		{
+			"id": "d77128b4-1958-4293-d809-7351004c425d",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "localhost:8080/customer/",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": [],
+			"dataMode": "raw",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1504810728552,
+			"name": "customer listAll",
+			"description": "",
+			"collectionId": "90bec8ad-249b-6d07-03af-5c06138ad540",
+			"responses": [],
+			"rawModeData": "{\"name\": \"macbook pro\", \"code\": \"001\", \"price\": 3242222}"
+		},
+		{
+			"id": "e0f1f8b9-7b6c-3329-19c1-4149e749748e",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "localhost:8080/invoice/create",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1504827441528,
+			"name": "invoice create",
+			"description": "",
+			"collectionId": "90bec8ad-249b-6d07-03af-5c06138ad540",
+			"responses": [],
+			"rawModeData": "{\n       \"invoice\": {\n            \"customer\": {\n                \"id\": 1\n            },\n            \"date\": 1504760400000\n        },\n        \"product\": {\n            \"id\": 2\n        },\n        \"amount\": 456000,\n        \"price\": 545555\n    }"
+		}
+	]
+}
