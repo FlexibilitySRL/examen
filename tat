@@ -1,0 +1,53 @@
+[33mcommit e1aa0007e7c8984676f5b947b0f9837ebbd9b8b1[m[33m ([m[1;36mHEAD -> [m[1;32mexamen-fede[m[33m)[m
+Author: Fpiacentini <piacentini08@gmail.com>
+Date:   Fri Apr 27 10:26:11 2018 -0300
+
+    ProductController terminado
+
+[33mcommit bc556dfb2f51b7e3387370c5d609c390ab1fd4c1[m
+Author: Fpiacentini <piacentini08@gmail.com>
+Date:   Thu Apr 26 17:41:18 2018 -0300
+
+    ProductController. Solo el add
+
+[33mcommit a830fd940228e93775080a5f951edd01c28df52b[m
+Author: Fpiacentini <piacentini08@gmail.com>
+Date:   Thu Apr 26 16:33:27 2018 -0300
+
+    Refactorizacion de codigo, manejo de excepciones y de errores. Mensajes de error diferenciados
+
+[33mcommit 1bccd392fc17316ba72b8c53936ea64a6a59feb0[m
+Author: Fpiacentini <piacentini08@gmail.com>
+Date:   Thu Apr 26 12:48:25 2018 -0300
+
+    Paginacion en getall
+
+[33mcommit 6c745c15e312c41cc068e31eedb15ea5cb7214f4[m
+Author: Fpiacentini <piacentini08@gmail.com>
+Date:   Thu Apr 26 11:46:07 2018 -0300
+
+    Excepciones, get, getall y autenticacion simple en getall
+
+[33mcommit bd3cafc8e0a4251f7eaf98e1627c4a20e3c3cb66[m
+Author: Fpiacentini <piacentini08@gmail.com>
+Date:   Wed Apr 25 12:38:54 2018 -0300
+
+    Remove clientes
+
+[33mcommit 879095cab38eac7255a3f2503f636dd0a53ddd5d[m
+Author: Fpiacentini <piacentini08@gmail.com>
+Date:   Wed Apr 25 12:14:53 2018 -0300
+
+    Add clientes y update clientes
+
+[33mcommit 7f08b15895f03884a5b6775cedf26b98f9510c68[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmaster[m[33m)[m
+Author: Felipe Santiago Corro <santiago.corro@gmail.com>
+Date:   Mon Sep 4 15:17:04 2017 -0300
+
+    Prueba
+
+[33mcommit db44d6c1aa6ded7f249530c97bebdf63077643be[m
+Author: Felipe Santiago Corro <santiago.corro@gmail.com>
+Date:   Mon Sep 4 14:41:10 2017 -0300
+
+    first commit
