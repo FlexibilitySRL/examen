@@ -8,7 +8,7 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.util.Optional;
 
-public abstract class AbstractService<T extends GenericEntity, S extends CrudRepository> {
+public abstract class AbstractService<T extends GenericEntity, S extends CrudRepository> implements GenericService<T> {
 
     protected S repository;
 
@@ -47,5 +47,27 @@ public abstract class AbstractService<T extends GenericEntity, S extends CrudRep
         } catch (DataIntegrityViolationException e) {
             throw new ConstraintsViolationException(e.getMessage());
         }
+    }
+
+    @Override
+    public T findOne(Long id) throws EntityNotFoundException {
+        return findCheckedEntity(id);
+    }
+
+
+    @Override
+    public T create(T entity) throws ConstraintsViolationException {
+        return createEntity(entity);
+    }
+
+    @Override
+    public T save(T entity) throws EntityNotFoundException {
+        findCheckedEntity(entity.getId());
+        return (T) repository.save(entity);
+    }
+
+    @Override
+    public T delete(Long id) throws EntityNotFoundException, ConstraintsViolationException {
+        return deleteEntity(id);
     }
 }
