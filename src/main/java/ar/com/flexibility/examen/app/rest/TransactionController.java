@@ -2,6 +2,8 @@ package ar.com.flexibility.examen.app.rest;
 
 import ar.com.flexibility.examen.app.api.TransactionApi;
 import ar.com.flexibility.examen.app.exception.ConstraintsViolationException;
+import ar.com.flexibility.examen.app.exception.EntityConflictException;
+import ar.com.flexibility.examen.app.exception.EntityNotFoundException;
 import ar.com.flexibility.examen.app.rest.mapper.TransactionApiMapper;
 import ar.com.flexibility.examen.domain.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +37,15 @@ public class TransactionController {
     public List<TransactionApi> list(@Valid @PathVariable Long transactionId) throws ConstraintsViolationException {
         return transactionService
                 .findByTransactionId(transactionId)
+                .stream()
+                .map(entity -> mapper.buildApi(entity))
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping("/{transactionId}/approve")
+    public List<TransactionApi> approve(@Valid @PathVariable Long transactionId) throws ConstraintsViolationException, EntityConflictException, EntityNotFoundException {
+        return transactionService
+                .approveTransaction(transactionId)
                 .stream()
                 .map(entity -> mapper.buildApi(entity))
                 .collect(Collectors.toList());
