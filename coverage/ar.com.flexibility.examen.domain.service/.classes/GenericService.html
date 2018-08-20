@@ -1,0 +1,103 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: GenericService</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">ar.com.flexibility.examen.domain.service</a> ]
+</div>
+
+<h1>Coverage Summary for Class: GenericService (ar.com.flexibility.examen.domain.service)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+</tr>
+  <tr>
+    <td class="name">GenericService$$EnhancerByMockitoWithCGLIB$$305e16b8</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package ar.com.flexibility.examen.domain.service;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import ar.com.flexibility.examen.app.exception.ConstraintsViolationException;
+<i>4</i>&nbsp;import ar.com.flexibility.examen.app.exception.EntityNotFoundException;
+<i>5</i>&nbsp;import ar.com.flexibility.examen.domain.model.GenericEntity;
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;import java.util.List;
+<i>8</i>&nbsp;
+<i>9</i>&nbsp;/**
+<i>10</i>&nbsp; * Represents the service that manages the {@link T} operations.
+<i>11</i>&nbsp; */
+<i>12</i>&nbsp;public interface GenericService&lt;T extends GenericEntity&gt; {
+<i>13</i>&nbsp;
+<i>14</i>&nbsp;    /**
+<i>15</i>&nbsp;     * Returns a {@link T} entity present in database.
+<i>16</i>&nbsp;     * @param id {@link T} id.
+<i>17</i>&nbsp;     * @return requested {@link T}
+<i>18</i>&nbsp;     * @throws EntityNotFoundException if the {@link T} with id does not exists in database.
+<i>19</i>&nbsp;     */
+<i>20</i>&nbsp;    T findOne(Long id) throws EntityNotFoundException;
+<i>21</i>&nbsp;
+<i>22</i>&nbsp;    /**
+<i>23</i>&nbsp;     * Lists all the {@link T} present in database.
+<i>24</i>&nbsp;     * @return {@link T} registered in database.
+<i>25</i>&nbsp;     */
+<i>26</i>&nbsp;    List&lt;T&gt; listAll();
+<i>27</i>&nbsp;
+<i>28</i>&nbsp;    /**
+<i>29</i>&nbsp;     * Creates a {@link T} entity in database.
+<i>30</i>&nbsp;     * @param entity {@link T} to been persisted in database.
+<i>31</i>&nbsp;     * @return created {@link T}
+<i>32</i>&nbsp;     * @throws ConstraintsViolationException if something goes wrong.
+<i>33</i>&nbsp;     */
+<i>34</i>&nbsp;    T create(T entity) throws ConstraintsViolationException;
+<i>35</i>&nbsp;
+<i>36</i>&nbsp;    /**
+<i>37</i>&nbsp;     * Updates a {@link T} entity present in database.
+<i>38</i>&nbsp;     * @param entity {@link T} to been persisted in database.
+<i>39</i>&nbsp;     * @return updated {@link T}
+<i>40</i>&nbsp;     * @throws EntityNotFoundException if the {@link T} with id does not exists in database.
+<i>41</i>&nbsp;     */
+<i>42</i>&nbsp;    T save(T entity) throws EntityNotFoundException;
+<i>43</i>&nbsp;
+<i>44</i>&nbsp;    /**
+<i>45</i>&nbsp;     * Deletes a {@link T} entity in database.
+<i>46</i>&nbsp;     * The delete process consists in mark the entity as deleted, does not mean a physical deletion in database.
+<i>47</i>&nbsp;     * @param id {@link T} to delete.
+<i>48</i>&nbsp;     * @return deleted {@link T}
+<i>49</i>&nbsp;     * @throws ConstraintsViolationException if something goes wrong.
+<i>50</i>&nbsp;     * @throws EntityNotFoundException if the {@link T} with id does not exists in database.
+<i>51</i>&nbsp;     */
+<i>52</i>&nbsp;    T delete(Long id) throws EntityNotFoundException, ConstraintsViolationException;
+<i>53</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-08-20 01:50</div>
+</div>
+</body>
+</html>

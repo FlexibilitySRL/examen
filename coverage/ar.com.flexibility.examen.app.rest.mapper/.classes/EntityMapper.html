@@ -1,0 +1,76 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: EntityMapper</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">ar.com.flexibility.examen.app.rest.mapper</a> ]
+</div>
+
+<h1>Coverage Summary for Class: EntityMapper (ar.com.flexibility.examen.app.rest.mapper)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+</tr>
+  <tr>
+    <td class="name">EntityMapper$$EnhancerByMockitoWithCGLIB$$a63eec21</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package ar.com.flexibility.examen.app.rest.mapper;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import ar.com.flexibility.examen.app.api.GenericApi;
+<i>4</i>&nbsp;import ar.com.flexibility.examen.domain.model.GenericEntity;
+<i>5</i>&nbsp;
+<i>6</i>&nbsp;/**
+<i>7</i>&nbsp; * Represents a class for mapping {@link GenericEntity} to {@link GenericApi} and vice versa.
+<i>8</i>&nbsp; * @param &lt;A&gt; {@link GenericApi} used as DTO.
+<i>9</i>&nbsp; * @param &lt;E&gt; {@link GenericEntity} used as database entity.
+<i>10</i>&nbsp; */
+<i>11</i>&nbsp;public interface EntityMapper&lt;A extends GenericApi, E extends GenericEntity&gt; {
+<i>12</i>&nbsp;
+<i>13</i>&nbsp;    /**
+<i>14</i>&nbsp;     * Transform a {@link GenericEntity} to {@link GenericApi}.
+<i>15</i>&nbsp;     * @param entity to transform.
+<i>16</i>&nbsp;     * @return a Serializable DTO.
+<i>17</i>&nbsp;     */
+<i>18</i>&nbsp;    A buildApi(E entity);
+<i>19</i>&nbsp;
+<i>20</i>&nbsp;    /**
+<i>21</i>&nbsp;     * Transform a {@link GenericApi} to {@link GenericEntity}.
+<i>22</i>&nbsp;     * @param api to transform.
+<i>23</i>&nbsp;     * @return a database entity.
+<i>24</i>&nbsp;     */
+<i>25</i>&nbsp;    E buildEntity(A api);
+<i>26</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-08-20 01:50</div>
+</div>
+</body>
+</html>

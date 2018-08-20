@@ -1,0 +1,116 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: ProductApiMapper</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">ar.com.flexibility.examen.app.rest.mapper</a> ]
+</div>
+
+<h1>Coverage Summary for Class: ProductApiMapper (ar.com.flexibility.examen.app.rest.mapper)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ProductApiMapper</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (3/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (12/ 12)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package ar.com.flexibility.examen.app.rest.mapper;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import ar.com.flexibility.examen.app.api.ProductApi;
+<i>4</i>&nbsp;import ar.com.flexibility.examen.domain.model.Product;
+<i>5</i>&nbsp;
+<i>6</i>&nbsp;/**
+<i>7</i>&nbsp; * Mapper to transform {@link ProductApi} to {@link Product} and vice versa.
+<i>8</i>&nbsp; */
+<b class="fc"><i>9</i>&nbsp;public class ProductApiMapper implements EntityMapper&lt;ProductApi, Product&gt; {</b>
+<i>10</i>&nbsp;
+<i>11</i>&nbsp;    /**
+<i>12</i>&nbsp;     * {@inheritDoc}
+<i>13</i>&nbsp;     */
+<i>14</i>&nbsp;    public ProductApi buildApi(Product product) {
+<b class="fc"><i>15</i>&nbsp;        return ProductApi.newBuilder()</b>
+<b class="fc"><i>16</i>&nbsp;                .setId(product.getId())</b>
+<b class="fc"><i>17</i>&nbsp;                .setDateCreated(product.getDateCreated())</b>
+<b class="fc"><i>18</i>&nbsp;                .setName(product.getName())</b>
+<b class="fc"><i>19</i>&nbsp;                .setPrice(product.getPrice())</b>
+<b class="fc"><i>20</i>&nbsp;                .build();</b>
+<i>21</i>&nbsp;    }
+<i>22</i>&nbsp;
+<i>23</i>&nbsp;    /**
+<i>24</i>&nbsp;     * {@inheritDoc}
+<i>25</i>&nbsp;     */
+<i>26</i>&nbsp;    public Product buildEntity(ProductApi productApi) {
+<b class="fc"><i>27</i>&nbsp;        return new Product(</b>
+<b class="fc"><i>28</i>&nbsp;                productApi.getId(),</b>
+<b class="fc"><i>29</i>&nbsp;                productApi.getDateCreated(),</b>
+<b class="fc"><i>30</i>&nbsp;                productApi.getName(),</b>
+<b class="fc"><i>31</i>&nbsp;                productApi.getPrice());</b>
+<i>32</i>&nbsp;    }
+<i>33</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-08-20 01:50</div>
+</div>
+</body>
+</html>

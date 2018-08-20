@@ -1,0 +1,163 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: GenericController</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">ar.com.flexibility.examen.app.rest</a> ]
+</div>
+
+<h1>Coverage Summary for Class: GenericController (ar.com.flexibility.examen.app.rest)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">GenericController</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (8/ 8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (23/ 23)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package ar.com.flexibility.examen.app.rest;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import ar.com.flexibility.examen.app.api.GenericApi;
+<i>4</i>&nbsp;import ar.com.flexibility.examen.app.exception.ConstraintsViolationException;
+<i>5</i>&nbsp;import ar.com.flexibility.examen.app.exception.EntityNotFoundException;
+<i>6</i>&nbsp;import ar.com.flexibility.examen.app.rest.mapper.EntityMapper;
+<i>7</i>&nbsp;import ar.com.flexibility.examen.domain.model.GenericEntity;
+<i>8</i>&nbsp;import ar.com.flexibility.examen.domain.service.GenericService;
+<i>9</i>&nbsp;import io.swagger.annotations.ApiOperation;
+<i>10</i>&nbsp;import org.springframework.http.HttpStatus;
+<i>11</i>&nbsp;import org.springframework.web.bind.annotation.*;
+<i>12</i>&nbsp;
+<i>13</i>&nbsp;import javax.validation.Valid;
+<i>14</i>&nbsp;import java.util.List;
+<i>15</i>&nbsp;import java.util.stream.Collectors;
+<i>16</i>&nbsp;
+<b class="fc"><i>17</i>&nbsp;public class GenericController&lt;</b>
+<i>18</i>&nbsp;        T extends GenericApi,
+<i>19</i>&nbsp;        E extends GenericEntity,
+<i>20</i>&nbsp;        M extends EntityMapper,
+<i>21</i>&nbsp;        S extends GenericService&gt; {
+<i>22</i>&nbsp;
+<i>23</i>&nbsp;    private S service;
+<i>24</i>&nbsp;    private M mapper;
+<i>25</i>&nbsp;
+<i>26</i>&nbsp;    protected void setService(S service) {
+<b class="fc"><i>27</i>&nbsp;        this.service = service;</b>
+<b class="fc"><i>28</i>&nbsp;    }</b>
+<i>29</i>&nbsp;
+<i>30</i>&nbsp;    protected void setMapper(M mapper) {
+<b class="fc"><i>31</i>&nbsp;        this.mapper = mapper;</b>
+<b class="fc"><i>32</i>&nbsp;    }</b>
+<i>33</i>&nbsp;
+<i>34</i>&nbsp;    @ApiOperation(&quot;Returns an entity by id.&quot;)
+<i>35</i>&nbsp;    @GetMapping(&quot;{id}&quot;)
+<i>36</i>&nbsp;    public T find(@Valid @PathVariable long id) throws EntityNotFoundException {
+<b class="fc"><i>37</i>&nbsp;        return (T) mapper</b>
+<b class="fc"><i>38</i>&nbsp;                .buildApi(service.findOne(id));</b>
+<i>39</i>&nbsp;    }
+<i>40</i>&nbsp;
+<i>41</i>&nbsp;    @ApiOperation(&quot;Returns a list of entities non marked as deleted.&quot;)
+<i>42</i>&nbsp;    @GetMapping(&quot;/&quot;)
+<i>43</i>&nbsp;    public List&lt;T&gt; list() {
+<b class="fc"><i>44</i>&nbsp;        return (List&lt;T&gt;) service</b>
+<b class="fc"><i>45</i>&nbsp;                .listAll()</b>
+<b class="fc"><i>46</i>&nbsp;                .stream()</b>
+<b class="fc"><i>47</i>&nbsp;                .map(entity -&gt; mapper.buildApi((E)entity))</b>
+<b class="fc"><i>48</i>&nbsp;                .collect(Collectors.toList());</b>
+<i>49</i>&nbsp;    }
+<i>50</i>&nbsp;
+<i>51</i>&nbsp;    @ApiOperation(&quot;Creates a new entity.&quot;)
+<i>52</i>&nbsp;    @PostMapping
+<i>53</i>&nbsp;    @ResponseStatus(HttpStatus.CREATED)
+<i>54</i>&nbsp;    public T create(@Valid @RequestBody T api) throws ConstraintsViolationException {
+<b class="fc"><i>55</i>&nbsp;        return (T) mapper</b>
+<b class="fc"><i>56</i>&nbsp;                .buildApi(</b>
+<i>57</i>&nbsp;                        service
+<b class="fc"><i>58</i>&nbsp;                                .create(</b>
+<b class="fc"><i>59</i>&nbsp;                                        mapper.buildEntity(api)));</b>
+<i>60</i>&nbsp;    }
+<i>61</i>&nbsp;
+<i>62</i>&nbsp;    @ApiOperation(&quot;Updates an existing entity.&quot;)
+<i>63</i>&nbsp;    @PutMapping
+<i>64</i>&nbsp;    public T update(@Valid @RequestBody T productApi) throws EntityNotFoundException {
+<b class="fc"><i>65</i>&nbsp;        return (T) mapper</b>
+<b class="fc"><i>66</i>&nbsp;                .buildApi(</b>
+<i>67</i>&nbsp;                        service
+<b class="fc"><i>68</i>&nbsp;                                .save(</b>
+<b class="fc"><i>69</i>&nbsp;                                        mapper.buildEntity(productApi)));</b>
+<i>70</i>&nbsp;    }
+<i>71</i>&nbsp;
+<i>72</i>&nbsp;    @ApiOperation(&quot;Deletes an existing entity.&quot;)
+<i>73</i>&nbsp;    @DeleteMapping(&quot;{id}&quot;)
+<i>74</i>&nbsp;    public T delete(@Valid @PathVariable Long id) throws ConstraintsViolationException, EntityNotFoundException {
+<b class="fc"><i>75</i>&nbsp;        return (T) mapper</b>
+<b class="fc"><i>76</i>&nbsp;                .buildApi(</b>
+<i>77</i>&nbsp;                        service
+<b class="fc"><i>78</i>&nbsp;                                .delete(id));</b>
+<i>79</i>&nbsp;    }
+<i>80</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-08-20 01:50</div>
+</div>
+</body>
+</html>

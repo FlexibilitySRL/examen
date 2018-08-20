@@ -1,0 +1,205 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: ClientApi</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">ar.com.flexibility.examen.app.api</a> ]
+</div>
+
+<h1>Coverage Summary for Class: ClientApi (ar.com.flexibility.examen.app.api)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ClientApi</td>
+<td class="coverageStat">
+  <span class="percent">
+    85,7%
+  </span>
+  <span class="absValue">
+    (6/ 7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    84,6%
+  </span>
+  <span class="absValue">
+    (11/ 13)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">ClientApi$ClientApiBuilder</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (6/ 6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (10/ 10)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    92,3%
+  </span>
+  <span class="absValue">
+    (12/ 13)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    91,3%
+  </span>
+  <span class="absValue">
+    (21/ 23)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package ar.com.flexibility.examen.app.api;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import com.fasterxml.jackson.annotation.JsonFormat;
+<i>4</i>&nbsp;import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+<i>5</i>&nbsp;import com.fasterxml.jackson.annotation.JsonProperty;
+<i>6</i>&nbsp;import com.fasterxml.jackson.annotation.JsonRootName;
+<i>7</i>&nbsp;
+<i>8</i>&nbsp;import javax.validation.constraints.NotNull;
+<i>9</i>&nbsp;import java.util.Date;
+<i>10</i>&nbsp;
+<i>11</i>&nbsp;@JsonRootName(value = &quot;client&quot;)
+<i>12</i>&nbsp;@JsonIgnoreProperties(ignoreUnknown = true)
+<i>13</i>&nbsp;public class ClientApi implements GenericApi {
+<i>14</i>&nbsp;
+<i>15</i>&nbsp;    private static final long serialVersionUID = -491805240386575287L;
+<i>16</i>&nbsp;    @JsonProperty
+<i>17</i>&nbsp;    private Long id;
+<i>18</i>&nbsp;
+<i>19</i>&nbsp;    @NotNull(message = &quot;Date can not be null!&quot;)
+<i>20</i>&nbsp;    @JsonProperty(&quot;date_created&quot;)
+<i>21</i>&nbsp;    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = &quot;yyyy-MM-dd-HH:mm&quot;)
+<i>22</i>&nbsp;    private Date dateCreated;
+<i>23</i>&nbsp;
+<i>24</i>&nbsp;    @NotNull(message = &quot;Name can not be null!&quot;)
+<i>25</i>&nbsp;    @JsonProperty
+<i>26</i>&nbsp;    private String documentId;
+<i>27</i>&nbsp;
+<i>28</i>&nbsp;    @NotNull(message = &quot;Name can not be null!&quot;)
+<i>29</i>&nbsp;    @JsonProperty
+<i>30</i>&nbsp;    private String name;
+<i>31</i>&nbsp;
+<b class="nc"><i>32</i>&nbsp;    private ClientApi() {</b>
+<i>33</i>&nbsp;        //Just to avoid public instantiation.
+<b class="nc"><i>34</i>&nbsp;    }</b>
+<i>35</i>&nbsp;
+<b class="fc"><i>36</i>&nbsp;    public ClientApi(Long id, Date dateCreated, String documentId, String name) {</b>
+<b class="fc"><i>37</i>&nbsp;        this.id = id;</b>
+<b class="fc"><i>38</i>&nbsp;        this.dateCreated = dateCreated;</b>
+<b class="fc"><i>39</i>&nbsp;        this.documentId = documentId;</b>
+<b class="fc"><i>40</i>&nbsp;        this.name = name;</b>
+<b class="fc"><i>41</i>&nbsp;    }</b>
+<i>42</i>&nbsp;
+<i>43</i>&nbsp;    public Long getId() {
+<b class="fc"><i>44</i>&nbsp;        return id;</b>
+<i>45</i>&nbsp;    }
+<i>46</i>&nbsp;
+<i>47</i>&nbsp;    @NotNull
+<i>48</i>&nbsp;    public Date getDateCreated() {
+<b class="fc"><i>49</i>&nbsp;        return dateCreated;</b>
+<i>50</i>&nbsp;    }
+<i>51</i>&nbsp;
+<i>52</i>&nbsp;    @NotNull
+<i>53</i>&nbsp;    public String getDocumentId() {
+<b class="fc"><i>54</i>&nbsp;        return documentId;</b>
+<i>55</i>&nbsp;    }
+<i>56</i>&nbsp;
+<i>57</i>&nbsp;    @NotNull
+<i>58</i>&nbsp;    public String getName() {
+<b class="fc"><i>59</i>&nbsp;        return name;</b>
+<i>60</i>&nbsp;    }
+<i>61</i>&nbsp;
+<i>62</i>&nbsp;    public static ClientApiBuilder newBuilder() {
+<b class="fc"><i>63</i>&nbsp;        return new ClientApiBuilder();</b>
+<i>64</i>&nbsp;    }
+<i>65</i>&nbsp;
+<b class="fc"><i>66</i>&nbsp;    public static class ClientApiBuilder {</b>
+<i>67</i>&nbsp;        private Long id;
+<i>68</i>&nbsp;        private Date dateCreated;
+<i>69</i>&nbsp;        private String documentId;
+<i>70</i>&nbsp;        private String name;
+<i>71</i>&nbsp;
+<i>72</i>&nbsp;        public ClientApi.ClientApiBuilder setId(Long id) {
+<b class="fc"><i>73</i>&nbsp;            this.id = id;</b>
+<b class="fc"><i>74</i>&nbsp;            return this;</b>
+<i>75</i>&nbsp;        }
+<i>76</i>&nbsp;
+<i>77</i>&nbsp;        public ClientApi.ClientApiBuilder setDateCreated(Date dateCreated) {
+<b class="fc"><i>78</i>&nbsp;            this.dateCreated = dateCreated;</b>
+<b class="fc"><i>79</i>&nbsp;            return this;</b>
+<i>80</i>&nbsp;        }
+<i>81</i>&nbsp;
+<i>82</i>&nbsp;        public ClientApi.ClientApiBuilder setDocumentId(String documentId) {
+<b class="fc"><i>83</i>&nbsp;            this.documentId = documentId;</b>
+<b class="fc"><i>84</i>&nbsp;            return this;</b>
+<i>85</i>&nbsp;        }
+<i>86</i>&nbsp;
+<i>87</i>&nbsp;        public ClientApi.ClientApiBuilder setName(String name) {
+<b class="fc"><i>88</i>&nbsp;            this.name = name;</b>
+<b class="fc"><i>89</i>&nbsp;            return this;</b>
+<i>90</i>&nbsp;        }
+<i>91</i>&nbsp;
+<i>92</i>&nbsp;        public ClientApi build() {
+<b class="fc"><i>93</i>&nbsp;            return new ClientApi(id, dateCreated, documentId, name);</b>
+<i>94</i>&nbsp;        }
+<i>95</i>&nbsp;    }
+<i>96</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-08-20 01:50</div>
+</div>
+</body>
+</html>

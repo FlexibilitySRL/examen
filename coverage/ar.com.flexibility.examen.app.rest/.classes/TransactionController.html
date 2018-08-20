@@ -1,0 +1,145 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: TransactionController</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">ar.com.flexibility.examen.app.rest</a> ]
+</div>
+
+<h1>Coverage Summary for Class: TransactionController (ar.com.flexibility.examen.app.rest)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">TransactionController</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (4/ 4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (17/ 17)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package ar.com.flexibility.examen.app.rest;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import ar.com.flexibility.examen.app.api.TransactionApi;
+<i>4</i>&nbsp;import ar.com.flexibility.examen.app.exception.ConstraintsViolationException;
+<i>5</i>&nbsp;import ar.com.flexibility.examen.app.exception.EntityConflictException;
+<i>6</i>&nbsp;import ar.com.flexibility.examen.app.exception.EntityNotFoundException;
+<i>7</i>&nbsp;import ar.com.flexibility.examen.app.rest.mapper.TransactionApiMapper;
+<i>8</i>&nbsp;import ar.com.flexibility.examen.domain.service.TransactionService;
+<i>9</i>&nbsp;import io.swagger.annotations.Api;
+<i>10</i>&nbsp;import io.swagger.annotations.ApiOperation;
+<i>11</i>&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+<i>12</i>&nbsp;import org.springframework.web.bind.annotation.GetMapping;
+<i>13</i>&nbsp;import org.springframework.web.bind.annotation.PathVariable;
+<i>14</i>&nbsp;import org.springframework.web.bind.annotation.RequestMapping;
+<i>15</i>&nbsp;import org.springframework.web.bind.annotation.RestController;
+<i>16</i>&nbsp;
+<i>17</i>&nbsp;import javax.validation.Valid;
+<i>18</i>&nbsp;import java.util.List;
+<i>19</i>&nbsp;import java.util.stream.Collectors;
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;/**
+<i>22</i>&nbsp; * Controller for {@link ar.com.flexibility.examen.domain.model.Transaction} operations.
+<i>23</i>&nbsp; */
+<i>24</i>&nbsp;@RestController
+<i>25</i>&nbsp;@RequestMapping(path = &quot;/transaction&quot;)
+<i>26</i>&nbsp;@Api(description = &quot;Controller for Transaction operations.&quot;)
+<b class="fc"><i>27</i>&nbsp;public class TransactionController {</b>
+<i>28</i>&nbsp;
+<i>29</i>&nbsp;    @Autowired
+<i>30</i>&nbsp;    private TransactionService transactionService;
+<b class="fc"><i>31</i>&nbsp;    private TransactionApiMapper mapper = new TransactionApiMapper();</b>
+<i>32</i>&nbsp;
+<i>33</i>&nbsp;    @ApiOperation(&quot;Returns a transaction list.&quot;)
+<i>34</i>&nbsp;    @GetMapping(&quot;/&quot;)
+<i>35</i>&nbsp;    public List&lt;TransactionApi&gt; list() {
+<b class="fc"><i>36</i>&nbsp;        return transactionService</b>
+<b class="fc"><i>37</i>&nbsp;                .listAll()</b>
+<b class="fc"><i>38</i>&nbsp;                .stream()</b>
+<b class="fc"><i>39</i>&nbsp;                .map(entity -&gt; mapper.buildApi(entity))</b>
+<b class="fc"><i>40</i>&nbsp;                .collect(Collectors.toList());</b>
+<i>41</i>&nbsp;    }
+<i>42</i>&nbsp;
+<i>43</i>&nbsp;    @ApiOperation(&quot;Returns a transaction list by transactionId.&quot;)
+<i>44</i>&nbsp;    @GetMapping(&quot;/{transactionId}&quot;)
+<i>45</i>&nbsp;    public List&lt;TransactionApi&gt; list(@Valid @PathVariable Long transactionId) throws ConstraintsViolationException {
+<b class="fc"><i>46</i>&nbsp;        return transactionService</b>
+<b class="fc"><i>47</i>&nbsp;                .findByTransactionId(transactionId)</b>
+<b class="fc"><i>48</i>&nbsp;                .stream()</b>
+<b class="fc"><i>49</i>&nbsp;                .map(entity -&gt; mapper.buildApi(entity))</b>
+<b class="fc"><i>50</i>&nbsp;                .collect(Collectors.toList());</b>
+<i>51</i>&nbsp;    }
+<i>52</i>&nbsp;
+<i>53</i>&nbsp;    @ApiOperation(&quot;Set a transaction with transactionId as approved.&quot;)
+<i>54</i>&nbsp;    @GetMapping(&quot;/{transactionId}/approve&quot;)
+<i>55</i>&nbsp;    public List&lt;TransactionApi&gt; approve(@Valid @PathVariable Long transactionId) throws ConstraintsViolationException, EntityConflictException, EntityNotFoundException {
+<b class="fc"><i>56</i>&nbsp;        return transactionService</b>
+<b class="fc"><i>57</i>&nbsp;                .approveTransaction(transactionId)</b>
+<b class="fc"><i>58</i>&nbsp;                .stream()</b>
+<b class="fc"><i>59</i>&nbsp;                .map(entity -&gt; mapper.buildApi(entity))</b>
+<b class="fc"><i>60</i>&nbsp;                .collect(Collectors.toList());</b>
+<i>61</i>&nbsp;    }
+<i>62</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-08-20 01:50</div>
+</div>
+</body>
+</html>

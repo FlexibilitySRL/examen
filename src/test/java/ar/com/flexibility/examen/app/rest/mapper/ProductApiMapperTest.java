@@ -9,9 +9,6 @@ import java.util.Date;
 
 import static org.junit.Assert.*;
 
-/**
- * Created by Manuel Perez P. (darkpriestrelative@gmail.com) on 19/08/18.
- */
 public class ProductApiMapperTest {
 
     private static final Long DEFAULT_ID = 1L;

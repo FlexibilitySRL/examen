@@ -1,0 +1,88 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: TransactionService</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">ar.com.flexibility.examen.domain.service</a> ]
+</div>
+
+<h1>Coverage Summary for Class: TransactionService (ar.com.flexibility.examen.domain.service)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+</tr>
+  <tr>
+    <td class="name">TransactionService$$EnhancerByMockitoWithCGLIB$$3793d589</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package ar.com.flexibility.examen.domain.service;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import ar.com.flexibility.examen.app.exception.ConstraintsViolationException;
+<i>4</i>&nbsp;import ar.com.flexibility.examen.app.exception.EntityConflictException;
+<i>5</i>&nbsp;import ar.com.flexibility.examen.app.exception.EntityNotFoundException;
+<i>6</i>&nbsp;import ar.com.flexibility.examen.domain.model.Transaction;
+<i>7</i>&nbsp;
+<i>8</i>&nbsp;import java.util.List;
+<i>9</i>&nbsp;
+<i>10</i>&nbsp;/**
+<i>11</i>&nbsp; * Represents the service that manages the {@link Transaction} operations.
+<i>12</i>&nbsp; */
+<i>13</i>&nbsp;public interface TransactionService {
+<i>14</i>&nbsp;
+<i>15</i>&nbsp;    /**
+<i>16</i>&nbsp;     * Lists all the {@link Transaction} present in database.
+<i>17</i>&nbsp;     * @return {@link Transaction} registered in database.
+<i>18</i>&nbsp;     */
+<i>19</i>&nbsp;    List&lt;Transaction&gt; listAll();
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;    /**
+<i>22</i>&nbsp;     * Lists all the {@link Transaction} identified by transactionId.
+<i>23</i>&nbsp;     * @param transactionId that identifies the requested {@link Transaction}.
+<i>24</i>&nbsp;     * @return {@link Transaction} registered in database filtered by transactionId.
+<i>25</i>&nbsp;     * @throws ConstraintsViolationException if something goes wrong.
+<i>26</i>&nbsp;     */
+<i>27</i>&nbsp;    List&lt;Transaction&gt; findByTransactionId(Long transactionId) throws ConstraintsViolationException;
+<i>28</i>&nbsp;
+<i>29</i>&nbsp;    /**
+<i>30</i>&nbsp;     * Approves a transaction.
+<i>31</i>&nbsp;     * @param transactionId that identifies the requested {@link Transaction}.
+<i>32</i>&nbsp;     * @return approved {@link Transaction}.
+<i>33</i>&nbsp;     * @throws EntityNotFoundException if the {@link Transaction} with id does not exists in database.
+<i>34</i>&nbsp;     * @throws ConstraintsViolationException if something goes wrong.
+<i>35</i>&nbsp;     * @throws EntityConflictException if the {@link Transaction} with id is already approved.
+<i>36</i>&nbsp;     */
+<i>37</i>&nbsp;    List&lt;Transaction&gt; approveTransaction(Long transactionId) throws EntityNotFoundException, ConstraintsViolationException, EntityConflictException;
+<i>38</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-08-20 01:50</div>
+</div>
+</body>
+</html>

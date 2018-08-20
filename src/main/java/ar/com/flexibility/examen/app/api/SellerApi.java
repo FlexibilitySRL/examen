@@ -8,11 +8,10 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
-@JsonRootName(value = "client")
+@JsonRootName(value = "seller")
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ClientApi implements GenericApi {
+public class SellerApi implements GenericApi {
 
-    private static final long serialVersionUID = -491805240386575287L;
     @JsonProperty
     private Long id;
 
@@ -29,11 +28,11 @@ public class ClientApi implements GenericApi {
     @JsonProperty
     private String name;
 
-    private ClientApi() {
+    private SellerApi() {
         //Just to avoid public instantiation.
     }
 
-    public ClientApi(Long id, Date dateCreated, String documentId, String name) {
+    public SellerApi(Long id, Date dateCreated, String documentId, String name) {
         this.id = id;
         this.dateCreated = dateCreated;
         this.documentId = documentId;
@@ -59,38 +58,38 @@ public class ClientApi implements GenericApi {
         return name;
     }
 
-    public static ClientApiBuilder newBuilder() {
-        return new ClientApiBuilder();
+    public static SellerApiBuilder newBuilder() {
+        return new SellerApiBuilder();
     }
 
-    public static class ClientApiBuilder {
+    public static class SellerApiBuilder {
         private Long id;
         private Date dateCreated;
         private String documentId;
         private String name;
 
-        public ClientApi.ClientApiBuilder setId(Long id) {
+        public SellerApi.SellerApiBuilder setId(Long id) {
             this.id = id;
             return this;
         }
 
-        public ClientApi.ClientApiBuilder setDateCreated(Date dateCreated) {
+        public SellerApi.SellerApiBuilder setDateCreated(Date dateCreated) {
             this.dateCreated = dateCreated;
             return this;
         }
 
-        public ClientApi.ClientApiBuilder setDocumentId(String documentId) {
+        public SellerApi.SellerApiBuilder setDocumentId(String documentId) {
             this.documentId = documentId;
             return this;
         }
 
-        public ClientApi.ClientApiBuilder setName(String name) {
+        public SellerApi.SellerApiBuilder setName(String name) {
             this.name = name;
             return this;
         }
 
-        public ClientApi build() {
-            return new ClientApi(id, dateCreated, documentId, name);
+        public SellerApi build() {
+            return new SellerApi(id, dateCreated, documentId, name);
         }
     }
 }

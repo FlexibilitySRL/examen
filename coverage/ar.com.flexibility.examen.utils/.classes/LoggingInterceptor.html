@@ -1,0 +1,119 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: LoggingInterceptor</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">ar.com.flexibility.examen.utils</a> ]
+</div>
+
+<h1>Coverage Summary for Class: LoggingInterceptor (ar.com.flexibility.examen.utils)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">LoggingInterceptor</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 10)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package ar.com.flexibility.examen.utils;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import org.apache.juli.logging.Log;
+<i>4</i>&nbsp;import org.apache.juli.logging.LogFactory;
+<i>5</i>&nbsp;import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;import javax.servlet.http.HttpServletRequest;
+<i>8</i>&nbsp;import javax.servlet.http.HttpServletResponse;
+<i>9</i>&nbsp;
+<b class="nc"><i>10</i>&nbsp;public class LoggingInterceptor extends HandlerInterceptorAdapter</b>
+<i>11</i>&nbsp;{
+<i>12</i>&nbsp;
+<b class="nc"><i>13</i>&nbsp;    private static final Log LOG = LogFactory.getLog(LoggingInterceptor.class);</b>
+<i>14</i>&nbsp;
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;    @Override
+<i>17</i>&nbsp;    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception
+<i>18</i>&nbsp;    {
+<b class="nc"><i>19</i>&nbsp;        StringBuilder logMessage = new StringBuilder();</b>
+<b class="nc"><i>20</i>&nbsp;        logMessage.append(&quot;method: &quot;).append(request.getMethod()).append(&quot;\t&quot;);</b>
+<b class="nc"><i>21</i>&nbsp;        logMessage.append(&quot;uri: &quot;).append(request.getRequestURI()).append(&quot;\t&quot;);</b>
+<b class="nc"><i>22</i>&nbsp;        logMessage.append(&quot;status: &quot;).append(response.getStatus()).append(&quot;\t&quot;);</b>
+<b class="nc"><i>23</i>&nbsp;        logMessage.append(&quot;remoteAddress: &quot;).append(request.getRemoteAddr()).append(&quot;\t&quot;);</b>
+<i>24</i>&nbsp;
+<b class="nc"><i>25</i>&nbsp;        if (ex != null)</b>
+<i>26</i>&nbsp;        {
+<b class="nc"><i>27</i>&nbsp;            LoggingInterceptor.LOG.error(logMessage.toString(), ex);</b>
+<i>28</i>&nbsp;        }
+<i>29</i>&nbsp;        else
+<i>30</i>&nbsp;        {
+<b class="nc"><i>31</i>&nbsp;            LoggingInterceptor.LOG.info(logMessage.toString());</b>
+<i>32</i>&nbsp;        }
+<i>33</i>&nbsp;
+<i>34</i>&nbsp;    }
+<i>35</i>&nbsp;
+<i>36</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-08-20 01:50</div>
+</div>
+</body>
+</html>

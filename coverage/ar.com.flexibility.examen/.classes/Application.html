@@ -1,0 +1,137 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Application</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">ar.com.flexibility.examen</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Application (ar.com.flexibility.examen)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Application</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 10)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package ar.com.flexibility.examen;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import ar.com.flexibility.examen.utils.LoggingInterceptor;
+<i>4</i>&nbsp;import org.springframework.boot.SpringApplication;
+<i>5</i>&nbsp;import org.springframework.boot.autoconfigure.SpringBootApplication;
+<i>6</i>&nbsp;import org.springframework.context.annotation.Bean;
+<i>7</i>&nbsp;import org.springframework.context.annotation.ComponentScan;
+<i>8</i>&nbsp;import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+<i>9</i>&nbsp;import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+<i>10</i>&nbsp;import springfox.documentation.builders.PathSelectors;
+<i>11</i>&nbsp;import springfox.documentation.builders.RequestHandlerSelectors;
+<i>12</i>&nbsp;import springfox.documentation.service.ApiInfo;
+<i>13</i>&nbsp;import springfox.documentation.spi.DocumentationType;
+<i>14</i>&nbsp;import springfox.documentation.spring.web.plugins.Docket;
+<i>15</i>&nbsp;import springfox.documentation.swagger2.annotations.EnableSwagger2;
+<i>16</i>&nbsp;
+<i>17</i>&nbsp;@SpringBootApplication
+<i>18</i>&nbsp;@EnableSwagger2
+<i>19</i>&nbsp;@ComponentScan(&quot;ar.com.flexibility.examen&quot;)
+<b class="nc"><i>20</i>&nbsp;public class Application extends WebMvcConfigurerAdapter {</b>
+<i>21</i>&nbsp;
+<i>22</i>&nbsp;    public static void main(final String[] args) {
+<b class="nc"><i>23</i>&nbsp;        SpringApplication.run(Application.class, args);</b>
+<i>24</i>&nbsp;    }
+<i>25</i>&nbsp;
+<i>26</i>&nbsp;    @Override
+<i>27</i>&nbsp;    public void addInterceptors(InterceptorRegistry registry)
+<i>28</i>&nbsp;    {
+<b class="nc"><i>29</i>&nbsp;        registry.addInterceptor(new LoggingInterceptor()).addPathPatterns(&quot;/**&quot;);</b>
+<i>30</i>&nbsp;    }
+<i>31</i>&nbsp;
+<i>32</i>&nbsp;    @Bean
+<i>33</i>&nbsp;    public Docket docket()
+<i>34</i>&nbsp;    {
+<b class="nc"><i>35</i>&nbsp;        return new Docket(DocumentationType.SWAGGER_2)</b>
+<b class="nc"><i>36</i>&nbsp;                .select()</b>
+<b class="nc"><i>37</i>&nbsp;                .apis(RequestHandlerSelectors.basePackage(getClass().getPackage().getName()))</b>
+<b class="nc"><i>38</i>&nbsp;                .paths(PathSelectors.any())</b>
+<b class="nc"><i>39</i>&nbsp;                .build()</b>
+<b class="nc"><i>40</i>&nbsp;                .apiInfo(generateApiInfo());</b>
+<i>41</i>&nbsp;    }
+<i>42</i>&nbsp;
+<i>43</i>&nbsp;    private ApiInfo generateApiInfo()
+<i>44</i>&nbsp;    {
+<b class="nc"><i>45</i>&nbsp;        return new ApiInfo(</b>
+<i>46</i>&nbsp;                &quot;Flexibility Exam&quot;,
+<i>47</i>&nbsp;                &quot;This service is to check the technology knowledge of a server applicant.&quot;,
+<i>48</i>&nbsp;                &quot;Version 1.0&quot;,
+<i>49</i>&nbsp;                &quot;urn:tos&quot;,
+<i>50</i>&nbsp;                &quot;darkpriestrelative@gmail.com&quot;,
+<i>51</i>&nbsp;                &quot;Apache 2.0&quot;,
+<i>52</i>&nbsp;                &quot;http://www.apache.org/licenses/LICENSE-2.0&quot;);
+<i>53</i>&nbsp;    }
+<i>54</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-08-20 01:50</div>
+</div>
+</body>
+</html>

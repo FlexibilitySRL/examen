@@ -1,0 +1,175 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Product</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">ar.com.flexibility.examen.domain.model</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Product (ar.com.flexibility.examen.domain.model)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Product</td>
+<td class="coverageStat">
+  <span class="percent">
+    54,5%
+  </span>
+  <span class="absValue">
+    (6/ 11)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    54,5%
+  </span>
+  <span class="absValue">
+    (12/ 22)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">Product$$EnhancerByMockitoWithCGLIB$$e4db0887</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    54,5%
+  </span>
+  <span class="absValue">
+    (6/ 11)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    54,5%
+  </span>
+  <span class="absValue">
+    (12/ 22)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package ar.com.flexibility.examen.domain.model;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import org.hibernate.annotations.ColumnDefault;
+<i>4</i>&nbsp;import org.hibernate.annotations.Type;
+<i>5</i>&nbsp;import org.springframework.format.annotation.DateTimeFormat;
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;import javax.persistence.*;
+<i>8</i>&nbsp;import javax.validation.constraints.NotNull;
+<i>9</i>&nbsp;import java.math.BigDecimal;
+<i>10</i>&nbsp;import java.util.Date;
+<i>11</i>&nbsp;
+<i>12</i>&nbsp;@Entity
+<i>13</i>&nbsp;@Table(
+<i>14</i>&nbsp;        name = &quot;product&quot;
+<i>15</i>&nbsp;)
+<i>16</i>&nbsp;public class Product implements GenericEntity {
+<i>17</i>&nbsp;
+<i>18</i>&nbsp;    @Id
+<i>19</i>&nbsp;    private Long id;
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;    @Column(name = &quot;date_created&quot;, nullable = false)
+<i>22</i>&nbsp;    @Type(type=&quot;java.util.Date&quot;)
+<i>23</i>&nbsp;    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+<i>24</i>&nbsp;    private Date dateCreated;
+<i>25</i>&nbsp;
+<i>26</i>&nbsp;    @Column(name = &quot;name&quot;, nullable = false)
+<i>27</i>&nbsp;    @NotNull(message = &quot;License plate can not be null!&quot;)
+<i>28</i>&nbsp;    private String name;
+<i>29</i>&nbsp;
+<i>30</i>&nbsp;    @Column(name = &quot;price&quot;, nullable = false)
+<i>31</i>&nbsp;    @ColumnDefault(&quot;false&quot;)
+<i>32</i>&nbsp;    private BigDecimal price;
+<i>33</i>&nbsp;
+<b class="fc"><i>34</i>&nbsp;    @Column(nullable = false)</b>
+<i>35</i>&nbsp;    @ColumnDefault(&quot;false&quot;)
+<b class="fc"><i>36</i>&nbsp;    private Boolean deleted = false;</b>
+<i>37</i>&nbsp;
+<b class="nc"><i>38</i>&nbsp;    public Product(){}</b>
+<i>39</i>&nbsp;
+<b class="fc"><i>40</i>&nbsp;    public Product(Long id, Date dateCreated, String name, BigDecimal price) {</b>
+<b class="fc"><i>41</i>&nbsp;        this.id = id;</b>
+<b class="fc"><i>42</i>&nbsp;        this.dateCreated = dateCreated;</b>
+<b class="fc"><i>43</i>&nbsp;        this.name = name;</b>
+<b class="fc"><i>44</i>&nbsp;        this.price = price;</b>
+<b class="fc"><i>45</i>&nbsp;    }</b>
+<i>46</i>&nbsp;
+<i>47</i>&nbsp;    public Long getId() {
+<b class="fc"><i>48</i>&nbsp;        return id;</b>
+<i>49</i>&nbsp;    }
+<i>50</i>&nbsp;
+<i>51</i>&nbsp;    public void setId(Long id) {
+<b class="nc"><i>52</i>&nbsp;        this.id = id;</b>
+<b class="nc"><i>53</i>&nbsp;    }</b>
+<i>54</i>&nbsp;
+<i>55</i>&nbsp;    public String getName() {
+<b class="fc"><i>56</i>&nbsp;        return name;</b>
+<i>57</i>&nbsp;    }
+<i>58</i>&nbsp;
+<i>59</i>&nbsp;    public void setName(String name) {
+<b class="nc"><i>60</i>&nbsp;        this.name = name;</b>
+<b class="nc"><i>61</i>&nbsp;    }</b>
+<i>62</i>&nbsp;
+<i>63</i>&nbsp;    public Date getDateCreated() {
+<b class="fc"><i>64</i>&nbsp;        return dateCreated;</b>
+<i>65</i>&nbsp;    }
+<i>66</i>&nbsp;
+<i>67</i>&nbsp;    public BigDecimal getPrice() {
+<b class="fc"><i>68</i>&nbsp;        return price;</b>
+<i>69</i>&nbsp;    }
+<i>70</i>&nbsp;
+<i>71</i>&nbsp;    public void setPrice(BigDecimal price) {
+<b class="nc"><i>72</i>&nbsp;        this.price = price;</b>
+<b class="nc"><i>73</i>&nbsp;    }</b>
+<i>74</i>&nbsp;
+<i>75</i>&nbsp;    public Boolean isDeleted() {
+<b class="nc"><i>76</i>&nbsp;        return deleted;</b>
+<i>77</i>&nbsp;    }
+<i>78</i>&nbsp;
+<i>79</i>&nbsp;    public void setDeleted(Boolean deleted) {
+<b class="nc"><i>80</i>&nbsp;        this.deleted = deleted;</b>
+<b class="nc"><i>81</i>&nbsp;    }</b>
+<i>82</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-08-20 01:50</div>
+</div>
+</body>
+</html>

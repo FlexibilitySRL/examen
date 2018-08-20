@@ -3,12 +3,16 @@ package ar.com.flexibility.examen.app.api;
 import ar.com.flexibility.examen.domain.model.Client;
 import ar.com.flexibility.examen.domain.model.Product;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonRootName;
 
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Date;
 
+@JsonRootName(value = "transaction")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class TransactionApi implements GenericApi {
 
     private static final long serialVersionUID = 6952185374892307205L;
