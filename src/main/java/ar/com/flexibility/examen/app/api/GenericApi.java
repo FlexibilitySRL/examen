@@ -1,4 +1,6 @@
 package ar.com.flexibility.examen.app.api;
 
-public interface GenericApi {
+import java.io.Serializable;
+
+public interface GenericApi extends Serializable {
 }

@@ -6,6 +6,7 @@ import ar.com.flexibility.examen.app.exception.EntityNotFoundException;
 import ar.com.flexibility.examen.app.rest.mapper.EntityMapper;
 import ar.com.flexibility.examen.domain.model.GenericEntity;
 import ar.com.flexibility.examen.domain.service.GenericService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,12 +31,14 @@ public class GenericController<
         this.mapper = mapper;
     }
 
+    @ApiOperation("Returns an entity by id.")
     @GetMapping("{id}")
     public T find(@Valid @PathVariable long id) throws EntityNotFoundException {
         return (T) mapper
                 .buildApi(service.findOne(id));
     }
 
+    @ApiOperation("Returns a list of entities non marked as deleted.")
     @GetMapping("/")
     public List<T> list() {
         return (List<T>) service
@@ -45,6 +48,7 @@ public class GenericController<
                 .collect(Collectors.toList());
     }
 
+    @ApiOperation("Creates a new entity.")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public T create(@Valid @RequestBody T api) throws ConstraintsViolationException {
@@ -55,6 +59,7 @@ public class GenericController<
                                         mapper.buildEntity(api)));
     }
 
+    @ApiOperation("Updates an existing entity.")
     @PutMapping
     public T update(@Valid @RequestBody T productApi) throws EntityNotFoundException {
         return (T) mapper
@@ -64,6 +69,7 @@ public class GenericController<
                                         mapper.buildEntity(productApi)));
     }
 
+    @ApiOperation("Deletes an existing entity.")
     @DeleteMapping("{id}")
     public T delete(@Valid @PathVariable Long id) throws ConstraintsViolationException, EntityNotFoundException {
         return (T) mapper

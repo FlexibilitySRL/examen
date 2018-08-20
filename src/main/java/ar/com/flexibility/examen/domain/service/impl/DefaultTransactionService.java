@@ -24,11 +24,17 @@ public class DefaultTransactionService implements TransactionService {
     @Autowired
     private TransactionRepository transactionRepository;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Transaction> listAll() {
         return Lists.newArrayList(transactionRepository.findAll());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Transaction> findByTransactionId(Long transactionId) throws ConstraintsViolationException {
         try {
@@ -38,6 +44,9 @@ public class DefaultTransactionService implements TransactionService {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Transaction> approveTransaction(Long transactionId)
             throws EntityNotFoundException, ConstraintsViolationException, EntityConflictException {

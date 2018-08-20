@@ -13,13 +13,18 @@ import java.util.List;
 @Service
 public class DefaultProductService extends AbstractService<Product, ProductRepository> implements ProductService {
 
+    private static final Boolean NON_DELETED_FLAG = false;
+
     @Autowired
     public DefaultProductService(ProductRepository repository) {
         super(repository);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Product> listAll() {
-        return Lists.newArrayList(repository.findByDeleted(false));
+        return Lists.newArrayList(repository.findByDeleted(NON_DELETED_FLAG));
     }
 }

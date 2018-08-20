@@ -13,6 +13,7 @@ import java.util.Date;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ProductApi implements GenericApi {
 
+    private static final long serialVersionUID = 1800354727348114604L;
     @JsonProperty
     private Long id;
 

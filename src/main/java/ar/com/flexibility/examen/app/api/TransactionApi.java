@@ -11,6 +11,7 @@ import java.util.Date;
 
 public class TransactionApi implements GenericApi {
 
+    private static final long serialVersionUID = 6952185374892307205L;
     @JsonProperty
     private Long id;
 
