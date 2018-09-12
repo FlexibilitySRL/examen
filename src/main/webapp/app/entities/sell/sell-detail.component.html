@@ -1,0 +1,40 @@
+
+<div *ngIf="sell">
+    <h2><span>Sell</span> {{sell.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span>Product</span></dt>
+        <dd>
+            <div *ngIf="sell.productId">
+                <a [routerLink]="['/product', sell.productId]">{{sell.productId}}</a>
+            </div>
+        </dd>
+        <dt><span>Seller</span></dt>
+        <dd>
+            <div *ngIf="sell.sellerId">
+                <a [routerLink]="['/seller', sell.sellerId]">{{sell.sellerId}}</a>
+            </div>
+        </dd>
+        <dt><span>Client</span></dt>
+        <dd>
+            <div *ngIf="sell.clientId">
+                <a [routerLink]="['/client', sell.clientId]">{{sell.clientId}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'sell/'+ sell.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span> Edit</span>
+    </button>
+</div>

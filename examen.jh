@@ -1,0 +1,42 @@
+
+
+entity Product{
+	title String required minlength(3),
+    description String required minlength(2),
+    createdAt LocalDate required,
+    stock Integer,
+}
+
+
+entity Client{
+	name String required minlength(3),
+    lastname String required minlength(2),
+    username String required minlength(2),
+    createdAt LocalDate required
+}
+
+entity Seller{
+	name String required minlength(3),
+    lastname String required minlength(2),
+    username String required minlength(2),
+    createdAt LocalDate required
+}
+
+entity Sell{
+}
+
+relationship ManyToOne {
+	Sell{product} to Product,
+    Sell{seller} to Seller,
+    Sell{Client} to Client
+}
+
+relationship OneToOne{
+	Client{user(login)} to User,
+    Seller{user(login)} to User
+}
+
+paginate * with infinite-scroll
+dto * with mapstruct
+service Product with serviceClass
+
