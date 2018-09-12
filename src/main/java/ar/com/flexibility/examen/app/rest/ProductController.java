@@ -43,7 +43,9 @@ public class ProductController {
      * POST  /products : Create a new product.
      *
      * @param productApi the productApi to create
-     * @return the ResponseEntity with status 201 (Created) and with body the new productApi, or with status 400 (Bad Request) if the product has already an ID
+     * @return the ResponseEntity with status 201 (Created) and with body the new productApi,
+     * or with status 400 (Bad Request) if the product has already an ID
+     *
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/products")

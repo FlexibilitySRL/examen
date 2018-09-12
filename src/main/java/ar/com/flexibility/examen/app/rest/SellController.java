@@ -4,9 +4,7 @@ import ar.com.flexibility.examen.app.api.SellApi;
 import ar.com.flexibility.examen.app.rest.errors.BadRequestAlertException;
 import ar.com.flexibility.examen.app.rest.util.HeaderUtil;
 import ar.com.flexibility.examen.app.rest.util.PaginationUtil;
-import ar.com.flexibility.examen.domain.model.Sell;
-import ar.com.flexibility.examen.domain.service.mapper.SellMapper;
-import ar.com.flexibility.examen.repository.SellRepository;
+import ar.com.flexibility.examen.domain.service.SellService;
 import com.codahale.metrics.annotation.Timed;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
@@ -34,13 +32,10 @@ public class SellController {
 
     private static final String ENTITY_NAME = "sell";
 
-    private final SellRepository sellRepository;
+    private final SellService sellService;
 
-    private final SellMapper sellMapper;
-
-    public SellController(SellRepository sellRepository, SellMapper sellMapper) {
-        this.sellRepository = sellRepository;
-        this.sellMapper = sellMapper;
+    public SellController(SellService sellService) {
+        this.sellService = sellService;
     }
 
     /**
@@ -57,9 +52,7 @@ public class SellController {
         if (sellApi.getId() != null) {
             throw new BadRequestAlertException("A new sell cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Sell sell = sellMapper.toEntity(sellApi);
-        sell = sellRepository.save(sell);
-        SellApi result = sellMapper.toApi(sell);
+        SellApi result = sellService.save(sellApi);
         return ResponseEntity.created(new URI("/api/sells/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -81,9 +74,7 @@ public class SellController {
         if (sellApi.getId() == null) {
             return createSell(sellApi);
         }
-        Sell sell = sellMapper.toEntity(sellApi);
-        sell = sellRepository.save(sell);
-        SellApi result = sellMapper.toApi(sell);
+        SellApi result = sellService.save(sellApi);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, sellApi.getId().toString()))
             .body(result);
@@ -99,23 +90,22 @@ public class SellController {
     @Timed
     public ResponseEntity<List<SellApi>> getAllSells(Pageable pageable) {
         log.debug("REST request to get a page of Sells");
-        Page<Sell> page = sellRepository.findAll(pageable);
+        Page<SellApi> page = sellService.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/sells");
-        return new ResponseEntity<>(sellMapper.toApi(page.getContent()), headers, HttpStatus.OK);
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
     /**
      * GET  /sells/:id : get the "id" sell.
      *
-     * @param id the id of the sellDTO to retrieve
-     * @return the ResponseEntity with status 200 (OK) and with body the sellDTO, or with status 404 (Not Found)
+     * @param id the id of the sellApi to retrieve
+     * @return the ResponseEntity with status 200 (OK) and with body the sellApi, or with status 404 (Not Found)
      */
     @GetMapping("/sells/{id}")
     @Timed
     public ResponseEntity<SellApi> getSell(@PathVariable Long id) {
         log.debug("REST request to get Sell : {}", id);
-        Sell sell = sellRepository.findOne(id);
-        SellApi sellApi = sellMapper.toApi(sell);
+        SellApi sellApi = sellService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(sellApi));
     }
 
@@ -129,7 +119,7 @@ public class SellController {
     @Timed
     public ResponseEntity<Void> deleteSell(@PathVariable Long id) {
         log.debug("REST request to delete Sell : {}", id);
-        sellRepository.delete(id);
+        sellService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 }
