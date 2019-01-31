@@ -1,0 +1,295 @@
+<?xml version="1.0"?>
+<!--AddFlow.net diagram-->
+<AddFlow Nodes="30" Links="26">
+  <Version>2.3.3.1</Version>
+  <DefaultLink>
+    <OrientedText>True</OrientedText>
+  </DefaultLink>
+  <Node Index="0" Left="159" Top="86" Width="60" Height="40">
+    <Shape Style="Rectangle" Orientation="so_0" />
+    <FillColor>-16711681</FillColor>
+    <Text>Client</Text>
+  </Node>
+  <Node Index="1" Left="458" Top="411" Width="60" Height="40">
+    <Shape Style="Rectangle" Orientation="so_0" />
+    <FillColor>-16711681</FillColor>
+    <Text>Product</Text>
+  </Node>
+  <Node Index="2" Left="456" Top="87" Width="60" Height="40">
+    <Shape Style="Rectangle" Orientation="so_0" />
+    <FillColor>-16711681</FillColor>
+    <Text>Sale</Text>
+  </Node>
+  <Node Index="3" Left="444" Top="255" Width="86" Height="40">
+    <Shape Style="Rectangle" Orientation="so_0" />
+    <FillColor>-8586240</FillColor>
+    <Text>SaleDetail</Text>
+    <Tipo>EDebil</Tipo>
+  </Node>
+  <Node Index="4" Left="449" Top="260" Width="76" Height="30">
+    <Selectable>False</Selectable>
+    <HighlightChildren>False</HighlightChildren>
+    <Shape Style="Rectangle" Orientation="so_0" />
+    <FillColor>16777215</FillColor>
+    <Parent>3</Parent>
+    <Tipo>EDebil</Tipo>
+  </Node>
+  <Node Index="5" Left="300" Top="81" Width="70" Height="50">
+    <OutLinkable>False</OutLinkable>
+    <Shape Style="Losange" Orientation="so_0" />
+    <FillColor>-1015680</FillColor>
+    <Text>make</Text>
+  </Node>
+  <Node Index="6" Left="452" Top="335" Width="70" Height="50">
+    <OutLinkable>False</OutLinkable>
+    <Shape Style="Losange" Orientation="so_0" />
+    <FillColor>-1015680</FillColor>
+    <Text>asociate</Text>
+  </Node>
+  <Node Index="7" Left="452" Top="170" Width="70" Height="50">
+    <OutLinkable>False</OutLinkable>
+    <HighlightChildren>False</HighlightChildren>
+    <Shape Style="Losange" Orientation="so_0" />
+    <FillColor>-8586240</FillColor>
+    <Text>contain</Text>
+    <Tipo>RDebil</Tipo>
+  </Node>
+  <Link Index="8" Org="2" Dst="7">
+    <Selectable>False</Selectable>
+    <ArrowOrg Head="One" Size="Small" Angle="deg15" Filled="False" />
+    <Text>1</Text>
+  </Link>
+  <Link Index="9" Org="3" Dst="7">
+    <Selectable>False</Selectable>
+    <ArrowOrg Head="Many" Size="Small" Angle="deg15" Filled="False" />
+    <Text>N</Text>
+  </Link>
+  <Node Index="10" Left="457" Top="175" Width="60" Height="40">
+    <Selectable>False</Selectable>
+    <InLinkable>False</InLinkable>
+    <OutLinkable>False</OutLinkable>
+    <Shape Style="Losange" Orientation="so_0" />
+    <FillColor>16777215</FillColor>
+    <Parent>7</Parent>
+    <Tipo>RDebil</Tipo>
+  </Node>
+  <Link Index="11" Org="3" Dst="6">
+    <ArrowOrg Head="One" Size="Small" Angle="deg15" Filled="False" />
+    <DrawColor>-16777216</DrawColor>
+    <Text>1</Text>
+  </Link>
+  <Link Index="12" Org="1" Dst="6">
+    <ArrowOrg Head="One" Size="Small" Angle="deg15" Filled="False" />
+    <DrawColor>-16777216</DrawColor>
+    <Text>1</Text>
+  </Link>
+  <Link Index="13" Org="2" Dst="5">
+    <ArrowOrg Head="Many" Size="Small" Angle="deg15" Filled="False" />
+    <DrawColor>-16777216</DrawColor>
+    <Text>N</Text>
+  </Link>
+  <Link Index="14" Org="0" Dst="5">
+    <ArrowOrg Head="One" Size="Small" Angle="deg15" Filled="False" />
+    <DrawColor>-16777216</DrawColor>
+    <Text>1</Text>
+  </Link>
+  <Node Index="15" Left="103" Top="293" Width="173" Height="100">
+    <Gradient>True</Gradient>
+    <InLinkable>False</InLinkable>
+    <OutLinkable>False</OutLinkable>
+    <Shape Style="RoundRect" Orientation="so_0" />
+    <GradientMode>Vertical</GradientMode>
+    <DashStyle>DashDot</DashStyle>
+    <FillColor>-5383962</FillColor>
+    <TextColor>-16776961</TextColor>
+    <Text>Un cliente realiza compras de productos. Estos productos formaran parte de una venta con la fecha de la operacion</Text>
+  </Node>
+  <Node Index="16" Left="89" Top="36" Width="60" Height="40">
+    <InLinkable>False</InLinkable>
+    <OutLinkable>False</OutLinkable>
+    <FillColor>-256</FillColor>
+    <Text>id</Text>
+    <Font Name="Arial" Size="8.25" Bold="False" Italic="False" Strikeout="False" Underline="True" />
+    <Tipo>Clave</Tipo>
+  </Node>
+  <Link Index="17" Org="16" Dst="0">
+    <Selectable>False</Selectable>
+  </Link>
+  <Node Index="18" Left="158" Top="23" Width="60" Height="40">
+    <InLinkable>False</InLinkable>
+    <OutLinkable>False</OutLinkable>
+    <FillColor>-256</FillColor>
+    <Text>fullname</Text>
+  </Node>
+  <Link Index="19" Org="18" Dst="0">
+    <Selectable>False</Selectable>
+  </Link>
+  <Node Index="20" Left="80" Top="87" Width="60" Height="40">
+    <InLinkable>False</InLinkable>
+    <OutLinkable>False</OutLinkable>
+    <FillColor>-256</FillColor>
+    <Text>username</Text>
+  </Node>
+  <Link Index="21" Org="20" Dst="0">
+    <Selectable>False</Selectable>
+  </Link>
+  <Node Index="22" Left="90" Top="138" Width="60" Height="40">
+    <InLinkable>False</InLinkable>
+    <OutLinkable>False</OutLinkable>
+    <FillColor>-256</FillColor>
+    <Text>password</Text>
+  </Node>
+  <Link Index="23" Org="22" Dst="0">
+    <Selectable>False</Selectable>
+  </Link>
+  <Node Index="24" Left="231" Top="145" Width="60" Height="40">
+    <InLinkable>False</InLinkable>
+    <OutLinkable>False</OutLinkable>
+    <FillColor>-256</FillColor>
+    <Text>active</Text>
+  </Node>
+  <Link Index="25" Org="24" Dst="0">
+    <Selectable>False</Selectable>
+  </Link>
+  <Node Index="26" Left="157" Top="159" Width="60" Height="40">
+    <InLinkable>False</InLinkable>
+    <OutLinkable>False</OutLinkable>
+    <FillColor>-256</FillColor>
+    <Text>createAt</Text>
+  </Node>
+  <Link Index="27" Org="26" Dst="0">
+    <Selectable>False</Selectable>
+  </Link>
+  <Node Index="28" Left="388" Top="18" Width="60" Height="40">
+    <InLinkable>False</InLinkable>
+    <OutLinkable>False</OutLinkable>
+    <FillColor>-256</FillColor>
+    <Text>id</Text>
+    <Font Name="Arial" Size="8.25" Bold="False" Italic="False" Strikeout="False" Underline="True" />
+    <Tipo>Clave</Tipo>
+  </Node>
+  <Link Index="29" Org="28" Dst="2">
+    <Selectable>False</Selectable>
+  </Link>
+  <Node Index="30" Left="455" Top="10" Width="60" Height="40">
+    <InLinkable>False</InLinkable>
+    <OutLinkable>False</OutLinkable>
+    <FillColor>-256</FillColor>
+    <Text>total</Text>
+  </Node>
+  <Link Index="31" Org="30" Dst="2">
+    <Selectable>False</Selectable>
+  </Link>
+  <Node Index="32" Left="522" Top="35" Width="60" Height="40">
+    <InLinkable>False</InLinkable>
+    <OutLinkable>False</OutLinkable>
+    <FillColor>-256</FillColor>
+    <Text>saleDate</Text>
+  </Node>
+  <Link Index="33" Org="32" Dst="2">
+    <Selectable>False</Selectable>
+  </Link>
+  <Node Index="34" Left="379" Top="139" Width="60" Height="40">
+    <InLinkable>False</InLinkable>
+    <OutLinkable>False</OutLinkable>
+    <FillColor>-256</FillColor>
+    <Text>active</Text>
+  </Node>
+  <Link Index="35" Org="34" Dst="2">
+    <Selectable>False</Selectable>
+  </Link>
+  <Node Index="36" Left="527" Top="135" Width="60" Height="40">
+    <InLinkable>False</InLinkable>
+    <OutLinkable>False</OutLinkable>
+    <FillColor>-256</FillColor>
+    <Text>bought</Text>
+  </Node>
+  <Link Index="37" Org="36" Dst="2">
+    <Selectable>False</Selectable>
+  </Link>
+  <Node Index="38" Left="542" Top="226" Width="60" Height="40">
+    <InLinkable>False</InLinkable>
+    <OutLinkable>False</OutLinkable>
+    <FillColor>-256</FillColor>
+    <Text>quantity</Text>
+  </Node>
+  <Link Index="39" Org="38" Dst="3">
+    <Selectable>False</Selectable>
+  </Link>
+  <Node Index="40" Left="550" Top="291" Width="60" Height="40">
+    <InLinkable>False</InLinkable>
+    <OutLinkable>False</OutLinkable>
+    <FillColor>-256</FillColor>
+    <Text>subtotal</Text>
+  </Node>
+  <Link Index="41" Org="40" Dst="3">
+    <Selectable>False</Selectable>
+  </Link>
+  <Node Index="42" Left="366" Top="278" Width="60" Height="40">
+    <InLinkable>False</InLinkable>
+    <OutLinkable>False</OutLinkable>
+    <FillColor>-256</FillColor>
+    <Text>active</Text>
+  </Node>
+  <Link Index="43" Org="42" Dst="3">
+    <Selectable>False</Selectable>
+  </Link>
+  <Node Index="44" Left="377" Top="223" Width="60" Height="40">
+    <InLinkable>False</InLinkable>
+    <OutLinkable>False</OutLinkable>
+    <FillColor>-256</FillColor>
+    <Text>id</Text>
+    <Font Name="Arial" Size="8.25" Bold="False" Italic="False" Strikeout="False" Underline="True" />
+    <Tipo>Clave</Tipo>
+  </Node>
+  <Link Index="45" Org="44" Dst="3">
+    <Selectable>False</Selectable>
+  </Link>
+  <Node Index="46" Left="557" Top="414" Width="60" Height="40">
+    <InLinkable>False</InLinkable>
+    <OutLinkable>False</OutLinkable>
+    <FillColor>-256</FillColor>
+    <Text>createAt</Text>
+  </Node>
+  <Link Index="47" Org="46" Dst="1">
+    <Selectable>False</Selectable>
+  </Link>
+  <Node Index="48" Left="522" Top="478" Width="60" Height="40">
+    <InLinkable>False</InLinkable>
+    <OutLinkable>False</OutLinkable>
+    <FillColor>-256</FillColor>
+    <Text>price</Text>
+  </Node>
+  <Link Index="49" Org="48" Dst="1">
+    <Selectable>False</Selectable>
+  </Link>
+  <Node Index="50" Left="421" Top="482" Width="60" Height="40">
+    <InLinkable>False</InLinkable>
+    <OutLinkable>False</OutLinkable>
+    <FillColor>-256</FillColor>
+    <Text>quantity</Text>
+  </Node>
+  <Link Index="51" Org="50" Dst="1">
+    <Selectable>False</Selectable>
+  </Link>
+  <Node Index="52" Left="357" Top="433" Width="60" Height="40">
+    <InLinkable>False</InLinkable>
+    <OutLinkable>False</OutLinkable>
+    <FillColor>-256</FillColor>
+    <Text>active</Text>
+  </Node>
+  <Link Index="53" Org="52" Dst="1">
+    <Selectable>False</Selectable>
+  </Link>
+  <Node Index="54" Left="366" Top="365" Width="60" Height="40">
+    <InLinkable>False</InLinkable>
+    <OutLinkable>False</OutLinkable>
+    <FillColor>-256</FillColor>
+    <Text>id</Text>
+    <Font Name="Arial" Size="8.25" Bold="False" Italic="False" Strikeout="False" Underline="True" />
+    <Tipo>Clave</Tipo>
+  </Node>
+  <Link Index="55" Org="54" Dst="1">
+    <Selectable>False</Selectable>
+  </Link>
+</AddFlow>
