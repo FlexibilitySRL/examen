@@ -18,7 +18,6 @@
     <properties>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <start-class>ar.com.flexibility.examen.Application</start-class>
         <hibernate-jpamodelgen.version>5.0.6.Final</hibernate-jpamodelgen.version>
         <joda-time-version>2.9.1</joda-time-version>
         <jadira-usertype-version>5.0.0.GA</jadira-usertype-version>
