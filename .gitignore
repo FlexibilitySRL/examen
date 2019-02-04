@@ -8,5 +8,10 @@ target
 .idea/
 *.iml
 
+# Eclipse
+.settings/
+.project
+.classpath
+
 # Mac
 .DS_Store

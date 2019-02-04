@@ -1,0 +1,394 @@
+{
+	"info": {
+		"_postman_id": "ac9d3eb5-0f11-4a2a-b165-e62b1c036937",
+		"name": "RestTest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Customer",
+			"description": null,
+			"item": [
+				{
+					"name": "Post",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"customerName\": \"Avelardo Gavide\",\n  \"address\": \"Parque Patricios\",\n  \"email\": \"avelardog@gmail.com\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/examen/private/customer",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"examen",
+								"private",
+								"customer"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Put",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": 1,\n  \"customerName\": \"Avelardo Gavide\",\n  \"address\": \"Parque Patricios-CABA\",\n  \"email\": \"nuevo.avelardog@gmail.com\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/examen/private/customer",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"examen",
+								"private",
+								"customer"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get by ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": 1,\n  \"customerName\": \"Avelardo Gavide\",\n  \"address\": \"Parque Patricios-CABA\",\n  \"email\": \"nuevo.avelardog@gmail.com\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/examen/private/customer/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"examen",
+								"private",
+								"customer",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": 1,\n  \"customerName\": \"Avelardo Gavide\",\n  \"address\": \"Parque Patricios-CABA\",\n  \"email\": \"nuevo.avelardog@gmail.com\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/examen/private/customer",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"examen",
+								"private",
+								"customer"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"customerName\": \"Cliente Test 1\",\n  \"address\": \"Parque Patricios\",\n  \"email\": \"clientetest1@gmail.com\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/examen/private/customer/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"examen",
+								"private",
+								"customer",
+								"4"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Product",
+			"description": null,
+			"item": [
+				{
+					"name": "Post",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"productName\": \"EXO Laptop\",\n  \"description\": \"EXO Laptop for development\",\n  \"unitPrice\": 15000,\n  \"stock\": 10\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/examen/private/product",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"examen",
+								"private",
+								"product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Put",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": 1,\n  \"productName\": \"EXO Laptop 5000\",\n  \"description\": \"EXO Laptop for development\",\n  \"unitPrice\": 15000,\n  \"stock\": 10\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/examen/private/product",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"examen",
+								"private",
+								"product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get by ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": 1,\n  \"productName\": \"EXO Laptop 5000\",\n  \"description\": \"EXO Laptop for development\",\n  \"unitPrice\": 15000,\n  \"stock\": 10\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/examen/private/product/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"examen",
+								"private",
+								"product",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": 1,\n  \"productName\": \"EXO Laptop 5000\",\n  \"description\": \"EXO Laptop for development\",\n  \"unitPrice\": 15000,\n  \"stock\": 10\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/examen/private/product",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"examen",
+								"private",
+								"product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"productName\": \"ProductTest\",\n  \"description\": \"Product Test\",\n  \"unitPrice\": 6000,\n  \"stock\": 1\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/examen/private/product/5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"examen",
+								"private",
+								"product",
+								"5"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Invoice",
+			"description": null,
+			"item": [
+				{
+					"name": "Get by ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"productName\": \"ProductTest\",\n  \"description\": \"Product Test\",\n  \"unitPrice\": 6000,\n  \"stock\": 1\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/examen/private/invoice/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"examen",
+								"private",
+								"invoice",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get by Customer ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"productName\": \"ProductTest\",\n  \"description\": \"Product Test\",\n  \"unitPrice\": 6000,\n  \"stock\": 1\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/examen/private/invoice/customer/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"examen",
+								"private",
+								"invoice",
+								"customer",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
