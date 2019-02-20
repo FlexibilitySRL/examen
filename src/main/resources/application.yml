@@ -1,13 +1,25 @@
 spring:
   profiles: local
   jpa:
-    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop
     show-sql: true
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/aramark?zeroDateTimeBehavior=convertToNull
-    username: root
-    password: password
+    url: jdbc:h2:mem:example-app;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    platform: h2
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+###
+#   H2 Settings
+###
+  h2:
+    console:
+      enabled: true
+      path: /console
+      settings:
+        trace: false
+        web-allow-others: false
 
 ---

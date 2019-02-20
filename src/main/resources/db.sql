@@ -1,0 +1,1 @@
+INSERT INTO product (id_product, name, price) VALUES (1, 'Agua Villa del Sur, 600ml', 30.0)
