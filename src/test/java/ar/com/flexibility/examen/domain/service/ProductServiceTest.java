@@ -13,9 +13,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
+import ar.com.flexibility.examen.app.api.ProductApi;
 import ar.com.flexibility.examen.domain.model.Product;
 import ar.com.flexibility.examen.domain.model.Seller;
 import ar.com.flexibility.examen.domain.repository.ProductRepository;
+import ar.com.flexibility.examen.domain.service.impl.ProductServiceImpl;
 
 /**
  * @author ro
@@ -34,26 +36,27 @@ public class ProductServiceTest {
                         new Product(2,"Tables",50D,seller1,5)
                 )
         );
-        productService = new ProductService(productRepository);
+        productService = new ProductServiceImpl(productRepository);
     }
 
     @Test
     public void returnProducts() {
 
-        Collection<Product> products = productService.findAll();
+        Collection<ProductApi> products = productService.findAll();
         assertTrue(getproductIds(products).size() == 2);
     }
     
-    private List<Long> getproductIds(Collection<Product> products) {
-        return products.stream().map(Product::getIdProduct).collect(Collectors.toList());
-    }
     
     @Test 
     public void createNewProduct() {
     	Seller seller2 = Mockito.mock(Seller.class);
     	Product product = new Product(3,"Plastic chairs", 50D, seller2, 20);
-    	productService.createProduct(product);
+    	productService.saveOrUpdate(product);
     	assertTrue(getproductIds(productService.findAll()).size() == 3);
+    }
+    
+    private List<Long> getproductIds(Collection<ProductApi> products) {
+        return products.stream().map(ProductApi::getIdProduct).collect(Collectors.toList());
     }
 
 }
