@@ -28,6 +28,7 @@ public class OrderApi {
 		setIdOrder(o.getIdOrder());
 		setNameProduct(o.getProduct().getName());
 		setIdProduct(o.getProduct().getIdProduct());
+		setItems(o.getItems());
 		
 	}
 

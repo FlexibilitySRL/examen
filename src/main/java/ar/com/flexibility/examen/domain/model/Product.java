@@ -20,7 +20,7 @@ import javax.persistence.Table;
  *
  */
 @Entity
-@Table(name="product")
+@Table(name="product_table")
 public class Product {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,6 +30,9 @@ public class Product {
 	
 	private Double price;
 	
+	@Access(AccessType.FIELD)
+	@ManyToOne(targetEntity = Seller.class,fetch = FetchType.LAZY)
+	@JoinColumn(name="idSeller", nullable=false)
 	private Seller seller;
 	
 	private Integer stock;
@@ -51,9 +54,6 @@ public class Product {
 		this.stock = stock;
 	}
 	
-	@Access(AccessType.PROPERTY)
-	@ManyToOne(targetEntity = Seller.class,fetch = FetchType.LAZY)
-	@JoinColumn(name="idSeller")
 	public Seller getSeller() {
 		return seller;
 	}

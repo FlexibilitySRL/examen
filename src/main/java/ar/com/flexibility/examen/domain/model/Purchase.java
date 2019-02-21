@@ -26,15 +26,20 @@ import javax.persistence.TemporalType;
  *
  */
 @Entity
-@Table(name="purchase")
+@Table(name="purchase_table")
 public class Purchase {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idPurchase;
-
+	
+	@Access(AccessType.FIELD)
+	@OneToMany(targetEntity= Order.class,mappedBy="purchase",fetch = FetchType.LAZY)
 	List<Order> orders = new ArrayList<>();
-
+	
+	@Access(AccessType.FIELD)
+	@ManyToOne(targetEntity= Client.class, fetch = FetchType.LAZY)
+	@JoinColumn(name="idClient",nullable=false)
 	Client client; 
 	
 	@Temporal(TemporalType.DATE)
@@ -42,8 +47,11 @@ public class Purchase {
 	
 	public Purchase() {}
 	
-	@Access(AccessType.PROPERTY)
-	@OneToMany(targetEntity= Order.class,mappedBy="purchase",fetch = FetchType.LAZY)
+	public Purchase(Client client, Date date) {
+		this.dateOfPurchase = date;
+	    this.client = client;
+	}
+
 	public List<Order> getOrders() {
 		return orders;
 	}
@@ -52,9 +60,6 @@ public class Purchase {
 		this.orders = orders;
 	}
 	
-	@Access(AccessType.PROPERTY)
-	@ManyToOne(targetEntity= Client.class, fetch = FetchType.LAZY)
-	@JoinColumn(name="idClient")
 	public Client getClient() {
 		return client;
 	}

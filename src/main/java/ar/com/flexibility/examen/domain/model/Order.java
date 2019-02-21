@@ -19,18 +19,33 @@ import javax.persistence.Table;
  *
  */
 @Entity
-@Table(name="order")
+@Table(name="order_table")
 public class Order {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idOrder;
+	
+	@Access(AccessType.FIELD)
+	@ManyToOne(targetEntity= Product.class,fetch = FetchType.LAZY)
+	@JoinColumn(name="idProduct", nullable=false)
 	private Product product;
+	
 	private Integer items;
+	
+	@Access(AccessType.FIELD)
+	@ManyToOne(targetEntity= Purchase.class,fetch = FetchType.LAZY)
+	@JoinColumn(name="idPurchase", nullable=false)
 	private Purchase purchase;
 	
 	public Order() {}
 	
+	public Order(Product product, int items, Purchase purchase) {
+		this.product = product;
+		this.items = items;
+		this.purchase = purchase;
+	}
+
 	public Long getIdOrder() {
 		return idOrder;
 	}
@@ -38,9 +53,6 @@ public class Order {
 		this.idOrder = idOrder;
 	}
 	
-	@Access(AccessType.PROPERTY)
-	@ManyToOne(targetEntity= Product.class,fetch = FetchType.LAZY)
-	@JoinColumn(name="idProduct")
 	public Product getProduct() {
 		return product;
 	}
@@ -56,10 +68,6 @@ public class Order {
 		this.items = items;
 	}
 	
-	
-	@Access(AccessType.PROPERTY)
-	@ManyToOne(targetEntity= Purchase.class,fetch = FetchType.LAZY)
-	@JoinColumn(name="idPurchase")
 	public Purchase getPurchase() {
 		return purchase;
 	}

@@ -21,20 +21,20 @@ import javax.persistence.Table;
  *
  */
 @Entity
-@Table(name="seller")
+@Table(name="seller_table")
 public class Seller{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idSeller;
 	
+	@Access(AccessType.FIELD)
+	@OneToMany(targetEntity= Product.class,mappedBy="seller",fetch = FetchType.LAZY)
 	List<Product> productList = new ArrayList<>();
 	
 	Double balance = 0D;
 	
 	public Seller() {}
 	
-	@Access(AccessType.PROPERTY)
-	@OneToMany(targetEntity= Product.class,mappedBy="seller",fetch = FetchType.LAZY)
 	public List<Product> getProductList() {
 		return productList;
 	}
