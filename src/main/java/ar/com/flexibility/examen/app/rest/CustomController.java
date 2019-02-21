@@ -1,7 +1,6 @@
 package ar.com.flexibility.examen.app.rest;
 
 import ar.com.flexibility.examen.app.api.MessageApi;
-import ar.com.flexibility.examen.domain.model.Message;
 import ar.com.flexibility.examen.domain.service.ProcessMessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,6 +20,6 @@ public class CustomController {
     @PostMapping("/echo")
     public ResponseEntity<?> echo(@RequestBody MessageApi message)
     {
-        return new ResponseEntity<Message>(messageService.processMessage(message.getMessage()), HttpStatus.OK);
+        return new ResponseEntity<>(messageService.processMessage(message.getMessage()), HttpStatus.OK);
     }
 }

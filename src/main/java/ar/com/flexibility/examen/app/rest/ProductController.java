@@ -1,11 +1,15 @@
+/**
+ * 
+ */
 package ar.com.flexibility.examen.app.rest;
+
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,31 +23,38 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
+/**
+ * @author ro
+ *
+ */
 @RestController
-@RequestMapping(path = "/api/seller")
-@Api(tags="seller")
-public class SellerController {
+@RequestMapping(path = "/api/product")
+@Api(tags="product")
+public class ProductController {
 	
     @Autowired
     private ProductService productService;
+    
     @Autowired
     private SellerService sellerService;
     
-    @PostMapping("/{idSeller}")
-    @ApiOperation(value= "Add new product", notes = "Service to add new products")
-    @ApiResponses(value= {@ApiResponse(code= 200, message= "Product added successfully"),
+    @GetMapping
+    public ResponseEntity<List<ProductApi>> getAllProducts(){
+    	return new ResponseEntity<>(productService.findAll(),HttpStatus.OK);
+    }
+    
+    @GetMapping("/{idSeller}")
+    @ApiOperation(value= "All products of seller", notes = "Service to list of product of seller")
+    @ApiResponses(value= {@ApiResponse(code= 200, message= "OK"),
     		@ApiResponse(code= 400, message="Seller not found")})
-    public ResponseEntity<Product> addNewProduct(@PathVariable("idSeller") Long idSeller, ProductApi productApi) {
+    public ResponseEntity<List<ProductApi>> getAllProductsOfSeller(@PathVariable("idSeller") Long idSeller){
     	Seller seller = this.sellerService.findById(idSeller);
     	if(seller == null) {
     		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     	}
-    	Product product = new Product();
-    	product.setName(productApi.getName());
-    	product.setPrice(productApi.getPrice());
-        return new ResponseEntity<>((product), HttpStatus.OK);
+    	return new ResponseEntity<>(productService.findBySeller(seller),HttpStatus.OK);
     }
     
     
-    
+
 }

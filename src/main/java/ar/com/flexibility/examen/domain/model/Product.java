@@ -32,12 +32,27 @@ public class Product {
 	
 	private Seller seller;
 	
-	private Purchase purchase;
+	private Integer stock;
 	
 	public Product() {}
+
+	public Product(long id, String name, Double price, Seller seller, int stock) {
+		this.idProduct = id;
+		this.name = name;
+		this.price = price;
+		this.seller = seller;
+		this.stock = stock;
+	}
+
+	public Product(String name, double price, Seller seller, int stock) {
+		this.name = name;
+		this.price = price;
+		this.seller = seller;
+		this.stock = stock;
+	}
 	
 	@Access(AccessType.PROPERTY)
-	@ManyToOne(targetEntity = Seller.class,cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToOne(targetEntity = Seller.class,fetch = FetchType.LAZY)
 	@JoinColumn(name="idSeller")
 	public Seller getSeller() {
 		return seller;
@@ -70,15 +85,14 @@ public class Product {
 		this.idProduct = idProduct;
 	}
 	
-	@Access(AccessType.PROPERTY)
-	@ManyToOne(targetEntity = Purchase.class,cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name="idPurchase")
-	public Purchase getPurchase() {
-		return purchase;
+	public Integer getStock() {
+		return stock;
+	}
+
+	public void setStock(Integer stock) {
+		this.stock = stock;
 	}
 	
-	public void setPurchase(Purchase purchase) {
-		this.purchase = purchase;
-	}
+	
 
 }

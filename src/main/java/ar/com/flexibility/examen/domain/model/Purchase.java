@@ -3,13 +3,12 @@
  */
 package ar.com.flexibility.examen.domain.model;
 
-import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -19,6 +18,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * @author rosalizaracho
@@ -32,22 +33,23 @@ public class Purchase {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idPurchase;
 
-	List<Product> productList = new ArrayList<Product>();
+	List<Order> orders = new ArrayList<>();
 
 	Client client; 
 	
+	@Temporal(TemporalType.DATE)
 	private Date dateOfPurchase;
 	
 	public Purchase() {}
 	
 	@Access(AccessType.PROPERTY)
-	@OneToMany(targetEntity= Product.class, mappedBy="purchase",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-	public List<Product> getProductList() {
-		return productList;
+	@OneToMany(targetEntity= Order.class,mappedBy="purchase",fetch = FetchType.LAZY)
+	public List<Order> getOrders() {
+		return orders;
 	}
 
-	public void setProductList(List<Product> productList) {
-		this.productList = productList;
+	public void setOrders(List<Order> orders) {
+		this.orders = orders;
 	}
 	
 	@Access(AccessType.PROPERTY)

@@ -28,14 +28,14 @@ public class Client{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idClient;
 	
-	List<Purchase> purchaseList = new ArrayList<Purchase>();
+	List<Purchase> purchaseList = new ArrayList<>();
 	
-	Double balance;
+	Double balance = 0D;
 
 	public Client() {}
 	
 	@Access(AccessType.PROPERTY)
-	@OneToMany(targetEntity=Purchase.class, mappedBy="client",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+	@OneToMany(targetEntity=Purchase.class, mappedBy="client",fetch = FetchType.LAZY)
 	public List<Purchase> getPurchaseList() {
 		return purchaseList;
 	}

@@ -8,7 +8,6 @@ import java.util.List;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -28,14 +27,14 @@ public class Seller{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idSeller;
 	
-	List<Product> productList = new ArrayList<Product>();
+	List<Product> productList = new ArrayList<>();
 	
-	Double balance;
+	Double balance = 0D;
 	
 	public Seller() {}
 	
 	@Access(AccessType.PROPERTY)
-	@OneToMany(targetEntity= Product.class,mappedBy="seller",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+	@OneToMany(targetEntity= Product.class,mappedBy="seller",fetch = FetchType.LAZY)
 	public List<Product> getProductList() {
 		return productList;
 	}
@@ -55,6 +54,11 @@ public class Seller{
 
 	public void setIdSeller(Long idSeller) {
 		this.idSeller = idSeller;
+	}
+
+	public void addProduct(Product product) {
+		this.productList.add(product);
+		
 	}
 	
 	
