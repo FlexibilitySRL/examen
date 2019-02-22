@@ -17,6 +17,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import ar.com.flexibility.examen.domain.exception.InsufficientBalanceException;
+
 /**
  * @author rosalizaracho
  * 
@@ -56,6 +58,20 @@ public class Client{
 	
 	public void setIdClient(Long idClient) {
 		this.idClient = idClient;
+	}
+
+
+	public boolean isBalance(Double total) throws InsufficientBalanceException {
+		if(balance < total) {
+			throw new InsufficientBalanceException();
+		}
+		return true;
+	}
+
+
+	public void discountBalance(Double total) {
+		this.balance = this.balance - total;
+		
 	} 
 	
 	

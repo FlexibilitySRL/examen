@@ -35,7 +35,7 @@ public class Order {
 	
 	@Access(AccessType.FIELD)
 	@ManyToOne(targetEntity= Purchase.class,fetch = FetchType.LAZY)
-	@JoinColumn(name="idPurchase", nullable=false)
+	@JoinColumn(name="idPurchase")
 	private Purchase purchase;
 	
 	public Order() {}

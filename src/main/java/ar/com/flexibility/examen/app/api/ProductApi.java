@@ -12,9 +12,8 @@ import ar.com.flexibility.examen.domain.model.Product;
  * @author rosalizaracho
  *
  */
-@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonIgnoreProperties(ignoreUnknown = true) 
 public class ProductApi {
-	
 	@JsonProperty
 	private String name;
 	@JsonProperty
@@ -25,6 +24,8 @@ public class ProductApi {
 	private Long idSeller;
 	@JsonProperty
 	private Long idProduct;
+	
+	public ProductApi() {}
 
 	public ProductApi(Product p) {
 		this.setName(p.getName());

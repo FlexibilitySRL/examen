@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -28,7 +29,7 @@ public class Seller{
 	private Long idSeller;
 	
 	@Access(AccessType.FIELD)
-	@OneToMany(targetEntity= Product.class,mappedBy="seller",fetch = FetchType.LAZY)
+	@OneToMany(targetEntity= Product.class,mappedBy="seller",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
 	List<Product> productList = new ArrayList<>();
 	
 	Double balance = 0D;
@@ -56,12 +57,23 @@ public class Seller{
 		this.idSeller = idSeller;
 	}
 
-	public void addProduct(Product product) {
-		this.productList.add(product);
+	public void removeProduct(Product product) {
+		this.productList.remove(product);
 		
 	}
-	
-	
+
+	public void addProduct(Product product) {
+		this.productList.add(product);
+	}
+
+	public Product findProduct(Long idProduct) {
+		for(Product product : productList) {
+			if(product.getIdProduct().equals(idProduct)) {
+				return product;
+			}
+		}
+		return null;
+	}
 	
 	
 }

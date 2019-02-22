@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -34,22 +35,33 @@ public class Purchase {
 	private Long idPurchase;
 	
 	@Access(AccessType.FIELD)
-	@OneToMany(targetEntity= Order.class,mappedBy="purchase",fetch = FetchType.LAZY)
+	@OneToMany(targetEntity= Order.class,mappedBy="purchase",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	List<Order> orders = new ArrayList<>();
 	
 	@Access(AccessType.FIELD)
 	@ManyToOne(targetEntity= Client.class, fetch = FetchType.LAZY)
-	@JoinColumn(name="idClient",nullable=false)
+	@JoinColumn(name="idClient")
 	Client client; 
 	
 	@Temporal(TemporalType.DATE)
 	private Date dateOfPurchase;
 	
+	private Double total;
+	
 	public Purchase() {}
 	
-	public Purchase(Client client, Date date) {
+	public Purchase(Client client, Date date, Double total) {
 		this.dateOfPurchase = date;
 	    this.client = client;
+	    this.total = total;
+	}
+
+	public Double getTotal() {
+		return total;
+	}
+
+	public void setTotal(Double total) {
+		this.total = total;
 	}
 
 	public List<Order> getOrders() {
@@ -82,6 +94,11 @@ public class Purchase {
 
 	public void setIdPurchase(Long idPurchase) {
 		this.idPurchase = idPurchase;
+	}
+
+	public void addOrder(Order order) {
+		this.orders.add(order);
+		
 	}
 	
 }

@@ -22,8 +22,10 @@ public class OrderApi {
 	@JsonProperty
 	private Long idProduct;
 	@JsonProperty
-	private Integer items;
+	private int items;
 	
+	public OrderApi() {}
+
 	public OrderApi(Order o) {
 		setIdOrder(o.getIdOrder());
 		setNameProduct(o.getProduct().getName());
@@ -56,11 +58,11 @@ public class OrderApi {
 		this.idProduct = idProduct;
 	}
 
-	public Integer getItems() {
+	public int getItems() {
 		return items;
 	}
 
-	public void setItems(Integer items) {
+	public void setItems(int items) {
 		this.items = items;
 	}
 	
