@@ -16,8 +16,6 @@ import javax.persistence.Table;
 
 import org.apache.commons.lang3.StringUtils;
 
-import ar.com.flexibility.examen.domain.exception.ProductWithoutStock;
-
 /**
  * @author rosalizaracho
  *
@@ -102,43 +100,10 @@ public class Product {
 		}
 	}
 
-	public boolean isStock(int items) throws ProductWithoutStock {
-		if(stock < items) {
-			throw new ProductWithoutStock();
-		}
-		return true;
-	}
-
 	public void discountStock(int items) {
 		this.stock = this.stock - items;
 		
 	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((idProduct == null) ? 0 : idProduct.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Product other = (Product) obj;
-		if (idProduct == null) {
-			if (other.idProduct != null)
-				return false;
-		} else if (!idProduct.equals(other.idProduct))
-			return false;
-		return true;
-	}
-	
 	
 	
 	

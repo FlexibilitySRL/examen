@@ -34,6 +34,11 @@ public class OrderApi {
 		
 	}
 
+	public OrderApi(long idProduct, int items) {
+		this.idProduct = idProduct;
+		this.items = items;
+	}
+
 	public Long getIdOrder() {
 		return idOrder;
 	}

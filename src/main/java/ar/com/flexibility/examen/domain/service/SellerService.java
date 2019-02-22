@@ -19,7 +19,7 @@ import ar.com.flexibility.examen.domain.exception.SellerNotFoundException;
 
 public interface SellerService {
 
-    List<ProductApi>findBySeller(Long idSeller) throws SellerNotFoundException;
+    List<ProductApi>getProductsOfSeller(Long idSeller) throws SellerNotFoundException;
 
 	void createNewProductToSeller(ProductApi productApi) throws SellerNotFoundException, ProductNameNotAcceptedException, ProductPriceNotAcceptedException, ProductStockNotAcceptedException;
 

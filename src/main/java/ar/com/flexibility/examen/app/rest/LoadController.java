@@ -18,8 +18,6 @@ import ar.com.flexibility.examen.domain.model.Product;
 import ar.com.flexibility.examen.domain.model.Purchase;
 import ar.com.flexibility.examen.domain.model.Seller;
 import ar.com.flexibility.examen.domain.repository.ClientRepository;
-import ar.com.flexibility.examen.domain.repository.OrderRepository;
-import ar.com.flexibility.examen.domain.repository.PurchaseRepository;
 import ar.com.flexibility.examen.domain.repository.SellerRepository;
 
 /**
@@ -33,8 +31,6 @@ public class LoadController {
 	private SellerRepository sellerRepository;
 	@Autowired
 	private ClientRepository clientRepository;
-	@Autowired
-	private PurchaseRepository purchaseRepository;
 	
 	@RequestMapping(value = "loadData", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
@@ -50,13 +46,12 @@ public class LoadController {
 		sellerRepository.save(seller2);
         
         Client client1 = new Client();
-        clientRepository.save(client1);
-        
         Purchase purchase1 = new Purchase(client1, new Date(),200D);
         Order order1 = new Order(product1,6,purchase1);
         purchase1.addOrder(order1);
         
-        purchaseRepository.save(purchase1);
+        client1.addPurchase(purchase1);
+        clientRepository.save(client1);
         
         
 	}

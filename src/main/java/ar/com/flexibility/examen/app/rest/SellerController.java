@@ -3,7 +3,6 @@ package ar.com.flexibility.examen.app.rest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,7 +39,7 @@ public class SellerController {
     		@ApiResponse(code= 404, message="Seller not found")})
     public ResponseEntity<?> getAllProductsOfSeller(@PathVariable("idSeller") Long idSeller){
     	try {
-			return new ResponseEntity<>(productService.findBySeller(idSeller),HttpStatus.OK);
+			return new ResponseEntity<>(productService.getProductsOfSeller(idSeller),HttpStatus.OK);
 		} catch (SellerNotFoundException e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ExceptionApi(e));
 		}

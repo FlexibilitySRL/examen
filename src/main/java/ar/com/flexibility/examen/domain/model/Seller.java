@@ -74,6 +74,11 @@ public class Seller{
 		}
 		return null;
 	}
+
+	public void updateBalance(Double amount) {
+		this.balance += amount;
+		
+	}
 	
 	
 }

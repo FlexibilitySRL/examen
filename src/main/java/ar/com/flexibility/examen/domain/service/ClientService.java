@@ -12,13 +12,10 @@ import ar.com.flexibility.examen.domain.exception.InsufficientBalanceException;
 import ar.com.flexibility.examen.domain.exception.NegativeAmountException;
 import ar.com.flexibility.examen.domain.exception.ProductNotFoundException;
 import ar.com.flexibility.examen.domain.exception.ProductWithoutStock;
-import ar.com.flexibility.examen.domain.model.Client;
 
 public interface ClientService {
 
 	List<ProductApi> findAllProducts();
-	
-	ClientApi saveOrUpdate(Client client);
 	
 	List<PurchaseApi> findAllPurchaseOfClient(Long idClient) throws ClientNotFoundException;
 

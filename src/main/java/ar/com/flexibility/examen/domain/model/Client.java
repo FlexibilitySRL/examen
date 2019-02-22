@@ -17,8 +17,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import ar.com.flexibility.examen.domain.exception.InsufficientBalanceException;
-
 /**
  * @author rosalizaracho
  * 
@@ -30,7 +28,7 @@ public class Client{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idClient;
 	@Access(AccessType.FIELD)
-	@OneToMany(targetEntity=Purchase.class, mappedBy="client",fetch = FetchType.LAZY)
+	@OneToMany(targetEntity=Purchase.class, mappedBy="client",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
 	List<Purchase> purchaseList = new ArrayList<>();
 	
 	Double balance = 0D;
@@ -61,19 +59,14 @@ public class Client{
 	}
 
 
-	public boolean isBalance(Double total) throws InsufficientBalanceException {
-		if(balance < total) {
-			throw new InsufficientBalanceException();
-		}
-		return true;
-	}
-
-
 	public void discountBalance(Double total) {
 		this.balance = this.balance - total;
 		
 	} 
 	
+	public void addPurchase(Purchase purchase) {
+		this.getPurchaseList().add(purchase);
+	}
 	
 	
 }
