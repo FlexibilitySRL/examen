@@ -34,7 +34,6 @@ public class ValidationHelper {
 	private static void validateProductName(String name) throws ProductNameNotAcceptedException {
 		if(StringUtils.isEmpty(name) || !(name instanceof String)) {
 			throw new ProductNameNotAcceptedException();
-		}
-		
+		}	
 	}
 }

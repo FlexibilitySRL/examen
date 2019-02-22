@@ -18,7 +18,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
- * @author rosalizaracho
+ * @author rosali zaracho
  * 
  */
 @Entity
@@ -43,9 +43,11 @@ public class Client{
 	public void setPurchaseList(List<Purchase> purchaseList) {
 		this.purchaseList = purchaseList;
 	}
+	
 	public Double getBalance() {
 		return balance;
 	}
+	
 	public void setBalance(Double balance) {
 		this.balance = balance;
 	}
@@ -57,8 +59,7 @@ public class Client{
 	public void setIdClient(Long idClient) {
 		this.idClient = idClient;
 	}
-
-
+	
 	public void discountBalance(Double total) {
 		this.balance = this.balance - total;
 		

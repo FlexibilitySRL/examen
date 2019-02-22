@@ -76,8 +76,4 @@ public class Order {
 		this.purchase = purchase;
 	}
 	
-	
-	
-	
-	
 }

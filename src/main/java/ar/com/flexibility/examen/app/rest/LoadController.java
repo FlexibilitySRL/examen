@@ -51,8 +51,6 @@ public class LoadController {
         purchase1.addOrder(order1);
         
         client1.addPurchase(purchase1);
-        clientRepository.save(client1);
-        
-        
+        clientRepository.save(client1); 
 	}
 }

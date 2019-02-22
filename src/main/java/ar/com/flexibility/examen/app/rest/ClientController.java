@@ -64,7 +64,6 @@ public class ClientController  {
 		}
 	}
 	
-	
 	@PostMapping("/{idClient}")
 	@ApiOperation(value= "Make a purchase", notes = "Service to make a purchase")
 	@ApiResponses(value= {@ApiResponse(code= 200, message= "The operation was successfully"),
@@ -100,9 +99,4 @@ public class ClientController  {
     public ResponseEntity<List<ProductApi>> getAllProducts(){
     	return new ResponseEntity<>(clientService.findAllProducts(),HttpStatus.OK);
     }
-	
-	
-	
-	
-	
 }

@@ -4,7 +4,7 @@
 package ar.com.flexibility.examen.domain.exception;
 
 /**
- * @author ro
+ * @author rosali zaracho
  *
  */
 public interface ExceptionSystem {

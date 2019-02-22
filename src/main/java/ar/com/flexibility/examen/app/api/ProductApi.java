@@ -14,6 +14,7 @@ import ar.com.flexibility.examen.domain.model.Product;
  */
 @JsonIgnoreProperties(ignoreUnknown = true) 
 public class ProductApi {
+	
 	@JsonProperty
 	private String name;
 	@JsonProperty
@@ -74,6 +75,4 @@ public class ProductApi {
 	public void setIdProduct(Long idProduct) {
 		this.idProduct = idProduct;
 	}
-	
-
 }

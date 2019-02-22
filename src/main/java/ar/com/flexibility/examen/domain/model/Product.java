@@ -17,7 +17,7 @@ import javax.persistence.Table;
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * @author rosalizaracho
+ * @author rosali zaracho
  *
  */
 @Entity
@@ -103,9 +103,5 @@ public class Product {
 	public void discountStock(int items) {
 		this.stock = this.stock - items;
 		
-	}
-	
-	
-	
-	
+	}	
 }

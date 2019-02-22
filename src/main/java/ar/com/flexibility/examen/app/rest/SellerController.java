@@ -32,7 +32,6 @@ public class SellerController {
     @Autowired
     private SellerService productService;
     
-    
     @GetMapping("/{idSeller}")
     @ApiOperation(value= "All products of seller", notes = "Service to list of product of seller")
     @ApiResponses(value= {@ApiResponse(code= 200, message= "OK"),

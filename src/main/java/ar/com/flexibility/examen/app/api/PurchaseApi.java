@@ -70,7 +70,5 @@ public class PurchaseApi {
 
 	public void setOrders(List<OrderApi> orders) {
 		this.orders = orders;
-	}
-
-	
+	}	
 }

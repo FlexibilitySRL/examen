@@ -30,8 +30,7 @@ public class OrderApi {
 		setIdOrder(o.getIdOrder());
 		setNameProduct(o.getProduct().getName());
 		setIdProduct(o.getProduct().getIdProduct());
-		setItems(o.getItems());
-		
+		setItems(o.getItems());	
 	}
 
 	public OrderApi(long idProduct, int items) {
@@ -70,7 +69,4 @@ public class OrderApi {
 	public void setItems(int items) {
 		this.items = items;
 	}
-	
-	
-
 }

@@ -79,6 +79,4 @@ public class Seller{
 		this.balance += amount;
 		
 	}
-	
-	
 }

@@ -195,9 +195,4 @@ public class ClientServiceImpl implements ClientService {
 		private List<ProductApi> getProductApiList(List<Product> productList) {
 	     	return productList.stream().map(p -> new ProductApi(p)).collect(Collectors.toList());
 		}
-			
-		
-		
-		
-
 }

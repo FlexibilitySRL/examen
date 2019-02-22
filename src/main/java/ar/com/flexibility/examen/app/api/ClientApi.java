@@ -17,35 +17,29 @@ public class ClientApi {
 	
 	@JsonProperty
 	private Double balance;
+	
 	@JsonProperty
 	private Long idClient;
-	
 	
 	public ClientApi(Client client) {
 		this.setBalance(client.getBalance());
 		this.setIdClient(client.getIdClient());
 	}
 
-
 	public Double getBalance() {
 		return balance;
 	}
-
 
 	public void setBalance(Double balance) {
 		this.balance = balance;
 	}
 
-
 	public Long getIdClient() {
 		return idClient;
 	}
 
-
 	public void setIdClient(Long idClient) {
 		this.idClient = idClient;
 	}
-	
-	
 
 }
