@@ -6,8 +6,7 @@ spring:
       ddl-auto: update
     show-sql: true
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/aramark?zeroDateTimeBehavior=convertToNull
+    url: jdbc:mysql://127.0.0.1:3306/ftolosa?zeroDateTimeBehavior=convertToNull
     username: root
     password: password
-
----
+# logging.level.org.springframework.web.filter.CommonsRequestLoggingFilter = DEBUG

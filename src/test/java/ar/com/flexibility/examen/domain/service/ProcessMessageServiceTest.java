@@ -18,8 +18,8 @@ public class ProcessMessageServiceTest {
     @Test
     public void processMessage()
     {
-        String messageTest = "TEST";
-        Message message = messageService.processMessage(messageTest);
+        final String messageTest = "TEST";
+        final Message message = messageService.processMessage(messageTest);
 
         assertNotNull(message);
         assertEquals(message.getMessage(), messageTest);
