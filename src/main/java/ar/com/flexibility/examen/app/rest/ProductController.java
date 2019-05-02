@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +31,7 @@ public class ProductController {
     @ApiOperation(value = "Obtiene todos los productos",
             response = ProductApi.class, responseContainer = "List")
     @ApiResponse(code = 200, message = "Obtención de Lista de Productos exitosa.")
-    @GetMapping(path = "all")
+    @GetMapping(path = "all", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> findAll() {
 
         List<Product> products = productService.findAll();
@@ -53,7 +54,7 @@ public class ProductController {
             @ApiResponse(code = 200, message = "Obtención del Producto éxitosa"),
             @ApiResponse(code = 404, message = "No se encontró el Producto")
     })
-    @GetMapping(path = "{id}")
+    @GetMapping(path = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> findOne(
             @ApiParam(value = "ID del producto a obtener", required = true)
             @PathVariable Long id) {
@@ -75,7 +76,8 @@ public class ProductController {
 
     @ApiOperation(value = "Crea un producto", response = ProductApi.class)
     @ApiResponse(code = 201, message = "Producto creado con éxito")
-    @PostMapping(path = "add")
+    @PostMapping(path = "add", produces = MediaType.APPLICATION_JSON_VALUE,
+            consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> add(
             @ApiParam(value = "Producto a crear", required = true)
             @RequestBody ProductApi productApi) {
@@ -92,7 +94,8 @@ public class ProductController {
             @ApiResponse(code = 412, message = "No hay cambios a actualizar"),
             @ApiResponse(code = 404, message = "No se encontró el Producto")
     })
-    @PutMapping(path = "update")
+    @PutMapping(path = "update", produces = MediaType.APPLICATION_JSON_VALUE,
+            consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> update(
             @ApiParam(value = "Producto a actualizar", required = true)
             @RequestBody ProductApi productApi) {
@@ -126,7 +129,7 @@ public class ProductController {
             @ApiResponse(code = 500, message = "El Producto no pudo ser eliminado"),
             @ApiResponse(code = 404, message = "No se encontró el Producto")
     })
-    @DeleteMapping(path = "delete/{id}")
+    @DeleteMapping(path = "delete/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> delete(
             @ApiParam(value = "ID del Producto a eliminar", required = true)
             @PathVariable Long id) {
