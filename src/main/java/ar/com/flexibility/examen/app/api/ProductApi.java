@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 
 @JsonRootName(value = "Product")
 @JsonIgnoreProperties(ignoreUnknown = true)
-@ApiModel(value = "Datos del Producto")
+@ApiModel(value = "Producto")
 public class ProductApi {
 
     @JsonProperty
