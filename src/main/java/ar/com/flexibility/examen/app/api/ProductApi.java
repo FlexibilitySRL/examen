@@ -4,20 +4,26 @@ import ar.com.flexibility.examen.domain.model.Product;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 import java.math.BigDecimal;
 
 @JsonRootName(value = "Product")
 @JsonIgnoreProperties(ignoreUnknown = true)
+@ApiModel(value = "Datos del Producto")
 public class ProductApi {
 
     @JsonProperty
+    @ApiModelProperty(value = "ID", position = 0)
     private Long id;
 
     @JsonProperty
+    @ApiModelProperty(value = "Descripción", position = 1)
     private String description;
 
     @JsonProperty
+    @ApiModelProperty(value = "Precio", position = 2)
     private BigDecimal price;
 
 

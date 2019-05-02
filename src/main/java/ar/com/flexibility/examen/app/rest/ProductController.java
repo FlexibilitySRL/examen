@@ -4,9 +4,7 @@ import ar.com.flexibility.examen.app.api.MessageApi;
 import ar.com.flexibility.examen.app.api.ProductApi;
 import ar.com.flexibility.examen.domain.model.Product;
 import ar.com.flexibility.examen.domain.service.ProductService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +18,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/products")
-@Api(value="Servcio de administracion de Productos")
+@Api("Servcio de administracion de Productos")
 public class ProductController {
 
     private static final Logger log = LoggerFactory.getLogger(ProductController.class);
@@ -29,9 +27,9 @@ public class ProductController {
     ProductService productService;
 
 
-    // curl -X GET -H 'Content-Type: application/json' -H 'Accept: application/json'
-    // http://localhost:8080/products/all
-    @ApiOperation(value = "Obtiene todos los productos")
+    @ApiOperation(value = "Obtiene todos los productos",
+            response = ProductApi.class, responseContainer = "List")
+    @ApiResponse(code = 200, message = "Obtención de Lista de Productos exitosa.")
     @GetMapping(path = "all")
     public ResponseEntity<?> findAll() {
 
@@ -49,11 +47,16 @@ public class ProductController {
         return new ResponseEntity<List>(productsApi, HttpStatus.OK);
     }
 
-    // curl -X GET -H 'Content-Type: application/json' -H 'Accept: application/json'
-    // http://localhost:8080/products/{id}
-    @ApiOperation(value = "Obtiene un Producto por ID")
+
+    @ApiOperation(value = "Obtiene un Producto", response = ProductApi.class)
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Obtención del Producto éxitosa"),
+            @ApiResponse(code = 404, message = "No se encontró el Producto")
+    })
     @GetMapping(path = "{id}")
-    public ResponseEntity<?> findOne(@PathVariable Long id) {
+    public ResponseEntity<?> findOne(
+            @ApiParam(value = "ID del producto a obtener", required = true)
+            @PathVariable Long id) {
 
         Product product = productService.findOne(id);
 
@@ -65,31 +68,34 @@ public class ProductController {
             return new ResponseEntity<>(messageApi, HttpStatus.NOT_FOUND);
         }
 
+        log.info("Se encontró el Producto con Éxito.");
         return new ResponseEntity<ProductApi>(new ProductApi(product), HttpStatus.OK);
     }
 
 
-    // curl -X POST -H 'Content-Type: application/json' -H 'Accept: application/json'
-    // http://localhost:8080/products/add
-    // -d '{"description":"nuevo producto 8", "price":88.00}'
-    @ApiOperation(value = "Crea un producto")
+    @ApiOperation(value = "Crea un producto", response = ProductApi.class)
+    @ApiResponse(code = 201, message = "Producto creado con éxito")
     @PostMapping(path = "add")
     public ResponseEntity<?> add(
-            @ApiParam(value = "Producto a crear") @RequestBody ProductApi productApi) {
+            @ApiParam(value = "Producto a crear", required = true)
+            @RequestBody ProductApi productApi) {
 
         Product product = productService.add(new Product(productApi));
-        log.info("Product created.");
+        log.info("Producto Creado con Éxito.");
         return new ResponseEntity<>(new ProductApi(product), HttpStatus.CREATED);
     }
 
 
-    // curl -X PUT -H 'Content-Type: application/json' -H 'Accept: application/json'
-    // http://localhost:8080/products/update
-    // -d '{"id":8, "description":"nuevo producto 8 updated", "price":80.00}'
-    @ApiOperation(value = "Actualiza un producto")
+    @ApiOperation(value = "Actualiza un producto", response = ProductApi.class)
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Producto actualizado con éxito"),
+            @ApiResponse(code = 412, message = "No hay cambios a actualizar"),
+            @ApiResponse(code = 404, message = "No se encontró el Producto")
+    })
     @PutMapping(path = "update")
     public ResponseEntity<?> update(
-            @ApiParam(value = "Producto a actualizar") @RequestBody ProductApi productApi) {
+            @ApiParam(value = "Producto a actualizar", required = true)
+            @RequestBody ProductApi productApi) {
 
         Product productToUse = new Product(productApi);
         Product productToUpdate = productService.findOne(productToUse.getId());
@@ -102,23 +108,28 @@ public class ProductController {
         } else if (productToUse.equals(productToUpdate)){
 
             log.info("No hay cambios a actualizar en el Producto. ");
-            return new ResponseEntity<>(productApi, HttpStatus.OK);
+            return new ResponseEntity<>(productApi, HttpStatus.PRECONDITION_FAILED);
 
         } else {
             // Aplicar cambios
             Product productUpdated = productService.update(productToUse);
-            log.info("Producto actualizado.");
+            log.info("Producto actualizado con Éxito.");
             return new ResponseEntity<>(new ProductApi(productUpdated), HttpStatus.OK);
         }
 
     }
 
 
-    // curl -X DELETE http://localhost:8080/products/delete/{id}
-    @ApiOperation(value = "Elimina un producto")
+    @ApiOperation(value = "Elimina un producto", response = MessageApi.class)
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Producto eliminado con éxito"),
+            @ApiResponse(code = 500, message = "El Producto no pudo ser eliminado"),
+            @ApiResponse(code = 404, message = "No se encontró el Producto")
+    })
     @DeleteMapping(path = "delete/{id}")
     public ResponseEntity<?> delete(
-            @ApiParam(value = "Producto a eliminar") @PathVariable Long id) {
+            @ApiParam(value = "ID del Producto a eliminar", required = true)
+            @PathVariable Long id) {
 
         MessageApi messageApi = new MessageApi();
 
@@ -133,15 +144,17 @@ public class ProductController {
 
             Boolean deleted = productService.delete(id);
 
-            if (deleted) {
-                messageApi.setMessage("El Producto fue Eliminado.");
-                log.info(messageApi.getMessage());
-                return new ResponseEntity<>(messageApi, HttpStatus.OK);
+            if (!deleted) {
 
-            } else {
                 messageApi.setMessage("El Producto no pudo ser Eliminado.");
                 log.info(messageApi.getMessage());
                 return new ResponseEntity<>(messageApi, HttpStatus.INTERNAL_SERVER_ERROR);
+
+            } else {
+
+                messageApi.setMessage("El Producto fue Eliminado con Éxito.");
+                log.info(messageApi.getMessage());
+                return new ResponseEntity<>(messageApi, HttpStatus.OK);
             }
         }
 
