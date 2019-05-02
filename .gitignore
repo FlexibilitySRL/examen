@@ -10,3 +10,6 @@ target
 
 # Mac
 .DS_Store
+
+# exclude
+exclude

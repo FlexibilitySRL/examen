@@ -15,7 +15,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
 @ComponentScan("ar.com.flexibility.examen")
-//@EnableSwagger2
+@EnableSwagger2
 public class Application {
 
     public static void main(final String[] args) {
