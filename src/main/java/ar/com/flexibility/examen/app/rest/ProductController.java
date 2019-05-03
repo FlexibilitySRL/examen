@@ -2,20 +2,24 @@ package ar.com.flexibility.examen.app.rest;
 
 import ar.com.flexibility.examen.app.api.MessageApi;
 import ar.com.flexibility.examen.app.api.ProductApi;
+import ar.com.flexibility.examen.domain.exception.GenericProductException;
 import ar.com.flexibility.examen.domain.model.Product;
 import ar.com.flexibility.examen.domain.service.ProductService;
 import io.swagger.annotations.*;
+import javassist.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static ar.com.flexibility.examen.domain.service.ProductService.*;
+
 
 @RestController
 @RequestMapping(path = "/products")
@@ -28,71 +32,79 @@ public class ProductController {
     ProductService productService;
 
 
+    private ResponseEntity<?> getCustomErrorResponseEntity(String message, HttpStatus httpStatus) {
+
+        MessageApi messageApi = new MessageApi();
+        messageApi.setMessage(message);
+        log.info(message);
+        return new ResponseEntity<>(messageApi, httpStatus);
+    }
+
+
     @ApiOperation(value = "Obtiene todos los productos",
             response = ProductApi.class, responseContainer = "List")
-    @ApiResponse(code = 200, message = "Obtención de Lista de Productos exitosa.")
+    @ApiResponse(code = 200, message = FIND_ALL_OK)
     @GetMapping(path = "all", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> findAll() {
 
         List<Product> products = productService.findAll();
-        List<ProductApi> productsApi = new ArrayList<>();
 
+        List<ProductApi> productsApi = new ArrayList<>();
         products.forEach(product -> productsApi.add(new ProductApi(product)));
 
-        if (CollectionUtils.isEmpty(productsApi)){
-            log.info("Products Empty.");
-        } else {
-            log.info(String.format("%d Products Found.", productsApi.size()));
-        }
-
+        log.info(FIND_ALL_OK);
         return new ResponseEntity<List>(productsApi, HttpStatus.OK);
     }
 
 
     @ApiOperation(value = "Obtiene un Producto", response = ProductApi.class)
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Obtención del Producto éxitosa"),
-            @ApiResponse(code = 404, message = "No se encontró el Producto")
+            @ApiResponse(code = 200, message = FIND_ONE_OK),
+            @ApiResponse(code = 404, message = PRODUCT_ID_NOT_EXIST)
     })
     @GetMapping(path = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> findOne(
             @ApiParam(value = "ID del producto a obtener", required = true)
             @PathVariable Long id) {
 
-        Product product = productService.findOne(id);
+        try {
 
-        if (product == null) {
+            Product product = productService.findOne(id);
 
-            MessageApi messageApi = new MessageApi();
-            messageApi.setMessage(String.format("No existe el producto con ID=%d.", id));
-            log.info(messageApi.getMessage());
-            return new ResponseEntity<>(messageApi, HttpStatus.NOT_FOUND);
+            log.info(FIND_ONE_OK);
+            return new ResponseEntity<ProductApi>(new ProductApi(product), HttpStatus.OK);
+
+        } catch (NotFoundException e) {
+            return getCustomErrorResponseEntity(e.getMessage(), HttpStatus.NOT_FOUND);
         }
-
-        log.info("Se encontró el Producto con Éxito.");
-        return new ResponseEntity<ProductApi>(new ProductApi(product), HttpStatus.OK);
     }
 
 
     @ApiOperation(value = "Crea un producto", response = ProductApi.class)
-    @ApiResponse(code = 201, message = "Producto creado con éxito")
+    @ApiResponse(code = 201, message = ADD_CODE_OK)
     @PostMapping(path = "add", produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> add(
             @ApiParam(value = "Producto a crear", required = true)
             @RequestBody ProductApi productApi) {
 
-        Product product = productService.add(new Product(productApi));
-        log.info("Producto Creado con Éxito.");
-        return new ResponseEntity<>(new ProductApi(product), HttpStatus.CREATED);
-    }
+        try {
 
+            Product product = productService.add(new Product(productApi));
+
+            log.info(ADD_CODE_OK);
+            return new ResponseEntity<>(new ProductApi(product), HttpStatus.CREATED);
+
+        } catch (GenericProductException e) {
+            return getCustomErrorResponseEntity(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
     @ApiOperation(value = "Actualiza un producto", response = ProductApi.class)
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Producto actualizado con éxito"),
-            @ApiResponse(code = 412, message = "No hay cambios a actualizar"),
-            @ApiResponse(code = 404, message = "No se encontró el Producto")
+            @ApiResponse(code = 200, message = UPDATE_CODE_OK),
+            @ApiResponse(code = 412, message = PRODUCT_TO_UPDATE_WITHOUT_CHANGES),
+            @ApiResponse(code = 404, message = PRODUCT_ID_NOT_EXIST)
     })
     @PutMapping(path = "update", produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -100,66 +112,50 @@ public class ProductController {
             @ApiParam(value = "Producto a actualizar", required = true)
             @RequestBody ProductApi productApi) {
 
-        Product productToUse = new Product(productApi);
-        Product productToUpdate = productService.findOne(productToUse.getId());
 
-        if (productToUpdate==null) {
+        try {
 
-            log.info(String.format("No existe el producto con ID=%d.", productToUse.getId()));
-            return new ResponseEntity<>(productApi, HttpStatus.NOT_FOUND);
+            Product productUpdated = productService.update(new Product(productApi));
 
-        } else if (productToUse.equals(productToUpdate)){
-
-            log.info("No hay cambios a actualizar en el Producto. ");
-            return new ResponseEntity<>(productApi, HttpStatus.PRECONDITION_FAILED);
-
-        } else {
-            // Aplicar cambios
-            Product productUpdated = productService.update(productToUse);
-            log.info("Producto actualizado con Éxito.");
+            log.info(UPDATE_CODE_OK);
             return new ResponseEntity<>(new ProductApi(productUpdated), HttpStatus.OK);
+
+        } catch (NotFoundException e) {
+            return getCustomErrorResponseEntity(e.getMessage(), HttpStatus.NOT_FOUND);
+
+        } catch (GenericProductException e) {
+            return getCustomErrorResponseEntity(e.getMessage(), HttpStatus.PRECONDITION_FAILED);
         }
 
     }
 
-
     @ApiOperation(value = "Elimina un producto", response = MessageApi.class)
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Producto eliminado con éxito"),
-            @ApiResponse(code = 500, message = "El Producto no pudo ser eliminado"),
-            @ApiResponse(code = 404, message = "No se encontró el Producto")
+            @ApiResponse(code = 200, message = DELETE_CODE_OK),
+            @ApiResponse(code = 500, message = PRODUCT_DELETE_FAILED),
+            @ApiResponse(code = 404, message = PRODUCT_ID_NOT_EXIST)
     })
     @DeleteMapping(path = "delete/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> delete(
             @ApiParam(value = "ID del Producto a eliminar", required = true)
             @PathVariable Long id) {
 
-        MessageApi messageApi = new MessageApi();
+        try {
 
-        Boolean exist = productService.exists(id);
+            productService.delete(id);
 
-        if (!exist) {
-            messageApi.setMessage(String.format("No existe el producto con ID=%d.", id));
+            MessageApi messageApi = new MessageApi();
+            messageApi.setMessage(DELETE_CODE_OK);
             log.info(messageApi.getMessage());
-            return new ResponseEntity<>(messageApi, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(messageApi, HttpStatus.OK);
 
-        } else {
+        } catch (NotFoundException e) {
+            return getCustomErrorResponseEntity(e.getMessage(), HttpStatus.NOT_FOUND);
 
-            Boolean deleted = productService.delete(id);
-
-            if (!deleted) {
-
-                messageApi.setMessage("El Producto no pudo ser Eliminado.");
-                log.info(messageApi.getMessage());
-                return new ResponseEntity<>(messageApi, HttpStatus.INTERNAL_SERVER_ERROR);
-
-            } else {
-
-                messageApi.setMessage("El Producto fue Eliminado con Éxito.");
-                log.info(messageApi.getMessage());
-                return new ResponseEntity<>(messageApi, HttpStatus.OK);
-            }
+        } catch (GenericProductException e) {
+            return getCustomErrorResponseEntity(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
+
 
     }
 
