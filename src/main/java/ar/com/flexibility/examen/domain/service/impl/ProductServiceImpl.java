@@ -18,11 +18,6 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
-    public Boolean exists(Long id){
-        return productRepository.exists(id);
-    }
-
-    @Override
     public void deleteAll(){
         productRepository.deleteAll();
     }
@@ -42,23 +37,16 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product add(Product product) throws GenericProductException {
-        Product productAdded = productRepository.saveAndFlush(product);
-        if (productAdded == null) {
-            throw new GenericProductException(PRODUCT_ADDED_FAILED);
-        }
-        return productAdded;
+    public Product add(Product product) {
+        return productRepository.saveAndFlush(product);
     }
 
     @Override
     public Product update(Product product) throws NotFoundException, GenericProductException {
 
-        Product productToPersist = productRepository.findOne(product.getId());
+        Product productToPersist = findOne(product.getId());
 
-        if (productToPersist == null) {
-            throw new NotFoundException(String.format(PRODUCT_ID_NOT_EXIST, product.getId()));
-
-        } else if (productToPersist.equals(product)){
+        if (productToPersist.equals(product)){
             throw new GenericProductException(PRODUCT_TO_UPDATE_WITHOUT_CHANGES);
         }
 
@@ -69,18 +57,10 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void delete(Long id) throws NotFoundException, GenericProductException {
+    public void delete(Long id) throws NotFoundException {
 
-        if (!exists(id)) {
-            throw new NotFoundException(String.format(PRODUCT_ID_NOT_EXIST, id));
-        }
-
+        id = findOne(id).getId();
         productRepository.delete(id);
-
-        if (exists(id)){
-            throw new GenericProductException(PRODUCT_DELETE_FAILED);
-        }
-
     }
 
 }

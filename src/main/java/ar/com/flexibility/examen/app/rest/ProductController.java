@@ -88,16 +88,10 @@ public class ProductController {
             @ApiParam(value = "Producto a crear", required = true)
             @RequestBody ProductApi productApi) {
 
-        try {
+        Product product = productService.add(new Product(productApi));
 
-            Product product = productService.add(new Product(productApi));
-
-            log.info(ADD_CODE_OK);
-            return new ResponseEntity<>(new ProductApi(product), HttpStatus.CREATED);
-
-        } catch (GenericProductException e) {
-            return getCustomErrorResponseEntity(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        log.info(ADD_CODE_OK);
+        return new ResponseEntity<>(new ProductApi(product), HttpStatus.CREATED);
     }
 
     @ApiOperation(value = "Actualiza un producto", response = ProductApi.class)
@@ -111,7 +105,6 @@ public class ProductController {
     public ResponseEntity<?> update(
             @ApiParam(value = "Producto a actualizar", required = true)
             @RequestBody ProductApi productApi) {
-
 
         try {
 
@@ -132,7 +125,6 @@ public class ProductController {
     @ApiOperation(value = "Elimina un producto", response = MessageApi.class)
     @ApiResponses({
             @ApiResponse(code = 200, message = DELETE_CODE_OK),
-            @ApiResponse(code = 500, message = PRODUCT_DELETE_FAILED),
             @ApiResponse(code = 404, message = PRODUCT_ID_NOT_EXIST)
     })
     @DeleteMapping(path = "delete/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -151,11 +143,7 @@ public class ProductController {
 
         } catch (NotFoundException e) {
             return getCustomErrorResponseEntity(e.getMessage(), HttpStatus.NOT_FOUND);
-
-        } catch (GenericProductException e) {
-            return getCustomErrorResponseEntity(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
 
     }
 
