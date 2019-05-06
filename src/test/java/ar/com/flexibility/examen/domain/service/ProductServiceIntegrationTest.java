@@ -43,7 +43,11 @@ public class ProductServiceIntegrationTest {
         product.setDescription("first product");
         product.setPrice(new BigDecimal(2.50));
 
-        productService.add(product);
+        try {
+            productService.add(product);
+        } catch (GenericProductException e) {
+            e.printStackTrace();
+        }
 
         List<Product> productList = productService.findAll();
 
@@ -85,19 +89,44 @@ public class ProductServiceIntegrationTest {
     }
 
     @Test
-    public void testAdd(){
+    public void testAddOk(){
         //given
         Product productToAdd = new Product();
         productToAdd.setDescription("prueba add");
         productToAdd.setPrice(new BigDecimal(100.00));
 
         //when
-        Product productAdded = productService.add(productToAdd);
+        Product productAdded = null;
+        try {
+            productAdded = productService.add(productToAdd);
+        } catch (GenericProductException e) {
+            e.printStackTrace();
+        }
 
         //then
         assertEquals(PRODUCT_ID_EXIST_IN_DB +1, (long) productAdded.getId());
         assertEquals(productToAdd.getDescription(), productAdded.getDescription());
         assertEquals(productToAdd.getPrice(), productAdded.getPrice());
+    }
+
+    @Test
+    public void testAddNotOk(){
+        //given
+        Product productToAdd = new Product();
+        productToAdd.setId(12L);
+        productToAdd.setDescription("prueba add with id not null");
+        productToAdd.setPrice(new BigDecimal(200.00));
+
+        //when
+        Product productAdded = null;
+        try {
+            productAdded = productService.add(productToAdd);
+        } catch (GenericProductException e) {
+            e.printStackTrace();
+        }
+
+        //then
+        assertNull(productAdded);
     }
 
     @Test

@@ -1,6 +1,7 @@
 package ar.com.flexibility.examen.app.rest;
 
 import ar.com.flexibility.examen.Application;
+import ar.com.flexibility.examen.domain.exception.GenericProductException;
 import ar.com.flexibility.examen.domain.model.Product;
 import ar.com.flexibility.examen.domain.service.impl.ProductServiceImpl;
 import org.junit.Before;
@@ -44,7 +45,11 @@ public class ProductControllerIntegrationTest {
         product.setDescription("first product");
         product.setPrice(new BigDecimal(2.50));
 
-        productService.add(product);
+        try {
+            productService.add(product);
+        } catch (GenericProductException e) {
+            e.printStackTrace();
+        }
 
         List<Product> productList = productService.findAll();
 
@@ -79,6 +84,18 @@ public class ProductControllerIntegrationTest {
 
         mvc.perform(get(pathUrl).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void testAddOk() throws Exception {
+        //given
+
+
+    }
+
+    @Test
+    public void testAddNotOk() throws Exception {
+
     }
 
     //TODO: tests add update delete

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static ar.com.flexibility.examen.domain.exception.GenericProductException.*;
 import static ar.com.flexibility.examen.domain.service.ProductService.*;
 
 
@@ -73,23 +74,32 @@ public class ProductController {
 
 
     @ApiOperation(value = "Crea un producto", response = ProductApi.class)
-    @ApiResponse(code = 201, message = ADD_CODE_OK)
+    @ApiResponses({
+            @ApiResponse(code = 201, message = ADD_CODE_OK),
+            @ApiResponse(code = 406, message = PRODUCT_ID_MUST_BE_NULL)})
     @PostMapping(path = "add", produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> add(
             @ApiParam(value = "Producto a crear", required = true)
             @RequestBody ProductApi productApi) {
 
-        Product product = productService.add(new Product(productApi));
+        try {
 
-        log.info(ADD_CODE_OK);
-        return new ResponseEntity<>(new ProductApi(product), HttpStatus.CREATED);
+            Product product = productService.add(new Product(productApi));
+
+            log.info(ADD_CODE_OK);
+            return new ResponseEntity<>(new ProductApi(product), HttpStatus.CREATED);
+
+        } catch (GenericProductException e) {
+            log.info(e.getMessage());
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
+        }
     }
 
     @ApiOperation(value = "Actualiza un producto", response = ProductApi.class)
     @ApiResponses({
             @ApiResponse(code = 200, message = UPDATE_CODE_OK),
-            @ApiResponse(code = 412, message = PRODUCT_TO_UPDATE_WITHOUT_CHANGES),
+            @ApiResponse(code = 406, message = PRODUCT_TO_UPDATE_WITHOUT_CHANGES),
             @ApiResponse(code = 404, message = PRODUCT_ID_NOT_EXIST)
     })
     @PutMapping(path = "update", produces = MediaType.APPLICATION_JSON_VALUE,
@@ -111,7 +121,7 @@ public class ProductController {
 
         } catch (GenericProductException e) {
             log.info(e.getMessage());
-            return new ResponseEntity<>(new MessageApi(e.getMessage()), HttpStatus.PRECONDITION_FAILED);
+            return new ResponseEntity<>(new MessageApi(e.getMessage()), HttpStatus.NOT_ACCEPTABLE);
         }
 
     }
