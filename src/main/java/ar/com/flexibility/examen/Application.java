@@ -16,15 +16,17 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @SpringBootApplication
 @ComponentScan("ar.com.flexibility.examen")
 @EnableSwagger2
-public class Application {
+public class Application 
+{
 
-    public static void main(final String[] args) {
+    public static void main(final String[] args) 
+    {
         SpringApplication.run(Application.class, args);
     }
 
-
     @Bean
-    public Docket swaggerApi(){
+    public Docket swaggerApi()
+    {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("ar.com.flexibility.examen"))
@@ -34,7 +36,8 @@ public class Application {
                 .pathMapping("/");
     }
 
-    private ApiInfo getApiInfo(){
+    private ApiInfo getApiInfo()
+    {
         return new ApiInfoBuilder().title("Spring Boot REST API")
                 .description("Examen REST API")
                 .contact(new Contact("jonatan duplessy",

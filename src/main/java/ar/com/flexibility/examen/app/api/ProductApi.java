@@ -12,51 +12,60 @@ import java.math.BigDecimal;
 @JsonRootName(value = "Product")
 @JsonIgnoreProperties(ignoreUnknown = true)
 @ApiModel(value = "Producto")
-public class ProductApi {
+public class ProductApi
+{
 
-    @JsonProperty
-    @ApiModelProperty(value = "ID", position = 0)
-    private Long id;
+	@JsonProperty
+	@ApiModelProperty(value = "ID", position = 0)
+	private Long id;
 
-    @JsonProperty
-    @ApiModelProperty(value = "Descripción", position = 1)
-    private String description;
+	@JsonProperty
+	@ApiModelProperty(value = "Descripción", position = 1)
+	private String description;
 
-    @JsonProperty
-    @ApiModelProperty(value = "Precio", position = 2)
-    private BigDecimal price;
+	@JsonProperty
+	@ApiModelProperty(value = "Precio", position = 2)
+	private BigDecimal price;
 
+	public ProductApi()
+	{
+	}
 
-    public ProductApi(){}
+	public ProductApi(Product product)
+	{
+		this.id = product.getId();
+		this.description = product.getDescription();
+		this.price = product.getPrice();
+	}
 
-    public ProductApi(Product product){
-        this.id = product.getId();
-        this.description = product.getDescription();
-        this.price = product.getPrice();
-    }
+	public Long getId()
+	{
+		return id;
+	}
 
-    public Long getId() {
-        return id;
-    }
+	public void setId(Long id)
+	{
+		this.id = id;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public String getDescription()
+	{
+		return description;
+	}
 
-    public String getDescription() {
-        return description;
-    }
+	public void setDescription(String description)
+	{
+		this.description = description;
+	}
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+	public BigDecimal getPrice()
+	{
+		return price;
+	}
 
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
+	public void setPrice(BigDecimal price)
+	{
+		this.price = price;
+	}
 
 }
