@@ -54,10 +54,10 @@ public class ProductController {
             @ApiResponse(code = 200, message = FIND_ONE_OK),
             @ApiResponse(code = 404, message = PRODUCT_ID_NOT_EXIST)
     })
-    @GetMapping(path = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path = "{id:^[0-9]*$}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> findOne(
-            @ApiParam(value = "ID del producto a obtener", required = true)
-            @PathVariable Long id) {
+            @ApiParam(name="id", value = "ID del producto a obtener", required = true)
+            @PathVariable(value = "id", required = true) Long id) {
 
         try {
 
@@ -80,7 +80,7 @@ public class ProductController {
     @PostMapping(path = "add", produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> add(
-            @ApiParam(value = "Producto a crear", required = true)
+            @ApiParam(name="Product", value = "Producto a crear", required = true)
             @RequestBody ProductApi productApi) {
 
         try {
@@ -105,7 +105,7 @@ public class ProductController {
     @PutMapping(path = "update", produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> update(
-            @ApiParam(value = "Producto a actualizar", required = true)
+            @ApiParam(name= "Product", value = "Producto a actualizar", required = true)
             @RequestBody ProductApi productApi) {
 
         try {
@@ -132,10 +132,10 @@ public class ProductController {
             @ApiResponse(code = 200, message = DELETE_CODE_OK),
             @ApiResponse(code = 404, message = PRODUCT_ID_NOT_EXIST)
     })
-    @DeleteMapping(path = "delete/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping(path = "delete/{id:^[0-9]*$}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> delete(
-            @ApiParam(value = "ID del Producto a eliminar", required = true)
-            @PathVariable Long id) {
+            @ApiParam(name="id", value = "ID del Producto a eliminar", required = true)
+            @PathVariable(value="id", required = true) Long id) {
 
         try {
 

@@ -13,3 +13,9 @@ target
 
 # exclude
 exclude
+
+# eclipse
+.project
+.metadata
+.settings
+.classpath
