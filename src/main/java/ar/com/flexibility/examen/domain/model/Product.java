@@ -34,10 +34,10 @@ public class Product {
         if (this.id != p.getId())
             return false;
 
-        if (this.description != p.getDescription())
+        if (!this.description.equals(p.getDescription()))
             return false;
 
-        if (this.getPrice() != p.getPrice())
+        if (!this.price.equals(p.getPrice()))
             return false;
 
         return true;

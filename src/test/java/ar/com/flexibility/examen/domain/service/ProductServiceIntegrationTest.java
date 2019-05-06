@@ -110,7 +110,7 @@ public class ProductServiceIntegrationTest {
     }
 
     @Test
-    public void testAddNotOk(){
+    public void testAddErrorIdNotNull(){
         //given
         Product productToAdd = new Product();
         productToAdd.setId(12L);
@@ -164,7 +164,7 @@ public class ProductServiceIntegrationTest {
     }
 
     @Test
-    public void testUpdateNotFound(){
+    public void testUpdateErrorIdNotFound(){
         //given
         Product productToUse = new Product();
         productToUse.setId(PRODUCT_ID_NOT_EXIST_IN_DB);
@@ -184,7 +184,7 @@ public class ProductServiceIntegrationTest {
     }
 
     @Test
-    public void testUpdateNotChanges(){
+    public void testUpdateErrorWithoutChanges(){
         //given
         Product productOriginal = null;
         try {
@@ -236,7 +236,7 @@ public class ProductServiceIntegrationTest {
     }
 
     @Test
-    public void testDeleteNotFound(){
+    public void testDeleteIdNotFound(){
         //given
         Product product = null;
         try {
