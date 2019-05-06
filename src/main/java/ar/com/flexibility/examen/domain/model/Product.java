@@ -4,6 +4,7 @@ import ar.com.flexibility.examen.app.api.ProductApi;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.Objects;
 
 @Entity
 @Table(name = "Product")
@@ -31,13 +32,13 @@ public class Product {
     public boolean equals(Object obj) {
         Product p = (Product) obj;
 
-        if (this.id != p.getId())
+        if(!Objects.equals(this.id, p.getId()))
             return false;
 
-        if (!this.description.equals(p.getDescription()))
+        if(!Objects.equals(this.description, p.getDescription()))
             return false;
 
-        if (!this.price.equals(p.getPrice()))
+        if(!Objects.equals(this.price, p.getPrice()))
             return false;
 
         return true;

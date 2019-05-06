@@ -6,7 +6,6 @@ import ar.com.flexibility.examen.domain.repository.ProductRepository;
 import ar.com.flexibility.examen.domain.service.ProductService;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
