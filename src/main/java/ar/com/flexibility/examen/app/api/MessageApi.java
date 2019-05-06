@@ -11,6 +11,8 @@ public class MessageApi {
     @JsonProperty
     private String message;
 
+    public MessageApi(String message) { this.message = message; }
+
     public String getMessage() {
         return message;
     }

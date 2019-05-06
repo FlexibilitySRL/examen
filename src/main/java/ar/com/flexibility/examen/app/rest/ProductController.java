@@ -32,15 +32,6 @@ public class ProductController {
     ProductService productService;
 
 
-    private ResponseEntity<?> getCustomErrorResponseEntity(String message, HttpStatus httpStatus) {
-
-        MessageApi messageApi = new MessageApi();
-        messageApi.setMessage(message);
-        log.info(message);
-        return new ResponseEntity<>(messageApi, httpStatus);
-    }
-
-
     @ApiOperation(value = "Obtiene todos los productos",
             response = ProductApi.class, responseContainer = "List")
     @ApiResponse(code = 200, message = FIND_ALL_OK)
@@ -75,7 +66,8 @@ public class ProductController {
             return new ResponseEntity<ProductApi>(new ProductApi(product), HttpStatus.OK);
 
         } catch (NotFoundException e) {
-            return getCustomErrorResponseEntity(e.getMessage(), HttpStatus.NOT_FOUND);
+            log.info(e.getMessage());
+            return new ResponseEntity<>(new MessageApi(e.getMessage()), HttpStatus.NOT_FOUND);
         }
     }
 
@@ -114,13 +106,16 @@ public class ProductController {
             return new ResponseEntity<>(new ProductApi(productUpdated), HttpStatus.OK);
 
         } catch (NotFoundException e) {
-            return getCustomErrorResponseEntity(e.getMessage(), HttpStatus.NOT_FOUND);
+            log.info(e.getMessage());
+            return new ResponseEntity<>(new MessageApi(e.getMessage()), HttpStatus.NOT_FOUND);
 
         } catch (GenericProductException e) {
-            return getCustomErrorResponseEntity(e.getMessage(), HttpStatus.PRECONDITION_FAILED);
+            log.info(e.getMessage());
+            return new ResponseEntity<>(new MessageApi(e.getMessage()), HttpStatus.PRECONDITION_FAILED);
         }
 
     }
+
 
     @ApiOperation(value = "Elimina un producto", response = MessageApi.class)
     @ApiResponses({
@@ -136,15 +131,15 @@ public class ProductController {
 
             productService.delete(id);
 
-            MessageApi messageApi = new MessageApi();
-            messageApi.setMessage(DELETE_CODE_OK);
-            log.info(messageApi.getMessage());
-            return new ResponseEntity<>(messageApi, HttpStatus.OK);
+            log.info(DELETE_CODE_OK);
+            return new ResponseEntity<>(new MessageApi(DELETE_CODE_OK), HttpStatus.OK);
 
         } catch (NotFoundException e) {
-            return getCustomErrorResponseEntity(e.getMessage(), HttpStatus.NOT_FOUND);
+            log.info(e.getMessage());
+            return new ResponseEntity<>(new MessageApi(e.getMessage()), HttpStatus.NOT_FOUND);
         }
 
     }
+
 
 }
