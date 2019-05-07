@@ -88,7 +88,7 @@ public class ProductController
 		catch (GenericProductException e)
 		{
 			log.info(e.getMessage());
-			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
+			return new ResponseEntity<>(new MessageApi(e.getMessage()), HttpStatus.NOT_ACCEPTABLE);
 		}
 	}
 

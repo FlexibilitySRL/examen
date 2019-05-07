@@ -6,7 +6,7 @@ spring:
       ddl-auto: update
     show-sql: true
   datasource:
-    url: jdbc:mysql://mysql-docker-container:3306/examen?zeroDateTimeBehavior=convertToNull&createDatabaseIfNotExist=true
+    url: jdbc:mysql://localhost:3306/examen?zeroDateTimeBehavior=convertToNull&createDatabaseIfNotExist=true
     username: root
     password: Tecso2019
   h2:
