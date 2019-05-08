@@ -12,3 +12,20 @@ spring:
   h2:
     console:
       enabled: true
+      
+---
+
+spring:
+  profiles: local-mysql-container
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  datasource:
+    url: jdbc:mysql://mysql-container:3306/examen?zeroDateTimeBehavior=CONVERT_TO_NULL
+    username: root
+    password: Tecso2019
+  h2:
+    console:
+      enabled: true    
