@@ -33,19 +33,23 @@ public class Product
 	@Override
 	public boolean equals(Object obj)
 	{
+		if (obj == null)
+			return false;
+		
+		if (obj.getClass() != this.getClass())
+            return false;
+
 		Product p = (Product) obj;
 
-		if (!Objects.equals(this.id, p.getId()))
-			return false;
-
-		if (!Objects.equals(this.description, p.getDescription()))
-			return false;
-
-		if (!Objects.equals(this.price, p.getPrice()))
-			return false;
-
-		return true;
+		return Objects.equals(this.id, p.getId()) 
+				&& Objects.equals(this.description, p.getDescription()) 
+				&& Objects.equals(this.price, p.getPrice()); 
 	}
+	
+	@Override
+    public int hashCode() {
+        return Objects.hash(id, description, price);
+    }
 
 	public Long getId()
 	{
