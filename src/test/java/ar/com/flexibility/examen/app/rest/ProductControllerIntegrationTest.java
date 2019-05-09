@@ -37,9 +37,9 @@ public class ProductControllerIntegrationTest
 	@Autowired
 	private ProductServiceImpl productService;
 
-	private static long PRODUCTS_COUNT;
-	private static long PRODUCT_ID_EXIST_IN_DB;
-	private static long PRODUCT_ID_NOT_EXIST_IN_DB;
+	private static long COUNT;
+	private static long ID_EXIST_IN_DB;
+	private static long ID_NOT_EXIST_IN_DB;
 
 	@Before
 	public void setUp() throws GenericException
@@ -54,9 +54,9 @@ public class ProductControllerIntegrationTest
 
 		List<Product> productList = productService.findAll();
 
-		PRODUCTS_COUNT = productList.size();
-		PRODUCT_ID_EXIST_IN_DB = productList.get((int) PRODUCTS_COUNT - 1).getId();
-		PRODUCT_ID_NOT_EXIST_IN_DB = PRODUCT_ID_EXIST_IN_DB + 1;
+		COUNT = productList.size();
+		ID_EXIST_IN_DB = productList.get((int) COUNT - 1).getId();
+		ID_NOT_EXIST_IN_DB = ID_EXIST_IN_DB + 1;
 
 	}
 
@@ -75,7 +75,7 @@ public class ProductControllerIntegrationTest
 	public void testFindOneOk() throws Exception
 	{
 		// given
-		String pathUrl = String.format("/products/%s", PRODUCT_ID_EXIST_IN_DB);
+		String pathUrl = String.format("/products/%s", ID_EXIST_IN_DB);
 		// when
 		MvcResult result = mvc.perform(get(pathUrl).contentType(MediaType.APPLICATION_JSON))
 				// then
@@ -83,7 +83,7 @@ public class ProductControllerIntegrationTest
 
 		// given
 		String contentAsString = result.getResponse().getContentAsString();
-		Product product = productService.findOne(PRODUCT_ID_EXIST_IN_DB);
+		Product product = productService.findOne(ID_EXIST_IN_DB);
 		// when
 		ProductApi productResponse = new ObjectMapper().readValue(contentAsString.getBytes(), ProductApi.class);
 		// then
@@ -97,7 +97,7 @@ public class ProductControllerIntegrationTest
 	public void testFindOneErrorIdNotFound() throws Exception
 	{
 		// given
-		String pathUrl = String.format("/products/%s", PRODUCT_ID_NOT_EXIST_IN_DB);
+		String pathUrl = String.format("/products/%s", ID_NOT_EXIST_IN_DB);
 		// when
 		mvc.perform(get(pathUrl).contentType(MediaType.APPLICATION_JSON))
 				// then
@@ -135,7 +135,7 @@ public class ProductControllerIntegrationTest
 		// given
 		String pathUrl = "/products/add";
 		Product product = new Product();
-		product.setId(PRODUCT_ID_NOT_EXIST_IN_DB);
+		product.setId(ID_NOT_EXIST_IN_DB);
 		product.setDescription("prueba controller add con ID no nulo");
 		product.setPrice(new BigDecimal(10));
 		// when
@@ -150,7 +150,7 @@ public class ProductControllerIntegrationTest
 		// given
 		String pathUrl = "/products/update";
 		Product product = new Product();
-		product.setId(PRODUCT_ID_EXIST_IN_DB);
+		product.setId(ID_EXIST_IN_DB);
 		product.setDescription("prueba update OK");
 		product.setPrice(new BigDecimal(2.50));
 		// when
@@ -175,7 +175,7 @@ public class ProductControllerIntegrationTest
 	{
 		// given
 		String pathUrl = "/products/update";
-		Product productActual = productService.findOne(PRODUCT_ID_EXIST_IN_DB);
+		Product productActual = productService.findOne(ID_EXIST_IN_DB);
 		Product product = new Product();
 		product.setId(productActual.getId());
 		product.setDescription(productActual.getDescription());
@@ -192,7 +192,7 @@ public class ProductControllerIntegrationTest
 		// given
 		String pathUrl = "/products/update";
 		Product product = new Product();
-		product.setId(PRODUCT_ID_NOT_EXIST_IN_DB);
+		product.setId(ID_NOT_EXIST_IN_DB);
 		product.setDescription("prueba ID not found");
 		product.setPrice(new BigDecimal(2.50));
 		// when
@@ -205,7 +205,7 @@ public class ProductControllerIntegrationTest
 	public void testDeleteOk() throws Exception
 	{
 		// given
-		String pathUrl = String.format("/products/delete/%s", PRODUCT_ID_EXIST_IN_DB);
+		String pathUrl = String.format("/products/delete/%s", ID_EXIST_IN_DB);
 		// when
 		mvc.perform(delete(pathUrl).contentType(MediaType.APPLICATION_JSON))
 				// then
@@ -216,7 +216,7 @@ public class ProductControllerIntegrationTest
 	public void testDeleteIdNotFound() throws Exception
 	{
 		// given
-		String pathUrl = String.format("/products/delete/%s", PRODUCT_ID_NOT_EXIST_IN_DB);
+		String pathUrl = String.format("/products/delete/%s", ID_NOT_EXIST_IN_DB);
 		// when
 		mvc.perform(delete(pathUrl).contentType(MediaType.APPLICATION_JSON))
 				// then

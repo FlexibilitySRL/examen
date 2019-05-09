@@ -24,9 +24,9 @@ public class ProductServiceIntegrationTest
 	@Autowired
 	private ProductServiceImpl productService;
 
-	private static long PRODUCTS_COUNT;
-	private static long PRODUCT_ID_EXIST_IN_DB;
-	private static long PRODUCT_ID_NOT_EXIST_IN_DB;
+	private static long COUNT;
+	private static long ID_EXIST_IN_DB;
+	private static long ID_NOT_EXIST_IN_DB;
 
 	@Before
 	public void setUp() throws GenericException 
@@ -41,9 +41,9 @@ public class ProductServiceIntegrationTest
 		
 		List<Product> productList = productService.findAll();
 
-		PRODUCTS_COUNT = productList.size();
-		PRODUCT_ID_EXIST_IN_DB = productList.get((int) PRODUCTS_COUNT - 1).getId();
-		PRODUCT_ID_NOT_EXIST_IN_DB = PRODUCT_ID_EXIST_IN_DB + 1;
+		COUNT = productList.size();
+		ID_EXIST_IN_DB = productList.get((int) COUNT - 1).getId();
+		ID_NOT_EXIST_IN_DB = ID_EXIST_IN_DB + 1;
 	}
 
 	@Test
@@ -65,7 +65,7 @@ public class ProductServiceIntegrationTest
 		// then
 		assertNotNull(products);
 		assertFalse(products.isEmpty());
-		assertEquals(PRODUCTS_COUNT, products.size());
+		assertEquals(COUNT, products.size());
 	}
 
 	@Test
@@ -78,8 +78,8 @@ public class ProductServiceIntegrationTest
 		// when
 		try
 		{
-			p1 = productService.findOne(PRODUCT_ID_EXIST_IN_DB);
-			p2 = productService.findOne(PRODUCT_ID_NOT_EXIST_IN_DB);
+			p1 = productService.findOne(ID_EXIST_IN_DB);
+			p2 = productService.findOne(ID_NOT_EXIST_IN_DB);
 		}
 		catch (NotFoundException e)
 		{
@@ -92,7 +92,7 @@ public class ProductServiceIntegrationTest
 
 		// then
 		assertNotNull(p1);
-		assertEquals(PRODUCT_ID_EXIST_IN_DB, (long) p1.getId());
+		assertEquals(ID_EXIST_IN_DB, (long) p1.getId());
 		assertNull(p2);
 	}
 
@@ -116,7 +116,7 @@ public class ProductServiceIntegrationTest
 		}
 
 		// then
-		assertEquals(PRODUCT_ID_EXIST_IN_DB + 1, (long) productAdded.getId());
+		assertEquals(ID_EXIST_IN_DB + 1, (long) productAdded.getId());
 		assertEquals(productToAdd.getDescription(), productAdded.getDescription());
 		assertEquals(productToAdd.getPrice(), productAdded.getPrice());
 	}
@@ -153,7 +153,7 @@ public class ProductServiceIntegrationTest
 		try
 		{
 			// when
-			productOriginal = productService.findOne(PRODUCT_ID_EXIST_IN_DB);
+			productOriginal = productService.findOne(ID_EXIST_IN_DB);
 		}
 		catch (NotFoundException e)
 		{
@@ -168,7 +168,7 @@ public class ProductServiceIntegrationTest
 
 		// given
 		Product productToUse = new Product();
-		productToUse.setId(PRODUCT_ID_EXIST_IN_DB);
+		productToUse.setId(ID_EXIST_IN_DB);
 		productToUse.setDescription("prueba update");
 
 		Product productUpdated = null;
@@ -197,7 +197,7 @@ public class ProductServiceIntegrationTest
 	{
 		// given
 		Product productToUse = new Product();
-		productToUse.setId(PRODUCT_ID_NOT_EXIST_IN_DB);
+		productToUse.setId(ID_NOT_EXIST_IN_DB);
 
 		Product productUpdated = new Product();
 		try
@@ -226,7 +226,7 @@ public class ProductServiceIntegrationTest
 		try
 		{
 			// when
-			productOriginal = productService.findOne(PRODUCT_ID_EXIST_IN_DB);
+			productOriginal = productService.findOne(ID_EXIST_IN_DB);
 		}
 		catch (NotFoundException e)
 		{
@@ -273,10 +273,10 @@ public class ProductServiceIntegrationTest
 		try
 		{
 			// given
-			assertNotNull(productService.findOne(PRODUCT_ID_EXIST_IN_DB));
+			assertNotNull(productService.findOne(ID_EXIST_IN_DB));
 			// when
-			productService.delete(PRODUCT_ID_EXIST_IN_DB);
-			product = productService.findOne(PRODUCT_ID_EXIST_IN_DB);
+			productService.delete(ID_EXIST_IN_DB);
+			product = productService.findOne(ID_EXIST_IN_DB);
 
 		}
 		catch (NotFoundException e)
@@ -299,8 +299,8 @@ public class ProductServiceIntegrationTest
 		try
 		{
 			// when
-			productService.delete(PRODUCT_ID_NOT_EXIST_IN_DB);
-			product = productService.findOne(PRODUCT_ID_NOT_EXIST_IN_DB);
+			productService.delete(ID_NOT_EXIST_IN_DB);
+			product = productService.findOne(ID_NOT_EXIST_IN_DB);
 		}
 		catch (NotFoundException e)
 		{
