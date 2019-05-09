@@ -13,15 +13,7 @@
 ### Testing
 
 Coverage
-> target/jacoco.exec
+> /testing/jacoco-coverage/index.html
 
 Reports
-> surefire-reports/TEST-ar.com.flexibility.examen.app.rest.ClientControllerIntegrationTest.xml
-
-> surefire-reports/TEST-ar.com.flexibility.examen.app.rest.ProductControllerIntegrationTest.xml
-
-> surefire-reports/TEST-ar.com.flexibility.examen.domain.service.ClientServiceIntegrationTest.xml
-
-> surefire-reports/TEST-ar.com.flexibility.examen.domain.service.ProcessMessageServiceTest.xml
-
-> surefire-reports/TEST-ar.com.flexibility.examen.domain.service.ProductServiceIntegrationTest.xml
+> /testing/surefire-reports/*
