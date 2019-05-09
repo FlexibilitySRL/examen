@@ -1,38 +1,52 @@
-# REST Test
+## App Hosted
+[https://examen.cfapps.io/swagger-ui.html](https://examen.cfapps.io/swagger-ui.html)
 
-# Bienvenidos!
+## Sonar Cloud
 
-La prueba consiste en agregar nueva funcionalidad a la API REST que corre en este repositorio. Para eso vamos a guiarnos por los siguientes puntos:
+`mvn sonar:sonar   -Dsonar.projectKey=jonatanduplessy_examen   -Dsonar.organization=jonatanduplessy-github   -Dsonar.host.url=https://sonarcloud.io   -Dsonar.login=8913a970571ed75b2d21396a1733036d41ca293c`
 
-1) Hacer un fork del repositorio, crear un nuevo branch y realizar las tareas enunciadas a continuación.
+SonarCloud [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=jonatanduplessy_examen&metric=alert_status)](https://sonarcloud.io/dashboard?id=jonatanduplessy_examen)
+[https://sonarcloud.io/dashboard?id=jonatanduplessy_examen](https://sonarcloud.io/dashboard?id=jonatanduplessy_examen)
 
-2) Proveer servicios para la administración de la compra de productos. Los mismos deberán incluir:
-- ABM de productos.
-- ABM de clientes.
-- Consulta de transacciones de compra.
-- Aprobación de compras.
- 
-3) Los servicios deben contar con logs que indiquen si el servicio respondió correctamente o no.
-  
-4) Documentar brevemente los servicios implementados.
- 
-5) Todos los servicios deben contar, al menos, con test unitarios.
- 
-6) Enviar un Pull Request con todos los cambios realizados. 
+## Test Coverage
 
-Para correr la aplicación se puede utilizar maven: 
+`mvn clean test`
 
-mvn spring-boot:run -Drun.jvmArguments="-Dspring.profiles.active=local"
+Reports
+> surefire-reports/TEST-ar.com.flexibility.examen.app.rest.ClientControllerIntegrationTest.xml
 
-Pueden probar el servicio de prueba con un curl de la siguiente forma:
+> surefire-reports/TEST-ar.com.flexibility.examen.app.rest.ProductControllerIntegrationTest.xml
 
-`curl -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' -d '{"message":"mensaje de prueba"}' localhost:8080/custom/echo `
+> surefire-reports/TEST-ar.com.flexibility.examen.domain.service.ClientServiceIntegrationTest.xml
 
-Bonus
+> surefire-reports/TEST-ar.com.flexibility.examen.domain.service.ProcessMessageServiceTest.xml
 
-1) Hostear la app en un cloud computing libre (Cloudfoudry o APP Engine) y enviar la URL para consultar.
-2) ABM de vendedores.
-3) Agregar test de integración.
-4) Correr pruebas con base de datos en memoria.
-5) Calcular la covertura de los tests.
-6) Crear Docker Image.
+> surefire-reports/TEST-ar.com.flexibility.examen.domain.service.ProductServiceIntegrationTest.xml
+
+Coverage
+> target/jacoco.exec
+
+
+## Docker 
+
+[https://hub.docker.com/r/jonatanduplessy/test-docker-repo/tags](https://hub.docker.com/r/jonatanduplessy/test-docker-repo/tags)
+
+## con 1 contenedor
+
+`mvn clean install`
+
+`sudo docker build -t jonatanduplessy/test-docker-repo:examen-latest-simple .`
+
+`sudo docker push jonatanduplessy/test-docker-repo:examen-latest-simple`
+
+`sudo docker run -t --name examen-container-simple -p 8080:8080 jonatanduplessy/test-docker-repo:examen-latest-simple`
+
+`http://localhost:8080/swagger-ui.html#/`
+
+## con 2 Contenedores (App,DB)
+
+`sudo docker run -d -p 2012:3306 --name mysql-container -e MYSQL_ROOT_PASSWORD=Tecso2019 -e  MYSQL_DATABASE=examen jonatanduplessy/test-docker-repo:mysql-latest`
+
+`sudo docker run -t --name examen-container -link mysql-container:mysql -p 8087:8080 jonatanduplessy/test-docker-repo:examen-latest`
+
+`http://localhost:8087/swagger-ui.html#/`
