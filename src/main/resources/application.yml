@@ -1,5 +1,21 @@
+
 spring:
   profiles: local
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.HSQLDialect
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+  datasource:
+    platform: hsqldb
+    continue-on-error: false
+
+---
+
+spring:
+  profiles: local-mysql-localhost
   jpa:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     hibernate:
