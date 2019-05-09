@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ar.com.flexibility.examen.app.api.ClientApi;
 import ar.com.flexibility.examen.app.api.MessageApi;
-import ar.com.flexibility.examen.app.api.ProductApi;
 import ar.com.flexibility.examen.domain.exception.GenericException;
 import ar.com.flexibility.examen.domain.model.Client;
 import ar.com.flexibility.examen.domain.service.ClientService;
@@ -40,7 +39,7 @@ public class ClientController
 	@Autowired
 	ClientService clientService;
 
-	@ApiOperation(value = "Obtiene todos los Clientes", response = ProductApi.class, responseContainer = "List")
+	@ApiOperation(value = "Obtiene todos los Clientes", response = ClientApi.class, responseContainer = "List")
 	@ApiResponse(code = 200, message = "Obtención de Lista de Clientes exitosa")
 	@GetMapping(path = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> findAll()
@@ -60,7 +59,7 @@ public class ClientController
 		}
 	}
 
-	@ApiOperation(value = "Obtiene un Cliente", response = ProductApi.class)
+	@ApiOperation(value = "Obtiene un Cliente", response = ClientApi.class)
 	@ApiResponse(code = 200, message = "Obtención del Cliente éxitosa")
 	@GetMapping(path = "/{id:^[0-9]*$}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> findOne(
@@ -85,7 +84,7 @@ public class ClientController
 		}
 	}
 
-	@ApiOperation(value = "Crea un Cliente", response = ProductApi.class)
+	@ApiOperation(value = "Crea un Cliente", response = ClientApi.class)
 	@ApiResponse(code = 200, message = "Cliente creado con éxito")
 	@PostMapping(path = "add", produces = MediaType.APPLICATION_JSON_VALUE, 
 			consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -107,7 +106,7 @@ public class ClientController
 		}
 	}
 
-	@ApiOperation(value = "Actualiza un Cliente", response = ProductApi.class)
+	@ApiOperation(value = "Actualiza un Cliente", response = ClientApi.class)
 	@ApiResponse(code = 200, message = "Cliente actualizado con éxito")
 	@PutMapping(path = "update", produces = MediaType.APPLICATION_JSON_VALUE, 
 			consumes = MediaType.APPLICATION_JSON_VALUE)
