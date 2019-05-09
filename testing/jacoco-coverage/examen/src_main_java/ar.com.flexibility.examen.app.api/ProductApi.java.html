@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>ProductApi.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">examen (May 9, 2019 6:04:33 PM)</a> &gt; <a href="../../index.html" class="el_group">examen</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">ar.com.flexibility.examen.app.api</a> &gt; <span class="el_source">ProductApi.java</span></div><h1>ProductApi.java</h1><pre class="source lang-java linenums">package ar.com.flexibility.examen.app.api;
+
+import ar.com.flexibility.examen.domain.model.Product;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonRootName;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+import java.math.BigDecimal;
+import java.util.Objects;
+
+import javax.validation.constraints.NotNull;
+
+@JsonRootName(value = &quot;product&quot;)
+@JsonIgnoreProperties(ignoreUnknown = true)
+@ApiModel(description = &quot;Product&quot;)
+public class ProductApi
+{
+	@JsonProperty
+	@ApiModelProperty(value = &quot;ID&quot;, position = 0)
+	private Long id;
+
+	@JsonProperty
+	@ApiModelProperty(value = &quot;Description&quot;, required = true, position = 1)
+	private String description;
+
+	@JsonProperty
+	@ApiModelProperty(value = &quot;Price&quot;, required = true, position = 2)
+	private BigDecimal price;
+
+<span class="fc" id="L32">	public ProductApi()</span>
+	{
+<span class="fc" id="L34">	}</span>
+
+<span class="fc" id="L36">	public ProductApi(Product product)</span>
+	{
+<span class="fc" id="L38">		this.id = product.getId();</span>
+<span class="fc" id="L39">		this.description = product.getDescription();</span>
+<span class="fc" id="L40">		this.price = product.getPrice();</span>
+<span class="fc" id="L41">	}</span>
+
+	public Long getId()
+	{
+<span class="fc" id="L45">		return id;</span>
+	}
+
+	public void setId(Long id)
+	{
+<span class="fc" id="L50">		this.id = id;</span>
+<span class="fc" id="L51">	}</span>
+
+	public String getDescription()
+	{
+<span class="fc" id="L55">		return description;</span>
+	}
+
+	public void setDescription(String description)
+	{
+<span class="fc" id="L60">		this.description = description;</span>
+<span class="fc" id="L61">	}</span>
+
+	public BigDecimal getPrice()
+	{
+<span class="fc" id="L65">		return price;</span>
+	}
+
+	public void setPrice(BigDecimal price)
+	{
+<span class="fc" id="L70">		this.price = price;</span>
+<span class="fc" id="L71">	}</span>
+	
+	@Override
+	public int hashCode()
+	{
+<span class="nc" id="L76">		return Objects.hash(description, id, price);</span>
+	}
+
+	@Override
+	public boolean equals(Object obj)
+	{
+<span class="nc bnc" id="L82" title="All 2 branches missed.">		if (this == obj)</span>
+<span class="nc" id="L83">			return true;</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">		if (obj == null)</span>
+<span class="nc" id="L85">			return false;</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">		if (!(obj instanceof ProductApi))</span>
+<span class="nc" id="L87">			return false;</span>
+<span class="nc" id="L88">		ProductApi other = (ProductApi) obj;</span>
+<span class="nc bnc" id="L89" title="All 4 branches missed.">		return Objects.equals(description, other.description) &amp;&amp; Objects.equals(id, other.id)</span>
+<span class="nc bnc" id="L90" title="All 2 branches missed.">				&amp;&amp; Objects.equals(price, other.price);</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span>examen (May 9, 2019 6:04:33 PM)</div></body></html>

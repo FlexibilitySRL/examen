@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>ProductController.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">examen (May 9, 2019 6:04:33 PM)</a> &gt; <a href="../../index.html" class="el_group">examen</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">ar.com.flexibility.examen.app.rest</a> &gt; <span class="el_source">ProductController.java</span></div><h1>ProductController.java</h1><pre class="source lang-java linenums">package ar.com.flexibility.examen.app.rest;
+
+import ar.com.flexibility.examen.app.api.MessageApi;
+import ar.com.flexibility.examen.app.api.ProductApi;
+import ar.com.flexibility.examen.domain.exception.GenericException;
+import ar.com.flexibility.examen.domain.model.Product;
+import ar.com.flexibility.examen.domain.service.ProductService;
+import io.swagger.annotations.*;
+import javassist.NotFoundException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@RestController
+@RequestMapping(path = &quot;/products&quot;)
+@Api(&quot;Servcio de administracion de Productos&quot;)
+<span class="fc" id="L24">public class ProductController</span>
+{
+<span class="fc" id="L26">	private static final Logger log = LoggerFactory.getLogger(ProductController.class);</span>
+
+	@Autowired
+	ProductService productService;
+
+	@ApiOperation(value = &quot;Obtiene todos los productos&quot;, response = ProductApi.class, responseContainer = &quot;List&quot;)
+	@ApiResponse(code = 200, message = &quot;Obtención de Lista de Productos exitosa&quot;)
+	@GetMapping(path = &quot;all&quot;, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity&lt;?&gt; findAll()
+	{
+		try
+		{
+<span class="fc" id="L38">			List&lt;ProductApi&gt; productsApi = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L39">			productService.findAll().forEach(product -&gt; productsApi.add(new ProductApi(product)));</span>
+
+<span class="fc" id="L41">			log.info(&quot;Obtención de Lista de Productos exitosa&quot;);</span>
+<span class="fc" id="L42">			return new ResponseEntity&lt;&gt;(productsApi, HttpStatus.OK);</span>
+		}
+<span class="nc" id="L44">		catch (GenericException e)</span>
+		{
+<span class="nc" id="L46">			return new ResponseEntity&lt;&gt;(new MessageApi(e.getMessage()), HttpStatus.NOT_ACCEPTABLE);</span>
+		}
+	}
+
+	@ApiOperation(value = &quot;Obtiene un Producto&quot;, response = ProductApi.class)
+	@ApiResponse(code = 200, message = &quot;Obtención del Producto éxitosa&quot;)
+	@GetMapping(path = &quot;{id:^[0-9]*$}&quot;, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity&lt;?&gt; findOne(
+		@ApiParam(name = &quot;id&quot;, value = &quot;ID del Producto a obtener&quot;, required = true) 
+		@PathVariable(value = &quot;id&quot;, required = true) Long id)
+	{
+		try
+		{
+<span class="fc" id="L59">			Product product = productService.findOne(id);</span>
+
+<span class="fc" id="L61">			log.info(&quot;Obtención del Producto éxitosa&quot;);</span>
+<span class="fc" id="L62">			return new ResponseEntity&lt;ProductApi&gt;(new ProductApi(product), HttpStatus.OK);</span>
+		}
+<span class="fc" id="L64">		catch (NotFoundException e)</span>
+		{
+<span class="fc" id="L66">			log.info(e.getMessage());</span>
+<span class="fc" id="L67">			return new ResponseEntity&lt;&gt;(new MessageApi(e.getMessage()), HttpStatus.NOT_FOUND);</span>
+		}
+<span class="nc" id="L69">		catch (GenericException e)</span>
+		{
+<span class="nc" id="L71">			return new ResponseEntity&lt;&gt;(new MessageApi(e.getMessage()), HttpStatus.NOT_ACCEPTABLE);</span>
+		}
+	}
+
+	@ApiOperation(value = &quot;Crea un producto&quot;, response = ProductApi.class)
+	@ApiResponse(code = 200, message = &quot;Producto creado con éxito&quot;)
+	@PostMapping(path = &quot;add&quot;, produces = MediaType.APPLICATION_JSON_VALUE, 
+				consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity&lt;?&gt; add(
+			@ApiParam(name = &quot;Product&quot;, value = &quot;Producto a crear&quot;, required = true) 
+			@RequestBody ProductApi productApi)
+	{
+		try
+		{
+<span class="fc" id="L85">			Product product = productService.add(new Product(productApi));</span>
+
+<span class="fc" id="L87">			log.info(&quot;Producto creado con éxito&quot;);</span>
+<span class="fc" id="L88">			return new ResponseEntity&lt;&gt;(new ProductApi(product), HttpStatus.OK);</span>
+		}
+<span class="nc" id="L90">		catch (GenericException e)</span>
+		{
+<span class="nc" id="L92">			log.info(e.getMessage());</span>
+<span class="nc" id="L93">			return new ResponseEntity&lt;&gt;(new MessageApi(e.getMessage()), HttpStatus.NOT_ACCEPTABLE);</span>
+		}
+	}
+
+	@ApiOperation(value = &quot;Actualiza un Producto&quot;, response = ProductApi.class)
+	@ApiResponse(code = 200, message = &quot;Producto actualizado con éxito&quot;)
+	@PutMapping(path = &quot;update&quot;, produces = MediaType.APPLICATION_JSON_VALUE, 
+				consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity&lt;?&gt; update(
+			@ApiParam(name = &quot;Product&quot;, value = &quot;Producto a actualizar&quot;, required = true) 
+			@RequestBody ProductApi productApi)
+	{
+		try
+		{
+<span class="fc" id="L107">			Product productUpdated = productService.update(new Product(productApi));</span>
+
+<span class="fc" id="L109">			log.info(&quot;Producto actualizado con éxito&quot;);</span>
+<span class="fc" id="L110">			return new ResponseEntity&lt;&gt;(new ProductApi(productUpdated), HttpStatus.OK);</span>
+		}
+<span class="fc" id="L112">		catch (NotFoundException e)</span>
+		{
+<span class="fc" id="L114">			log.info(e.getMessage());</span>
+<span class="fc" id="L115">			return new ResponseEntity&lt;&gt;(new MessageApi(e.getMessage()), HttpStatus.NOT_FOUND);</span>
+		}
+<span class="fc" id="L117">		catch (GenericException e)</span>
+		{
+<span class="fc" id="L119">			log.info(e.getMessage());</span>
+<span class="fc" id="L120">			return new ResponseEntity&lt;&gt;(new MessageApi(e.getMessage()), HttpStatus.NOT_ACCEPTABLE);</span>
+		}
+	}
+
+	@ApiOperation(value = &quot;Elimina un Producto&quot;, response = MessageApi.class)
+	@ApiResponse(code = 200, message = &quot;Producto eliminado con éxito&quot;)
+	@DeleteMapping(path = &quot;delete/{id:^[0-9]*$}&quot;, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity&lt;?&gt; delete(
+			@ApiParam(name = &quot;id&quot;, value = &quot;ID del Producto a eliminar&quot;, required = true) 
+			@PathVariable(value = &quot;id&quot;, required = true) Long id)
+	{
+		try
+		{
+<span class="fc" id="L133">			productService.delete(id);</span>
+
+<span class="fc" id="L135">			log.info(&quot;Producto eliminado con éxito&quot;);</span>
+<span class="fc" id="L136">			return new ResponseEntity&lt;&gt;(new MessageApi(&quot;Producto eliminado con éxito&quot;), HttpStatus.OK);</span>
+		}
+<span class="fc" id="L138">		catch (NotFoundException e)</span>
+		{
+<span class="fc" id="L140">			log.info(e.getMessage());</span>
+<span class="fc" id="L141">			return new ResponseEntity&lt;&gt;(new MessageApi(e.getMessage()), HttpStatus.NOT_FOUND);</span>
+		}
+<span class="nc" id="L143">		catch (GenericException e)</span>
+		{
+<span class="nc" id="L145">			log.info(e.getMessage());</span>
+<span class="nc" id="L146">			return new ResponseEntity&lt;&gt;(new MessageApi(e.getMessage()), HttpStatus.NOT_ACCEPTABLE);</span>
+		}
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span>examen (May 9, 2019 6:04:33 PM)</div></body></html>

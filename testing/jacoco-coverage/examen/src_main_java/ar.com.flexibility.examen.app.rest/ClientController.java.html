@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>ClientController.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">examen (May 9, 2019 6:04:33 PM)</a> &gt; <a href="../../index.html" class="el_group">examen</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">ar.com.flexibility.examen.app.rest</a> &gt; <span class="el_source">ClientController.java</span></div><h1>ClientController.java</h1><pre class="source lang-java linenums">package ar.com.flexibility.examen.app.rest;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import ar.com.flexibility.examen.app.api.ClientApi;
+import ar.com.flexibility.examen.app.api.MessageApi;
+import ar.com.flexibility.examen.domain.exception.GenericException;
+import ar.com.flexibility.examen.domain.model.Client;
+import ar.com.flexibility.examen.domain.service.ClientService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import javassist.NotFoundException;
+
+@RestController
+@RequestMapping(path = &quot;/clients&quot;)
+@Api(&quot;Servcio de administracion de Clientes&quot;)
+<span class="fc" id="L35">public class ClientController</span>
+{
+<span class="fc" id="L37">	private static final Logger log = LoggerFactory.getLogger(ClientController.class);</span>
+
+	@Autowired
+	ClientService clientService;
+
+	@ApiOperation(value = &quot;Obtiene todos los Clientes&quot;, response = ClientApi.class, responseContainer = &quot;List&quot;)
+	@ApiResponse(code = 200, message = &quot;Obtención de Lista de Clientes exitosa&quot;)
+	@GetMapping(path = &quot;/all&quot;, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity&lt;?&gt; findAll()
+	{
+		try
+		{
+<span class="fc" id="L49">			List&lt;ClientApi&gt; clientsApi = new ArrayList&lt;ClientApi&gt;();</span>
+<span class="fc" id="L50">			clientService.findAll().forEach((client) -&gt; clientsApi.add(new ClientApi(client)));</span>
+			
+<span class="fc" id="L52">			log.info(&quot;Obtención de Lista de Clientes exitosa&quot;);</span>
+<span class="fc" id="L53">			return new ResponseEntity&lt;&gt;(clientsApi, HttpStatus.OK);</span>
+		}
+<span class="nc" id="L55">		catch (GenericException e)</span>
+		{
+<span class="nc" id="L57">			log.info(e.getMessage());</span>
+<span class="nc" id="L58">			return new ResponseEntity&lt;&gt;(new MessageApi(e.getMessage()), HttpStatus.NOT_ACCEPTABLE);</span>
+		}
+	}
+
+	@ApiOperation(value = &quot;Obtiene un Cliente&quot;, response = ClientApi.class)
+	@ApiResponse(code = 200, message = &quot;Obtención del Cliente éxitosa&quot;)
+	@GetMapping(path = &quot;/{id:^[0-9]*$}&quot;, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity&lt;?&gt; findOne(
+			@ApiParam(name = &quot;id&quot;, value = &quot;ID del Cliente a obtener&quot;, required = true) @PathVariable(value = &quot;id&quot;, required = true) Long id)
+	{
+		try
+		{
+<span class="fc" id="L70">			Client client = clientService.findOne(id);</span>
+			
+<span class="fc" id="L72">			log.info(&quot;Obtención del Cliente éxitosa&quot;);</span>
+<span class="fc" id="L73">			return new ResponseEntity&lt;&gt;(new ClientApi(client), HttpStatus.OK);</span>
+		}
+<span class="fc" id="L75">		catch (NotFoundException e)</span>
+		{
+<span class="fc" id="L77">			log.info(e.getMessage());</span>
+<span class="fc" id="L78">			return new ResponseEntity&lt;&gt;(new MessageApi(e.getMessage()), HttpStatus.NOT_FOUND);</span>
+		}
+<span class="nc" id="L80">		catch (GenericException e)</span>
+		{
+<span class="nc" id="L82">			log.info(e.getMessage());</span>
+<span class="nc" id="L83">			return new ResponseEntity&lt;&gt;(new MessageApi(e.getMessage()), HttpStatus.NOT_ACCEPTABLE);</span>
+		}
+	}
+
+	@ApiOperation(value = &quot;Crea un Cliente&quot;, response = ClientApi.class)
+	@ApiResponse(code = 200, message = &quot;Cliente creado con éxito&quot;)
+	@PostMapping(path = &quot;add&quot;, produces = MediaType.APPLICATION_JSON_VALUE, 
+			consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity&lt;?&gt; add(
+			@ApiParam(name = &quot;Client&quot;, value = &quot;Cliente a crear&quot;, required = true) 
+			@RequestBody ClientApi clientApi)
+	{
+		try
+		{
+<span class="fc" id="L97">			Client client = clientService.add(new Client(clientApi));</span>
+			
+<span class="fc" id="L99">			log.info(&quot;Cliente creado con éxito&quot;);</span>
+<span class="fc" id="L100">			return new ResponseEntity&lt;&gt;(new ClientApi(client), HttpStatus.OK);</span>
+		}
+<span class="nc" id="L102">		catch (GenericException e)</span>
+		{
+<span class="nc" id="L104">			log.info(e.getMessage());</span>
+<span class="nc" id="L105">			return new ResponseEntity&lt;&gt;(new MessageApi(e.getMessage()), HttpStatus.NOT_ACCEPTABLE);</span>
+		}
+	}
+
+	@ApiOperation(value = &quot;Actualiza un Cliente&quot;, response = ClientApi.class)
+	@ApiResponse(code = 200, message = &quot;Cliente actualizado con éxito&quot;)
+	@PutMapping(path = &quot;update&quot;, produces = MediaType.APPLICATION_JSON_VALUE, 
+			consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity&lt;?&gt; update(
+			@ApiParam(name = &quot;Client&quot;, value = &quot;Cliente a actualizar&quot;, required = true) 
+			@RequestBody ClientApi clientApi)
+	{
+		try
+		{
+<span class="fc" id="L119">			Client client = clientService.update(new Client(clientApi));</span>
+			
+<span class="fc" id="L121">			log.info(&quot;Cliente actualizado con éxito&quot;);</span>
+<span class="fc" id="L122">			return new ResponseEntity&lt;&gt;(new ClientApi(client), HttpStatus.OK);</span>
+		}
+<span class="fc" id="L124">		catch (NotFoundException e)</span>
+		{
+<span class="fc" id="L126">			log.info(e.getMessage());</span>
+<span class="fc" id="L127">			return new ResponseEntity&lt;&gt;(new MessageApi(e.getMessage()), HttpStatus.NOT_FOUND);</span>
+		}
+<span class="fc" id="L129">		catch (GenericException e)</span>
+		{
+<span class="fc" id="L131">			log.info(e.getMessage());</span>
+<span class="fc" id="L132">			return new ResponseEntity&lt;&gt;(new MessageApi(e.getMessage()), HttpStatus.NOT_ACCEPTABLE);</span>
+		}
+	}
+
+	@ApiOperation(value = &quot;Elimina un Cliente&quot;, response = MessageApi.class)
+	@ApiResponse(code = 200, message = &quot;Cliente eliminado con éxito&quot;)
+	@DeleteMapping(path = &quot;delete/{id:^[0-9]*$}&quot;, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity&lt;?&gt; delete(
+			@ApiParam(name = &quot;id&quot;, value = &quot;ID del Cliente a eliminar&quot;, required = true) 
+			@PathVariable(value = &quot;id&quot;, required = true) Long id)
+	{
+		try
+		{
+<span class="fc" id="L145">			clientService.delete(id);</span>
+			
+<span class="fc" id="L147">			log.info(&quot;Cliente eliminado con éxito&quot;);</span>
+<span class="fc" id="L148">			return new ResponseEntity&lt;&gt;(new MessageApi(&quot;Cliente eliminado con éxito&quot;), HttpStatus.OK);</span>
+		}
+<span class="fc" id="L150">		catch (NotFoundException e)</span>
+		{
+<span class="fc" id="L152">			log.info(e.getMessage());</span>
+<span class="fc" id="L153">			return new ResponseEntity&lt;&gt;(new MessageApi(e.getMessage()), HttpStatus.NOT_FOUND);</span>
+		}
+<span class="nc" id="L155">		catch (GenericException e)</span>
+		{
+<span class="nc" id="L157">			log.info(e.getMessage());</span>
+<span class="nc" id="L158">			return new ResponseEntity&lt;&gt;(new MessageApi(e.getMessage()), HttpStatus.NOT_ACCEPTABLE);</span>
+		}
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span>examen (May 9, 2019 6:04:33 PM)</div></body></html>

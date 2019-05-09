@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: ar.com.flexibility.examen.domain.service.ProductServiceIntegrationTest
+-------------------------------------------------------------------------------
+Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 14.232 sec - in ar.com.flexibility.examen.domain.service.ProductServiceIntegrationTest

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>ClientServiceImpl.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">examen (May 9, 2019 6:04:33 PM)</a> &gt; <a href="../../index.html" class="el_group">examen</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">ar.com.flexibility.examen.domain.service.impl</a> &gt; <span class="el_source">ClientServiceImpl.java</span></div><h1>ClientServiceImpl.java</h1><pre class="source lang-java linenums">package ar.com.flexibility.examen.domain.service.impl;
+
+import static ar.com.flexibility.examen.domain.exception.GenericException.GENERAL_ID_NOT_EXIST_FORMATED;
+import static ar.com.flexibility.examen.domain.exception.GenericException.GENERAL_NOT_CHANGES_TO_MADE;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import ar.com.flexibility.examen.domain.exception.GenericException;
+import ar.com.flexibility.examen.domain.model.Client;
+import ar.com.flexibility.examen.domain.repository.ClientRepository;
+import ar.com.flexibility.examen.domain.service.ClientService;
+import javassist.NotFoundException;
+
+@Service
+<span class="fc" id="L18">public class ClientServiceImpl implements ClientService</span>
+{
+	@Autowired
+	ClientRepository clientRepository;
+	
+	@Override
+	public void deleteAll() throws GenericException
+	{
+<span class="fc" id="L26">		clientRepository.deleteAll();</span>
+<span class="fc" id="L27">	}</span>
+
+	@Override
+	public List&lt;Client&gt; findAll() throws GenericException
+	{
+<span class="fc" id="L32">		return clientRepository.findAll();</span>
+	}
+
+	@Override
+	public Client findOne(Long id) throws NotFoundException, GenericException
+	{
+<span class="fc" id="L38">		Client client = clientRepository.findOne(id);</span>
+<span class="fc bfc" id="L39" title="All 2 branches covered.">		if (client == null)</span>
+<span class="fc" id="L40">			throw new NotFoundException(String.format(GENERAL_ID_NOT_EXIST_FORMATED, id));</span>
+<span class="fc" id="L41">		return client;</span>
+	}
+
+	@Override
+	public Client add(Client client) throws GenericException
+	{
+<span class="fc" id="L47">		client.setId(null);</span>
+<span class="fc" id="L48">		return clientRepository.saveAndFlush(client);</span>
+	}
+
+	@Override
+	public Client update(Client client) throws NotFoundException, GenericException
+	{
+<span class="fc" id="L54">		Client clientToPersist = findOne(client.getId());</span>
+
+<span class="fc bfc" id="L56" title="All 2 branches covered.">		if (clientToPersist.equals(client))</span>
+<span class="fc" id="L57">			throw new GenericException(GENERAL_NOT_CHANGES_TO_MADE);</span>
+
+<span class="fc" id="L59">		clientToPersist.setFullname(client.getFullname());</span>
+<span class="fc" id="L60">		clientToPersist.setEmail(client.getEmail());</span>
+
+<span class="fc" id="L62">		return clientRepository.saveAndFlush(clientToPersist);</span>
+
+	}
+
+	@Override
+	public void delete(Long id) throws NotFoundException, GenericException
+	{
+<span class="fc" id="L69">		id = findOne(id).getId();</span>
+<span class="fc" id="L70">		clientRepository.delete(id);</span>
+<span class="fc" id="L71">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span>examen (May 9, 2019 6:04:33 PM)</div></body></html>

@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>ProductControllerIntegrationTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">examen (May 9, 2019 6:04:33 PM)</a> &gt; <a href="../../index.html" class="el_group">examen</a> &gt; <a href="../index.html" class="el_bundle">src/test/java</a> &gt; <a href="index.source.html" class="el_package">ar.com.flexibility.examen.app.rest</a> &gt; <span class="el_source">ProductControllerIntegrationTest.java</span></div><h1>ProductControllerIntegrationTest.java</h1><pre class="source lang-java linenums">package ar.com.flexibility.examen.app.rest;
+
+import ar.com.flexibility.examen.Application;
+import ar.com.flexibility.examen.app.api.ProductApi;
+import ar.com.flexibility.examen.domain.exception.GenericException;
+import ar.com.flexibility.examen.domain.model.Product;
+import ar.com.flexibility.examen.domain.service.impl.ProductServiceImpl;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+
+import java.math.BigDecimal;
+import java.util.List;
+
+import static junit.framework.TestCase.assertNotNull;
+import static org.junit.Assert.assertEquals;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = Application.class)
+@AutoConfigureMockMvc
+<span class="fc" id="L32">public class ProductControllerIntegrationTest</span>
+{
+	@Autowired
+	private MockMvc mvc;
+
+	@Autowired
+	private ProductServiceImpl productService;
+
+	private static long COUNT;
+	private static long ID_EXIST_IN_DB;
+	private static long ID_NOT_EXIST_IN_DB;
+
+	@Before
+	public void setUp() throws GenericException
+	{
+<span class="fc" id="L47">		productService.deleteAll();</span>
+
+<span class="fc" id="L49">		Product product = new Product();</span>
+<span class="fc" id="L50">		product.setDescription(&quot;first product&quot;);</span>
+<span class="fc" id="L51">		product.setPrice(new BigDecimal(2.50));</span>
+
+<span class="fc" id="L53">		productService.add(product);</span>
+
+<span class="fc" id="L55">		List&lt;Product&gt; productList = productService.findAll();</span>
+
+<span class="fc" id="L57">		COUNT = productList.size();</span>
+<span class="fc" id="L58">		ID_EXIST_IN_DB = productList.get((int) COUNT - 1).getId();</span>
+<span class="fc" id="L59">		ID_NOT_EXIST_IN_DB = ID_EXIST_IN_DB + 1;</span>
+
+<span class="fc" id="L61">	}</span>
+
+	@Test
+	public void testFindAll() throws Exception
+	{
+		// given
+<span class="fc" id="L67">		String pathUrl = &quot;/products/all&quot;;</span>
+		// when
+<span class="fc" id="L69">		mvc.perform(get(pathUrl).contentType(MediaType.APPLICATION_JSON))</span>
+				// then
+<span class="fc" id="L71">				.andExpect(status().isOk()).andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));</span>
+<span class="fc" id="L72">	}</span>
+
+	@Test
+	public void testFindOneOk() throws Exception
+	{
+		// given
+<span class="fc" id="L78">		String pathUrl = String.format(&quot;/products/%s&quot;, ID_EXIST_IN_DB);</span>
+		// when
+<span class="fc" id="L80">		MvcResult result = mvc.perform(get(pathUrl).contentType(MediaType.APPLICATION_JSON))</span>
+				// then
+<span class="fc" id="L82">				.andExpect(status().isOk()).andReturn();</span>
+
+		// given
+<span class="fc" id="L85">		String contentAsString = result.getResponse().getContentAsString();</span>
+<span class="fc" id="L86">		Product product = productService.findOne(ID_EXIST_IN_DB);</span>
+		// when
+<span class="fc" id="L88">		ProductApi productResponse = new ObjectMapper().readValue(contentAsString.getBytes(), ProductApi.class);</span>
+		// then
+<span class="fc" id="L90">		assertNotNull(contentAsString);</span>
+<span class="fc" id="L91">		assertEquals(productResponse.getId(), product.getId());</span>
+<span class="fc" id="L92">		assertEquals(productResponse.getDescription(), product.getDescription());</span>
+<span class="fc" id="L93">		assertEquals(productResponse.getPrice(), product.getPrice());</span>
+<span class="fc" id="L94">	}</span>
+
+	@Test
+	public void testFindOneErrorIdNotFound() throws Exception
+	{
+		// given
+<span class="fc" id="L100">		String pathUrl = String.format(&quot;/products/%s&quot;, ID_NOT_EXIST_IN_DB);</span>
+		// when
+<span class="fc" id="L102">		mvc.perform(get(pathUrl).contentType(MediaType.APPLICATION_JSON))</span>
+				// then
+<span class="fc" id="L104">				.andExpect(status().isNotFound());</span>
+<span class="fc" id="L105">	}</span>
+
+	@Test
+	public void testAddOk() throws Exception
+	{
+		// given
+<span class="fc" id="L111">		String pathUrl = &quot;/products/add&quot;;</span>
+<span class="fc" id="L112">		Product product = new Product();</span>
+<span class="fc" id="L113">		product.setDescription(&quot;prueba controller add&quot;);</span>
+<span class="fc" id="L114">		product.setPrice(new BigDecimal(300));</span>
+		// when
+<span class="fc" id="L116">		MvcResult result = mvc</span>
+<span class="fc" id="L117">				.perform(post(pathUrl).contentType(MediaType.APPLICATION_JSON).content(asJsonString(product)))</span>
+				// then
+<span class="fc" id="L119">				.andExpect(status().isOk()).andReturn();</span>
+
+		// given
+<span class="fc" id="L122">		String contentAsString = result.getResponse().getContentAsString();</span>
+		// when
+<span class="fc" id="L124">		ProductApi productResponse = new ObjectMapper().readValue(contentAsString.getBytes(), ProductApi.class);</span>
+		// then
+<span class="fc" id="L126">		assertNotNull(contentAsString);</span>
+<span class="fc" id="L127">		assertNotNull(productResponse.getId());</span>
+<span class="fc" id="L128">		assertEquals(product.getDescription(), productResponse.getDescription());</span>
+<span class="fc" id="L129">		assertEquals(product.getPrice(), productResponse.getPrice());</span>
+<span class="fc" id="L130">	}</span>
+
+	@Test
+	public void testUpdateOk() throws Exception
+	{
+		// given
+<span class="fc" id="L136">		String pathUrl = &quot;/products/update&quot;;</span>
+<span class="fc" id="L137">		Product product = new Product();</span>
+<span class="fc" id="L138">		product.setId(ID_EXIST_IN_DB);</span>
+<span class="fc" id="L139">		product.setDescription(&quot;prueba update OK&quot;);</span>
+<span class="fc" id="L140">		product.setPrice(new BigDecimal(2.50));</span>
+		// when
+<span class="fc" id="L142">		MvcResult result = mvc</span>
+<span class="fc" id="L143">				.perform(put(pathUrl).contentType(MediaType.APPLICATION_JSON).content(asJsonString(product)))</span>
+				// then
+<span class="fc" id="L145">				.andExpect(status().isOk()).andReturn();</span>
+
+		// given
+<span class="fc" id="L148">		String contentAsString = result.getResponse().getContentAsString();</span>
+		// when
+<span class="fc" id="L150">		ProductApi productResponse = new ObjectMapper().readValue(contentAsString.getBytes(), ProductApi.class);</span>
+		// then
+<span class="fc" id="L152">		assertNotNull(contentAsString);</span>
+<span class="fc" id="L153">		assertEquals(product.getId(), productResponse.getId());</span>
+<span class="fc" id="L154">		assertEquals(product.getDescription(), productResponse.getDescription());</span>
+<span class="fc" id="L155">		assertEquals(product.getPrice(), productResponse.getPrice());</span>
+<span class="fc" id="L156">	}</span>
+
+	@Test
+	public void testUpdateErrorWithoutChanges() throws Exception
+	{
+		// given
+<span class="fc" id="L162">		String pathUrl = &quot;/products/update&quot;;</span>
+<span class="fc" id="L163">		Product productActual = productService.findOne(ID_EXIST_IN_DB);</span>
+<span class="fc" id="L164">		Product product = new Product();</span>
+<span class="fc" id="L165">		product.setId(productActual.getId());</span>
+<span class="fc" id="L166">		product.setDescription(productActual.getDescription());</span>
+<span class="fc" id="L167">		product.setPrice(productActual.getPrice());</span>
+		// when
+<span class="fc" id="L169">		mvc.perform(put(pathUrl).contentType(MediaType.APPLICATION_JSON).content(asJsonString(product)))</span>
+				// then
+<span class="fc" id="L171">				.andExpect(status().isNotAcceptable());</span>
+<span class="fc" id="L172">	}</span>
+
+	@Test
+	public void testUpdateErrorIdNotFound() throws Exception
+	{
+		// given
+<span class="fc" id="L178">		String pathUrl = &quot;/products/update&quot;;</span>
+<span class="fc" id="L179">		Product product = new Product();</span>
+<span class="fc" id="L180">		product.setId(ID_NOT_EXIST_IN_DB);</span>
+<span class="fc" id="L181">		product.setDescription(&quot;prueba ID not found&quot;);</span>
+<span class="fc" id="L182">		product.setPrice(new BigDecimal(2.50));</span>
+		// when
+<span class="fc" id="L184">		mvc.perform(put(pathUrl).contentType(MediaType.APPLICATION_JSON).content(asJsonString(product)))</span>
+				// then
+<span class="fc" id="L186">				.andExpect(status().isNotFound());</span>
+<span class="fc" id="L187">	}</span>
+
+	@Test
+	public void testDeleteOk() throws Exception
+	{
+		// given
+<span class="fc" id="L193">		String pathUrl = String.format(&quot;/products/delete/%s&quot;, ID_EXIST_IN_DB);</span>
+		// when
+<span class="fc" id="L195">		mvc.perform(delete(pathUrl).contentType(MediaType.APPLICATION_JSON))</span>
+				// then
+<span class="fc" id="L197">				.andExpect(status().isOk());</span>
+<span class="fc" id="L198">	}</span>
+
+	@Test
+	public void testDeleteIdNotFound() throws Exception
+	{
+		// given
+<span class="fc" id="L204">		String pathUrl = String.format(&quot;/products/delete/%s&quot;, ID_NOT_EXIST_IN_DB);</span>
+		// when
+<span class="fc" id="L206">		mvc.perform(delete(pathUrl).contentType(MediaType.APPLICATION_JSON))</span>
+				// then
+<span class="fc" id="L208">				.andExpect(status().isNotFound());</span>
+<span class="fc" id="L209">	}</span>
+
+	public static String asJsonString(final Object obj)
+	{
+		try
+		{
+<span class="fc" id="L215">			return new ObjectMapper().writeValueAsString(obj);</span>
+		}
+<span class="nc" id="L217">		catch (Exception e)</span>
+		{
+<span class="nc" id="L219">			throw new RuntimeException(e);</span>
+		}
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span>examen (May 9, 2019 6:04:33 PM)</div></body></html>
