@@ -21,12 +21,10 @@ public class ProductApi
 	@ApiModelProperty(value = "ID", position = 0)
 	private Long id;
 
-	@NotNull
 	@JsonProperty
 	@ApiModelProperty(value = "Description", required = true, position = 1)
 	private String description;
 
-	@NotNull
 	@JsonProperty
 	@ApiModelProperty(value = "Price", required = true, position = 2)
 	private BigDecimal price;

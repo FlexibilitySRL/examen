@@ -116,7 +116,7 @@ public class ProductControllerIntegrationTest
 		MvcResult result = mvc
 				.perform(post(pathUrl).contentType(MediaType.APPLICATION_JSON).content(asJsonString(product)))
 				// then
-				.andExpect(status().isCreated()).andReturn();
+				.andExpect(status().isOk()).andReturn();
 
 		// given
 		String contentAsString = result.getResponse().getContentAsString();
@@ -127,21 +127,6 @@ public class ProductControllerIntegrationTest
 		assertNotNull(productResponse.getId());
 		assertEquals(product.getDescription(), productResponse.getDescription());
 		assertEquals(product.getPrice(), productResponse.getPrice());
-	}
-
-	@Test
-	public void testAddErrorIdNotNull() throws Exception
-	{
-		// given
-		String pathUrl = "/products/add";
-		Product product = new Product();
-		product.setId(ID_NOT_EXIST_IN_DB);
-		product.setDescription("prueba controller add con ID no nulo");
-		product.setPrice(new BigDecimal(10));
-		// when
-		mvc.perform(post(pathUrl).contentType(MediaType.APPLICATION_JSON).content(asJsonString(product)))
-				// then
-				.andExpect(status().isNotAcceptable());
 	}
 
 	@Test

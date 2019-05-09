@@ -21,12 +21,10 @@ public class ClientApi
 	@ApiModelProperty(value = "ID", position = 0)
 	private Long id;
 	
-	@NotNull
 	@JsonProperty
 	@ApiModelProperty(value = "Full Name", required = true, position = 1)
 	private String fullname;
 	
-	@NotNull
 	@JsonProperty
 	@ApiModelProperty(value = "Email", required = true, position = 2)
 	private String email;

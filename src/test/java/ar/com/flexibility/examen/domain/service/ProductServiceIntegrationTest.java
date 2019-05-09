@@ -122,30 +122,6 @@ public class ProductServiceIntegrationTest
 	}
 
 	@Test
-	public void testAddErrorIdNotNull()
-	{
-		// given
-		Product productToAdd = new Product();
-		productToAdd.setId(12L);
-		productToAdd.setDescription("prueba add with id not null");
-		productToAdd.setPrice(new BigDecimal(200.00));
-
-		// when
-		Product productAdded = null;
-		try
-		{
-			productAdded = productService.add(productToAdd);
-		}
-		catch (GenericException e)
-		{
-			e.printStackTrace();
-		}
-
-		// then
-		assertNull(productAdded);
-	}
-
-	@Test
 	public void testUpdateOk()
 	{
 		// given

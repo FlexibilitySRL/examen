@@ -1,20 +1,33 @@
-## ABM Product
-ProductApi.java,
-ProductController.java,
-GenericProductException.java,
-Product.java,
-ProductRepository.java,
-ProductServiceImpl.java,
-ProductService.java
+## App Hosted
+[https://examen.cfapps.io/swagger-ui.html](https://examen.cfapps.io/swagger-ui.html)
 
-## Test Coverage Report
-ProductControllerIntegrationTest.java,
-ProductServiceIntegrationTest.java
+## Sonar Cloud
 
-product-coverage-jacoco.exec
+`mvn sonar:sonar   -Dsonar.projectKey=jonatanduplessy_examen   -Dsonar.organization=jonatanduplessy-github   -Dsonar.host.url=https://sonarcloud.io   -Dsonar.login=8913a970571ed75b2d21396a1733036d41ca293c`
 
-## Docker
+SonarCloud [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=jonatanduplessy_examen&metric=alert_status)](https://sonarcloud.io/dashboard?id=jonatanduplessy_examen)
+[https://sonarcloud.io/dashboard?id=jonatanduplessy_examen](https://sonarcloud.io/dashboard?id=jonatanduplessy_examen)
+
+## Test Coverage
+
+`mvn clean test`
+
+
+
+## Docker Images
+
 [https://hub.docker.com/r/jonatanduplessy/test-docker-repo/tags](https://hub.docker.com/r/jonatanduplessy/test-docker-repo/tags)
+
+### 1 Contenedor
+
+jonatanduplessy/test-docker-repo:examen-latest-simple
+
+`sudo docker run -t --name examen-container-simple -p 8080:8080 jonatanduplessy/test-docker-repo:examen-latest-simple`
+
+
+`http://localhost:8080/swagger-ui.html#/`
+
+### 2 Contenedores
 
 jonatanduplessy/test-docker-repo/mysql-latest, 
 jonatanduplessy/test-docker-repo/examen-latest
@@ -24,8 +37,3 @@ jonatanduplessy/test-docker-repo/examen-latest
 `sudo docker run -t --name examen-container -link mysql-container:mysql -p 8087:8080 jonatanduplessy/test-docker-repo:examen-latest`
 
 `http://localhost:8087/swagger-ui.html#/`
-
-## SonarCloud
-[https://sonarcloud.io/dashboard?id=jonatanduplessy_examen](https://sonarcloud.io/dashboard?id=jonatanduplessy_examen)
-
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=jonatanduplessy_examen&metric=alert_status)](https://sonarcloud.io/dashboard?id=jonatanduplessy_examen)

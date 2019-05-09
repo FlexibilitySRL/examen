@@ -67,7 +67,7 @@ public class ClientControllerIntegrationTest
 	public void testFindAll() throws Exception
 	{
 		// given
-		String pathUrl = "all";
+		String pathUrl = "/clients/all";
 		// when
 		mvc.perform(get(pathUrl).contentType(MediaType.APPLICATION_JSON))
 				// then
@@ -78,7 +78,7 @@ public class ClientControllerIntegrationTest
 	public void testFindOneOk() throws Exception
 	{
 		// given
-		String pathUrl = String.format("%s", ID_EXIST_IN_DB);
+		String pathUrl = String.format("/clients/%s", ID_EXIST_IN_DB);
 		// when
 		MvcResult result = mvc.perform(get(pathUrl).contentType(MediaType.APPLICATION_JSON))
 				// then
@@ -100,7 +100,7 @@ public class ClientControllerIntegrationTest
 	public void testFindOneErrorIdNotFound() throws Exception
 	{
 		// given
-		String pathUrl = String.format("%s", ID_NOT_EXIST_IN_DB);
+		String pathUrl = String.format("/clients/%s", ID_NOT_EXIST_IN_DB);
 		// when
 		mvc.perform(get(pathUrl).contentType(MediaType.APPLICATION_JSON))
 				// then
@@ -111,7 +111,7 @@ public class ClientControllerIntegrationTest
 	public void testAddOk() throws Exception
 	{
 		// given
-		String pathUrl = "add";
+		String pathUrl = "/clients/add";
 		Client client = new Client();
 		client.setFullname("prueba controller add");
 		client.setEmail("email here");
@@ -119,7 +119,7 @@ public class ClientControllerIntegrationTest
 		MvcResult result = mvc
 				.perform(post(pathUrl).contentType(MediaType.APPLICATION_JSON).content(asJsonString(client)))
 				// then
-				.andExpect(status().isCreated()).andReturn();
+				.andExpect(status().isOk()).andReturn();
 
 		// given
 		String contentAsString = result.getResponse().getContentAsString();
@@ -133,25 +133,10 @@ public class ClientControllerIntegrationTest
 	}
 
 	@Test
-	public void testAddErrorIdNotNull() throws Exception
-	{
-		// given
-		String pathUrl = "add";
-		Client client = new Client();
-		client.setId(ID_NOT_EXIST_IN_DB);
-		client.setFullname("prueba controller add con ID no nulo");
-		client.setEmail("email here");
-		// when
-		mvc.perform(post(pathUrl).contentType(MediaType.APPLICATION_JSON).content(asJsonString(client)))
-				// then
-				.andExpect(status().isNotAcceptable());
-	}
-
-	@Test
 	public void testUpdateOk() throws Exception
 	{
 		// given
-		String pathUrl = "update";
+		String pathUrl = "/clients/update";
 		Client client = new Client();
 		client.setId(ID_EXIST_IN_DB);
 		client.setFullname("prueba update OK");
@@ -177,7 +162,7 @@ public class ClientControllerIntegrationTest
 	public void testUpdateErrorWithoutChanges() throws Exception
 	{
 		// given
-		String pathUrl = "update";
+		String pathUrl = "/clients/update";
 		Client ClientActual = clientService.findOne(ID_EXIST_IN_DB);
 		Client client = new Client();
 		client.setId(ClientActual.getId());
@@ -193,7 +178,7 @@ public class ClientControllerIntegrationTest
 	public void testUpdateErrorIdNotFound() throws Exception
 	{
 		// given
-		String pathUrl = "update";
+		String pathUrl = "/clients/update";
 		Client client = new Client();
 		client.setId(ID_NOT_EXIST_IN_DB);
 		client.setFullname("prueba ID not found");
@@ -208,7 +193,7 @@ public class ClientControllerIntegrationTest
 	public void testDeleteOk() throws Exception
 	{
 		// given
-		String pathUrl = String.format("delete/%s", ID_EXIST_IN_DB);
+		String pathUrl = String.format("/clients/delete/%s", ID_EXIST_IN_DB);
 		// when
 		mvc.perform(delete(pathUrl).contentType(MediaType.APPLICATION_JSON))
 				// then
@@ -219,7 +204,7 @@ public class ClientControllerIntegrationTest
 	public void testDeleteIdNotFound() throws Exception
 	{
 		// given
-		String pathUrl = String.format("delete/%s", ID_NOT_EXIST_IN_DB);
+		String pathUrl = String.format("/clients/delete/%s", ID_NOT_EXIST_IN_DB);
 		// when
 		mvc.perform(delete(pathUrl).contentType(MediaType.APPLICATION_JSON))
 				// then

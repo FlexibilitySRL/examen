@@ -126,30 +126,6 @@ public class ClientServiceIntegrationTest
 	}
 
 	@Test
-	public void testAddErrorIdNotNull()
-	{
-		// given
-		Client clientToAdd = new Client();
-		clientToAdd.setId(12L);
-		clientToAdd.setFullname("prueba add with id not null");
-		clientToAdd.setEmail("email here");
-
-		// when
-		Client clientAdded = null;
-		try
-		{
-			clientAdded = clientService.add(clientToAdd);
-		}
-		catch (GenericException e)
-		{
-			e.printStackTrace();
-		}
-
-		// then
-		assertNull(clientAdded);
-	}
-
-	@Test
 	public void testUpdateOk()
 	{
 		// given
@@ -174,6 +150,7 @@ public class ClientServiceIntegrationTest
 		Client clientToUse = new Client();
 		clientToUse.setId(ID_EXIST_IN_DB);
 		clientToUse.setFullname("prueba update");
+		clientToUse.setEmail("email here");
 
 		Client clientUpdated = null;
 		try
