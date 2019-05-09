@@ -10,18 +10,19 @@ import java.util.Objects;
 @Table(name = "Product")
 public class Product 
 {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "description", length = 100, nullable = false)
+    @Column(name = "description", length = 130, nullable = false)
     private String description;
 
     @Column(name = "price")
     private BigDecimal price;
 
-    public Product(){}
+	public Product()
+	{
+	}
 
 	public Product(ProductApi productApi)
 	{
@@ -29,27 +30,6 @@ public class Product
 		this.description = productApi.getDescription();
 		this.price = productApi.getPrice();
 	}
-
-	@Override
-	public boolean equals(Object obj)
-	{
-		if (obj == null)
-			return false;
-		
-		if (obj.getClass() != this.getClass())
-            return false;
-
-		Product p = (Product) obj;
-
-		return Objects.equals(this.id, p.getId()) 
-				&& Objects.equals(this.description, p.getDescription()) 
-				&& Objects.equals(this.price, p.getPrice()); 
-	}
-	
-	@Override
-    public int hashCode() {
-        return Objects.hash(id, description, price);
-    }
 
 	public Long getId()
 	{
@@ -81,4 +61,23 @@ public class Product
 		this.price = price;
 	}
 
+	@Override
+	public int hashCode()
+	{
+		return Objects.hash(description, id, price);
+	}
+
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof Product))
+			return false;
+		Product other = (Product) obj;
+		return Objects.equals(description, other.description) && Objects.equals(id, other.id)
+				&& Objects.equals(price, other.price);
+	}
 }

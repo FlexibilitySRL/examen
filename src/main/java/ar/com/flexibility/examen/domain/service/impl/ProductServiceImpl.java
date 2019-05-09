@@ -1,6 +1,6 @@
 package ar.com.flexibility.examen.domain.service.impl;
 
-import ar.com.flexibility.examen.domain.exception.GenericProductException;
+import ar.com.flexibility.examen.domain.exception.GenericException;
 import ar.com.flexibility.examen.domain.model.Product;
 import ar.com.flexibility.examen.domain.repository.ProductRepository;
 import ar.com.flexibility.examen.domain.service.ProductService;
@@ -10,52 +10,49 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static ar.com.flexibility.examen.domain.exception.GenericProductException.*;
+import static ar.com.flexibility.examen.domain.exception.GenericException.*;
 
 @Service
 public class ProductServiceImpl implements ProductService 
 {
-
     @Autowired
     ProductRepository productRepository;
 
-
 	@Override
-	public void deleteAll()
+	public void deleteAll() throws GenericException
 	{
 		productRepository.deleteAll();
 	}
 
 	@Override
-	public List<Product> findAll()
+	public List<Product> findAll() throws GenericException
 	{
 		return productRepository.findAll();
 	}
 
     @Override
-	public Product findOne(Long id) throws NotFoundException, IllegalArgumentException
+	public Product findOne(Long id) throws NotFoundException, GenericException
 	{
 		Product product = productRepository.findOne(id);
 		if (product == null)
-			throw new NotFoundException(String.format(PRODUCT_ID_NOT_EXIST_FORMAT, id));
-
+			throw new NotFoundException(String.format(GENERAL_ID_NOT_EXIST_FORMATED, id));
 		return product;
     }
 
 	@Override
-	public Product add(Product product) throws GenericProductException
+	public Product add(Product product) throws GenericException
 	{
 		product.setId(null);
 		return productRepository.saveAndFlush(product);
 	}
 
 	@Override
-	public Product update(Product product) throws NotFoundException, GenericProductException
+	public Product update(Product product) throws NotFoundException, GenericException
 	{
 		Product productToPersist = findOne(product.getId());
 
 		if (productToPersist.equals(product))
-			throw new GenericProductException(PRODUCT_TO_UPDATE_WITHOUT_CHANGES);
+			throw new GenericException(GENERAL_NOT_CHANGES_TO_MADE);
 
 		productToPersist.setDescription(product.getDescription());
 		productToPersist.setPrice(product.getPrice());
@@ -64,10 +61,9 @@ public class ProductServiceImpl implements ProductService
 	}
 
 	@Override
-	public void delete(Long id) throws NotFoundException
+	public void delete(Long id) throws NotFoundException, GenericException
 	{
 		id = findOne(id).getId();
 		productRepository.delete(id);
 	}
-
 }

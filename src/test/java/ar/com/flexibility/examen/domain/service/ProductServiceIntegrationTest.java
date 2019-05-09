@@ -1,9 +1,8 @@
 package ar.com.flexibility.examen.domain.service;
 
 import ar.com.flexibility.examen.Application;
-import ar.com.flexibility.examen.domain.exception.GenericProductException;
+import ar.com.flexibility.examen.domain.exception.GenericException;
 import ar.com.flexibility.examen.domain.model.Product;
-import ar.com.flexibility.examen.domain.repository.ProductRepository;
 import ar.com.flexibility.examen.domain.service.impl.ProductServiceImpl;
 import javassist.NotFoundException;
 import org.junit.Before;
@@ -11,9 +10,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.math.BigDecimal;
@@ -21,234 +17,300 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class)
-public class ProductServiceIntegrationTest {
+public class ProductServiceIntegrationTest
+{
+	@Autowired
+	private ProductServiceImpl productService;
 
+	private static long PRODUCTS_COUNT;
+	private static long PRODUCT_ID_EXIST_IN_DB;
+	private static long PRODUCT_ID_NOT_EXIST_IN_DB;
 
-    @Autowired
-    private ProductServiceImpl productService;
+	@Before
+	public void setUp() throws GenericException 
+	{
+		productService.deleteAll();
 
+		Product product = new Product();
+		product.setDescription("first product");
+		product.setPrice(new BigDecimal(2.50));
 
-    private static long PRODUCTS_COUNT;
-    private static long PRODUCT_ID_EXIST_IN_DB;
-    private static long PRODUCT_ID_NOT_EXIST_IN_DB;
+		productService.add(product);
+		
+		List<Product> productList = productService.findAll();
 
-    @Before
-    public void setUp(){
-        productService.deleteAll();
+		PRODUCTS_COUNT = productList.size();
+		PRODUCT_ID_EXIST_IN_DB = productList.get((int) PRODUCTS_COUNT - 1).getId();
+		PRODUCT_ID_NOT_EXIST_IN_DB = PRODUCT_ID_EXIST_IN_DB + 1;
+	}
 
-        Product product = new Product();
-        product.setDescription("first product");
-        product.setPrice(new BigDecimal(2.50));
+	@Test
+	public void testFindAll()
+	{
+		// given
 
-        try {
-            productService.add(product);
-        } catch (GenericProductException e) {
-            e.printStackTrace();
-        }
+		// when
+		List<Product> products = null;
+		try
+		{
+			products = productService.findAll();
+		}
+		catch (GenericException e)
+		{
+			e.printStackTrace();
+		}
 
-        List<Product> productList = productService.findAll();
+		// then
+		assertNotNull(products);
+		assertFalse(products.isEmpty());
+		assertEquals(PRODUCTS_COUNT, products.size());
+	}
 
-        PRODUCTS_COUNT = productList.size();
-        PRODUCT_ID_EXIST_IN_DB = productList.get((int) PRODUCTS_COUNT-1).getId();
-        PRODUCT_ID_NOT_EXIST_IN_DB = PRODUCT_ID_EXIST_IN_DB + 1;
-    }
+	@Test
+	public void testFindOne()
+	{
+		// given
+		Product p1 = null;
+		Product p2 = null;
 
-    @Test
-    public void testFindAll(){
-        //given
+		// when
+		try
+		{
+			p1 = productService.findOne(PRODUCT_ID_EXIST_IN_DB);
+			p2 = productService.findOne(PRODUCT_ID_NOT_EXIST_IN_DB);
+		}
+		catch (NotFoundException e)
+		{
+			e.printStackTrace();
+		}
+		catch (GenericException e)
+		{
+			e.printStackTrace();
+		}
 
-        //when
-        List<Product> products = productService.findAll();
+		// then
+		assertNotNull(p1);
+		assertEquals(PRODUCT_ID_EXIST_IN_DB, (long) p1.getId());
+		assertNull(p2);
+	}
 
-        //then
-        assertNotNull(products);
-        assertFalse(products.isEmpty());
-        assertEquals(PRODUCTS_COUNT, products.size());
-    }
+	@Test
+	public void testAddOk()
+	{
+		// given
+		Product productToAdd = new Product();
+		productToAdd.setDescription("prueba add");
+		productToAdd.setPrice(new BigDecimal(100.00));
 
-    @Test
-    public void testFindOne(){
-        //given
-        Product p1 = null;
-        Product p2 = null;
+		// when
+		Product productAdded = null;
+		try
+		{
+			productAdded = productService.add(productToAdd);
+		}
+		catch (GenericException e)
+		{
+			e.printStackTrace();
+		}
 
-        //when
-        try {
-            p1 = productService.findOne(PRODUCT_ID_EXIST_IN_DB);
-            p2 = productService.findOne(PRODUCT_ID_NOT_EXIST_IN_DB);
-        } catch (NotFoundException e) {
-        }
+		// then
+		assertEquals(PRODUCT_ID_EXIST_IN_DB + 1, (long) productAdded.getId());
+		assertEquals(productToAdd.getDescription(), productAdded.getDescription());
+		assertEquals(productToAdd.getPrice(), productAdded.getPrice());
+	}
 
-        //then
-        assertNotNull(p1);
-        assertEquals(PRODUCT_ID_EXIST_IN_DB, (long) p1.getId());
-        assertNull(p2);
-    }
+	@Test
+	public void testAddErrorIdNotNull()
+	{
+		// given
+		Product productToAdd = new Product();
+		productToAdd.setId(12L);
+		productToAdd.setDescription("prueba add with id not null");
+		productToAdd.setPrice(new BigDecimal(200.00));
 
-    @Test
-    public void testAddOk(){
-        //given
-        Product productToAdd = new Product();
-        productToAdd.setDescription("prueba add");
-        productToAdd.setPrice(new BigDecimal(100.00));
+		// when
+		Product productAdded = null;
+		try
+		{
+			productAdded = productService.add(productToAdd);
+		}
+		catch (GenericException e)
+		{
+			e.printStackTrace();
+		}
 
-        //when
-        Product productAdded = null;
-        try {
-            productAdded = productService.add(productToAdd);
-        } catch (GenericProductException e) {
-            e.printStackTrace();
-        }
+		// then
+		assertNull(productAdded);
+	}
 
-        //then
-        assertEquals(PRODUCT_ID_EXIST_IN_DB +1, (long) productAdded.getId());
-        assertEquals(productToAdd.getDescription(), productAdded.getDescription());
-        assertEquals(productToAdd.getPrice(), productAdded.getPrice());
-    }
+	@Test
+	public void testUpdateOk()
+	{
+		// given
+		Product productOriginal = null;
+		try
+		{
+			// when
+			productOriginal = productService.findOne(PRODUCT_ID_EXIST_IN_DB);
+		}
+		catch (NotFoundException e)
+		{
+			e.printStackTrace();
+		}
+		catch (GenericException e)
+		{
+			e.printStackTrace();
+		}
+		// then
+		assertNotNull(productOriginal);
 
-    @Test
-    public void testAddErrorIdNotNull(){
-        //given
-        Product productToAdd = new Product();
-        productToAdd.setId(12L);
-        productToAdd.setDescription("prueba add with id not null");
-        productToAdd.setPrice(new BigDecimal(200.00));
+		// given
+		Product productToUse = new Product();
+		productToUse.setId(PRODUCT_ID_EXIST_IN_DB);
+		productToUse.setDescription("prueba update");
 
-        //when
-        Product productAdded = null;
-        try {
-            productAdded = productService.add(productToAdd);
-        } catch (GenericProductException e) {
-            e.printStackTrace();
-        }
+		Product productUpdated = null;
+		try
+		{
+			// when
+			productUpdated = productService.update(productToUse);
+		}
+		catch (NotFoundException e)
+		{
+			e.printStackTrace();
+		}
+		catch (GenericException e)
+		{
+			e.printStackTrace();
+		}
 
-        //then
-        assertNull(productAdded);
-    }
+		// then
+		assertNotNull(productUpdated);
+		assertEquals(productUpdated, productToUse);
+		assertNotEquals(productUpdated, productOriginal);
+	}
 
-    @Test
-    public void testUpdateOk(){
-        //given
-        Product productOriginal = null;
-        try {
-            //when
-            productOriginal = productService.findOne(PRODUCT_ID_EXIST_IN_DB);
-        } catch (NotFoundException e) {
-            e.printStackTrace();
-        }
-        //then
-        assertNotNull(productOriginal);
+	@Test
+	public void testUpdateErrorIdNotFound()
+	{
+		// given
+		Product productToUse = new Product();
+		productToUse.setId(PRODUCT_ID_NOT_EXIST_IN_DB);
 
-        //given
-        Product productToUse = new Product();
-        productToUse.setId(PRODUCT_ID_EXIST_IN_DB);
-        productToUse.setDescription("prueba update");
+		Product productUpdated = new Product();
+		try
+		{
+			// when
+			productUpdated = productService.update(productToUse);
+		}
+		catch (NotFoundException e)
+		{
+			e.printStackTrace();
+		}
+		catch (GenericException e)
+		{
+			e.printStackTrace();
+		}
 
-        Product productUpdated = null;
-        try {
-            //when
-            productUpdated = productService.update(productToUse);
-        } catch (NotFoundException e) {
-            e.printStackTrace();
-        } catch (GenericProductException e) {
-            e.printStackTrace();
-        }
+		// then
+		assertNull(productUpdated.getId());
+	}
 
-        //then
-        assertNotNull(productUpdated);
-        assertEquals(productUpdated, productToUse);
-        assertNotEquals(productUpdated, productOriginal);
-    }
+	@Test
+	public void testUpdateErrorWithoutChanges()
+	{
+		// given
+		Product productOriginal = null;
+		try
+		{
+			// when
+			productOriginal = productService.findOne(PRODUCT_ID_EXIST_IN_DB);
+		}
+		catch (NotFoundException e)
+		{
+			e.printStackTrace();
+		}
+		catch (GenericException e)
+		{
+			e.printStackTrace();
+		}
+		// then
+		assertNotNull(productOriginal);
 
-    @Test
-    public void testUpdateErrorIdNotFound(){
-        //given
-        Product productToUse = new Product();
-        productToUse.setId(PRODUCT_ID_NOT_EXIST_IN_DB);
+		// given
+		Product productToUse = new Product();
+		productToUse.setId(productOriginal.getId());
+		productToUse.setDescription(productOriginal.getDescription());
+		productToUse.setPrice(productOriginal.getPrice());
 
-        Product productUpdated = new Product();
-        try {
-            //when
-            productUpdated = productService.update(productToUse);
-        } catch (NotFoundException e) {
-            e.printStackTrace();
-        } catch (GenericProductException e) {
-            e.printStackTrace();
-        }
+		// when
+		Product productUpdated = null;
+		try
+		{
+			productUpdated = productService.update(productToUse);
+		}
+		catch (NotFoundException e)
+		{
+			e.printStackTrace();
+		}
+		catch (GenericException e)
+		{
+			e.printStackTrace();
+		}
 
-        //then
-        assertNull(productUpdated.getId());
-    }
+		// then
+		assertNull(productUpdated);
+		assertEquals(productToUse, productOriginal);
+	}
 
-    @Test
-    public void testUpdateErrorWithoutChanges(){
-        //given
-        Product productOriginal = null;
-        try {
-            //when
-            productOriginal = productService.findOne(PRODUCT_ID_EXIST_IN_DB);
-        } catch (NotFoundException e) {
-            e.printStackTrace();
-        }
-        //then
-        assertNotNull(productOriginal);
+	@Test
+	public void testDeleteOk()
+	{
 
-        //given
-        Product productToUse = new Product();
-        productToUse.setId(productOriginal.getId());
-        productToUse.setDescription(productOriginal.getDescription());
-        productToUse.setPrice(productOriginal.getPrice());
+		Product product = null;
+		try
+		{
+			// given
+			assertNotNull(productService.findOne(PRODUCT_ID_EXIST_IN_DB));
+			// when
+			productService.delete(PRODUCT_ID_EXIST_IN_DB);
+			product = productService.findOne(PRODUCT_ID_EXIST_IN_DB);
 
-        //when
-        Product productUpdated = null;
-        try {
-            productUpdated = productService.update(productToUse);
-        } catch (NotFoundException e) {
-            e.printStackTrace();
-        } catch (GenericProductException e) {
-            e.printStackTrace();
-        }
+		}
+		catch (NotFoundException e)
+		{
+			e.printStackTrace();
+		}
+		catch (GenericException e)
+		{
+			e.printStackTrace();
+		}
+		// then
+		assertNull(product);
+	}
 
-        //then
-        assertNull(productUpdated);
-        assertEquals(productToUse, productOriginal);
-    }
-
-    @Test
-    public void testDeleteOk(){
-
-        Product product = null;
-        try {
-            //given
-            assertNotNull(productService.findOne(PRODUCT_ID_EXIST_IN_DB));
-            //when
-            productService.delete(PRODUCT_ID_EXIST_IN_DB);
-            product = productService.findOne(PRODUCT_ID_EXIST_IN_DB);
-
-        } catch (NotFoundException e) {
-            e.printStackTrace();
-        }
-        //then
-        assertNull(product);
-    }
-
-    @Test
-    public void testDeleteIdNotFound(){
-        //given
-        Product product = null;
-        try {
-            //when
-            productService.delete(PRODUCT_ID_NOT_EXIST_IN_DB);
-            product = productService.findOne(PRODUCT_ID_NOT_EXIST_IN_DB);
-        } catch (NotFoundException e) {
-            e.printStackTrace();
-        }
-        //then
-        assertNull(product);
-    }
-
-
+	@Test
+	public void testDeleteIdNotFound()
+	{
+		// given
+		Product product = null;
+		try
+		{
+			// when
+			productService.delete(PRODUCT_ID_NOT_EXIST_IN_DB);
+			product = productService.findOne(PRODUCT_ID_NOT_EXIST_IN_DB);
+		}
+		catch (NotFoundException e)
+		{
+			e.printStackTrace();
+		}
+		catch (GenericException e)
+		{
+			e.printStackTrace();
+		}
+		// then
+		assertNull(product);
+	}
 }

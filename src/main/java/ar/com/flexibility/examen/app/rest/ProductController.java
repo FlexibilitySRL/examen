@@ -2,7 +2,7 @@ package ar.com.flexibility.examen.app.rest;
 
 import ar.com.flexibility.examen.app.api.MessageApi;
 import ar.com.flexibility.examen.app.api.ProductApi;
-import ar.com.flexibility.examen.domain.exception.GenericProductException;
+import ar.com.flexibility.examen.domain.exception.GenericException;
 import ar.com.flexibility.examen.domain.model.Product;
 import ar.com.flexibility.examen.domain.service.ProductService;
 import io.swagger.annotations.*;
@@ -18,50 +18,47 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static ar.com.flexibility.examen.domain.exception.GenericProductException.*;
-import static ar.com.flexibility.examen.domain.service.ProductService.*;
-
 @RestController
 @RequestMapping(path = "/products")
 @Api("Servcio de administracion de Productos")
 public class ProductController
 {
-
 	private static final Logger log = LoggerFactory.getLogger(ProductController.class);
 
 	@Autowired
 	ProductService productService;
 
 	@ApiOperation(value = "Obtiene todos los productos", response = ProductApi.class, responseContainer = "List")
-	@ApiResponse(code = 200, message = FIND_ALL_OK)
+	@ApiResponse(code = 200, message = "Obtención de Lista de Productos exitosa")
 	@GetMapping(path = "all", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> findAll()
 	{
-		List<Product> products = productService.findAll();
+		try
+		{
+			List<ProductApi> productsApi = new ArrayList<>();
+			productService.findAll().forEach(product -> productsApi.add(new ProductApi(product)));
 
-		List<ProductApi> productsApi = new ArrayList<>();
-		products.forEach(product -> productsApi.add(new ProductApi(product)));
-
-		log.info(FIND_ALL_OK);
-		return new ResponseEntity<>(productsApi, HttpStatus.OK);
+			log.info("Obtención de Lista de Productos exitosa");
+			return new ResponseEntity<>(productsApi, HttpStatus.OK);
+		}
+		catch (GenericException e)
+		{
+			return new ResponseEntity<>(new MessageApi(e.getMessage()), HttpStatus.NOT_ACCEPTABLE);
+		}
 	}
 
 	@ApiOperation(value = "Obtiene un Producto", response = ProductApi.class)
-	@ApiResponses
-	({ 
-		@ApiResponse(code = 200, message = FIND_ONE_OK),
-		@ApiResponse(code = 404, message = PRODUCT_ID_NOT_EXIST_ERROR) 
-	})
+	@ApiResponse(code = 200, message = "Obtención del Producto éxitosa")
 	@GetMapping(path = "{id:^[0-9]*$}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> findOne(
-		@ApiParam(name = "id", value = "ID del producto a obtener", required = true) 
+		@ApiParam(name = "id", value = "ID del Producto a obtener", required = true) 
 		@PathVariable(value = "id", required = true) Long id)
 	{
 		try
 		{
 			Product product = productService.findOne(id);
 
-			log.info(FIND_ONE_OK);
+			log.info("Obtención del Producto éxitosa");
 			return new ResponseEntity<ProductApi>(new ProductApi(product), HttpStatus.OK);
 		}
 		catch (NotFoundException e)
@@ -69,10 +66,14 @@ public class ProductController
 			log.info(e.getMessage());
 			return new ResponseEntity<>(new MessageApi(e.getMessage()), HttpStatus.NOT_FOUND);
 		}
+		catch (GenericException e)
+		{
+			return new ResponseEntity<>(new MessageApi(e.getMessage()), HttpStatus.NOT_ACCEPTABLE);
+		}
 	}
 
 	@ApiOperation(value = "Crea un producto", response = ProductApi.class)
-	@ApiResponse(code = 201, message = ADD_CODE_OK)
+	@ApiResponse(code = 200, message = "Producto creado con éxito")
 	@PostMapping(path = "add", produces = MediaType.APPLICATION_JSON_VALUE, 
 				consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> add(
@@ -83,23 +84,18 @@ public class ProductController
 		{
 			Product product = productService.add(new Product(productApi));
 
-			log.info(ADD_CODE_OK);
-			return new ResponseEntity<>(new ProductApi(product), HttpStatus.CREATED);
+			log.info("Producto creado con éxito");
+			return new ResponseEntity<>(new ProductApi(product), HttpStatus.OK);
 		}
-		catch (GenericProductException e)
+		catch (GenericException e)
 		{
 			log.info(e.getMessage());
 			return new ResponseEntity<>(new MessageApi(e.getMessage()), HttpStatus.NOT_ACCEPTABLE);
 		}
 	}
 
-	@ApiOperation(value = "Actualiza un producto", response = ProductApi.class)
-	@ApiResponses
-	({ 
-		@ApiResponse(code = 200, message = UPDATE_CODE_OK),
-		@ApiResponse(code = 406, message = PRODUCT_TO_UPDATE_WITHOUT_CHANGES),
-		@ApiResponse(code = 404, message = PRODUCT_ID_NOT_EXIST_ERROR) 
-	})
+	@ApiOperation(value = "Actualiza un Producto", response = ProductApi.class)
+	@ApiResponse(code = 200, message = "Producto actualizado con éxito")
 	@PutMapping(path = "update", produces = MediaType.APPLICATION_JSON_VALUE, 
 				consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> update(
@@ -110,7 +106,7 @@ public class ProductController
 		{
 			Product productUpdated = productService.update(new Product(productApi));
 
-			log.info(UPDATE_CODE_OK);
+			log.info("Producto actualizado con éxito");
 			return new ResponseEntity<>(new ProductApi(productUpdated), HttpStatus.OK);
 		}
 		catch (NotFoundException e)
@@ -118,19 +114,15 @@ public class ProductController
 			log.info(e.getMessage());
 			return new ResponseEntity<>(new MessageApi(e.getMessage()), HttpStatus.NOT_FOUND);
 		}
-		catch (GenericProductException e)
+		catch (GenericException e)
 		{
 			log.info(e.getMessage());
 			return new ResponseEntity<>(new MessageApi(e.getMessage()), HttpStatus.NOT_ACCEPTABLE);
 		}
 	}
 
-	@ApiOperation(value = "Elimina un producto", response = MessageApi.class)
-	@ApiResponses
-	({ 
-		@ApiResponse(code = 200, message = DELETE_CODE_OK),
-		@ApiResponse(code = 404, message = PRODUCT_ID_NOT_EXIST_ERROR) 
-	})
+	@ApiOperation(value = "Elimina un Producto", response = MessageApi.class)
+	@ApiResponse(code = 200, message = "Producto eliminado con éxito")
 	@DeleteMapping(path = "delete/{id:^[0-9]*$}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> delete(
 			@ApiParam(name = "id", value = "ID del Producto a eliminar", required = true) 
@@ -140,14 +132,18 @@ public class ProductController
 		{
 			productService.delete(id);
 
-			log.info(DELETE_CODE_OK);
-			return new ResponseEntity<>(new MessageApi(DELETE_CODE_OK), HttpStatus.OK);
+			log.info("Producto eliminado con éxito");
+			return new ResponseEntity<>(new MessageApi("Producto eliminado con éxito"), HttpStatus.OK);
 		}
 		catch (NotFoundException e)
 		{
 			log.info(e.getMessage());
 			return new ResponseEntity<>(new MessageApi(e.getMessage()), HttpStatus.NOT_FOUND);
 		}
+		catch (GenericException e)
+		{
+			log.info(e.getMessage());
+			return new ResponseEntity<>(new MessageApi(e.getMessage()), HttpStatus.NOT_ACCEPTABLE);
+		}
 	}
-
 }

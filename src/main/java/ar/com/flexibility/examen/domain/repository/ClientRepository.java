@@ -1,10 +1,11 @@
 package ar.com.flexibility.examen.domain.repository;
 
-import ar.com.flexibility.examen.domain.model.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import ar.com.flexibility.examen.domain.model.Client;
+
 @Repository
-public interface ProductRepository extends JpaRepository<Product, Long> 
+public interface ClientRepository extends JpaRepository<Client, Long>
 {
 }
