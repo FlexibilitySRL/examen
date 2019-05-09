@@ -33,11 +33,11 @@ public class ProductServiceImpl implements ProductService
 	}
 
     @Override
-	public Product findOne(Long id) throws NotFoundException
+	public Product findOne(Long id) throws NotFoundException, IllegalArgumentException
 	{
 		Product product = productRepository.findOne(id);
 		if (product == null)
-			throw new NotFoundException(String.format(PRODUCT_ID_NOT_EXIST, id));
+			throw new NotFoundException(String.format(PRODUCT_ID_NOT_EXIST_FORMAT, id));
 
 		return product;
     }
@@ -45,9 +45,7 @@ public class ProductServiceImpl implements ProductService
 	@Override
 	public Product add(Product product) throws GenericProductException
 	{
-		if (product.getId() != null)
-			throw new GenericProductException(PRODUCT_ID_MUST_BE_NULL);
-		
+		product.setId(null);
 		return productRepository.saveAndFlush(product);
 	}
 

@@ -19,7 +19,7 @@ public interface ProductService
 
     void deleteAll();
     List<Product> findAll();
-    Product findOne(Long id) throws NotFoundException;
+    Product findOne(Long id) throws NotFoundException, IllegalArgumentException;
 
     Product add(Product product) throws GenericProductException;
     Product update(Product product) throws NotFoundException, GenericProductException;

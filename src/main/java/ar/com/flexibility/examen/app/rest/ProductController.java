@@ -32,8 +32,7 @@ public class ProductController
 	@Autowired
 	ProductService productService;
 
-	@ApiOperation(value = "Obtiene todos los productos", response = ProductApi.class, 
-			responseContainer = "List")
+	@ApiOperation(value = "Obtiene todos los productos", response = ProductApi.class, responseContainer = "List")
 	@ApiResponse(code = 200, message = FIND_ALL_OK)
 	@GetMapping(path = "all", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> findAll()
@@ -44,16 +43,19 @@ public class ProductController
 		products.forEach(product -> productsApi.add(new ProductApi(product)));
 
 		log.info(FIND_ALL_OK);
-		return new ResponseEntity<List>(productsApi, HttpStatus.OK);
+		return new ResponseEntity<>(productsApi, HttpStatus.OK);
 	}
 
 	@ApiOperation(value = "Obtiene un Producto", response = ProductApi.class)
-	@ApiResponses({ @ApiResponse(code = 200, message = FIND_ONE_OK),
-			@ApiResponse(code = 404, message = PRODUCT_ID_NOT_EXIST) })
+	@ApiResponses
+	({ 
+		@ApiResponse(code = 200, message = FIND_ONE_OK),
+		@ApiResponse(code = 404, message = PRODUCT_ID_NOT_EXIST_ERROR) 
+	})
 	@GetMapping(path = "{id:^[0-9]*$}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> findOne(
-			@ApiParam(name = "id", value = "ID del producto a obtener", required = true) 
-			@PathVariable(value = "id", required = true) Long id)
+		@ApiParam(name = "id", value = "ID del producto a obtener", required = true) 
+		@PathVariable(value = "id", required = true) Long id)
 	{
 		try
 		{
@@ -70,8 +72,7 @@ public class ProductController
 	}
 
 	@ApiOperation(value = "Crea un producto", response = ProductApi.class)
-	@ApiResponses({ @ApiResponse(code = 201, message = ADD_CODE_OK),
-			@ApiResponse(code = 406, message = PRODUCT_ID_MUST_BE_NULL) })
+	@ApiResponse(code = 201, message = ADD_CODE_OK)
 	@PostMapping(path = "add", produces = MediaType.APPLICATION_JSON_VALUE, 
 				consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> add(
@@ -93,9 +94,12 @@ public class ProductController
 	}
 
 	@ApiOperation(value = "Actualiza un producto", response = ProductApi.class)
-	@ApiResponses({ @ApiResponse(code = 200, message = UPDATE_CODE_OK),
-			@ApiResponse(code = 406, message = PRODUCT_TO_UPDATE_WITHOUT_CHANGES),
-			@ApiResponse(code = 404, message = PRODUCT_ID_NOT_EXIST) })
+	@ApiResponses
+	({ 
+		@ApiResponse(code = 200, message = UPDATE_CODE_OK),
+		@ApiResponse(code = 406, message = PRODUCT_TO_UPDATE_WITHOUT_CHANGES),
+		@ApiResponse(code = 404, message = PRODUCT_ID_NOT_EXIST_ERROR) 
+	})
 	@PutMapping(path = "update", produces = MediaType.APPLICATION_JSON_VALUE, 
 				consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> update(
@@ -122,8 +126,11 @@ public class ProductController
 	}
 
 	@ApiOperation(value = "Elimina un producto", response = MessageApi.class)
-	@ApiResponses({ @ApiResponse(code = 200, message = DELETE_CODE_OK),
-			@ApiResponse(code = 404, message = PRODUCT_ID_NOT_EXIST) })
+	@ApiResponses
+	({ 
+		@ApiResponse(code = 200, message = DELETE_CODE_OK),
+		@ApiResponse(code = 404, message = PRODUCT_ID_NOT_EXIST_ERROR) 
+	})
 	@DeleteMapping(path = "delete/{id:^[0-9]*$}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> delete(
 			@ApiParam(name = "id", value = "ID del Producto a eliminar", required = true) 
