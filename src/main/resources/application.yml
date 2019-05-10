@@ -25,9 +25,6 @@ spring:
     url: jdbc:mysql://localhost:3306/examen?zeroDateTimeBehavior=CONVERT_TO_NULL
     username: root
     password: Tecso2019
-  h2:
-    console:
-      enabled: true
       
 ---
 
@@ -41,7 +38,4 @@ spring:
   datasource:
     url: jdbc:mysql://mysql-container:3306/examen?zeroDateTimeBehavior=CONVERT_TO_NULL
     username: root
-    password: Tecso2019
-  h2:
-    console:
-      enabled: true    
+    password: Tecso2019  
