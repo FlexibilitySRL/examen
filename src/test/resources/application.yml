@@ -1,18 +1,16 @@
+
 spring:
   profiles: local
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.HSQLDialect
     hibernate:
-      ddl-auto: create
+      ddl-auto: create-drop
     show-sql: true
   datasource:
-    url: jdbc:h2:mem:examen
-    driver-class-name: org.h2.Driver
-    username: sa
-    password:
-  h2:
-    console:
-      enabled: true
+    platform: hsqldb
+    continue-on-error: false
 
 ---
 

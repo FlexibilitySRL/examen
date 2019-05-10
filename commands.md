@@ -1,13 +1,16 @@
 ### Testing
-```
-mvn clean test
-```
 
-**Reports**
-> surefire-reports/*
+**eclipse run configuration**
 
-**Coverage**
-> target/jacoco.exec
+> all tests classes
+
+> -Dspring.profiles.active=local
+
+**eclipse view "Coverage" **
+
+> export session in format "html" and "jacoco.exec"
+
+> copy exported to "/testing/jacoco-coverage/"
 
 ### Sonar
 
@@ -35,7 +38,9 @@ sudo docker run -t --name examen-container-simple -p 8080:8080 jonatanduplessy/t
 
 ### App Hosting
 
-eclipse view 'Boot Dashboard'
+**eclipse view "Boot Dashboard" **
+
+> export and run on "jonatan-duplessy-test-org: development - [http://api.run.pivotal.io]"
 
 [https://console.run.pivotal.io/](https://console.run.pivotal.io/)
 
