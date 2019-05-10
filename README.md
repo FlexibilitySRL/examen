@@ -6,35 +6,35 @@
 
 > -Dspring.profiles.active=local
 
-**eclipse view "Coverage" **
+
+**eclipse view "Coverage"**
 
 > export session in format "html" and "jacoco.exec"
 
 > copy exported to "/testing/jacoco-coverage/"
 
+
 ### Sonar
 
 ```
-mvn sonar:sonar \
--Dsonar.projectKey=jonatanduplessy_examen \ 
--Dsonar.organization=jonatanduplessy-github \
--Dsonar.host.url=https://sonarcloud.io \  
--Dsonar.login=8913a970571ed75b2d21396a1733036d41ca293c
+mvn clean install
 
 mvn sonar:sonar -Dsonar.projectKey=jonatanduplessy_examen -Dsonar.organization=jonatanduplessy-github -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=8913a970571ed75b2d21396a1733036d41ca293c
 ```
 
 [https://sonarcloud.io/dashboard?id=jonatanduplessy_examen](https://sonarcloud.io/dashboard?id=jonatanduplessy_examen)
 
+
 ### App Hosting
 
-**eclipse view "Boot Dashboard" **
+**eclipse view "Boot Dashboard"**
 
 > export and run on "jonatan-duplessy-test-org: development - [http://api.run.pivotal.io]"
 
 [https://console.run.pivotal.io/](https://console.run.pivotal.io/)
 
 [https://examen.cfapps.io/swagger-ui.html](https://examen.cfapps.io/swagger-ui.html)
+
 
 ### Docker
 ```
