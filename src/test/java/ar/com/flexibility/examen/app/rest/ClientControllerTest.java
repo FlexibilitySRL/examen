@@ -33,7 +33,7 @@ import ar.com.flexibility.examen.domain.service.impl.ClientServiceImpl;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class)
 @AutoConfigureMockMvc
-public class ClientControllerIntegrationTest
+public class ClientControllerTest
 {
 	@Autowired
 	private MockMvc mvc;

@@ -2,8 +2,6 @@ package ar.com.flexibility.examen.app.api;
 
 import java.util.Objects;
 
-import javax.validation.constraints.NotNull;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;

@@ -33,18 +33,11 @@ public class ProductController
 	@GetMapping(path = "all", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> findAll()
 	{
-		try
-		{
-			List<ProductApi> productsApi = new ArrayList<>();
-			productService.findAll().forEach(product -> productsApi.add(new ProductApi(product)));
+		List<ProductApi> productsApi = new ArrayList<>();
+		productService.findAll().forEach(product -> productsApi.add(new ProductApi(product)));
 
-			log.info("Obtención de Lista de Productos exitosa");
-			return new ResponseEntity<>(productsApi, HttpStatus.OK);
-		}
-		catch (GenericException e)
-		{
-			return new ResponseEntity<>(new MessageApi(e.getMessage()), HttpStatus.NOT_ACCEPTABLE);
-		}
+		log.info("Obtención de Lista de Productos exitosa");
+		return new ResponseEntity<>(productsApi, HttpStatus.OK);
 	}
 
 	@ApiOperation(value = "Obtiene un Producto", response = ProductApi.class)
@@ -66,10 +59,6 @@ public class ProductController
 			log.info(e.getMessage());
 			return new ResponseEntity<>(new MessageApi(e.getMessage()), HttpStatus.NOT_FOUND);
 		}
-		catch (GenericException e)
-		{
-			return new ResponseEntity<>(new MessageApi(e.getMessage()), HttpStatus.NOT_ACCEPTABLE);
-		}
 	}
 
 	@ApiOperation(value = "Crea un producto", response = ProductApi.class)
@@ -80,18 +69,10 @@ public class ProductController
 			@ApiParam(name = "Product", value = "Producto a crear", required = true) 
 			@RequestBody ProductApi productApi)
 	{
-		try
-		{
-			Product product = productService.add(new Product(productApi));
+		Product product = productService.add(new Product(productApi));
 
-			log.info("Producto creado con éxito");
-			return new ResponseEntity<>(new ProductApi(product), HttpStatus.OK);
-		}
-		catch (GenericException e)
-		{
-			log.info(e.getMessage());
-			return new ResponseEntity<>(new MessageApi(e.getMessage()), HttpStatus.NOT_ACCEPTABLE);
-		}
+		log.info("Producto creado con éxito");
+		return new ResponseEntity<>(new ProductApi(product), HttpStatus.OK);
 	}
 
 	@ApiOperation(value = "Actualiza un Producto", response = ProductApi.class)
@@ -139,11 +120,6 @@ public class ProductController
 		{
 			log.info(e.getMessage());
 			return new ResponseEntity<>(new MessageApi(e.getMessage()), HttpStatus.NOT_FOUND);
-		}
-		catch (GenericException e)
-		{
-			log.info(e.getMessage());
-			return new ResponseEntity<>(new MessageApi(e.getMessage()), HttpStatus.NOT_ACCEPTABLE);
 		}
 	}
 }

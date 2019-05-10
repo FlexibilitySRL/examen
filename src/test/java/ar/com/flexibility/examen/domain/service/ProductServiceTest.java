@@ -19,7 +19,7 @@ import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class)
-public class ProductServiceIntegrationTest
+public class ProductServiceTest
 {
 	@Autowired
 	private ProductServiceImpl productService;
@@ -53,14 +53,7 @@ public class ProductServiceIntegrationTest
 
 		// when
 		List<Product> products = null;
-		try
-		{
-			products = productService.findAll();
-		}
-		catch (GenericException e)
-		{
-			e.printStackTrace();
-		}
+		products = productService.findAll();
 
 		// then
 		assertNotNull(products);
@@ -85,11 +78,6 @@ public class ProductServiceIntegrationTest
 		{
 			e.printStackTrace();
 		}
-		catch (GenericException e)
-		{
-			e.printStackTrace();
-		}
-
 		// then
 		assertNotNull(p1);
 		assertEquals(ID_EXIST_IN_DB, (long) p1.getId());
@@ -106,14 +94,7 @@ public class ProductServiceIntegrationTest
 
 		// when
 		Product productAdded = null;
-		try
-		{
-			productAdded = productService.add(productToAdd);
-		}
-		catch (GenericException e)
-		{
-			e.printStackTrace();
-		}
+		productAdded = productService.add(productToAdd);
 
 		// then
 		assertEquals(ID_EXIST_IN_DB + 1, (long) productAdded.getId());
@@ -132,10 +113,6 @@ public class ProductServiceIntegrationTest
 			productOriginal = productService.findOne(ID_EXIST_IN_DB);
 		}
 		catch (NotFoundException e)
-		{
-			e.printStackTrace();
-		}
-		catch (GenericException e)
 		{
 			e.printStackTrace();
 		}
@@ -208,10 +185,6 @@ public class ProductServiceIntegrationTest
 		{
 			e.printStackTrace();
 		}
-		catch (GenericException e)
-		{
-			e.printStackTrace();
-		}
 		// then
 		assertNotNull(productOriginal);
 
@@ -259,10 +232,6 @@ public class ProductServiceIntegrationTest
 		{
 			e.printStackTrace();
 		}
-		catch (GenericException e)
-		{
-			e.printStackTrace();
-		}
 		// then
 		assertNull(product);
 	}
@@ -279,10 +248,6 @@ public class ProductServiceIntegrationTest
 			product = productService.findOne(ID_NOT_EXIST_IN_DB);
 		}
 		catch (NotFoundException e)
-		{
-			e.printStackTrace();
-		}
-		catch (GenericException e)
 		{
 			e.printStackTrace();
 		}

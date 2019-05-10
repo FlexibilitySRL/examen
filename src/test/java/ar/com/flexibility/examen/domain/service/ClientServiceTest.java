@@ -23,7 +23,7 @@ import javassist.NotFoundException;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class)
-public class ClientServiceIntegrationTest
+public class ClientServiceTest
 {
 	@Autowired
 	private ClientServiceImpl clientService;
@@ -57,14 +57,7 @@ public class ClientServiceIntegrationTest
 
 		// when
 		List<Client> clients = null;
-		try
-		{
-			clients = clientService.findAll();
-		}
-		catch (GenericException e)
-		{
-			e.printStackTrace();
-		}
+		clients = clientService.findAll();
 
 		// then
 		assertNotNull(clients);
@@ -89,11 +82,6 @@ public class ClientServiceIntegrationTest
 		{
 			e.printStackTrace();
 		}
-		catch (GenericException e)
-		{
-			e.printStackTrace();
-		}
-
 		// then
 		assertNotNull(c1);
 		assertEquals(ID_EXIST_IN_DB, (long) c1.getId());
@@ -110,14 +98,7 @@ public class ClientServiceIntegrationTest
 
 		// when
 		Client clientAdded = null;
-		try
-		{
-			clientAdded = clientService.add(clientToAdd);
-		}
-		catch (GenericException e)
-		{
-			e.printStackTrace();
-		}
+		clientAdded = clientService.add(clientToAdd);
 
 		// then
 		assertEquals(ID_EXIST_IN_DB + 1, (long) clientAdded.getId());
@@ -136,10 +117,6 @@ public class ClientServiceIntegrationTest
 			clientOriginal = clientService.findOne(ID_EXIST_IN_DB);
 		}
 		catch (NotFoundException e)
-		{
-			e.printStackTrace();
-		}
-		catch (GenericException e)
 		{
 			e.printStackTrace();
 		}
@@ -213,10 +190,6 @@ public class ClientServiceIntegrationTest
 		{
 			e.printStackTrace();
 		}
-		catch (GenericException e)
-		{
-			e.printStackTrace();
-		}
 		// then
 		assertNotNull(clientOriginal);
 
@@ -264,10 +237,6 @@ public class ClientServiceIntegrationTest
 		{
 			e.printStackTrace();
 		}
-		catch (GenericException e)
-		{
-			e.printStackTrace();
-		}
 		// then
 		assertNull(client);
 	}
@@ -284,10 +253,6 @@ public class ClientServiceIntegrationTest
 			client = clientService.findOne(ID_NOT_EXIST_IN_DB);
 		}
 		catch (NotFoundException e)
-		{
-			e.printStackTrace();
-		}
-		catch (GenericException e)
 		{
 			e.printStackTrace();
 		}

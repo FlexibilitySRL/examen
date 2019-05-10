@@ -8,12 +8,12 @@ import javassist.NotFoundException;
 
 public interface ClientService
 {
-    void deleteAll() throws GenericException;
+    void deleteAll();
     
-    List<Client> findAll() throws GenericException;
-    Client findOne(Long id) throws NotFoundException, GenericException;
+    List<Client> findAll();
+    Client findOne(Long id) throws NotFoundException;
 
-    Client add(Client client) throws GenericException;
+    Client add(Client client);
     Client update(Client client) throws NotFoundException, GenericException;
-    void delete(Long id) throws NotFoundException, GenericException;
+    void delete(Long id) throws NotFoundException;
 }

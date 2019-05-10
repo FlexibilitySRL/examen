@@ -83,7 +83,7 @@ public class Client
 		if (!(obj instanceof Client))
 			return false;
 		Client other = (Client) obj;
-		return Objects.equals(email, other.email) && Objects.equals(fullname, other.fullname)
-				&& Objects.equals(id, other.id);
+		return Objects.equals(this.email, other.getEmail()) && Objects.equals(this.fullname, other.getFullname())
+				&& Objects.equals(this.id, other.getId());
 	}
 }

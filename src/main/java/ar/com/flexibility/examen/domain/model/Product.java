@@ -77,7 +77,7 @@ public class Product
 		if (!(obj instanceof Product))
 			return false;
 		Product other = (Product) obj;
-		return Objects.equals(description, other.description) && Objects.equals(id, other.id)
-				&& Objects.equals(price, other.price);
+		return Objects.equals(this.description, other.getDescription()) && Objects.equals(this.id, other.getId())
+				&& Objects.equals(this.price, other.getPrice());
 	}
 }

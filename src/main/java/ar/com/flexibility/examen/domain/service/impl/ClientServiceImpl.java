@@ -21,19 +21,19 @@ public class ClientServiceImpl implements ClientService
 	ClientRepository clientRepository;
 	
 	@Override
-	public void deleteAll() throws GenericException
+	public void deleteAll()
 	{
 		clientRepository.deleteAll();
 	}
 
 	@Override
-	public List<Client> findAll() throws GenericException
+	public List<Client> findAll()
 	{
 		return clientRepository.findAll();
 	}
 
 	@Override
-	public Client findOne(Long id) throws NotFoundException, GenericException
+	public Client findOne(Long id) throws NotFoundException
 	{
 		Client client = clientRepository.findOne(id);
 		if (client == null)
@@ -42,7 +42,7 @@ public class ClientServiceImpl implements ClientService
 	}
 
 	@Override
-	public Client add(Client client) throws GenericException
+	public Client add(Client client)
 	{
 		client.setId(null);
 		return clientRepository.saveAndFlush(client);
@@ -64,7 +64,7 @@ public class ClientServiceImpl implements ClientService
 	}
 
 	@Override
-	public void delete(Long id) throws NotFoundException, GenericException
+	public void delete(Long id) throws NotFoundException
 	{
 		id = findOne(id).getId();
 		clientRepository.delete(id);

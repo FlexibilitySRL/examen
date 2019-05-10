@@ -8,12 +8,12 @@ import java.util.List;
 
 public interface ProductService 
 {
-    void deleteAll() throws GenericException;
+    void deleteAll();
     
-    List<Product> findAll() throws GenericException;
-    Product findOne(Long id) throws NotFoundException, GenericException;
+    List<Product> findAll();
+    Product findOne(Long id) throws NotFoundException;
 
-    Product add(Product product) throws GenericException;
+    Product add(Product product);
     Product update(Product product) throws NotFoundException, GenericException;
-    void delete(Long id) throws NotFoundException, GenericException;
+    void delete(Long id) throws NotFoundException;
 }

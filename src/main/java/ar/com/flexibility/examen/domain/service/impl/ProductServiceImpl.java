@@ -19,19 +19,19 @@ public class ProductServiceImpl implements ProductService
     ProductRepository productRepository;
 
 	@Override
-	public void deleteAll() throws GenericException
+	public void deleteAll()
 	{
 		productRepository.deleteAll();
 	}
 
 	@Override
-	public List<Product> findAll() throws GenericException
+	public List<Product> findAll()
 	{
 		return productRepository.findAll();
 	}
 
     @Override
-	public Product findOne(Long id) throws NotFoundException, GenericException
+	public Product findOne(Long id) throws NotFoundException
 	{
 		Product product = productRepository.findOne(id);
 		if (product == null)
@@ -40,7 +40,7 @@ public class ProductServiceImpl implements ProductService
     }
 
 	@Override
-	public Product add(Product product) throws GenericException
+	public Product add(Product product)
 	{
 		product.setId(null);
 		return productRepository.saveAndFlush(product);
@@ -61,7 +61,7 @@ public class ProductServiceImpl implements ProductService
 	}
 
 	@Override
-	public void delete(Long id) throws NotFoundException, GenericException
+	public void delete(Long id) throws NotFoundException
 	{
 		id = findOne(id).getId();
 		productRepository.delete(id);

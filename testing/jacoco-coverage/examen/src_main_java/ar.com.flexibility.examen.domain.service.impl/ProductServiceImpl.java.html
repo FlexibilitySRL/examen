@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>ProductServiceImpl.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Imported (May 10, 2019 12:31:43 PM)</a> &gt; <a href="../../index.html" class="el_group">examen</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">ar.com.flexibility.examen.domain.service.impl</a> &gt; <span class="el_source">ProductServiceImpl.java</span></div><h1>ProductServiceImpl.java</h1><pre class="source lang-java linenums">package ar.com.flexibility.examen.domain.service.impl;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>ProductServiceImpl.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">examen-tests-coverage (May 10, 2019 3:37:32 PM)</a> &gt; <a href="../../index.html" class="el_group">examen</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">ar.com.flexibility.examen.domain.service.impl</a> &gt; <span class="el_source">ProductServiceImpl.java</span></div><h1>ProductServiceImpl.java</h1><pre class="source lang-java linenums">package ar.com.flexibility.examen.domain.service.impl;
 
 import ar.com.flexibility.examen.domain.exception.GenericException;
 import ar.com.flexibility.examen.domain.model.Product;
@@ -19,19 +19,19 @@ import static ar.com.flexibility.examen.domain.exception.GenericException.*;
     ProductRepository productRepository;
 
 	@Override
-	public void deleteAll() throws GenericException
+	public void deleteAll()
 	{
 <span class="fc" id="L24">		productRepository.deleteAll();</span>
 <span class="fc" id="L25">	}</span>
 
 	@Override
-	public List&lt;Product&gt; findAll() throws GenericException
+	public List&lt;Product&gt; findAll()
 	{
 <span class="fc" id="L30">		return productRepository.findAll();</span>
 	}
 
     @Override
-	public Product findOne(Long id) throws NotFoundException, GenericException
+	public Product findOne(Long id) throws NotFoundException
 	{
 <span class="fc" id="L36">		Product product = productRepository.findOne(id);</span>
 <span class="fc bfc" id="L37" title="All 2 branches covered.">		if (product == null)</span>
@@ -40,7 +40,7 @@ import static ar.com.flexibility.examen.domain.exception.GenericException.*;
     }
 
 	@Override
-	public Product add(Product product) throws GenericException
+	public Product add(Product product)
 	{
 <span class="fc" id="L45">		product.setId(null);</span>
 <span class="fc" id="L46">		return productRepository.saveAndFlush(product);</span>
@@ -61,10 +61,10 @@ import static ar.com.flexibility.examen.domain.exception.GenericException.*;
 	}
 
 	@Override
-	public void delete(Long id) throws NotFoundException, GenericException
+	public void delete(Long id) throws NotFoundException
 	{
 <span class="fc" id="L66">		id = findOne(id).getId();</span>
 <span class="fc" id="L67">		productRepository.delete(id);</span>
 <span class="fc" id="L68">	}</span>
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span>Imported (May 10, 2019 12:31:43 PM)</div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span>examen-tests-coverage (May 10, 2019 3:37:32 PM)</div></body></html>

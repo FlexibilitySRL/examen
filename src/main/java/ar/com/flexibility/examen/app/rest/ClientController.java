@@ -44,19 +44,11 @@ public class ClientController
 	@GetMapping(path = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> findAll()
 	{
-		try
-		{
-			List<ClientApi> clientsApi = new ArrayList<ClientApi>();
-			clientService.findAll().forEach((client) -> clientsApi.add(new ClientApi(client)));
-			
-			log.info("Obtención de Lista de Clientes exitosa");
-			return new ResponseEntity<>(clientsApi, HttpStatus.OK);
-		}
-		catch (GenericException e)
-		{
-			log.info(e.getMessage());
-			return new ResponseEntity<>(new MessageApi(e.getMessage()), HttpStatus.NOT_ACCEPTABLE);
-		}
+		List<ClientApi> clientsApi = new ArrayList<ClientApi>();
+		clientService.findAll().forEach((client) -> clientsApi.add(new ClientApi(client)));
+		
+		log.info("Obtención de Lista de Clientes exitosa");
+		return new ResponseEntity<>(clientsApi, HttpStatus.OK);
 	}
 
 	@ApiOperation(value = "Obtiene un Cliente", response = ClientApi.class)
@@ -77,11 +69,6 @@ public class ClientController
 			log.info(e.getMessage());
 			return new ResponseEntity<>(new MessageApi(e.getMessage()), HttpStatus.NOT_FOUND);
 		}
-		catch (GenericException e)
-		{
-			log.info(e.getMessage());
-			return new ResponseEntity<>(new MessageApi(e.getMessage()), HttpStatus.NOT_ACCEPTABLE);
-		}
 	}
 
 	@ApiOperation(value = "Crea un Cliente", response = ClientApi.class)
@@ -92,18 +79,10 @@ public class ClientController
 			@ApiParam(name = "Client", value = "Cliente a crear", required = true) 
 			@RequestBody ClientApi clientApi)
 	{
-		try
-		{
-			Client client = clientService.add(new Client(clientApi));
-			
-			log.info("Cliente creado con éxito");
-			return new ResponseEntity<>(new ClientApi(client), HttpStatus.OK);
-		}
-		catch (GenericException e)
-		{
-			log.info(e.getMessage());
-			return new ResponseEntity<>(new MessageApi(e.getMessage()), HttpStatus.NOT_ACCEPTABLE);
-		}
+		Client client = clientService.add(new Client(clientApi));
+		
+		log.info("Cliente creado con éxito");
+		return new ResponseEntity<>(new ClientApi(client), HttpStatus.OK);
 	}
 
 	@ApiOperation(value = "Actualiza un Cliente", response = ClientApi.class)
@@ -151,11 +130,6 @@ public class ClientController
 		{
 			log.info(e.getMessage());
 			return new ResponseEntity<>(new MessageApi(e.getMessage()), HttpStatus.NOT_FOUND);
-		}
-		catch (GenericException e)
-		{
-			log.info(e.getMessage());
-			return new ResponseEntity<>(new MessageApi(e.getMessage()), HttpStatus.NOT_ACCEPTABLE);
 		}
 	}
 }

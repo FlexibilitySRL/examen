@@ -11,6 +11,10 @@ public class MessageApi
 
 	@JsonProperty
 	private String message;
+	
+	public MessageApi()
+	{
+	}
 
 	public MessageApi(String message)
 	{

@@ -1,16 +1,15 @@
 package ar.com.flexibility.examen.app.api;
 
-import ar.com.flexibility.examen.domain.model.Product;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonRootName;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-
 import java.math.BigDecimal;
 import java.util.Objects;
 
-import javax.validation.constraints.NotNull;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonRootName;
+
+import ar.com.flexibility.examen.domain.model.Product;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 @JsonRootName(value = "product")
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -86,7 +85,7 @@ public class ProductApi
 		if (!(obj instanceof ProductApi))
 			return false;
 		ProductApi other = (ProductApi) obj;
-		return Objects.equals(description, other.description) && Objects.equals(id, other.id)
-				&& Objects.equals(price, other.price);
+		return Objects.equals(description, other.getDescription()) && Objects.equals(id, other.getId())
+				&& Objects.equals(price, other.getPrice());
 	}
 }
