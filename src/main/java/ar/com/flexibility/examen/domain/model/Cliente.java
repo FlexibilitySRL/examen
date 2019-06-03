@@ -1,8 +1,8 @@
 package ar.com.flexibility.examen.domain.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import java.util.List;
+
+import javax.persistence.*;
 
 @Entity
 public class Cliente {
@@ -11,6 +11,10 @@ public class Cliente {
 	private int idCliente;
 	@Column(name="nombre")
 	private String nombre;
+	@JoinColumn(name="ventas")
+	@OneToMany(targetEntity = Cliente.class, fetch = FetchType.LAZY , cascade = CascadeType.ALL)
+	private List<Ventas> venta;
+	
 	
 	public String getNombre() {
 		return nombre;
@@ -18,10 +22,10 @@ public class Cliente {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	public int getIdProducto() {
+	public int getIdCliente() {
 		return idCliente;
 	}
-	public void setIdProducto(int idProducto) {
-		this.idCliente = idProducto;
+	public void setIdCliente(int id) {
+		this.idCliente = id;
 	}
 }

@@ -1,8 +1,8 @@
 package ar.com.flexibility.examen.domain.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import java.util.List;
+
+import javax.persistence.*;
 
 @Entity
 public class Producto {
@@ -14,7 +14,9 @@ public class Producto {
 	@Column(name="descripcion")
 	private String descripcion;
 	@Column(name="precio")
-	private Integer precio;
+	private float precio;
+	@OneToMany(targetEntity = Ventas.class, fetch = FetchType.LAZY , cascade = CascadeType.ALL)
+	private List<Ventas> venta;
 	
 	
 	public String getNombre() {
