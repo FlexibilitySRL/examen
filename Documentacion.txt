@@ -1,0 +1,5 @@
+Realize la immplementacion de los serivicios Alta Baja y Modificacion de los clientes y productos permitiendo asi la utilizacion de una base de datos
+
+Realize la implementacion de la consulta de transacciones de venta, en vez de compra, para asi poder vincular los clientes y los productos. Considere la consulta de transacciones como un historial de las ventas realizadas.
+
+Realize la implementacion del servicio para aceptar o rechazar una venta
