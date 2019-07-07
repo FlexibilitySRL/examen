@@ -17,12 +17,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product createProduct (Product product) throws ProductExistsException {
-
-        try {
             return productRepository.save(product);
-        }catch (RuntimeException ex) {
-            throw new ProductExistsException();
-        }
     }
 
 

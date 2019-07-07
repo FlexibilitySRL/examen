@@ -1,6 +1,6 @@
 package ar.com.flexibility.examen.app.rest;
 
-import ar.com.flexibility.examen.app.api.response.ErrorResponse;
+import ar.com.flexibility.examen.app.api.response.ApiError;
 import ar.com.flexibility.examen.domain.model.Product;
 import ar.com.flexibility.examen.domain.service.ProductService;
 import ar.com.flexibility.examen.domain.service.impl.ProductExistsException;
@@ -27,21 +27,24 @@ public class ProductController {
         try {
             Product product1 = productService.createProduct(product);
         } catch (ProductExistsException e) {
-            return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.CONFLICT);
+            ApiError apiError = new ApiError(HttpStatus.CONFLICT, "Product already exists",
+                    "The Product you attempt to register already exists");
+            return new ResponseEntity<>(apiError, apiError.getStatus());
         }
 
         return new ResponseEntity<>(product, HttpStatus.CREATED);
     }
 
 
-    @PutMapping("{id}")
+    @PutMapping("")
     public ResponseEntity<?> updateProduct (@RequestBody Product product) {
 
         try {
             productService.updateProduct(product);
         } catch (ProductNotFoundException e) {
-            e.printStackTrace ();
-            return ResponseEntity.notFound().build();
+            ApiError apiError = new ApiError(HttpStatus.NOT_FOUND, "Product not found",
+                    "The Product you attempt to access is not registered");
+            return new ResponseEntity<>(apiError, apiError.getStatus());
         }
 
         return new ResponseEntity<>(product, HttpStatus.OK);
@@ -54,7 +57,6 @@ public class ProductController {
         try {
             productService.deleteProduct(id);
         } catch (ProductNotFoundException e) {
-            e.printStackTrace();
             return ResponseEntity.notFound().build();
         }
 
@@ -70,7 +72,6 @@ public class ProductController {
         try {
             product = productService.getProductById(id);
         } catch (ProductNotFoundException e) {
-            e.printStackTrace();
             return ResponseEntity.notFound().build();
         }
 
