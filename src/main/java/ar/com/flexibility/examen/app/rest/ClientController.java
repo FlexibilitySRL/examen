@@ -27,7 +27,7 @@ public class ClientController {
     }
 
 
-    @PutMapping("{id}")
+    @PutMapping("")
     public ResponseEntity<?> updateClient (@RequestBody Client client) {
 
         try {
