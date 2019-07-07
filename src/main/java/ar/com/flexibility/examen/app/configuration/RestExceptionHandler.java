@@ -2,6 +2,7 @@ package ar.com.flexibility.examen.app.configuration;
 
 
 import ar.com.flexibility.examen.app.api.response.ApiError;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +20,15 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler({ConstraintViolationException.class})
     public ResponseEntity<Object> handleConstraintViolationException(ConstraintViolationException ex, WebRequest request) {
         ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, "Object constrain", "You must check the request");
-        return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
+        return new ResponseEntity<>(apiError, new HttpHeaders(), apiError.getStatus());
+    }
+
+
+    @ExceptionHandler({EmptyResultDataAccessException.class})
+    public ResponseEntity<Object> handleEmptyResultDataAccessException (EmptyResultDataAccessException ex, WebRequest request) {
+        ApiError apiError = new ApiError(HttpStatus.NOT_FOUND, "Resource not found",
+                "The resource you tried yo access doesn't exists");
+        return new ResponseEntity<>(apiError, apiError.getStatus());
     }
 
 }

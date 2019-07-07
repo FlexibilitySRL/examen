@@ -4,6 +4,7 @@ import ar.com.flexibility.examen.domain.model.Product;
 import ar.com.flexibility.examen.domain.repository.ProductRepository;
 import ar.com.flexibility.examen.domain.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 
@@ -46,7 +47,7 @@ public class ProductServiceImpl implements ProductService {
     public void deleteProduct (Long id) throws ProductNotFoundException {
         try {
             productRepository.delete(id);
-        }catch (RuntimeException re) {
+        }catch (EmptyResultDataAccessException ex) {
             throw new ProductNotFoundException();
         }
     }
