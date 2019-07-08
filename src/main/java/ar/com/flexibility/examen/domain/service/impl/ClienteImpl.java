@@ -2,42 +2,72 @@ package ar.com.flexibility.examen.domain.service.impl;
 
 import java.util.List;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.data.jpa.repository.JpaRepository;
 import ar.com.flexibility.examen.domain.repository.IClienteRepo;
 import ar.com.flexibility.examen.domain.model.Cliente;
-import ar.com.flexibility.examen.domain.service.ClienteService;
+import ar.com.flexibility.examen.domain.model.Producto;
 
-@Service
-public class ClienteImpl implements ClienteService{
+
+@Service("servicioCliente")
+public class ClienteImpl {
 	
 	@Autowired
+	@Qualifier("repositorio")
 	private IClienteRepo clienteRepo;
 	
-	@Override
-	public Cliente insertar(Cliente cliente) {
-		return clienteRepo.save(cliente); 
+	private static final Log Logger = LogFactory.getLog(ClienteImpl.class);
+	
+	
+	public boolean insertar (Cliente cliente) {
+			
+		Logger.info("agregando cliente");
+		
+		try {
+			clienteRepo.save(cliente);
+			Logger.info("cliente agregado");			 
+			 return true;
+		}catch(Exception e) {
+			Logger.info("no pudo agregarse el cliente"); 
+			return false;
+		} 
 	}
 		
-	@Override
 	public List<Cliente> findAll(){
 		
 		return clienteRepo.findAll();
 	}
 	
-	@Override
-	public Cliente modificar(Cliente cliente) {
+	
+	public boolean modificar(Cliente cliente) {
 		
-		return clienteRepo.save(cliente);
+		try {
+			clienteRepo.save(cliente);
+			Logger.info("cliente modificado");			 
+			 return true;
+		}catch(Exception e) {
+			Logger.info("no pudo modificar el cliente"); 
+			return false;
+		} 
 	}
 	
-	@Override
-	public Cliente eliminar (Cliente cliente) {
+	
+	
+	public boolean eliminar (String nombre) {
 		
-		return clienteRepo.save(cliente);
+		try {
+			Cliente cliente = clienteRepo.findByNombre(nombre);
+			clienteRepo.delete(cliente);
+			return true;
+		}catch(Exception e) {
+			return false;
+		}
 	}
 	
 }

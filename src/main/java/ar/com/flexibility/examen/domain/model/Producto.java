@@ -1,11 +1,13 @@
 package ar.com.flexibility.examen.domain.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity
-public class Producto {
+public class Producto implements Serializable {
 	
 	@Id
 	@Column (name = "id")

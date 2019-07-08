@@ -1,11 +1,11 @@
 package ar.com.flexibility.examen.app.rest;
 
 import java.util.List;
-import java.util.logging.LogManager;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ar.com.flexibility.examen.domain.model.Producto;
-import ar.com.flexibility.examen.domain.repository.IProductoRepo;
+import ar.com.flexibility.examen.domain.service.impl.ProductoImpl;
 
 
 
@@ -28,18 +28,23 @@ public class ProductoController {
 	Logger LOG = (Logger) LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired
-	private  IProductoRepo productoRepo;
+	@Qualifier("servicio")
+	private  ProductoImpl productoImpl;
 	
 	//Lista los productos
-	@GetMapping 
+	@GetMapping ("/listar")
 	public List<Producto> listar(){
-		return productoRepo.findAll();		
+		
+		LOG.info("Lista de todos los productos");
+		
+		return productoImpl.obtenerLista();	
+		
 	}
 	
 	//Inserta productos
 	@PostMapping
 	public ResponseEntity<Producto> insertar(@RequestBody Producto producto) {
-		productoRepo.save(producto);
+		productoImpl.insertar(producto);
 		LOG.info("El producto se ha agregado correctamente");	
 		return new ResponseEntity<Producto>(HttpStatus.ACCEPTED);
 	}
@@ -47,7 +52,7 @@ public class ProductoController {
 	//Modifica Productos
 	@PutMapping
 	public ResponseEntity<Producto> modificar(@RequestBody Producto producto) {
-		productoRepo.save(producto);
+		productoImpl.modificar(producto);
 		LOG.info("El producto se ha modificado correctamente");
 		return new ResponseEntity<Producto>(HttpStatus.OK);
 	}
@@ -55,7 +60,7 @@ public class ProductoController {
 	//Elimina Productos
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Producto> eliminar(@PathVariable("id") Integer id) {
-		productoRepo.delete(id);
+		productoImpl.eliminar(id);
 		LOG.info("El producto se ha eliminado correctamente");
 		return new ResponseEntity<Producto>(HttpStatus.OK);
 	}
