@@ -49,7 +49,7 @@ public class ProductoController {
 	@PostMapping("/alta")
 	public ResponseEntity<?> guardar(@RequestBody RequestProducto producto)
 	{
-		if(producto.getDescripcion() != "" && producto.getNombre() != "" && producto.getPrecio() > 0)
+		if(producto.getDescripcion() != "" && producto.getNombre() != "" && producto.getPrecio() >= 0)
 		{	
 			Producto productoEntity = new Producto();
 			productoEntity.setDescripcion(producto.getDescripcion());
