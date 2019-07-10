@@ -1,7 +1,7 @@
 package ar.com.flexibility.examen.domain.service;
 
 import ar.com.flexibility.examen.domain.model.Client;
-import ar.com.flexibility.examen.domain.service.impl.ClientNotFoundException;
+import ar.com.flexibility.examen.domain.service.exception.ClientNotFoundException;
 
 public interface ClientService {
 

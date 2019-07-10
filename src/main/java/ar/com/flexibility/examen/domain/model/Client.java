@@ -16,8 +16,14 @@ public class Client {
     private String lastName;
     private String age;
 
+    public Client() {
+    }
 
-
+    public Client(String firstName, String lastName, String age) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.age = age;
+    }
 
 
 

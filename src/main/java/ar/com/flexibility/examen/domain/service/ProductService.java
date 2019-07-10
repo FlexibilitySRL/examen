@@ -1,8 +1,8 @@
 package ar.com.flexibility.examen.domain.service;
 
 import ar.com.flexibility.examen.domain.model.Product;
-import ar.com.flexibility.examen.domain.service.impl.ProductExistsException;
-import ar.com.flexibility.examen.domain.service.impl.ProductNotFoundException;
+import ar.com.flexibility.examen.domain.service.exception.ProductExistsException;
+import ar.com.flexibility.examen.domain.service.exception.ProductNotFoundException;
 
 public interface ProductService {
 

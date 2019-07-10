@@ -3,6 +3,8 @@ package ar.com.flexibility.examen.domain.service.impl;
 import ar.com.flexibility.examen.domain.model.Product;
 import ar.com.flexibility.examen.domain.repository.ProductRepository;
 import ar.com.flexibility.examen.domain.service.ProductService;
+import ar.com.flexibility.examen.domain.service.exception.ProductExistsException;
+import ar.com.flexibility.examen.domain.service.exception.ProductNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;

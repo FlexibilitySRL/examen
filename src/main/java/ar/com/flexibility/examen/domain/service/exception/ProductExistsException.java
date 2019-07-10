@@ -1,4 +1,4 @@
-package ar.com.flexibility.examen.domain.service.impl;
+package ar.com.flexibility.examen.domain.service.exception;
 
 public class ProductExistsException extends Exception {
 
