@@ -4,14 +4,23 @@ import ar.com.flexibility.examen.domain.model.Client;
 import ar.com.flexibility.examen.domain.model.Product;
 import ar.com.flexibility.examen.domain.model.PurchaseOrder;
 import ar.com.flexibility.examen.domain.repository.PurchaseOrderRepository;
+import ar.com.flexibility.examen.domain.service.ProductService;
 import ar.com.flexibility.examen.domain.service.PurchaseService;
+import ar.com.flexibility.examen.domain.service.exception.ProductNotFoundException;
+import ar.com.flexibility.examen.domain.service.exception.PurchaseOrderEvaluationTransactionException;
 import ar.com.flexibility.examen.domain.service.exception.PurchaseOrderNotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
+@Transactional
 public class PurchaseServiceImpl implements PurchaseService {
+
+    @Autowired
+    private ProductService productService;
 
     @Autowired
     private PurchaseOrderRepository purchaseOrderRepository;
@@ -42,24 +51,35 @@ public class PurchaseServiceImpl implements PurchaseService {
 
 
     @Override
-    public PurchaseOrder aprovePurchase(PurchaseOrder purchaseOrder) throws PurchaseOrderNotFound {
+    @Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = PurchaseOrderEvaluationTransactionException.class)
+    public PurchaseOrder aprovePurchase(PurchaseOrder purchaseOrderTmp) throws PurchaseOrderNotFound,
+            PurchaseOrderEvaluationTransactionException,
+            ProductNotFoundException {
 
-        PurchaseOrder purchaseOrder1 = getPurchaseOrder(purchaseOrder.getId());
+        Product product = productService.getProductById(purchaseOrderTmp.getProduct().getId());
+        PurchaseOrder purchaseOrder = getPurchaseOrder(purchaseOrderTmp.getId());
 
-        purchaseOrder1.setStatus(PurchaseOrder.Status.ACCEPTED);
+        if(purchaseOrder.getAmount() > product.getStock())
+            throw new PurchaseOrderEvaluationTransactionException("Product amount not enough in stock");
 
-        return purchaseOrderRepository.save(purchaseOrder1);
+        purchaseOrder.setStatus(PurchaseOrder.Status.ACCEPTED);
+
+        return purchaseOrderRepository.save(purchaseOrder);
     }
 
 
     @Override
-    public PurchaseOrder revokePurchase(PurchaseOrder purchaseOrder) throws PurchaseOrderNotFound {
+    @Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = PurchaseOrderEvaluationTransactionException.class)
+    public PurchaseOrder revokePurchase(PurchaseOrder purchaseOrderTmp) throws PurchaseOrderNotFound,
+            PurchaseOrderEvaluationTransactionException,
+            ProductNotFoundException {
 
-        PurchaseOrder purchaseOrder1 = getPurchaseOrder(purchaseOrder.getId());
+        Product product = productService.getProductById(purchaseOrderTmp.getProduct().getId());
+        PurchaseOrder purchaseOrder = getPurchaseOrder(purchaseOrderTmp.getId());
 
-        purchaseOrder1.setStatus(PurchaseOrder.Status.REVOKED);
+        purchaseOrder.setStatus(PurchaseOrder.Status.REVOKED);
 
-        return purchaseOrderRepository.save(purchaseOrder1);
+        return purchaseOrderRepository.save(purchaseOrder);
     }
 
 }

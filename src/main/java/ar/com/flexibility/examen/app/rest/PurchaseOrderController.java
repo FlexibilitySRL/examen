@@ -12,6 +12,7 @@ import ar.com.flexibility.examen.domain.service.ProductService;
 import ar.com.flexibility.examen.domain.service.PurchaseService;
 import ar.com.flexibility.examen.domain.service.exception.ClientNotFoundException;
 import ar.com.flexibility.examen.domain.service.exception.ProductNotFoundException;
+import ar.com.flexibility.examen.domain.service.exception.PurchaseOrderEvaluationTransactionException;
 import ar.com.flexibility.examen.domain.service.exception.PurchaseOrderNotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -91,9 +92,9 @@ public class PurchaseOrderController {
         try {
             purchaseOrder = purchaseService.getPurchaseOrder(purchaseOrderId);
 
-            if (purchaseOrderEvaluationRequest.getStatus().toUpperCase().equals(PurchaseOrder.Status.ACCEPTED)) {
+            if (purchaseOrderEvaluationRequest.getStatus().toUpperCase().equals(PurchaseOrder.Status.ACCEPTED.toString().toUpperCase())) {
                 purchaseOrder = purchaseService.aprovePurchase(purchaseOrder);
-            } else if (purchaseOrderEvaluationRequest.getStatus().toUpperCase().equals(PurchaseOrder.Status.REVOKED)) {
+            } else if (purchaseOrderEvaluationRequest.getStatus().toUpperCase().equals(PurchaseOrder.Status.REVOKED.toString().toUpperCase())) {
                 purchaseOrder = purchaseService.revokePurchase(purchaseOrder);
             } else {
                 ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST,
@@ -105,6 +106,15 @@ public class PurchaseOrderController {
             ApiError apiError = new ApiError(HttpStatus.NOT_FOUND,
                     "Resource not found",
                     "Purchase Order not registered");
+            return new ResponseEntity<>(apiError, apiError.getStatus());
+        }catch (ProductNotFoundException e) {
+            ApiError apiError = new ApiError(HttpStatus.NOT_FOUND,
+                    "Resource not found",
+                    "Product not registered");
+        } catch (PurchaseOrderEvaluationTransactionException e) {
+            ApiError apiError = new ApiError(HttpStatus.CONFLICT,
+                    "Evaluation Error",
+                    e.toString());
             return new ResponseEntity<>(apiError, apiError.getStatus());
         }
 
