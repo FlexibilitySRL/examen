@@ -11,3 +11,7 @@ spring:
     password: password
 
 ---
+logging:
+  level:
+    ROOT: DEBUG
+    ar.com.flexibility: DEBUG
