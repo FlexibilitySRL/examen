@@ -31,7 +31,8 @@ public class CustomerController extends BaseController {
      * {@code POST  /customers} : Create a new customer.
      *
      * @param customerDTO the customerDTO to create.
-     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new customerDTO, or with status {@code 400 (Bad Request)} if the customerDTO has already an ID.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new customerDTO,
+     * or with status {@code 400 (Bad Request)} if the customerDTO has already an ID.
      */
     @ApiOperation("Create a Customer")
     @PostMapping("/customers")
@@ -80,7 +81,8 @@ public class CustomerController extends BaseController {
      * {@code GET  /customers/:id} : get the "id" customer.
      *
      * @param id the id of the customerDTO to retrieve.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the customerDTO, or with status {@code 404 (Not Found)}.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the customerDTO, or with status
+     * {@code 404 (Not Found)}.
      */
     @GetMapping("/customers/{id}")
     public ResponseEntity<CustomerDTO> findById(@ApiParam("Customer id") @PathVariable Long id) {
