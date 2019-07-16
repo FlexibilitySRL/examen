@@ -29,4 +29,11 @@ public abstract class BaseController {
         log.error("Error", e);
         return new ResponseEntity<>(new ExceptionDTO(e.getMessage()), HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(Exception.class)
+    @ResponseBody
+    public ResponseEntity<ExceptionDTO> exceptionHandler(Exception e) {
+        log.error("Error", e);
+        return new ResponseEntity<>(new ExceptionDTO(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 }
