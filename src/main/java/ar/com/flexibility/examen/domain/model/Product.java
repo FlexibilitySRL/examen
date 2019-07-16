@@ -1,9 +1,9 @@
 package ar.com.flexibility.examen.domain.model;
 
+import org.joda.time.LocalDateTime;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 public class Product {
