@@ -1,9 +1,9 @@
 package ar.com.flexibility.examen.domain.model;
 
-import org.joda.time.LocalDateTime;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 public class Product {
@@ -15,9 +15,20 @@ public class Product {
     private String name;
 
     private String description;
+
     @CreatedDate
     @Column(name = "created_date", updatable = false)
     private LocalDateTime createdDate = LocalDateTime.now();
+
+    private Double price;
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
 
     public Long getId() {
         return id;

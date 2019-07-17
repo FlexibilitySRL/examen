@@ -1,14 +1,23 @@
 package ar.com.flexibility.examen.domain.service.dto;
 
 
-import org.joda.time.DateTime;
+import java.time.LocalDateTime;
 
 public class ProductDTO {
 
     private Long id;
     private String name;
     private String description;
-    private DateTime createdDate;
+    private LocalDateTime createdDate;
+    private Double price;
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
 
     public Long getId() {
         return id;
@@ -34,11 +43,11 @@ public class ProductDTO {
         this.description = description;
     }
 
-    public DateTime getCreatedDate() {
+    public LocalDateTime getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(DateTime createdDate) {
+    public void setCreatedDate(LocalDateTime createdDate) {
         this.createdDate = createdDate;
     }
 }

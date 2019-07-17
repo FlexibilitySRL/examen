@@ -1,0 +1,109 @@
+INSERT INTO CUSTOMER
+( ID,
+  EMAIL,
+  FIRST_NAME,
+  LAST_NAME
+)
+VALUES
+( 1,
+  'admlz635@gmail.com',
+  'Andres Daniel',
+  'Martinez'
+);
+
+INSERT INTO CUSTOMER
+( ID,
+  EMAIL,
+  FIRST_NAME,
+  LAST_NAME
+)
+VALUES
+( 2,
+  'andresdmartinez@outlook.com',
+  'Andres',
+  'Martinez'
+);
+
+
+INSERT INTO PRODUCT
+( ID,
+  CREATED_DATE,
+  DESCRIPTION,
+  NAME,
+  PRICE
+)
+VALUES
+( 1,
+  '2019-07-16 21:54:42.468',
+  'ZXC',
+  'QWQWQW',
+  1.9
+);
+
+INSERT INTO PRODUCT
+( ID,
+  CREATED_DATE,
+  DESCRIPTION,
+  NAME,
+  PRICE
+)
+VALUES
+( 2,
+  '2019-07-16 21:54:45.097',
+  'ZXC',
+  'QWQWQW',
+  1.9
+);
+
+
+INSERT INTO PURCHASE
+( ID,
+  PURCHASE_STATUS,
+  CUSTOMER_ID,
+  PRODUCT_ID
+)
+VALUES
+( 1,
+  0,
+  1,
+  1
+);
+
+INSERT INTO PURCHASE
+( ID,
+  PURCHASE_STATUS,
+  CUSTOMER_ID,
+  PRODUCT_ID
+)
+VALUES
+( 2,
+  0,
+  1,
+  1
+);
+
+INSERT INTO PURCHASE
+( ID,
+  PURCHASE_STATUS,
+  CUSTOMER_ID,
+  PRODUCT_ID
+)
+VALUES
+( 3,
+  0,
+  1,
+  1
+);
+
+INSERT INTO PURCHASE
+( ID,
+  PURCHASE_STATUS,
+  CUSTOMER_ID,
+  PRODUCT_ID
+)
+VALUES
+( 4,
+  0,
+  1,
+  1
+);

@@ -1,8 +1,11 @@
 package ar.com.flexibility.examen.domain.service.dto;
 
 import ar.com.flexibility.examen.domain.model.PurchaseStatus;
+import org.springframework.data.annotation.CreatedDate;
 
+import javax.persistence.Column;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 
 public class PurchaseDTO {
     private Long id;
@@ -13,6 +16,18 @@ public class PurchaseDTO {
     private ProductDTO product;
 
     private CustomerDTO customer;
+
+    @CreatedDate
+    @Column(name = "created_date", updatable = false)
+    private LocalDateTime createdDate = LocalDateTime.now();
+
+    public LocalDateTime getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(LocalDateTime createdDate) {
+        this.createdDate = createdDate;
+    }
 
     public Long getId() {
         return id;
