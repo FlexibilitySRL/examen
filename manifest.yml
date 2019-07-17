@@ -1,0 +1,5 @@
+applications:
+  - name: examenflexibility
+    buildpacks: 
+      - java_buildpack
+    path: target/examen-0.0.1.jar
