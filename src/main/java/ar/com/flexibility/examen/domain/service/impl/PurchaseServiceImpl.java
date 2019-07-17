@@ -76,7 +76,7 @@ public class PurchaseServiceImpl implements PurchaseService {
       }
 
       else if(purchase.getPurchaseStatus().equals(PurchaseStatus.APPROVED)) {
-          throw new FlexibilityException("Purchase with id".concat(id.toString()).concat(" already approved"));
+          throw new FlexibilityException("Purchase with id ".concat(id.toString()).concat(" already approved"));
       }
 
       purchase.setPurchaseStatus(PurchaseStatus.APPROVED);
