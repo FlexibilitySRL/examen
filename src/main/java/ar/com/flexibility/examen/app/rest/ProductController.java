@@ -87,7 +87,7 @@ public class ProductController extends BaseController {
      */
     @ApiOperation("Get a Product")
     @GetMapping("/products/{id}")
-    public ResponseEntity<ProductDTO> findById(@ApiParam("Product Id") @PathVariable Long id) {
+    public ResponseEntity<ProductDTO> findById(@ApiParam(value = "Product Id", required = true) @PathVariable Long id) {
         log.debug("REST request to get Product : {}", id);
         return productService.findOne(id).map(ResponseEntity::ok)
                 .orElseThrow(() -> new FlexibilityNotFoundException("ID not found"));
@@ -101,7 +101,7 @@ public class ProductController extends BaseController {
      */
     @ApiOperation("Remove a Product")
     @DeleteMapping("/products/{id}")
-    public ResponseEntity<Void> delete(@ApiParam("Product Id") @PathVariable Long id) {
+    public ResponseEntity<Void> delete(@ApiParam(value = "Product Id", required = true) @PathVariable Long id) {
         log.debug("REST request to delete Product : {}", id);
 
         productService.delete(id);

@@ -84,8 +84,9 @@ public class CustomerController extends BaseController {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the customerDTO, or with status
      * {@code 404 (Not Found)}.
      */
+    @ApiOperation("Get a Customer")
     @GetMapping("/customers/{id}")
-    public ResponseEntity<CustomerDTO> findById(@ApiParam("Customer id") @PathVariable Long id) {
+    public ResponseEntity<CustomerDTO> findById(@ApiParam(value = "Customer id", required = true) @PathVariable Long id) {
         log.debug("REST request to get Customer : {}", id);
 
         return customerService.findOne(id).map(ResponseEntity::ok)
@@ -101,7 +102,7 @@ public class CustomerController extends BaseController {
      */
     @ApiOperation(value = "Remove a Customer")
     @DeleteMapping("/customers/{id}")
-    public ResponseEntity<Void> delete(@ApiParam("Customer id") @PathVariable Long id) {
+    public ResponseEntity<Void> delete(@ApiParam(value = "Customer id", required = true) @PathVariable Long id) {
         log.debug("REST request to delete Contact : {}", id);
         customerService.delete(id);
         return ResponseEntity.noContent().build();

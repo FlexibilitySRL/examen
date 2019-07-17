@@ -5,6 +5,8 @@ import ar.com.flexibility.examen.app.exception.FlexibilityNotFoundException;
 import ar.com.flexibility.examen.domain.service.PurchaseService;
 import ar.com.flexibility.examen.domain.service.dto.PurchaseDTO;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,8 +29,9 @@ public class PurchaseController extends BaseController {
      * @param id the id of the purchaseDTO to approve.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the purchaseDTO, or with status {@code 404 (Not Found)}.
      */
+    @ApiOperation("Approve a purchase")
     @PostMapping("/purchases/{id}/approve")
-    public ResponseEntity<PurchaseDTO> approve(@PathVariable Long id) {
+    public ResponseEntity<PurchaseDTO> approve(@ApiParam(value = "Purchase Id", required = true) @PathVariable Long id) {
         return ResponseEntity.ok(purchaseService.approve(id));
     }
 
@@ -37,6 +40,7 @@ public class PurchaseController extends BaseController {
      *
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of purchases in body.
      */
+    @ApiOperation("Get all purchases")
     @GetMapping("/purchases")
     public List<PurchaseDTO> findAll() {
         return purchaseService.findAll();
@@ -48,8 +52,9 @@ public class PurchaseController extends BaseController {
      * @param id the id of the productDTO to retrieve.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the productDTO, or with status {@code 404 (Not Found)}.
      */
+    @ApiOperation("Get a purchase")
     @GetMapping("/purchases/{id}")
-    public ResponseEntity<PurchaseDTO> findById(@PathVariable Long id) {
+    public ResponseEntity<PurchaseDTO> findById(@ApiParam(value = "Purchase Id", required = true) @PathVariable Long id) {
 
         return purchaseService.findOne(id).map(ResponseEntity::ok)
                 .orElseThrow(() -> new FlexibilityNotFoundException("Id not found"));
