@@ -1,126 +1,151 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.4.1.RELEASE</version>
-    </parent>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>1.4.1.RELEASE</version>
+	</parent>
 
-    <modelVersion>4.0.0</modelVersion>
-    <groupId>ar.com.flexibility</groupId>
-    <artifactId>examen</artifactId>
-    <version>0.0.1</version>
-    <packaging>jar</packaging>
-    <name>examen</name>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>ar.com.flexibility</groupId>
+	<artifactId>examen</artifactId>
+	<version>0.0.1</version>
+	<packaging>jar</packaging>
+	<name>examen</name>
 
-    <url>https://github.com/FlexibilitySRL/examen</url>
-    <description>Examen Rest</description>
-    <inceptionYear>2017</inceptionYear>
+	<url>https://github.com/FlexibilitySRL/examen</url>
+	<description>Examen Rest</description>
+	<inceptionYear>2017</inceptionYear>
 
-    <scm>
-        <url>https://github.com/FlexibilitySRL/examen</url>
-        <connection>scm:git:https://github.com/FlexibilitySRL/examen.git</connection>
-        <developerConnection>scm:git:https://github.com/FlexibilitySRL/examen.git</developerConnection>
-        <tag>HEAD</tag>
-    </scm>
+	<scm>
+		<url>https://github.com/FlexibilitySRL/examen</url>
+		<connection>scm:git:https://github.com/FlexibilitySRL/examen.git</connection>
+		<developerConnection>scm:git:https://github.com/FlexibilitySRL/examen.git</developerConnection>
+		<tag>HEAD</tag>
+	</scm>
 
-    <issueManagement>
-        <system>GitHub Issues</system>
-        <url>https://github.com/FlexibilitySRL/examen/issues</url>
-    </issueManagement>
+	<issueManagement>
+		<system>GitHub Issues</system>
+		<url>https://github.com/FlexibilitySRL/examen/issues</url>
+	</issueManagement>
 
-    <properties>
-        <java.version>1.8</java.version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <start-class>ar.com.flexibility.examen.Application</start-class>
-        <hibernate-jpamodelgen.version>5.0.6.Final</hibernate-jpamodelgen.version>
-        <joda-time-version>2.9.1</joda-time-version>
-        <jadira-usertype-version>5.0.0.GA</jadira-usertype-version>
-        <commons-lang3.version>3.4</commons-lang3.version>
-        <commons-codec.version>1.10</commons-codec.version>
-        <guava.version>19.0</guava.version>
-    </properties>
+	<properties>
+		<java.version>1.8</java.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<start-class>ar.com.flexibility.examen.Application</start-class>
+		<hibernate-jpamodelgen.version>5.0.6.Final</hibernate-jpamodelgen.version>
+		<joda-time-version>2.9.1</joda-time-version>
+		<jadira-usertype-version>5.0.0.GA</jadira-usertype-version>
+		<commons-lang3.version>3.4</commons-lang3.version>
+		<commons-codec.version>1.10</commons-codec.version>
+		<guava.version>19.0</guava.version>
+		<jackson.version>2.8.10</jackson.version>
+		<jaxb-api.version>2.2.11</jaxb-api.version>
+	</properties>
 
-    <dependencies>
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-actuator</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-hateoas</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-jpamodelgen</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.jadira.usertype</groupId>
+			<artifactId>usertype.core</artifactId>
+			<version>${jadira-usertype-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>${commons-lang3.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>${guava.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-actuator</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-hateoas</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
             <scope>runtime</scope>
         </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-jpamodelgen</artifactId>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>joda-time</groupId>
-            <artifactId>joda-time</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.jadira.usertype</groupId>
-            <artifactId>usertype.core</artifactId>
-            <version>${jadira-usertype-version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>${commons-lang3.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>${guava.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>commons-codec</groupId>
-            <artifactId>commons-codec</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
 
-    <build>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-jar-plugin</artifactId>
-                    <configuration>
-                        <archive>
-                            <manifestEntries>
-                                <Premain-Class>ar.com.flexibility.examen.NopPreMain</Premain-Class>
-                            </manifestEntries>
-                        </archive>
-                    </configuration>
-                </plugin>
-            </plugins>
-        </pluginManagement>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.xml.bind</groupId>
+			<artifactId>jaxb-api</artifactId>
+			<version>${jaxb-api.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+
+
+	</dependencies>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-jar-plugin</artifactId>
+					<configuration>
+						<archive>
+							<manifestEntries>
+								<Premain-Class>ar.com.flexibility.examen.NopPreMain</Premain-Class>
+							</manifestEntries>
+						</archive>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
 </project>
