@@ -8,7 +8,7 @@ public interface ProductService {
 
     Product updateProduct(Product product);
 
-    Product findById(Product product);
+    Product findById(Long id);
 
     void deleteProduct(Product product);
 }
