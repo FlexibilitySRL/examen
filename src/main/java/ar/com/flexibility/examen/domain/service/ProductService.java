@@ -2,6 +2,8 @@ package ar.com.flexibility.examen.domain.service;
 
 import ar.com.flexibility.examen.domain.model.Product;
 
+import java.util.List;
+
 public interface ProductService {
 
     Product addProduct(Product product);
@@ -10,5 +12,7 @@ public interface ProductService {
 
     Product findById(Long id);
 
-    void deleteProduct(Product product);
+    void deleteProduct(Long product);
+
+    List<Product> findAll();
 }

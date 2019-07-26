@@ -64,7 +64,7 @@ public class ProductServiceImplTest {
         System.out.println("ProductServiceImplTest.deleteProduct_withExistingProduct");
         System.out.println("savedProduct.getPrice() = " + savedProduct.getPrice());
 
-        productService.deleteProduct(savedProduct);
+        productService.deleteProduct(savedProduct.getId());
 
         assertNull(productService.findById(savedProduct.getId()));
     }

@@ -6,6 +6,7 @@ import ar.com.flexibility.examen.domain.service.ProductService;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 @Transactional
@@ -33,7 +34,14 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void deleteProduct(Product product) {
-        productRepository.delete(product);
+    public void deleteProduct(Long id) {
+        productRepository.delete(id);
     }
+
+    @Override
+    public List<Product> findAll() {
+        return (List<Product>) productRepository.findAll();
+    }
+
+
 }
