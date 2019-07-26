@@ -61,9 +61,6 @@ public class ProductServiceImplTest {
     public void deleteProduct_withExistingProduct() {
         Product savedProduct = productService.addProduct(this.product);
 
-        System.out.println("ProductServiceImplTest.deleteProduct_withExistingProduct");
-        System.out.println("savedProduct.getPrice() = " + savedProduct.getPrice());
-
         productService.deleteProduct(savedProduct.getId());
 
         assertNull(productService.findById(savedProduct.getId()));
