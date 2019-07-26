@@ -14,7 +14,8 @@ public class Client {
     private String name;
     private String surname;
 
-    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
+    @OneToMany
+    @JoinColumn(name = "client_id")
     private List<Product> products;
 
     public Client(){
@@ -28,7 +29,6 @@ public class Client {
     }
 
     public void addProduct(Product product){
-        product.setClient(this);
         products.add(product);
     }
 

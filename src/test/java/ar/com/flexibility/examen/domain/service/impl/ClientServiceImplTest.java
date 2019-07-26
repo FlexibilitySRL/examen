@@ -19,6 +19,10 @@ public class ClientServiceImplTest {
 
     @Autowired
     private ClientServiceImpl clientService;
+
+    @Autowired
+    private ProductServiceImpl productService;
+
     private Client client;
 
     @Before
@@ -36,11 +40,14 @@ public class ClientServiceImplTest {
 
     @Test
     public void addClient_clientWithProducts_returnClient(){
-        client.addProduct(new Product("coca", BigDecimal.valueOf(12.3)));
+        Product product = new Product("coca", BigDecimal.valueOf(12.3));
+        productService.addProduct(product);
+
+        client.addProduct(product);
         Client savedClient = clientService.addClient(this.client);
 
         assertEquals(client.getProducts().size(), savedClient.getProducts().size());
-        assertEquals(client.getProducts().get(0).getClient().getId(), savedClient.getId());
+        assertEquals("coca", client.getProducts().get(0).getName());
     }
 
     @Test

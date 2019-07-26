@@ -11,10 +11,6 @@ public class Product {
     private String name;
     private BigDecimal price;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "client_id")
-    private Client client;
-
     public Product(){}
 
     public Product(String name, BigDecimal price) {
@@ -46,11 +42,4 @@ public class Product {
         this.price = price;
     }
 
-    public Client getClient() {
-        return client;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
-    }
 }
