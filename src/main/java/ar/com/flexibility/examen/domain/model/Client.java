@@ -1,7 +1,5 @@
 package ar.com.flexibility.examen.domain.model;
 
-import org.springframework.boot.autoconfigure.web.ResourceProperties;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,20 +14,30 @@ public class Client {
 
     @OneToMany
     @JoinColumn(name = "client_id")
+    private List<Purcharse> purcharses;
+
+    @OneToMany
+    @JoinColumn(name = "client_id")
     private List<Product> products;
 
     public Client(){
         products = new ArrayList<>();
+        purcharses = new ArrayList<>();
     }
 
     public Client(String name, String surname) {
         this.name = name;
         this.surname = surname;
-        products = new ArrayList<>();
+        this.products = new ArrayList<>();
+        this.purcharses = new ArrayList<>();
     }
 
     public void addProduct(Product product){
         products.add(product);
+    }
+
+    public void addPurcharse(Purcharse purcharse) {
+        purcharses.add(purcharse);
     }
 
     public Long getId() {
@@ -54,6 +62,14 @@ public class Client {
 
     public void setSurname(String surname) {
         this.surname = surname;
+    }
+
+    public List<Purcharse> getPurcharses() {
+        return purcharses;
+    }
+
+    public void setPurcharses(List<Purcharse> purcharses) {
+        this.purcharses = purcharses;
     }
 
     public List<Product> getProducts() {

@@ -12,7 +12,7 @@ public interface ProductService {
 
     Product findById(Long id);
 
-    void deleteProduct(Long product);
+    void deleteProduct(Long id);
 
     List<Product> findAll();
 }
