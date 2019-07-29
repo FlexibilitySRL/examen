@@ -2,7 +2,6 @@ package ar.com.flexibility.examen.domain.service.impl;
 
 import ar.com.flexibility.examen.domain.model.Product;
 import ar.com.flexibility.examen.domain.model.ShoppingList;
-import ar.com.flexibility.examen.domain.service.ShoppingListService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -45,6 +44,32 @@ public class ShoppingListServiceTest {
         assertNotNull(savedShoppingList);
         assertEquals(2, savedShoppingList.getProducts().size());
         assertEquals("Cheddar", savedShoppingList.getProducts().get(0).getName());
+    }
+
+    @Test
+    public void addProductToShoppingList_existingProduct_returnsUpdatedShoppingList() {
+        Product savedProduct = productService.addProduct(new Product("Coca", BigDecimal.valueOf(75)));
+        ShoppingList savedShoppingList = shoppingListService.addShoppingList(this.shoppingList);
+
+        ShoppingList shoppingListWithNewProduct = shoppingListService.addProduct(savedShoppingList, savedProduct);
+
+        assertNotNull(shoppingListWithNewProduct);
+        assertEquals(3, shoppingListWithNewProduct.getProducts().size());
+        assertEquals(savedProduct, shoppingListWithNewProduct.getProducts().get(2));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void addProductToShoppingList_inexistingProduct_returnIllegalArgumentException(){
+        ShoppingList savedShoppingList = shoppingListService.addShoppingList(this.shoppingList);
+
+        ShoppingList shoppingListWithNewProduct = shoppingListService.addProduct(savedShoppingList, null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void addProductToShoppingList_inexistingShoppingList_returnIllegalArgumentException(){
+        Product savedProduct = productService.addProduct(new Product("Coca", BigDecimal.valueOf(75)));
+
+        ShoppingList shoppingListWithNewProduct = shoppingListService.addProduct(null, savedProduct);
     }
 
     @Test

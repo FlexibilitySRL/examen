@@ -1,5 +1,6 @@
 package ar.com.flexibility.examen.domain.service.impl;
 
+import ar.com.flexibility.examen.domain.model.Product;
 import ar.com.flexibility.examen.domain.model.ShoppingList;
 import ar.com.flexibility.examen.domain.repository.ShoppingListRepository;
 import ar.com.flexibility.examen.domain.service.ShoppingListService;
@@ -20,6 +21,24 @@ public class ShoppingListServiceImpl implements ShoppingListService {
     @Override
     public ShoppingList addShoppingList(ShoppingList shoppingList) {
         return shoppingListRepository.save(shoppingList);
+    }
+
+    @Override
+    public ShoppingList addProduct(ShoppingList shoppingList, Product product) {
+        checkValidParameters(shoppingList, product);
+
+        shoppingList.add(product);
+
+        return updateShoppingList(shoppingList);
+    }
+
+    private void checkValidParameters(ShoppingList shoppingList, Product product) {
+        if (shoppingList == null) {
+            throw new IllegalArgumentException("The shoppingList cannot be null");
+        }
+        if (product == null) {
+            throw new IllegalArgumentException("The product cannot be null");
+        }
     }
 
     @Override
