@@ -83,8 +83,8 @@ public class PurcharseServiceImpl implements PurcharseService {
     }
 
     private void checkSuccessfullyFindAll(List<Purcharse> allPurcharses) {
-        if (allPurcharses == null) {
-            logger.info("The purcharses was find successfully");
+        if (allPurcharses != null) {
+            logger.info("The purcharses were found successfully");
         } else {
             logger.warn("An error ocurred while searching the purcharses");
         }

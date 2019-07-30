@@ -104,8 +104,8 @@ public class ShoppingListServiceImpl implements ShoppingListService {
     }
 
     private void checkSuccessfullyFindAll(List<ShoppingList> allShoppingLists) {
-        if (allShoppingLists == null) {
-            logger.info("The shopping lists was find successfully");
+        if (allShoppingLists != null) {
+            logger.info("The shopping lists were found successfully");
         } else {
             logger.warn("An error ocurred while searching the shopping lists");
         }

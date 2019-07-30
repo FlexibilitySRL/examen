@@ -9,8 +9,8 @@ public class Purcharse {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @OneToOne
-    @JoinColumn(name="shopping_list_id")
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name = "shopping_list_id")
     private ShoppingList shoppingList;
     //    private LocalDateTime currentDate;
     private BigDecimal cost;
@@ -18,7 +18,8 @@ public class Purcharse {
     @Enumerated()
     private PurcharseEnum state;
 
-    public Purcharse() {    }
+    public Purcharse() {
+    }
 
     public Purcharse buy(ShoppingList shoppingList, Client client) {
         //TODO persistir LocalDateTime
