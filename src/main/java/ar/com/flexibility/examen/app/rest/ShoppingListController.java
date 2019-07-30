@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @RestController
 @RequestMapping("/shoppingList")
@@ -18,6 +20,7 @@ public class ShoppingListController {
     private ShoppingListServiceImpl shoppingListService;
     @Autowired
     private ProductServiceImpl productService;
+    private Logger logger = Logger.getLogger("ar.com.flexibility.examen.app.rest.ShoppingListController");
 
     @GetMapping
     public List<ShoppingList> showShoppingLists() {
@@ -26,7 +29,17 @@ public class ShoppingListController {
 
     @PostMapping
     private void addShopingList(@RequestBody ShoppingList shoppingList) {
-        shoppingListService.addShoppingList(shoppingList);
+        ShoppingList updatedShoppingList = shoppingListService.addShoppingList(shoppingList);
+
+       checkServiceStatus(updatedShoppingList,"The shopping list was added succesfully.","An error ocurred while trying to add the shopping list.");
+    }
+
+    private void checkServiceStatus(ShoppingList updatedShoppingList, String infoMessage, String warningMessage) {
+        if (updatedShoppingList != null) {
+            logger.log(Level.INFO, infoMessage);
+        } else {
+            logger.log(Level.WARNING, warningMessage);
+        }
     }
 
     @PostMapping("/product")
@@ -37,8 +50,10 @@ public class ShoppingListController {
         Long productId = Long.parseLong(shoppingListApi.getProductId());
         Product searchedProduct = productService.findById(productId);
 
-        shoppingListService.addProduct(searchedShoppingList, searchedProduct);
+        ShoppingList updatedShoppingList = shoppingListService.addProduct(searchedShoppingList, searchedProduct);
+        checkServiceStatus(updatedShoppingList,"The product was added successfully", "An error occurred while trying to add product to the list");
     }
+
 
     @PutMapping
     private void updateShoppingList(@RequestBody ShoppingList shoppingList) {

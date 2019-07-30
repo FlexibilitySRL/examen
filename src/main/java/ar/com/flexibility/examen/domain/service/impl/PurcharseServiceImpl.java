@@ -40,6 +40,6 @@ public class PurcharseServiceImpl implements PurcharseService {
 
     @Override
     public List<Purcharse> findAll() {
-        return null;
+        return (List<Purcharse>) purcharseRepository.findAll();
     }
 }

@@ -9,7 +9,7 @@ public class Purcharse {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @OneToOne(cascade=CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name="shopping_list_id")
     private ShoppingList shoppingList;
     //    private LocalDateTime currentDate;
@@ -18,10 +18,9 @@ public class Purcharse {
     @Enumerated()
     private PurcharseEnum state;
 
-    public Purcharse() {
-    }
+    public Purcharse() {    }
 
-    public void buy(ShoppingList shoppingList, Client client) {
+    public Purcharse buy(ShoppingList shoppingList, Client client) {
         //TODO persistir LocalDateTime
 //        currentDate = LocalDateTime.now();
         this.shoppingList = shoppingList;
@@ -31,6 +30,8 @@ public class Purcharse {
         state = PurcharseEnum.valueOf("APPROVED");
 
         client.addPurcharse(this);
+
+        return this;
     }
 
     private BigDecimal calculatePrice(ShoppingList shoppingList) {
