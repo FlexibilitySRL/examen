@@ -30,8 +30,8 @@ public class ShoppingListServiceImpl implements ShoppingListService {
         return savedShoppingList;
     }
 
-    private void checkServiceStatus(ShoppingList updatedShoppingList, String infoMessage, String warningMessage) {
-        if (updatedShoppingList != null) {
+    private void checkServiceStatus(ShoppingList shoppingList, String infoMessage, String warningMessage) {
+        if (shoppingList != null) {
             logger.info(infoMessage);
         } else {
             logger.warn(warningMessage);

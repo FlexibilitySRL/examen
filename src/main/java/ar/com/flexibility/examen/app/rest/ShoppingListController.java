@@ -5,8 +5,6 @@ import ar.com.flexibility.examen.domain.model.Product;
 import ar.com.flexibility.examen.domain.model.ShoppingList;
 import ar.com.flexibility.examen.domain.service.impl.ProductServiceImpl;
 import ar.com.flexibility.examen.domain.service.impl.ShoppingListServiceImpl;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
