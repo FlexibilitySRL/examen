@@ -18,4 +18,7 @@ public class MessageApi {
     public void setMessage(String message) {
         this.message = message;
     }
+    public String Holamundo() {
+    	return "mundo";
+    }
 }

@@ -23,4 +23,5 @@ public class CustomController {
     {
         return new ResponseEntity<Message>(messageService.processMessage(message.getMessage()), HttpStatus.OK);
     }
+  
 }

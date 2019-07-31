@@ -3,6 +3,8 @@ package ar.com.flexibility.examen.domain.model;
 public class Message {
 
     private String message;
+    
+   
 
     public Message(String message) {
         this.message = message;

@@ -6,8 +6,8 @@ spring:
       ddl-auto: update
     show-sql: true
   datasource:
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/myabm?useSSL=false
+    url: jdbc:mysql://127.0.0.1:3306/aramark?zeroDateTimeBehavior=convertToNull
     username: root
-    password: 
+    password: password
 
+---
