@@ -12,6 +12,8 @@ import javax.persistence.Table;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity
 @Table(name="compras")
@@ -24,15 +26,20 @@ public class Compra {
 	
 	@ManyToOne(fetch= FetchType.LAZY, optional= false)
 	@OnDelete(action = OnDeleteAction.CASCADE)
+	@JoinColumn(name= "id_articulo",nullable=false)
+	@JsonIgnore
 	private Producto id_articulo;
 
 	@ManyToOne(fetch= FetchType.LAZY, optional= false)
 	@OnDelete(action = OnDeleteAction.CASCADE)
+	@JoinColumn(name= "id_cliente",nullable=false)
+	@JsonIgnore
 	private Cliente id_cliente;
 	
 	@ManyToOne(fetch= FetchType.LAZY, optional= false)
 	@OnDelete(action = OnDeleteAction.CASCADE)
-	@JoinColumn
+	@JoinColumn(name= "id_vendedor",nullable=false)
+	@JsonIgnore
 	private Vendedor id_vendedor;
 
 	public Integer getId() {
@@ -83,17 +90,6 @@ public class Compra {
 		this.id_vendedor = id_vendedor;
 	}
 
-	public Compra(Integer id, Integer cant_art, String tipo_pago, Producto id_articulo, Cliente id_cliente,
-			Vendedor id_vendedor) {
-		super();
-		this.id = id;
-		this.cant_art = cant_art;
-		this.tipo_pago = tipo_pago;
-		this.id_articulo = id_articulo;
-		this.id_cliente = id_cliente;
-		this.id_vendedor = id_vendedor;
-	}
-	
 	
 	
 	

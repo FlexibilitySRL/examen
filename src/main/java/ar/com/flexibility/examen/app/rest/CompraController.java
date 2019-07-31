@@ -18,6 +18,10 @@ import java.util.logging.*;
 @RestController
 @RequestMapping(path = "/compra")
 public class CompraController {
+	// este controlador maneja todos los endpoints de las compras realizadas
+	// indicando los ids de los productos, vendedores , y el id del cliente
+	// referenciando a tablas independientes que muestra la info completa
+	//de cada id
 	@Autowired
 	CompraRepo comprarepo;
 	
@@ -33,11 +37,14 @@ public class CompraController {
 	@PostMapping("/nueva")
 	public Compra CrearCompra(@Valid @RequestBody Compra cmp) {
 		loggercompra.info("creando nuevo registro");
+		// para crear una compra tiene que haber al menos 1 cliente,un vendedor
+		//y un producto registrado previamente ya que se ingresara su correspondiente id
+		
 		return comprarepo.save(cmp);
 		
 	}
 
-	// buscar una compra por id
+	// buscar una compra por id de compra
 	@GetMapping("/buscar/{id}")
 	public Compra BuscaporID(@PathVariable(value = "id") Integer idcompra) {
 		Compra busca = comprarepo.findOne(idcompra);

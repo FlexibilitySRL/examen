@@ -10,7 +10,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+/*Api rest 
+ * 4 tablas cliente, productos,compras y vendedores
+ * Miguel Mavo.
+ * puntos a destacar de la prueba:
+ * -realiza correctamente las operaciones CRUD excepto la de compras por problemas
+ * de integridad referencial. por gestor de bd si lo realiza.
+ * -faltante:pruebas unitarias
+ * -no pude lograr solventarlo por el tiempo.
+ * -los logs lo implemente a nivel de controlador 
+ * 
+ * */
 @RestController
 @RequestMapping(path = "/custom")
 public class CustomController {

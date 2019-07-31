@@ -11,8 +11,7 @@ public class ClienteService {
 	@Autowired
 	ClienteRepo clienterepo;
 	
-	
-	
+
 	public Iterable<Cliente> verClientes(){
 		return clienterepo.findAll();
 		
