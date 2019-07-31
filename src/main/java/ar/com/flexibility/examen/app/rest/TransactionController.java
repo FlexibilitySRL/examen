@@ -1,18 +1,18 @@
 package ar.com.flexibility.examen.app.rest;
 
 import ar.com.flexibility.examen.domain.model.Transaction;
-import ar.com.flexibility.examen.domain.service.impl.AuthorizationServiceImpl;
+import ar.com.flexibility.examen.domain.service.impl.TransactionServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/authorizations")
-public class AuthorizationController {
+@RequestMapping("/transactions")
+public class TransactionController {
 
     @Autowired
-    private AuthorizationServiceImpl authorizationService;
+    private TransactionServiceImpl authorizationService;
 
     @GetMapping
     public List<Transaction> showAuthorizations() {

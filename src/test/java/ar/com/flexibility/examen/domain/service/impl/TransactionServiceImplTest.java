@@ -19,7 +19,7 @@ import static org.junit.Assert.assertNull;
 public class TransactionServiceImplTest {
 
     @Autowired
-    private AuthorizationServiceImpl authorizationService;
+    private TransactionServiceImpl authorizationService;
     @Autowired
     private ClientServiceImpl clientService;
 

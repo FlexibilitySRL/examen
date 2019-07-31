@@ -3,7 +3,7 @@ package ar.com.flexibility.examen.app.rest;
 import ar.com.flexibility.examen.domain.model.Client;
 import ar.com.flexibility.examen.domain.model.Transaction;
 import ar.com.flexibility.examen.domain.model.Purcharse;
-import ar.com.flexibility.examen.domain.service.impl.AuthorizationServiceImpl;
+import ar.com.flexibility.examen.domain.service.impl.TransactionServiceImpl;
 import ar.com.flexibility.examen.domain.service.impl.ClientServiceImpl;
 import ar.com.flexibility.examen.domain.service.impl.PurcharseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ public class ClientController {
     @Autowired
     private PurcharseServiceImpl purcharseService;
     @Autowired
-    private AuthorizationServiceImpl authorizationService;
+    private TransactionServiceImpl authorizationService;
 
     @GetMapping
     public List<Client> showClients(){
@@ -43,8 +43,8 @@ public class ClientController {
     }
 
 
-    @GetMapping(value = "{id}/transactions/")
-    public List<Purcharse> getTransactions(@PathVariable Long id) {
+    @GetMapping(value = "/{id}/purcharses")
+    public List<Purcharse> getPurcharses(@PathVariable Long id) {
         Client searchedClient = clientService.findById(id);
 
         return searchedClient.getPurcharses();
@@ -58,6 +58,5 @@ public class ClientController {
         searchedPurcharse.addTransaction(authorizedTransaction);
 
         purcharseService.updatePurcharse(searchedPurcharse);
-
     }
 }

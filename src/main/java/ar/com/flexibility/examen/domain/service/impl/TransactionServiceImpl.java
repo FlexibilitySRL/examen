@@ -2,7 +2,7 @@ package ar.com.flexibility.examen.domain.service.impl;
 
 import ar.com.flexibility.examen.domain.model.Transaction;
 import ar.com.flexibility.examen.domain.model.Purcharse;
-import ar.com.flexibility.examen.domain.repository.AuthorizationRepository;
+import ar.com.flexibility.examen.domain.repository.TransactionRepository;
 import ar.com.flexibility.examen.domain.service.AuthorizationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,13 +13,13 @@ import java.util.List;
 
 @Service
 @Transactional
-public class AuthorizationServiceImpl implements AuthorizationService {
+public class TransactionServiceImpl implements AuthorizationService {
     private Logger logger = LoggerFactory.getLogger("ar.com.flexibility.examen.domain.service.impl.AuthorizationServiceImpl");
-    private AuthorizationRepository authorizationRepository;
+    private TransactionRepository transactionRepository;
     private PurcharseServiceImpl purcharseService;
 
-    public AuthorizationServiceImpl(AuthorizationRepository authorizationRepository, PurcharseServiceImpl purcharseService) {
-        this.authorizationRepository = authorizationRepository;
+    public TransactionServiceImpl(TransactionRepository transactionRepository, PurcharseServiceImpl purcharseService) {
+        this.transactionRepository = transactionRepository;
         this.purcharseService = purcharseService;
     }
 
@@ -46,7 +46,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
 
     @Override
     public Transaction findById(Long id) {
-        Transaction searchedTransaction = authorizationRepository.findOne(id);
+        Transaction searchedTransaction = transactionRepository.findOne(id);
 
         checkServiceStatus(searchedTransaction, "The authorization was searched successfully.","An error ocurred while trying to search the authorization.");
 
@@ -55,7 +55,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
 
     @Override
     public void deleteAuthorization(Long id) {
-        authorizationRepository.delete(id);
+        transactionRepository.delete(id);
 
         Transaction searchedTransaction = findById(id);
 
@@ -72,7 +72,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
 
     @Override
     public List<Transaction> findAll() {
-        List<Transaction> transactions = (List<Transaction>) authorizationRepository.findAll();
+        List<Transaction> transactions = (List<Transaction>) transactionRepository.findAll();
 
         checkSuccessfullyFindAll(transactions);
 
