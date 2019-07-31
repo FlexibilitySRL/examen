@@ -9,31 +9,23 @@ public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String name;
-    private String surname;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "client_id")
     private List<Purcharse> purcharses;
 
-    @OneToMany
-    @JoinColumn(name = "client_id")
-    private List<Product> products;
+    private String name;
+    private String surname;
+
 
     public Client(){
-        products = new ArrayList<>();
         purcharses = new ArrayList<>();
     }
 
     public Client(String name, String surname) {
         this.name = name;
         this.surname = surname;
-        this.products = new ArrayList<>();
         this.purcharses = new ArrayList<>();
-    }
-
-    public void addProduct(Product product){
-        products.add(product);
     }
 
     public void addPurcharse(Purcharse purcharse) {
@@ -70,13 +62,5 @@ public class Client {
 
     public void setPurcharses(List<Purcharse> purcharses) {
         this.purcharses = purcharses;
-    }
-
-    public List<Product> getProducts() {
-        return products;
-    }
-
-    public void setProducts(List<Product> products) {
-        this.products = products;
     }
 }

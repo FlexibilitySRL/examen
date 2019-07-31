@@ -1,6 +1,7 @@
 package ar.com.flexibility.examen.domain.service.impl;
 
 import ar.com.flexibility.examen.domain.model.Client;
+import ar.com.flexibility.examen.domain.model.Purcharse;
 import ar.com.flexibility.examen.domain.repository.ClientRepository;
 import ar.com.flexibility.examen.domain.service.ClientService;
 import org.slf4j.Logger;
@@ -66,9 +67,9 @@ public class ClientServiceImpl implements ClientService {
 
     private void checkSuccessfullyDelete(Client client) {
         if (client == null) {
-            logger.info("The shopping list was deleted successfully");
+            logger.info("The client was deleted successfully");
         } else {
-            logger.warn("An error ocurred while deleting the shopping list");
+            logger.warn("An error ocurred while deleting the client");
         }
     }
 
@@ -88,4 +89,17 @@ public class ClientServiceImpl implements ClientService {
             logger.warn("An error ocurred while searching clients");
         }
     }
+
+    @Override
+    public Client addPurcharse(Client client, Purcharse purcharse) {
+        client.addPurcharse(purcharse);
+
+        Client updatedClient = updateClient(client);
+
+        checkServiceStatus(updatedClient, "The purcharse was added succesfully.","An error ocurred while trying to add the purcharse.");
+
+        return updatedClient;
+    }
+
+
 }

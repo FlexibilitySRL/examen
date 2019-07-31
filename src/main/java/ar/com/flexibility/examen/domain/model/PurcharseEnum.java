@@ -2,7 +2,8 @@ package ar.com.flexibility.examen.domain.model;
 
 enum PurcharseEnum {
     APPROVED("APPROVED"),
-    REJECTED("REJECTED");
+    REJECTED("REJECTED"),
+    PENDING("PENDING");
     private String state;
 
 

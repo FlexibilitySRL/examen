@@ -1,6 +1,6 @@
 package ar.com.flexibility.examen.domain.service.impl;
 
-
+import ar.com.flexibility.examen.domain.model.Product;
 import ar.com.flexibility.examen.domain.model.Purcharse;
 import ar.com.flexibility.examen.domain.repository.PurcharseRepository;
 import ar.com.flexibility.examen.domain.service.PurcharseService;
@@ -16,16 +16,18 @@ import java.util.List;
 public class PurcharseServiceImpl implements PurcharseService {
     private Logger logger = LoggerFactory.getLogger("ar.com.flexibility.examen.domain.service.impl.PurcharseServiceImpl");
     private PurcharseRepository purcharseRepository;
+    private ProductServiceImpl productService;
 
-    public PurcharseServiceImpl(PurcharseRepository purcharseRepository) {
+    public PurcharseServiceImpl(PurcharseRepository purcharseRepository, ProductServiceImpl productService) {
         this.purcharseRepository = purcharseRepository;
+        this.productService = productService;
     }
 
     @Override
     public Purcharse addPurcharse(Purcharse purcharse) {
         Purcharse savedPurcharse = purcharseRepository.save(purcharse);
 
-        checkServiceStatus(savedPurcharse,"The purcharse was saved successfully", "An error ocurred while saving the purcharse");
+        checkServiceStatus(savedPurcharse, "The purcharse was saved successfully", "An error ocurred while saving the purcharse");
 
         return savedPurcharse;
     }
@@ -35,6 +37,29 @@ public class PurcharseServiceImpl implements PurcharseService {
             logger.info(infoMessage);
         } else {
             logger.warn(warningMessage);
+        }
+    }
+
+    @Override
+    public Purcharse addProduct(Purcharse purcharse, Product product) {
+        checkValidParameters(purcharse, product);
+        Purcharse searchedPurcharse = findById(purcharse.getId());
+        Product searchedProduct = productService.findById(product.getId());
+
+        searchedPurcharse.add(searchedProduct);
+        Purcharse updatedPurcharse = updatePurcharse(searchedPurcharse);
+
+        checkServiceStatus(updatedPurcharse, "The product was added successfully", "An error ocurred while adding the product");
+
+        return updatedPurcharse;
+    }
+
+    private void checkValidParameters(Purcharse purcharse, Product product) {
+        if (purcharse == null) {
+            throw new IllegalArgumentException("The purcharse cannot be null");
+        }
+        if (product == null) {
+            throw new IllegalArgumentException("The product cannot be null");
         }
     }
 
@@ -60,7 +85,7 @@ public class PurcharseServiceImpl implements PurcharseService {
     public void deletePurcharse(Long id) {
         purcharseRepository.delete(id);
 
-        Purcharse searchedPurcharse = purcharseRepository.findOne(id);
+        Purcharse searchedPurcharse = findById(id);
 
         checkSuccessfullyDelete(searchedPurcharse);
     }
@@ -69,7 +94,7 @@ public class PurcharseServiceImpl implements PurcharseService {
         if (purcharse == null) {
             logger.info("The purcharse was deleted successfully");
         } else {
-            logger.warn("An error ocurred while deleting the purcharse");
+            logger.warn("An error ocurred while deleting the shopping list");
         }
     }
 
@@ -82,11 +107,11 @@ public class PurcharseServiceImpl implements PurcharseService {
         return allPurcharses;
     }
 
-    private void checkSuccessfullyFindAll(List<Purcharse> allPurcharses) {
-        if (allPurcharses != null) {
-            logger.info("The purcharses were found successfully");
+    private void checkSuccessfullyFindAll(List<Purcharse> allProducts) {
+        if (allProducts != null) {
+            logger.info("The product was found successfully");
         } else {
-            logger.warn("An error ocurred while searching the purcharses");
+            logger.warn("An error ocurred while searching the product");
         }
     }
 }

@@ -66,9 +66,9 @@ public class ProductServiceImpl implements ProductService {
 
     private void checkSuccessfullyDelete(Product product) {
         if (product == null) {
-            logger.info("The shopping list was deleted successfully");
+            logger.info("The product was deleted successfully");
         } else {
-            logger.warn("An error ocurred while deleting the shopping list");
+            logger.warn("An error ocurred while deleting the product");
         }
     }
 
@@ -83,9 +83,9 @@ public class ProductServiceImpl implements ProductService {
 
     private void checkSuccessfullyFindAll(List<Product> allProducts) {
         if (allProducts != null) {
-            logger.info("The shopping lists was found successfully");
+            logger.info("The product was found successfully");
         } else {
-            logger.warn("An error ocurred while searching the shopping lists");
+            logger.warn("An error ocurred while searching the product");
         }
     }
 

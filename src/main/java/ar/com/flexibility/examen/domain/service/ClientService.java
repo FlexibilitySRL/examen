@@ -1,6 +1,7 @@
 package ar.com.flexibility.examen.domain.service;
 
 import ar.com.flexibility.examen.domain.model.Client;
+import ar.com.flexibility.examen.domain.model.Purcharse;
 
 import java.util.List;
 
@@ -15,4 +16,6 @@ public interface ClientService {
     void deleteClient(Long id);
 
     List<Client> findAll();
+
+    Client addPurcharse(Client client, Purcharse purcharse);
 }

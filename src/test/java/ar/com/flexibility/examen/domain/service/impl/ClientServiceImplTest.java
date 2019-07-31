@@ -1,15 +1,13 @@
 package ar.com.flexibility.examen.domain.service.impl;
 
 import ar.com.flexibility.examen.domain.model.Client;
-import ar.com.flexibility.examen.domain.model.Product;
+import ar.com.flexibility.examen.domain.model.Purcharse;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.math.BigDecimal;
 
 import static org.junit.Assert.*;
 
@@ -38,17 +36,6 @@ public class ClientServiceImplTest {
         assertEquals(client.getSurname(), savedClient.getSurname());
     }
 
-    @Test
-    public void addClient_clientWithProducts_returnClient(){
-        Product product = new Product("coca", BigDecimal.valueOf(12.3));
-        productService.addProduct(product);
-
-        client.addProduct(product);
-        Client savedClient = clientService.addClient(this.client);
-
-        assertEquals(client.getProducts().size(), savedClient.getProducts().size());
-        assertEquals("coca", client.getProducts().get(0).getName());
-    }
 
     @Test
     public void updateClient_validClient_returnClient(){
@@ -80,6 +67,15 @@ public class ClientServiceImplTest {
         clientService.deleteClient(savedClient.getId());
 
         assertNull(clientService.findById(savedClient.getId()));
+    }
+
+    @Test
+    public void addPurcharse_validPurcharse_returnsUpdatedClient(){
+        Purcharse purcharse = new Purcharse();
+
+        Client updatedClient = clientService.addPurcharse(client, purcharse);
+
+        assertEquals(1, updatedClient.getPurcharses().size());
     }
 
 }

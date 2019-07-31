@@ -2,6 +2,9 @@ package ar.com.flexibility.examen.domain.model;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -9,41 +12,47 @@ public class Purcharse {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name = "shopping_list_id")
-    private ShoppingList shoppingList;
-    //    private LocalDateTime currentDate;
-    private BigDecimal cost;
 
-    @Enumerated()
-    private PurcharseEnum state;
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "purcharse_id")
+    private List<Product> products;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "purcharse_id")
+    private List<Transaction> transactions;
+    private BigDecimal cost;
+    private PurcharseEnum status;
 
     public Purcharse() {
-    }
-
-    public Purcharse buy(ShoppingList shoppingList, Client client) {
-        //TODO persistir LocalDateTime
-//        currentDate = LocalDateTime.now();
-        this.shoppingList = shoppingList;
-
-        BigDecimal cost = calculatePrice(shoppingList);
-
-        state = PurcharseEnum.valueOf("APPROVED");
-
-        client.addPurcharse(this);
-
-        return this;
-    }
-
-    private BigDecimal calculatePrice(ShoppingList shoppingList) {
+        products = new ArrayList<>();
+        transactions = new ArrayList<>();
         cost = BigDecimal.valueOf(0);
-        for (Product product : shoppingList.getProducts()) {
-            cost = cost.add(product.getPrice());
-        }
-
-        return cost;
+        status = PurcharseEnum.valueOf("PENDING");
     }
 
+    public void add(Product product) {
+        products.add(product);
+
+        cost = cost.add(product.getPrice());
+    }
+
+    public void addTransaction(Transaction transaction) {
+        transactions.add(transaction);
+    }
+
+    public void delete(Product product) {
+        Iterator<Product> products = this.products.iterator();
+
+        while (products.hasNext()) {
+            Product nextProduct = products.next();
+            if (product.equals(nextProduct)) {
+
+                cost = cost.subtract(nextProduct.getPrice());
+
+                products.remove();
+            }
+        }
+    }
 
     public Long getId() {
         return id;
@@ -51,6 +60,14 @@ public class Purcharse {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
     }
 
     public BigDecimal getCost() {
@@ -61,20 +78,20 @@ public class Purcharse {
         this.cost = cost;
     }
 
-    public ShoppingList getShoppingList() {
-        return shoppingList;
+    public String getStatus() {
+        return status.toString();
     }
 
-    public void setShoppingList(ShoppingList shoppingList) {
-        this.shoppingList = shoppingList;
+    public void setStatus(PurcharseEnum status) {
+        this.status = status;
     }
 
-    public String getState() {
-        return state.getState();
+    public List<Transaction> getTransactions() {
+        return transactions;
     }
 
-    public void setState(PurcharseEnum state) {
-        this.state = state;
+    public void setTransactions(List<Transaction> transactions) {
+        this.transactions = transactions;
     }
 
     @Override
@@ -83,13 +100,16 @@ public class Purcharse {
         if (o == null || getClass() != o.getClass()) return false;
         Purcharse purcharse = (Purcharse) o;
         return Objects.equals(id, purcharse.id) &&
-                Objects.equals(shoppingList, purcharse.shoppingList) &&
+                Objects.equals(products, purcharse.products) &&
+                Objects.equals(transactions, purcharse.transactions) &&
                 Objects.equals(cost, purcharse.cost) &&
-                state == purcharse.state;
+                status == purcharse.status;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, shoppingList, cost, state);
+        return Objects.hash(id, products, transactions, cost, status);
     }
+
+
 }
