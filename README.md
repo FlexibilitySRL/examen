@@ -36,3 +36,119 @@ Bonus
 4) Correr pruebas con base de datos en memoria.
 5) Calcular la covertura de los tests.
 6) Crear Docker Image.
+
+
+
+## 1. Rutas de la api.
+
+
+### 1.1 Cliente
+```
+(GET)		/clients
+```
+``` 
+(POST)		/clients
+```
+```
+(PUT)		/clients 
+```
+```
+(DELETE)	/clients/:id 
+```
+```
+(GET)		/:id/purcharses 
+```
+```
+(PUT)		/:idCliente/transactions/:idPurcharse/authorize
+```
+
+### 1.2 Producto
+```
+(GET)		/products 
+```
+```
+(POST)		/products 
+```
+```
+(PUT)		/products 
+```
+```
+(DELETE)	/products/:id 
+```
+
+
+### 1.3 Compra
+```
+(GET)		/purcharses 
+```
+```
+(POST)		/purcharses 
+```
+```
+(PUT)		/purcharses 
+```
+```
+(DELETE)	/purcharses/:id 
+```
+
+
+### 1.4 Transacción
+```
+(GET)	 	/transactions
+```
+```
+(PUT)	 	/purcharse 
+```
+```
+(DELETE) 	/transactions/:id 
+```
+
+
+## 2. Modelos
+
+### 2.1 Client
+```
+{
+	id: Long,
+	name: String,
+	surname: String
+	purcharses: List<Purcharse>
+}
+```
+
+### 2.2 Product
+```
+{
+	id: Long,
+	name: String
+	price: BigDecimal
+}
+```
+
+### 2.3 Purcharse
+```
+{
+	id: Long,
+	products: List<Product>
+	transaction: List<Transaction>
+	cost: BigDecimal
+	status: PurcharseEnum
+}
+```
+
+### 2.4 Transaction
+```
+{
+	id: Long,
+	transactionTime: LocalDateTime
+}
+```
+
+### 2.5 PurcharseEnum
+```
+{
+	APPROVED,
+	REJECTED
+	PENDING
+}
+```
