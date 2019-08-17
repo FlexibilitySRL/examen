@@ -1,13 +1,45 @@
+server:
+  address=localhost
+  port=8080
+
+logging:
+  file: /weblogs/logfile.log
+
 spring:
+  dao:
+    exceptionTranslation:
+      enabled: true
   profiles: local
-  jpa:
-    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
-    hibernate:
-      ddl-auto: update
-    show-sql: true
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/aramark?zeroDateTimeBehavior=convertToNull
-    username: root
-    password: password
+    name: dataSource
+    url: jdbc:h2:mem:test
+    username: sa
+    password: sa
+    driver-class-name: org.h2.Driver
+    testWhileIdle: true
+    maximumPoolSize: 20
+    max-active: 20
+    max-idle: 8
+    min-idle: 2
+    initial-size: 2
+    test-on-borrow: true
+    test-on-return: true
+    pool-name: dataSourceSpringBootHikariCP
+    minimumIdle: 2
+    maxLifetime: 2000000
+    connectionTimeout: 30000
+    idleTimeout: 30000
+    pool-prepared-statements: true
+    max-open-prepared-statements: true
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+        naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create-drop
+      ddl-generate: true
+    show-sql: true
 
 ---
