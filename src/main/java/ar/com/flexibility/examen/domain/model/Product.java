@@ -1,5 +1,7 @@
 package ar.com.flexibility.examen.domain.model;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,11 +21,27 @@ public class Product {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_seq_productId")
 	private Long productId;
 	
-	@Column(name="NAME")
+	@Column(name="NAME", nullable=false)
 	private String name;
 	
-	@Column(name="DESCRIPTION")
+	@Column(name="DESCRIPTION", nullable=false)
 	private String description;
+	
+	@Column(name="UNITPRICE", nullable=false)
+	private BigDecimal unitPrice;
+
+	public BigDecimal getUnitPrice() {
+		return unitPrice;
+	}
+
+	public void setUnitPrice(BigDecimal unitPrice) {
+		if ( unitPrice != null ) {
+			this.unitPrice = unitPrice;
+		}
+		else {
+			throw new NullPointerException();
+		}
+	}
 
 	public String getName() {
 		return name;

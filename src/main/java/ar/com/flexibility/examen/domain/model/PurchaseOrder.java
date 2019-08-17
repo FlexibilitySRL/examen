@@ -28,7 +28,7 @@ public class PurchaseOrder {
 	@JoinColumn(name = "CLIENT_ID", nullable=false)
 	private Client client;
 	
-	@Column(name="ISSUEDATE")
+	@Column(name="ISSUEDATE", nullable=false)
 	private Date issueDate;
 
 	public PurchaseOrder(Client client) {

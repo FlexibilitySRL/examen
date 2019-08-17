@@ -1,5 +1,7 @@
 package ar.com.flexibility.examen.domain.model;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -31,14 +33,19 @@ public class PurchaseOrderLine {
 	@JoinColumn(name = "PRODUCT_ID", nullable=false)
 	private Product product;
 	
-	@Column(name="QUANTITY")
+	@Column(name="QUANTITY", nullable=false)
 	private int quantity;
 	
-	public PurchaseOrderLine(PurchaseOrder purchaseOrder, Product product, int quantity) {
+	// Para considerar un cambio de precio de los productos
+	@Column(name="UNITPRICE", nullable=false)
+	private BigDecimal unitPrice;
+	
+	public PurchaseOrderLine(PurchaseOrder purchaseOrder, Product product, int quantity, BigDecimal unitPrice) {
 		if ( ( purchaseOrder != null ) && ( product != null ) ) {
 			this.purchaseOrder = purchaseOrder;
 			this.product = product;
 			this.quantity = quantity;
+			this.unitPrice = unitPrice;
 		}
 		else {
 			throw new NullPointerException();
@@ -63,6 +70,10 @@ public class PurchaseOrderLine {
 
 	public int getQuantity() {
 		return quantity;
+	}
+	
+	public BigDecimal getUnitPrice() {
+		return unitPrice;
 	}
 
 	@Override

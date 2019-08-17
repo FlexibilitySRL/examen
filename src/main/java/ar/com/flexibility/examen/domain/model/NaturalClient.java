@@ -9,16 +9,16 @@ import javax.persistence.Table;
 @Entity
 @Table(name="NATURALCLIENTS")
 public class NaturalClient extends Client {
-	@Column(name="NAME")
+	@Column(name="NAME", nullable=false)
 	private String name;
 	
-	@Column(name="SURNAME")
+	@Column(name="SURNAME", nullable=false)
 	private String surname;
 	
-	@Column(name="DNI")
+	@Column(name="DNI", nullable=false)
 	private long dni;
 	
-	@Column(name="BIRTHDAY")
+	@Column(name="BIRTHDAY", nullable=false)
 	private Date birthday;
 	
 	private Address residentialAddress;
