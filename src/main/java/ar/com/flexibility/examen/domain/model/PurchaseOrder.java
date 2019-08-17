@@ -1,5 +1,6 @@
 package ar.com.flexibility.examen.domain.model;
 
+import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -27,6 +28,9 @@ public class PurchaseOrder {
 	@JoinColumn(name = "CLIENT_ID", nullable=false)
 	private Client client;
 	
+	@Column(name="ISSUEDATE")
+	private Date issueDate;
+
 	public PurchaseOrder(Client client) {
 		if ( client != null ) {
 			this.client = client;
@@ -46,6 +50,14 @@ public class PurchaseOrder {
 	
 	public Client getClient() {
 		return this.client;
+	}
+	
+	public Date getIssueDate() {
+		return issueDate;
+	}
+
+	public void setIssueDate(Date issueDate) {
+		this.issueDate = issueDate;
 	}
 	
 	@Override

@@ -1,3 +1,0 @@
-[2019-08-17 13:37:46.429] - 14196 INFO [main] --- org.apache.catalina.core.StandardService: Starting service Tomcat
-[2019-08-17 13:37:46.432] - 14196 INFO [main] --- org.apache.catalina.core.StandardEngine: Starting Servlet Engine: Apache Tomcat/8.5.5
-[2019-08-17 13:37:46.538] - 14196 INFO [localhost-startStop-1] --- org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]: Initializing Spring embedded WebApplicationContext

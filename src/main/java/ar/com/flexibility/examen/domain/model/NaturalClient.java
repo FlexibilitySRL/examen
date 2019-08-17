@@ -62,4 +62,9 @@ public class NaturalClient extends Client {
 	public void setResidentialAddress(Address residentialAddress) {
 		this.residentialAddress = residentialAddress;
 	}
+
+	@Override
+	public <R> R accept(ClientVisitor<R> visitor) {
+		return visitor.visit(this);
+	}
 }

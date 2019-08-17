@@ -14,7 +14,7 @@ import javax.persistence.Table;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED) // Porque la principal diferencia entre las clases concretas son los datos que almacenan
 @Table(name="CLIENTS")
-public class Client {
+public abstract class Client {
 	@Id
 	@Column(name="CLIENT_ID")
 	@SequenceGenerator(name = "client_seq_clientId", sequenceName = "seq_clientId", allocationSize = 1)
@@ -61,6 +61,8 @@ public class Client {
 			return false;
 		}
 	}
+	
+	public abstract <R> R accept(ClientVisitor<R> visitor);
 
 	public Address getCommercialAddress() {
 		return commercialAddress;
