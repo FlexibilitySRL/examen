@@ -24,4 +24,44 @@ public class Product {
 	
 	@Column(name="DESCRIPTION")
 	private String description;
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public Long getProductId() {
+		return productId;
+	}
+	
+	@Override
+	public int hashCode() {
+		if ( this.getProductId() != null ) {
+			return this.getProductId().hashCode();
+		}
+		else {
+			return super.hashCode();
+		}
+	}
+	
+	@Override
+	public boolean equals(Object other) {
+		if ( ( other != null ) && ( other instanceof Product ) ) {
+			return this.getProductId().equals(((Product) other).getProductId());
+		}
+		else {
+			return false;
+		}
+	}
 }
