@@ -58,7 +58,7 @@ public class Product {
 	@Override
 	public boolean equals(Object other) {
 		if ( ( other != null ) && ( other instanceof Product ) ) {
-			return this.getProductId().equals(((Product) other).getProductId());
+			return ( other == this ) || this.getProductId().equals(((Product) other).getProductId());
 		}
 		else {
 			return false;

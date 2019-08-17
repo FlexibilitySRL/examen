@@ -19,15 +19,15 @@ public class Client {
 	@Column(name="CLIENT_ID")
 	@SequenceGenerator(name = "client_seq_clientId", sequenceName = "seq_clientId", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "client_seq_clientId")
-	private Long clientId;
+	private Long id;
 	
 	@Column(name="CUIT", unique=true, nullable=false)
 	private long cuit;
 	
 	private Address commercialAddress;
 	
-	public Long getClientId() {
-		return clientId;
+	public Long getId() {
+		return id;
 	}
 	
 	public long getCuit() {
@@ -44,8 +44,8 @@ public class Client {
 
 	@Override
 	public int hashCode() {
-		if ( this.clientId != null ) {
-			return this.getClientId().hashCode();
+		if ( this.id != null ) {
+			return this.getId().hashCode();
 		}
 		else {
 			return super.hashCode();
@@ -55,7 +55,7 @@ public class Client {
 	@Override
 	public boolean equals(Object other) {
 		if ( ( other != null ) && ( other instanceof Client ) ) {
-			return this.getClientId().equals(((Client) other).getClientId());
+			return ( other == this ) || this.getId().equals(((Client) other).getId());
 		}
 		else {
 			return false;

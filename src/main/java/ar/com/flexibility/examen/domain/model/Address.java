@@ -33,6 +33,10 @@ public final class Address {
 		}
 	}
 	
+	protected Address() {
+		
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
