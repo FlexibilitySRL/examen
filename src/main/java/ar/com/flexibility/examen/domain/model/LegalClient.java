@@ -10,6 +10,4 @@ public class LegalClient extends Client {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	
 }
