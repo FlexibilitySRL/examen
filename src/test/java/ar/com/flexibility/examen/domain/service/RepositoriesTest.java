@@ -1,8 +1,10 @@
 package ar.com.flexibility.examen.domain.service;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.HashSet;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -453,6 +455,22 @@ public class RepositoriesTest {
 	}
 	
 	@Test
+	public void testSantiagoFreireOrder1Lines() {
+		Assert.assertEquals(
+			new HashSet<PurchaseOrderLine>(Arrays.asList(
+				this.purchaseOrderLineRepository.findOne(this.santiagoFreireOrder1Line1_id),
+				this.purchaseOrderLineRepository.findOne(this.santiagoFreireOrder1Line2_id),
+				this.purchaseOrderLineRepository.findOne(this.santiagoFreireOrder1Line3_id)
+			)),
+			new HashSet<PurchaseOrderLine>(
+				this.purchaseOrderLineRepository.findByPurchaseOrder(
+					this.purchaseOrderRepository.findOne(this.santiagoFreireOrder1_id)
+				)
+			)
+		);
+	}
+	
+	@Test
 	public void testSantiagoFreireOrder2_SantiagoFreireClientRelation() {
 		PurchaseOrder santiagoFreireOrder2 = this.purchaseOrderRepository.findOne(this.santiagoFreireOrder2_id);
 		
@@ -472,6 +490,21 @@ public class RepositoriesTest {
 	@Test
 	public void testSantiagoFreireOrder2Line2_SantiagoFreireOrder1Relation() {
 		Assert.assertEquals(this.santiagoFreireOrder2_id, (long) this.purchaseOrderLineRepository.findOne(this.santiagoFreireOrder2Line2_id).getPurchaseOrder().getId());
+	}
+	
+	@Test
+	public void testSantiagoFreireOrder2Lines() {
+		Assert.assertEquals(
+			new HashSet<PurchaseOrderLine>(Arrays.asList(
+				this.purchaseOrderLineRepository.findOne(this.santiagoFreireOrder2Line1_id),
+				this.purchaseOrderLineRepository.findOne(this.santiagoFreireOrder2Line2_id)
+			)),
+			new HashSet<PurchaseOrderLine>(
+				this.purchaseOrderLineRepository.findByPurchaseOrder(
+					this.purchaseOrderRepository.findOne(this.santiagoFreireOrder2_id)
+				)
+			)
+		);
 	}
 	
 	@Test
@@ -497,6 +530,21 @@ public class RepositoriesTest {
 	}
 	
 	@Test
+	public void testSantiagoFreireOrder3Lines() {
+		Assert.assertEquals(
+			new HashSet<PurchaseOrderLine>(Arrays.asList(
+				this.purchaseOrderLineRepository.findOne(this.santiagoFreireOrder3Line1_id),
+				this.purchaseOrderLineRepository.findOne(this.santiagoFreireOrder3Line2_id)
+			)),
+			new HashSet<PurchaseOrderLine>(
+				this.purchaseOrderLineRepository.findByPurchaseOrder(
+					this.purchaseOrderRepository.findOne(this.santiagoFreireOrder3_id)
+				)
+			)
+		);
+	}
+	
+	@Test
 	public void testLucasMonteroOrder1_LucasMonteroClientRelation() {
 		PurchaseOrder lucasMonteroOrder1 = this.purchaseOrderRepository.findOne(this.lucasMonteroOrder1_id);
 		
@@ -516,6 +564,21 @@ public class RepositoriesTest {
 	@Test
 	public void testLucasMonteroOrder1Line2_LucasMonteroOrder1Relation() {
 		Assert.assertEquals(this.lucasMonteroOrder1_id, (long) this.purchaseOrderLineRepository.findOne(this.lucasMonteroOrder1Line2_id).getPurchaseOrder().getId());
+	}
+	
+	@Test
+	public void testLucasMonteroOrder1Lines() {
+		Assert.assertEquals(
+			new HashSet<PurchaseOrderLine>(Arrays.asList(
+				this.purchaseOrderLineRepository.findOne(this.lucasMonteroOrder1Line1_id),
+				this.purchaseOrderLineRepository.findOne(this.lucasMonteroOrder1Line2_id)
+			)),
+			new HashSet<PurchaseOrderLine>(
+				this.purchaseOrderLineRepository.findByPurchaseOrder(
+					this.purchaseOrderRepository.findOne(this.lucasMonteroOrder1_id)
+				)
+			)
+		);
 	}
 	
 	@Test
@@ -541,6 +604,21 @@ public class RepositoriesTest {
 	}
 	
 	@Test
+	public void testLucasMonteroOrder2Lines() {
+		Assert.assertEquals(
+			new HashSet<PurchaseOrderLine>(Arrays.asList(
+				this.purchaseOrderLineRepository.findOne(this.lucasMonteroOrder2Line1_id),
+				this.purchaseOrderLineRepository.findOne(this.lucasMonteroOrder2Line2_id)
+			)),
+			new HashSet<PurchaseOrderLine>(
+				this.purchaseOrderLineRepository.findByPurchaseOrder(
+					this.purchaseOrderRepository.findOne(this.lucasMonteroOrder2_id)
+				)
+			)
+		);
+	}
+	
+	@Test
 	public void testLucasMonteroOrder3_LucasMonteroClientRelation() {
 		PurchaseOrder lucasMonteroOrder3 = this.purchaseOrderRepository.findOne(this.lucasMonteroOrder3_id);
 		
@@ -560,6 +638,21 @@ public class RepositoriesTest {
 	@Test
 	public void testLucasMonteroOrder3Line2_LucasMonteroOrder1Relation() {
 		Assert.assertEquals(this.lucasMonteroOrder3_id, (long) this.purchaseOrderLineRepository.findOne(this.lucasMonteroOrder3Line2_id).getPurchaseOrder().getId());
+	}
+	
+	@Test
+	public void testLucasMonteroOrder3Lines() {
+		Assert.assertEquals(
+			new HashSet<PurchaseOrderLine>(Arrays.asList(
+				this.purchaseOrderLineRepository.findOne(this.lucasMonteroOrder3Line1_id),
+				this.purchaseOrderLineRepository.findOne(this.lucasMonteroOrder3Line2_id)
+			)),
+			new HashSet<PurchaseOrderLine>(
+				this.purchaseOrderLineRepository.findByPurchaseOrder(
+					this.purchaseOrderRepository.findOne(this.lucasMonteroOrder3_id)
+				)
+			)
+		);
 	}
 	
 	@Test
@@ -588,6 +681,22 @@ public class RepositoriesTest {
 	}
 	
 	@Test
+	public void testEsferixisSolutionsOrder1Lines() {
+		Assert.assertEquals(
+			new HashSet<PurchaseOrderLine>(Arrays.asList(
+				this.purchaseOrderLineRepository.findOne(this.esferixisSolutionsOrder1Line1_id),
+				this.purchaseOrderLineRepository.findOne(this.esferixisSolutionsOrder1Line2_id),
+				this.purchaseOrderLineRepository.findOne(this.esferixisSolutionsOrder1Line3_id)
+			)),
+			new HashSet<PurchaseOrderLine>(
+				this.purchaseOrderLineRepository.findByPurchaseOrder(
+					this.purchaseOrderRepository.findOne(this.esferixisSolutionsOrder1_id)
+				)
+			)
+		);
+	}
+	
+	@Test
 	public void testEsferixisSolutionsOrder2_EsferixisSolutionsClientRelation() {
 		Assert.assertEquals(this.esferixisSolutionsClient_id, (long) this.purchaseOrderRepository.findOne(this.esferixisSolutionsOrder2_id).getClient().getId());
 	}
@@ -610,6 +719,22 @@ public class RepositoriesTest {
 	@Test
 	public void testEsferixisSolutionsOrder2Line3_EsferixisSolutionsOrder2Relation() {
 		Assert.assertEquals(this.esferixisSolutionsOrder2_id, (long) this.purchaseOrderLineRepository.findOne(this.esferixisSolutionsOrder2Line3_id).getPurchaseOrder().getId());
+	}
+	
+	@Test
+	public void testEsferixisSolutionsOrder2Lines() {
+		Assert.assertEquals(
+			new HashSet<PurchaseOrderLine>(Arrays.asList(
+				this.purchaseOrderLineRepository.findOne(this.esferixisSolutionsOrder2Line1_id),
+				this.purchaseOrderLineRepository.findOne(this.esferixisSolutionsOrder2Line2_id),
+				this.purchaseOrderLineRepository.findOne(this.esferixisSolutionsOrder2Line3_id)
+			)),
+			new HashSet<PurchaseOrderLine>(
+				this.purchaseOrderLineRepository.findByPurchaseOrder(
+					this.purchaseOrderRepository.findOne(this.esferixisSolutionsOrder2_id)
+				)
+			)
+		);
 	}
 	
 	@Test
@@ -638,6 +763,22 @@ public class RepositoriesTest {
 	}
 	
 	@Test
+	public void testEsferixisSolutionsOrder3Lines() {
+		Assert.assertEquals(
+			new HashSet<PurchaseOrderLine>(Arrays.asList(
+				this.purchaseOrderLineRepository.findOne(this.esferixisSolutionsOrder3Line1_id),
+				this.purchaseOrderLineRepository.findOne(this.esferixisSolutionsOrder3Line2_id),
+				this.purchaseOrderLineRepository.findOne(this.esferixisSolutionsOrder3Line3_id)
+			)),
+			new HashSet<PurchaseOrderLine>(
+				this.purchaseOrderLineRepository.findByPurchaseOrder(
+					this.purchaseOrderRepository.findOne(this.esferixisSolutionsOrder3_id)
+				)
+			)
+		);
+	}
+	
+	@Test
 	public void testJupiterOrder1_JupiterClientRelation() {
 		Assert.assertEquals(this.jupiterClient_id, (long) this.purchaseOrderRepository.findOne(this.jupiterOrder1_id).getClient().getId());
 	}
@@ -660,6 +801,22 @@ public class RepositoriesTest {
 	@Test
 	public void testJupiterOrder1Line3_JupiterOrder1Relation() {
 		Assert.assertEquals(this.jupiterOrder1_id, (long) this.purchaseOrderLineRepository.findOne(this.jupiterOrder1Line3_id).getPurchaseOrder().getId());
+	}
+	
+	@Test
+	public void testJupiterOrder1Lines() {
+		Assert.assertEquals(
+			new HashSet<PurchaseOrderLine>(Arrays.asList(
+				this.purchaseOrderLineRepository.findOne(this.jupiterOrder1Line1_id),
+				this.purchaseOrderLineRepository.findOne(this.jupiterOrder1Line2_id),
+				this.purchaseOrderLineRepository.findOne(this.jupiterOrder1Line3_id)
+			)),
+			new HashSet<PurchaseOrderLine>(
+				this.purchaseOrderLineRepository.findByPurchaseOrder(
+					this.purchaseOrderRepository.findOne(this.jupiterOrder1_id)
+				)
+			)
+		);
 	}
 	
 	@Test
@@ -688,6 +845,22 @@ public class RepositoriesTest {
 	}
 	
 	@Test
+	public void testJupiterOrder2Lines() {
+		Assert.assertEquals(
+			new HashSet<PurchaseOrderLine>(Arrays.asList(
+				this.purchaseOrderLineRepository.findOne(this.jupiterOrder2Line1_id),
+				this.purchaseOrderLineRepository.findOne(this.jupiterOrder2Line2_id),
+				this.purchaseOrderLineRepository.findOne(this.jupiterOrder2Line3_id)
+			)),
+			new HashSet<PurchaseOrderLine>(
+				this.purchaseOrderLineRepository.findByPurchaseOrder(
+					this.purchaseOrderRepository.findOne(this.jupiterOrder2_id)
+				)
+			)
+		);
+	}
+	
+	@Test
 	public void testJupiterOrder3_JupiterClientRelation() {
 		Assert.assertEquals(this.jupiterClient_id, (long) this.purchaseOrderRepository.findOne(this.jupiterOrder3_id).getClient().getId());
 	}
@@ -710,5 +883,21 @@ public class RepositoriesTest {
 	@Test
 	public void testJupiterOrder3Line3_JupiterOrder1Relation() {
 		Assert.assertEquals(this.jupiterOrder3_id, (long) this.purchaseOrderLineRepository.findOne(this.jupiterOrder3Line3_id).getPurchaseOrder().getId());
+	}
+	
+	@Test
+	public void testJupiterOrder3Lines() {
+		Assert.assertEquals(
+			new HashSet<PurchaseOrderLine>(Arrays.asList(
+				this.purchaseOrderLineRepository.findOne(this.jupiterOrder3Line1_id),
+				this.purchaseOrderLineRepository.findOne(this.jupiterOrder3Line2_id),
+				this.purchaseOrderLineRepository.findOne(this.jupiterOrder3Line3_id)
+			)),
+			new HashSet<PurchaseOrderLine>(
+				this.purchaseOrderLineRepository.findByPurchaseOrder(
+					this.purchaseOrderRepository.findOne(this.jupiterOrder3_id)
+				)
+			)
+		);
 	}
 }
