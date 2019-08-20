@@ -1,6 +1,6 @@
 package ar.com.flexibility.examen.domain.service.exceptions;
 
-public final class ClientDoesNotExist extends UserServiceException {
+public final class ClientDoesNotExistException extends UserServiceException {
 
 	/**
 	 * 
@@ -9,7 +9,7 @@ public final class ClientDoesNotExist extends UserServiceException {
 
 	private long clientId;
 	
-	public ClientDoesNotExist(long clientId) {
+	public ClientDoesNotExistException(long clientId) {
 		this.clientId = clientId;
 	}
 	

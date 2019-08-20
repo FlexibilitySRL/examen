@@ -1,6 +1,6 @@
 package ar.com.flexibility.examen.domain.service.exceptions;
 
-public final class PurchaseOrderHasBeenApproved extends UserServiceException {
+public final class PurchaseOrderHasBeenApprovedException extends UserServiceException {
 
 	/**
 	 * 
@@ -9,7 +9,7 @@ public final class PurchaseOrderHasBeenApproved extends UserServiceException {
 	
 	private long purchaseOrderId;
 	
-	public PurchaseOrderHasBeenApproved(long purchaseOrderId) {
+	public PurchaseOrderHasBeenApprovedException(long purchaseOrderId) {
 		this.purchaseOrderId = purchaseOrderId;
 	}
 	

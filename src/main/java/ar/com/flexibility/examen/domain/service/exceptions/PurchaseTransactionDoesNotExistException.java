@@ -1,6 +1,6 @@
 package ar.com.flexibility.examen.domain.service.exceptions;
 
-public final class PurchaseTransactionDoesNotExist extends UserServiceException {
+public final class PurchaseTransactionDoesNotExistException extends UserServiceException {
 	/**
 	 * 
 	 */
@@ -8,7 +8,7 @@ public final class PurchaseTransactionDoesNotExist extends UserServiceException 
 	
 	private long purchaseTransactionId;
 
-	public PurchaseTransactionDoesNotExist(long purchaseTransactionId) {
+	public PurchaseTransactionDoesNotExistException(long purchaseTransactionId) {
 		this.purchaseTransactionId = purchaseTransactionId;
 	}
 	

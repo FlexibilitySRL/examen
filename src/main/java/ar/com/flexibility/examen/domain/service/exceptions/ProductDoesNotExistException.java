@@ -1,6 +1,6 @@
 package ar.com.flexibility.examen.domain.service.exceptions;
 
-public final class ProductDoesNotExists extends UserServiceException {
+public final class ProductDoesNotExistException extends UserServiceException {
 
 	/**
 	 * 
@@ -9,7 +9,7 @@ public final class ProductDoesNotExists extends UserServiceException {
 	
 	private long productId;
 	
-	public ProductDoesNotExists(long productId) {
+	public ProductDoesNotExistException(long productId) {
 		this.productId = productId;
 	}
 	
