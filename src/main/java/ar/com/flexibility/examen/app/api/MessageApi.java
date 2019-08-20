@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 
 @JsonRootName(value = "message")
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class MessageApi {
+public final class MessageApi {
 
     @JsonProperty
     private String message;

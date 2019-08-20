@@ -31,13 +31,15 @@ public class PurchaseOrder {
 	@Column(name="ISSUEDATE", nullable=false)
 	private Date issueDate;
 
-	public PurchaseOrder(Client client) {
-		if ( client != null ) {
-			this.client = client;
-		}
-		else {
+	public PurchaseOrder(Client client, Date issueDate) {
+		if ( client == null )
 			throw new NullPointerException();
-		}
+			
+		if ( issueDate == null )
+			throw new NullPointerException();
+		
+		this.client = client;
+		this.issueDate = issueDate;
 	}
 	
 	protected PurchaseOrder() {
@@ -54,10 +56,6 @@ public class PurchaseOrder {
 	
 	public Date getIssueDate() {
 		return issueDate;
-	}
-
-	public void setIssueDate(Date issueDate) {
-		this.issueDate = issueDate;
 	}
 	
 	@Override

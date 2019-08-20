@@ -246,9 +246,8 @@ public class RepositoriesTest {
 		jupiterClient = this.legalClientRepository.save(jupiterClient);
 		this.jupiterClient_id = jupiterClient.getId();
 		
-		PurchaseOrder santiagoFreireOrder1 = new PurchaseOrder(santiagoFreireClient);
 		calendar.set(2017, 6, 10);
-		santiagoFreireOrder1.setIssueDate(calendar.getTime());
+		PurchaseOrder santiagoFreireOrder1 = new PurchaseOrder(santiagoFreireClient, calendar.getTime());
 		
 		santiagoFreireOrder1 = this.purchaseOrderRepository.save(santiagoFreireOrder1);
 		this.santiagoFreireOrder1_id = santiagoFreireOrder1.getId();
@@ -260,9 +259,8 @@ public class RepositoriesTest {
 		PurchaseOrderLine santiagoFreireOrder1Line3 = this.purchaseOrderLineRepository.save(new PurchaseOrderLine(santiagoFreireOrder1, productC, 5, new BigDecimal(12)));
 		this.santiagoFreireOrder1Line3_id = santiagoFreireOrder1Line3.getId();
 		
-		PurchaseOrder santiagoFreireOrder2 = new PurchaseOrder(santiagoFreireClient);
 		calendar.set(2018, 8, 15);
-		santiagoFreireOrder2.setIssueDate(calendar.getTime());
+		PurchaseOrder santiagoFreireOrder2 = new PurchaseOrder(santiagoFreireClient, calendar.getTime());
 		
 		santiagoFreireOrder2 = this.purchaseOrderRepository.save(santiagoFreireOrder2);
 		this.santiagoFreireOrder2_id = santiagoFreireOrder2.getId();
@@ -276,9 +274,8 @@ public class RepositoriesTest {
 		PurchaseTransaction santiagoFreireOrder2Transaction = this.purchaseTransactionRepository.save(new PurchaseTransaction(santiagoFreireOrder2, calendar.getTime()));
 		this.santiagoFreireOrder2Transaction_id = santiagoFreireOrder2Transaction.getId();
 		
-		PurchaseOrder santiagoFreireOrder3 = new PurchaseOrder(santiagoFreireClient);
 		calendar.set(2018, 8, 19);
-		santiagoFreireOrder3.setIssueDate(calendar.getTime());
+		PurchaseOrder santiagoFreireOrder3 = new PurchaseOrder(santiagoFreireClient, calendar.getTime());
 		
 		santiagoFreireOrder3 = this.purchaseOrderRepository.save(santiagoFreireOrder3);
 		this.santiagoFreireOrder3_id = santiagoFreireOrder3.getId();
@@ -292,9 +289,8 @@ public class RepositoriesTest {
 		PurchaseTransaction santiagoFreireOrder3Transaction = this.purchaseTransactionRepository.save(new PurchaseTransaction(santiagoFreireOrder3, calendar.getTime()));
 		this.santiagoFreireOrder3Transaction_id = santiagoFreireOrder3Transaction.getId();
 		
-		PurchaseOrder lucasMonteroOrder1 = new PurchaseOrder(lucasMonteroClient);
 		calendar.set(2018, 10, 13);
-		lucasMonteroOrder1.setIssueDate(calendar.getTime());
+		PurchaseOrder lucasMonteroOrder1 = new PurchaseOrder(lucasMonteroClient, calendar.getTime());
 		
 		lucasMonteroOrder1 = this.purchaseOrderRepository.save(lucasMonteroOrder1);
 		this.lucasMonteroOrder1_id = lucasMonteroOrder1.getId();
@@ -308,9 +304,8 @@ public class RepositoriesTest {
 		PurchaseTransaction lucasMonteroOrder1Transaction = this.purchaseTransactionRepository.save(new PurchaseTransaction(lucasMonteroOrder1, calendar.getTime()));
 		this.lucasMonteroOrder1Transaction_id = lucasMonteroOrder1Transaction.getId();
 		
-		PurchaseOrder lucasMonteroOrder2 = new PurchaseOrder(lucasMonteroClient);
 		calendar.set(2018, 11, 8);
-		lucasMonteroOrder2.setIssueDate(calendar.getTime());
+		PurchaseOrder lucasMonteroOrder2 = new PurchaseOrder(lucasMonteroClient, calendar.getTime());
 		
 		lucasMonteroOrder2 = this.purchaseOrderRepository.save(lucasMonteroOrder2);
 		this.lucasMonteroOrder2_id = lucasMonteroOrder2.getId();
@@ -320,9 +315,8 @@ public class RepositoriesTest {
 		PurchaseOrderLine lucasMonteroOrder2Line2 = this.purchaseOrderLineRepository.save(new PurchaseOrderLine(lucasMonteroOrder2, productB, 7, new BigDecimal(11)));
 		this.lucasMonteroOrder2Line2_id = lucasMonteroOrder2Line2.getId();
 		
-		PurchaseOrder lucasMonteroOrder3 = new PurchaseOrder(lucasMonteroClient);
 		calendar.set(2018, 11, 13);
-		lucasMonteroOrder3.setIssueDate(calendar.getTime());
+		PurchaseOrder lucasMonteroOrder3 = new PurchaseOrder(lucasMonteroClient, calendar.getTime());
 		
 		lucasMonteroOrder3 = this.purchaseOrderRepository.save(lucasMonteroOrder3);
 		this.lucasMonteroOrder3_id = lucasMonteroOrder3.getId();
@@ -332,9 +326,8 @@ public class RepositoriesTest {
 		PurchaseOrderLine lucasMonteroOrder3Line2 = this.purchaseOrderLineRepository.save(new PurchaseOrderLine(lucasMonteroOrder3, productA, 3, new BigDecimal(10)));
 		this.lucasMonteroOrder3Line2_id = lucasMonteroOrder3Line2.getId();
 		
-		PurchaseOrder esferixisSolutionsOrder1 = new PurchaseOrder(esferixisSolutionsClient);
 		calendar.set(2019, 2, 18);
-		esferixisSolutionsOrder1.setIssueDate(calendar.getTime());
+		PurchaseOrder esferixisSolutionsOrder1 = new PurchaseOrder(esferixisSolutionsClient, calendar.getTime());
 		
 		esferixisSolutionsOrder1 = this.purchaseOrderRepository.save(esferixisSolutionsOrder1);
 		this.esferixisSolutionsOrder1_id = esferixisSolutionsOrder1.getId();
@@ -346,9 +339,8 @@ public class RepositoriesTest {
 		PurchaseOrderLine esferixisSolutionsOrder1Line3 = this.purchaseOrderLineRepository.save(new PurchaseOrderLine(esferixisSolutionsOrder1, productB, 13, new BigDecimal(11)));
 		this.esferixisSolutionsOrder1Line3_id = esferixisSolutionsOrder1Line3.getId();
 		
-		PurchaseOrder esferixisSolutionsOrder2 = new PurchaseOrder(esferixisSolutionsClient);
 		calendar.set(2019, 3, 15);
-		esferixisSolutionsOrder2.setIssueDate(calendar.getTime());
+		PurchaseOrder esferixisSolutionsOrder2 = new PurchaseOrder(esferixisSolutionsClient, calendar.getTime());
 		
 		esferixisSolutionsOrder2 = this.purchaseOrderRepository.save(esferixisSolutionsOrder2);
 		this.esferixisSolutionsOrder2_id = esferixisSolutionsOrder2.getId();
@@ -364,9 +356,8 @@ public class RepositoriesTest {
 		PurchaseTransaction esferixisSolutionsOrder2Transaction = this.purchaseTransactionRepository.save(new PurchaseTransaction(esferixisSolutionsOrder2, calendar.getTime()));
 		this.esferixisSolutionsOrder2Transaction_id = esferixisSolutionsOrder2Transaction.getId();
 		
-		PurchaseOrder esferixisSolutionsOrder3 = new PurchaseOrder(esferixisSolutionsClient);
 		calendar.set(2019, 3, 20);
-		esferixisSolutionsOrder3.setIssueDate(calendar.getTime());
+		PurchaseOrder esferixisSolutionsOrder3 = new PurchaseOrder(esferixisSolutionsClient, calendar.getTime());
 		
 		esferixisSolutionsOrder3 = this.purchaseOrderRepository.save(esferixisSolutionsOrder3);
 		this.esferixisSolutionsOrder3_id = esferixisSolutionsOrder3.getId();
@@ -378,9 +369,8 @@ public class RepositoriesTest {
 		PurchaseOrderLine esferixisSolutionsOrder3Line3 = this.purchaseOrderLineRepository.save(new PurchaseOrderLine(esferixisSolutionsOrder3, productC, 13, new BigDecimal(12)));
 		this.esferixisSolutionsOrder3Line3_id = esferixisSolutionsOrder3Line3.getId();
 		
-		PurchaseOrder jupiterOrder1 = new PurchaseOrder(jupiterClient);
 		calendar.set(2019, 4, 15);
-		jupiterOrder1.setIssueDate(calendar.getTime());
+		PurchaseOrder jupiterOrder1 = new PurchaseOrder(jupiterClient, calendar.getTime());
 		
 		jupiterOrder1 = this.purchaseOrderRepository.save(jupiterOrder1);
 		this.jupiterOrder1_id = jupiterOrder1.getId();
@@ -392,9 +382,8 @@ public class RepositoriesTest {
 		PurchaseOrderLine jupiterOrder1Line3 = this.purchaseOrderLineRepository.save(new PurchaseOrderLine(jupiterOrder1, productB, 13, new BigDecimal(11)));
 		this.jupiterOrder1Line3_id = jupiterOrder1Line3.getId();
 		
-		PurchaseOrder jupiterOrder2 = new PurchaseOrder(jupiterClient);
 		calendar.set(2019, 4, 18);
-		jupiterOrder2.setIssueDate(calendar.getTime());
+		PurchaseOrder jupiterOrder2 = new PurchaseOrder(jupiterClient, calendar.getTime());
 		
 		jupiterOrder2 = this.purchaseOrderRepository.save(jupiterOrder2);
 		this.jupiterOrder2_id = jupiterOrder2.getId();
@@ -406,9 +395,8 @@ public class RepositoriesTest {
 		PurchaseOrderLine jupiterOrder2Line3 = this.purchaseOrderLineRepository.save(new PurchaseOrderLine(jupiterOrder2, productA, 4, new BigDecimal(11)));
 		this.jupiterOrder2Line3_id = jupiterOrder2Line3.getId();
 		
-		PurchaseOrder jupiterOrder3 = new PurchaseOrder(jupiterClient);
 		calendar.set(2019, 4, 21);
-		jupiterOrder3.setIssueDate(calendar.getTime());
+		PurchaseOrder jupiterOrder3 = new PurchaseOrder(jupiterClient, calendar.getTime());
 		
 		jupiterOrder3 = this.purchaseOrderRepository.save(jupiterOrder3);
 		this.jupiterOrder3_id = jupiterOrder3.getId();
