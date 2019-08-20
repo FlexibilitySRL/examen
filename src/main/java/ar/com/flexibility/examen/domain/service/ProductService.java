@@ -15,6 +15,7 @@ import ar.com.flexibility.examen.domain.dto.ObjectDTO;
 import ar.com.flexibility.examen.domain.dto.ProductDTO;
 import ar.com.flexibility.examen.domain.model.Product;
 import ar.com.flexibility.examen.domain.repositories.ProductRepository;
+import ar.com.flexibility.examen.domain.repositories.PurchaseOrderLineRepository;
 import ar.com.flexibility.examen.domain.repositories.PurchaseOrderRepository;
 import ar.com.flexibility.examen.domain.service.exceptions.ProductDoesNotExists;
 import ar.com.flexibility.examen.domain.service.exceptions.ProductIsInAPurchaseOrderException;
@@ -26,7 +27,7 @@ public class ProductService {
 	private ProductRepository productRepository;
 	
 	@Autowired
-	private PurchaseOrderRepository purchaseOrderRepository;
+	private PurchaseOrderLineRepository purchaseOrderLineRepository;
 	
 	/**
 	 * @post Devuelve el producto con sus descripciones
@@ -85,7 +86,7 @@ public class ProductService {
 			throw new ProductDoesNotExists(productId);
 		}
 		
-		if ( !this.purchaseOrderRepository.existsByProduct(product) ) {
+		if ( !this.purchaseOrderLineRepository.existsPurchaseOrderLineByProduct(product) ) {
 			throw new ProductIsInAPurchaseOrderException(productId);
 		}
 		
