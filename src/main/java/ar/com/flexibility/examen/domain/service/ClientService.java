@@ -22,7 +22,7 @@ import ar.com.flexibility.examen.domain.model.NaturalClient;
 import ar.com.flexibility.examen.domain.repositories.LegalClientRepository;
 import ar.com.flexibility.examen.domain.repositories.NaturalClientRepository;
 import ar.com.flexibility.examen.domain.repositories.PurchaseOrderRepository;
-import ar.com.flexibility.examen.domain.service.exceptions.ClientDoesNotExist;
+import ar.com.flexibility.examen.domain.service.exceptions.ClientDoesNotExistException;
 import ar.com.flexibility.examen.domain.service.exceptions.ClientIsInAPurchaseOrderException;
 import ar.com.flexibility.examen.domain.service.exceptions.UserServiceException;
 
@@ -47,7 +47,7 @@ public class ClientService {
 			propagation = Propagation.SUPPORTS,
 			isolation = Isolation.READ_COMMITTED
 	)
-	public List<ObjectDTO<ClientDTO>> findAllClientsById() {
+	public List<ObjectDTO<ClientDTO>> findAllClients() {
 		List<ObjectDTO<ClientDTO>> clientDTOs = new ArrayList<>();
 		
 		for ( LegalClient eachClient : this.legalClientRepository.findAll() ) {
@@ -59,6 +59,36 @@ public class ClientService {
 		}
 		
 		return Collections.unmodifiableList(clientDTOs);
+	}
+	
+	/**
+	 * @post Obtiene un cliente
+	 */
+	@Transactional(
+			readOnly = false,
+			timeout = 5000,
+			propagation = Propagation.SUPPORTS,
+			isolation = Isolation.READ_COMMITTED
+	)
+	public ClientDTO getClient(long clientId) throws UserServiceException {
+		final LegalClient legalClient = this.legalClientRepository.findOne(clientId);
+		final ClientDTO clientDTO;
+		
+		if ( legalClient != null ) {
+			clientDTO = new LegalClientDTO(legalClient);
+		}
+		else {
+			final NaturalClient naturalClient = this.naturalClientRepository.findOne(clientId);
+			
+			if ( naturalClient != null ) {
+				clientDTO = new NaturalClientDTO(naturalClient);
+			}
+			else {
+				throw new ClientDoesNotExistException(clientId);
+			}
+		}
+		
+		return clientDTO;
 	}
 	
 	/**
@@ -120,7 +150,7 @@ public class ClientService {
 				this.naturalClientRepository.delete(naturalClient);
 		}
 		else {
-			throw new ClientDoesNotExist(clientId);
+			throw new ClientDoesNotExistException(clientId);
 		}
 	}
 }

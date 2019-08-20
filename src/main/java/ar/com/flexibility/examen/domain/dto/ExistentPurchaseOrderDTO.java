@@ -20,26 +20,20 @@ public class ExistentPurchaseOrderDTO {
 	private Date issueDate;
 	
 	@JsonProperty
-	private Date approvalDate;
-	
-	@JsonProperty
 	private List<ExistentPurchaseOrderLineDTO> lines;
 	
 	/**
 	 * @post Crea un DTO de órden de compra existente con el id de cliente,
 	 * 		 la fecha de elaboración,
-	 * 		 la fecha de aprobación,
 	 * 		 y las líneas
 	 */
-	public ExistentPurchaseOrderDTO(long clientId, Date issueDate, Date approvalDate, List<ExistentPurchaseOrderLineDTO> lines) {
+	public ExistentPurchaseOrderDTO(long clientId, Date issueDate, List<ExistentPurchaseOrderLineDTO> lines) {
 		this.clientId = clientId;
 		
 		if ( this.issueDate != null )
 			this.issueDate = issueDate;
 		else
 			throw new NullPointerException();
-		
-		this.approvalDate = approvalDate;
 		
 		this.lines = new ArrayList<ExistentPurchaseOrderLineDTO>(lines);
 	}

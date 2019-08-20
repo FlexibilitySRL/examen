@@ -17,7 +17,7 @@ import ar.com.flexibility.examen.domain.model.Product;
 import ar.com.flexibility.examen.domain.repositories.ProductRepository;
 import ar.com.flexibility.examen.domain.repositories.PurchaseOrderLineRepository;
 import ar.com.flexibility.examen.domain.repositories.PurchaseOrderRepository;
-import ar.com.flexibility.examen.domain.service.exceptions.ProductDoesNotExists;
+import ar.com.flexibility.examen.domain.service.exceptions.ProductDoesNotExistException;
 import ar.com.flexibility.examen.domain.service.exceptions.ProductIsInAPurchaseOrderException;
 import ar.com.flexibility.examen.domain.service.exceptions.UserServiceException;
 
@@ -48,6 +48,19 @@ public class ProductService {
 		
 		return Collections.unmodifiableList(productDTOs);
 	}
+	
+	/**
+	 * @post Devuelve un producto
+	 */
+	public ProductDTO getProduct(long productId) throws UserServiceException {
+		Product product = this.productRepository.findOne(productId);
+		
+		if ( product != null )
+			return new ProductDTO(product);
+		else
+			throw new ProductDoesNotExistException(productId);
+	}
+	
 	
 	/**
 	 * @pre El DTO de producto no puede ser nulo
@@ -83,7 +96,7 @@ public class ProductService {
 		Product product = this.productRepository.findOne(productId);
 		
 		if ( product == null ) {
-			throw new ProductDoesNotExists(productId);
+			throw new ProductDoesNotExistException(productId);
 		}
 		
 		if ( !this.purchaseOrderLineRepository.existsPurchaseOrderLineByProduct(product) ) {

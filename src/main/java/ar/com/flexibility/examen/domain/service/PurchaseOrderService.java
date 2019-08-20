@@ -28,10 +28,10 @@ import ar.com.flexibility.examen.domain.repositories.ProductRepository;
 import ar.com.flexibility.examen.domain.repositories.PurchaseOrderLineRepository;
 import ar.com.flexibility.examen.domain.repositories.PurchaseOrderRepository;
 import ar.com.flexibility.examen.domain.repositories.PurchaseTransactionRepository;
-import ar.com.flexibility.examen.domain.service.exceptions.ClientDoesNotExist;
-import ar.com.flexibility.examen.domain.service.exceptions.ProductDoesNotExists;
+import ar.com.flexibility.examen.domain.service.exceptions.ClientDoesNotExistException;
+import ar.com.flexibility.examen.domain.service.exceptions.ProductDoesNotExistException;
 import ar.com.flexibility.examen.domain.service.exceptions.PurchaseOrderDoesNotExistException;
-import ar.com.flexibility.examen.domain.service.exceptions.PurchaseOrderHasBeenApproved;
+import ar.com.flexibility.examen.domain.service.exceptions.PurchaseOrderHasBeenApprovedException;
 import ar.com.flexibility.examen.domain.service.exceptions.UserServiceException;
 
 @Service
@@ -75,6 +75,34 @@ public class PurchaseOrderService {
 	}
 	
 	/**
+	 * @post Obtiene todas las órdenes de compra por ID especificadas
+	 * @return
+	 */
+	@Transactional(
+			readOnly = false,
+			timeout = 5000,
+			propagation = Propagation.SUPPORTS,
+			isolation = Isolation.READ_COMMITTED
+	)
+	public List<ObjectDTO<ExistentPurchaseOrderDTO>> findById(List<Long> purchaseOrderIDs) throws UserServiceException {
+		if ( purchaseOrderIDs == null )
+			throw new NullPointerException();
+		
+		List<ObjectDTO<ExistentPurchaseOrderDTO>> purchaseOrderDTOs = new ArrayList<>();
+		
+		for ( Long eachPurchaseOrderId : purchaseOrderIDs ) {
+			PurchaseOrder eachPurchaseOrder = this.purchaseOrderRepository.findOne(eachPurchaseOrderId);
+			
+			if ( eachPurchaseOrder == null )
+				throw new PurchaseOrderDoesNotExistException(eachPurchaseOrderId);
+			
+			purchaseOrderDTOs.add( new ObjectDTO<ExistentPurchaseOrderDTO>(eachPurchaseOrder.getId(), this.convertToDTO(eachPurchaseOrder)));
+		}
+		
+		return Collections.unmodifiableList(purchaseOrderDTOs);
+	}
+	
+	/**
 	 * @post Agrega una orden de compra con el DTO
 	 * 		 especificado.
 	 * 		 Devuelve el id.
@@ -92,7 +120,7 @@ public class PurchaseOrderService {
 			client = naturalClientRepository.findOne(purchaseOrderDTO.getClientId());
 			
 			if ( client == null ) {
-				throw new ClientDoesNotExist(purchaseOrderDTO.getClientId());
+				throw new ClientDoesNotExistException(purchaseOrderDTO.getClientId());
 			}
 		}
 		
@@ -102,7 +130,7 @@ public class PurchaseOrderService {
 			Product product = this.productRepository.findOne(eachLineDTO.getProductId());
 			
 			if ( product == null )
-				throw new ProductDoesNotExists(eachLineDTO.getProductId());
+				throw new ProductDoesNotExistException(eachLineDTO.getProductId());
 			
 			purchaseOrderLineRepository.save(new PurchaseOrderLine(purchaseOrder, product, eachLineDTO.getQuantity(), product.getUnitPrice()) );
 		}
@@ -135,17 +163,13 @@ public class PurchaseOrderService {
 		long clientId = purchaseOrder.getId();
 		Date issueDate = purchaseOrder.getIssueDate();
 		
-		PurchaseTransaction purchaseTransaction = this.purchaseTransactionRepository.findByPurchaseOrder(purchaseOrder);
-		
-		Date approvalDate = purchaseTransaction != null ? purchaseTransaction.getApprovalDate() : null;
-		
 		List<ExistentPurchaseOrderLineDTO> lines = new ArrayList<ExistentPurchaseOrderLineDTO>();
 		
 		for ( PurchaseOrderLine eachLine : this.purchaseOrderLineRepository.findByPurchaseOrder(purchaseOrder) ) {
 			lines.add( new ExistentPurchaseOrderLineDTO(eachLine.getProduct().getProductId(), eachLine.getQuantity(), eachLine.getUnitPrice()) );
 		}
 		
-		return new ExistentPurchaseOrderDTO(clientId, issueDate, approvalDate, lines);
+		return new ExistentPurchaseOrderDTO(clientId, issueDate, lines);
 	}
 	
 	/**
@@ -167,7 +191,7 @@ public class PurchaseOrderService {
 		PurchaseTransaction purchaseTransaction = this.purchaseTransactionRepository.findByPurchaseOrder(purchaseOrder);
 		
 		if ( purchaseTransaction != null )
-			throw new PurchaseOrderHasBeenApproved(purchaseOrderId);
+			throw new PurchaseOrderHasBeenApprovedException(purchaseOrderId);
 		
 		purchaseTransaction = this.purchaseTransactionRepository.save(new PurchaseTransaction(purchaseOrder, Calendar.getInstance().getTime()));
 	}
