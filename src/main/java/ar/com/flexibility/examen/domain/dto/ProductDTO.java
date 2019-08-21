@@ -38,11 +38,22 @@ public final class ProductDTO {
 	public Product toEntity() {
 		Product product = new Product();
 		
+		this.updateEntity(product);
+		
+		return product;
+	}
+	
+	/**
+	 * @post Actualiza un producto
+	 * @return
+	 */
+	public void updateEntity(Product product) {
+		if ( product == null )
+			throw new NullPointerException();
+		
 		product.setName(this.name);
 		product.setDescription(this.description);
 		product.setUnitPrice(this.unitPrice);
-		
-		return product;
 	}
 
 	public String getName() {

@@ -1,6 +1,6 @@
 package ar.com.flexibility.examen.domain.service.exceptions;
 
-public final class PurchaseTransactionDoesNotExistException extends UserServiceException {
+public final class PurchaseTransactionDoesNotExistException extends BusinessException {
 	/**
 	 * 
 	 */
@@ -14,5 +14,10 @@ public final class PurchaseTransactionDoesNotExistException extends UserServiceE
 	
 	public long getPurchaseTransactionId() {
 		return purchaseTransactionId;
+	}
+
+	@Override
+	public <R> R accept(BusinessExceptionVisitor<R> visitor) {
+		return visitor.visit(this);
 	}
 }

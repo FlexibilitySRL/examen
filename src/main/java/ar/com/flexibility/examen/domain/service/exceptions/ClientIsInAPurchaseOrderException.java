@@ -1,6 +1,6 @@
 package ar.com.flexibility.examen.domain.service.exceptions;
 
-public final class ClientIsInAPurchaseOrderException extends UserServiceException {
+public final class ClientIsInAPurchaseOrderException extends BusinessException {
 	/**
 	 * 
 	 */
@@ -14,5 +14,10 @@ public final class ClientIsInAPurchaseOrderException extends UserServiceExceptio
 	
 	public long getClientId() {
 		return this.clientId;
+	}
+
+	@Override
+	public <R> R accept(BusinessExceptionVisitor<R> visitor) {
+		return visitor.visit(this);
 	}
 }

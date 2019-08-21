@@ -3,6 +3,7 @@ package ar.com.flexibility.examen.domain.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import ar.com.flexibility.examen.domain.model.Address;
+import ar.com.flexibility.examen.domain.service.exceptions.UnexpectedNullValueException;
 
 public class AddressDTO {
 	@JsonProperty
@@ -51,6 +52,24 @@ public class AddressDTO {
 	 * @return
 	 */
 	public Address toValueObject() {
+		if ( this.street == null )
+			throw new UnexpectedNullValueException();
+		
+		if ( this.neighbourhood == null )
+			throw new UnexpectedNullValueException();
+		
+		if ( this.town == null )
+			throw new UnexpectedNullValueException();
+		
+		if ( this.department == null )
+			throw new UnexpectedNullValueException();
+		
+		if ( this.province == null )
+			throw new UnexpectedNullValueException();
+		
+		if ( this.country == null )
+			throw new UnexpectedNullValueException();
+		
 		return new Address(
 			this.street,
 			this.number,

@@ -9,6 +9,14 @@ public final class ObjectDTO<T> {
 	@JsonProperty
 	private T data;
 	
+	public long getId() {
+		return id;
+	}
+
+	public T getData() {
+		return data;
+	}
+
 	public ObjectDTO(long id, T data) {
 		this.id = id;
 		this.data = data;

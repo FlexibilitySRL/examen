@@ -1,6 +1,6 @@
 package ar.com.flexibility.examen.domain.service.exceptions;
 
-public final class ProductDoesNotExistException extends UserServiceException {
+public final class ProductDoesNotExistException extends BusinessException {
 
 	/**
 	 * 
@@ -15,5 +15,10 @@ public final class ProductDoesNotExistException extends UserServiceException {
 	
 	public long getProductId() {
 		return this.productId;
+	}
+
+	@Override
+	public <R> R accept(BusinessExceptionVisitor<R> visitor) {
+		return visitor.visit(this);
 	}
 }

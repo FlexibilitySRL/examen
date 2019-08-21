@@ -4,7 +4,9 @@ import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import ar.com.flexibility.examen.domain.model.LegalClient;
 import ar.com.flexibility.examen.domain.model.NaturalClient;
+import ar.com.flexibility.examen.domain.service.exceptions.UnexpectedNullValueException;
 
 public final class NaturalClientDTO extends ClientDTO {
 
@@ -60,15 +62,46 @@ public final class NaturalClientDTO extends ClientDTO {
 	public NaturalClient toEntity() {
 		NaturalClient client = new NaturalClient();
 		
-		client.setCuit(client.getCuit());
-		client.setCommercialAddress( this.getCommercialAddress().toValueObject() );
-		client.setName(client.getName());
-		client.setSurname(client.getSurname());
-		client.setDni(client.getDni());
-		client.setBirthday(client.getBirthday());
-		client.setResidentialAddress(this.residentialAddress.toValueObject());
+		this.updateEntity(client);
 		
 		return client;
+	}
+	
+	/**
+	 * @post Actualiza la entidad
+	 */
+	public void updateEntity(NaturalClient client) {
+		if ( client == null )
+			throw new NullPointerException();
+		
+		client.setCuit(client.getCuit());
+		
+		if ( this.getCommercialAddress() == null )
+			throw new UnexpectedNullValueException();
+		
+		client.setCommercialAddress( this.getCommercialAddress().toValueObject() );
+		
+		if ( this.getName() == null )
+			throw new UnexpectedNullValueException();
+		
+		client.setName(client.getName());
+		
+		if ( this.getSurname() == null )
+			throw new UnexpectedNullValueException();
+		
+		client.setSurname(client.getSurname());
+		
+		client.setDni(client.getDni());
+		
+		if ( this.getBirthday() == null )
+			throw new UnexpectedNullValueException();
+		
+		client.setBirthday(client.getBirthday());
+		
+		if ( this.getResidentialAddress() == null )
+			throw new UnexpectedNullValueException();
+		
+		client.setResidentialAddress(this.residentialAddress.toValueObject());
 	}
 	
 	@Override

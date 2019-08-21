@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
@@ -17,6 +18,7 @@ import ar.com.flexibility.examen.domain.dto.ExistentPurchaseOrderLineDTO;
 import ar.com.flexibility.examen.domain.dto.NewPurchaseOrderDTO;
 import ar.com.flexibility.examen.domain.dto.NewPurchaseOrderLineDTO;
 import ar.com.flexibility.examen.domain.dto.ObjectDTO;
+import ar.com.flexibility.examen.domain.dto.PageRequestDTO;
 import ar.com.flexibility.examen.domain.model.Client;
 import ar.com.flexibility.examen.domain.model.Product;
 import ar.com.flexibility.examen.domain.model.PurchaseOrder;
@@ -32,7 +34,8 @@ import ar.com.flexibility.examen.domain.service.exceptions.ClientDoesNotExistExc
 import ar.com.flexibility.examen.domain.service.exceptions.ProductDoesNotExistException;
 import ar.com.flexibility.examen.domain.service.exceptions.PurchaseOrderDoesNotExistException;
 import ar.com.flexibility.examen.domain.service.exceptions.PurchaseOrderHasBeenApprovedException;
-import ar.com.flexibility.examen.domain.service.exceptions.UserServiceException;
+import ar.com.flexibility.examen.domain.service.exceptions.UnexpectedNullValueException;
+import ar.com.flexibility.examen.domain.service.exceptions.BusinessException;
 
 @Service
 public class PurchaseOrderService {
@@ -64,14 +67,35 @@ public class PurchaseOrderService {
 			propagation = Propagation.SUPPORTS,
 			isolation = Isolation.READ_COMMITTED
 	)
-	public List<ObjectDTO<ExistentPurchaseOrderDTO>> findAllPurchaseOrders() throws UserServiceException {
+	public List<ObjectDTO<ExistentPurchaseOrderDTO>> listPurchaseOrders(PageRequestDTO pageRequestDTO) throws BusinessException {
+		if ( pageRequestDTO == null )
+			throw new NullPointerException();
+		
 		List<ObjectDTO<ExistentPurchaseOrderDTO>> purchaseOrderDTOs = new ArrayList<>();
 		
-		for ( PurchaseOrder eachPurchaseOrder : this.purchaseOrderRepository.findAll() ) {
+		for ( PurchaseOrder eachPurchaseOrder : this.purchaseOrderRepository.findAll( pageRequestDTO.toPageRequest() ) ) {
 			purchaseOrderDTOs.add( new ObjectDTO<ExistentPurchaseOrderDTO>(eachPurchaseOrder.getId(), this.convertToDTO(eachPurchaseOrder)));
 		}
 		
 		return Collections.unmodifiableList(purchaseOrderDTOs);
+	}
+	
+	/**
+	 * @post Obtiene la orden de compra por id
+	 */
+	@Transactional(
+			readOnly = false,
+			timeout = 5000,
+			propagation = Propagation.SUPPORTS,
+			isolation = Isolation.READ_COMMITTED
+	)
+	public ExistentPurchaseOrderDTO getPurchaseOrder(long purchaseOrderId) throws BusinessException {
+		PurchaseOrder purchaseOrder = this.purchaseOrderRepository.findOne(purchaseOrderId);
+		
+		if ( purchaseOrder == null )
+			throw new PurchaseOrderDoesNotExistException(purchaseOrderId);
+		
+		return this.convertToDTO(purchaseOrder);
 	}
 	
 	/**
@@ -84,7 +108,7 @@ public class PurchaseOrderService {
 			propagation = Propagation.SUPPORTS,
 			isolation = Isolation.READ_COMMITTED
 	)
-	public List<ObjectDTO<ExistentPurchaseOrderDTO>> findById(List<Long> purchaseOrderIDs) throws UserServiceException {
+	public List<ObjectDTO<ExistentPurchaseOrderDTO>> findById(List<Long> purchaseOrderIDs) throws BusinessException {
 		if ( purchaseOrderIDs == null )
 			throw new NullPointerException();
 		
@@ -113,7 +137,7 @@ public class PurchaseOrderService {
 			propagation = Propagation.SUPPORTS,
 			isolation = Isolation.READ_COMMITTED
 	)
-	public long addPurchaseOrder(NewPurchaseOrderDTO purchaseOrderDTO) throws UserServiceException {
+	public long addPurchaseOrder(NewPurchaseOrderDTO purchaseOrderDTO) throws BusinessException {
 		Client client = legalClientRepository.findOne(purchaseOrderDTO.getClientId());
 		
 		if ( client == null ) {
@@ -138,25 +162,7 @@ public class PurchaseOrderService {
 		return purchaseOrder.getId();
 	}
 	
-	/**
-	 * @post Obtiene la orden de compra por id
-	 */
-	@Transactional(
-			readOnly = false,
-			timeout = 5000,
-			propagation = Propagation.SUPPORTS,
-			isolation = Isolation.READ_COMMITTED
-	)
-	public ExistentPurchaseOrderDTO getPurchaseOrder(long purchaseOrderId) throws UserServiceException {
-		PurchaseOrder purchaseOrder = this.purchaseOrderRepository.findOne(purchaseOrderId);
-		
-		if ( purchaseOrder == null )
-			throw new PurchaseOrderDoesNotExistException(purchaseOrderId);
-		
-		return this.convertToDTO(purchaseOrder);
-	}
-	
-	private ExistentPurchaseOrderDTO convertToDTO(PurchaseOrder purchaseOrder) throws UserServiceException {
+	private ExistentPurchaseOrderDTO convertToDTO(PurchaseOrder purchaseOrder) throws BusinessException {
 		if ( purchaseOrder == null )
 			throw new NullPointerException();
 		
@@ -182,7 +188,7 @@ public class PurchaseOrderService {
 			propagation = Propagation.SUPPORTS,
 			isolation = Isolation.SERIALIZABLE
 	)
-	public void approvePurchaseOrder(long purchaseOrderId) throws UserServiceException {
+	public void approvePurchaseOrder(long purchaseOrderId) throws BusinessException {
 		PurchaseOrder purchaseOrder = this.purchaseOrderRepository.findOne(purchaseOrderId);
 		
 		if ( purchaseOrder == null )
@@ -197,6 +203,27 @@ public class PurchaseOrderService {
 	}
 	
 	/**
+	 * @post Busca la transacción asociada a la orden de compra.
+	 * 		 Si no existe devuelve 'null'
+	 */
+	@Transactional(
+			readOnly = false,
+			timeout = 5000,
+			propagation = Propagation.SUPPORTS,
+			isolation = Isolation.READ_COMMITTED
+	)
+	public Long getPurchaseTransaction(long purchaseOrderId) throws BusinessException {
+		PurchaseOrder purchaseOrder = this.purchaseOrderRepository.findOne(purchaseOrderId);
+		
+		if ( purchaseOrder == null )
+			throw new PurchaseOrderDoesNotExistException(purchaseOrderId);
+		
+		PurchaseTransaction purchaseTransaction = this.purchaseTransactionRepository.findByPurchaseOrder(purchaseOrder);
+		
+		return purchaseTransaction != null ? purchaseTransaction.getId() : null;
+	}
+	
+	/**
 	 * @pre La orden de compra tiene que existir
 	 * @post Suprime la orden de compra
 	 */
@@ -206,7 +233,7 @@ public class PurchaseOrderService {
 			propagation = Propagation.SUPPORTS,
 			isolation = Isolation.SERIALIZABLE
 	)
-	public void removePurchaseOrder(long purchaseOrderId) throws UserServiceException {
+	public void removePurchaseOrder(long purchaseOrderId) throws BusinessException {
 		PurchaseOrder purchaseOrder = this.purchaseOrderRepository.findOne(purchaseOrderId);
 		
 		if ( purchaseOrder == null )
