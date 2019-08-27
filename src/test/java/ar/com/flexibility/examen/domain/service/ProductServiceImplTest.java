@@ -1,8 +1,10 @@
 package ar.com.flexibility.examen.domain.service;
 
 import static org.junit.Assert.assertEquals;
+//import org.junit.jupiter.api.BeforeEach;
+//import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.AdditionalAnswers;
 import org.mockito.InjectMocks;
