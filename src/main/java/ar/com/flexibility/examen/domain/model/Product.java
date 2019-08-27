@@ -3,7 +3,6 @@ package ar.com.flexibility.examen.domain.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.math.BigDecimal;
 
 @Entity
 @Table(name = "products")
@@ -17,7 +16,7 @@ public class Product implements Serializable {
 
     private String name;
     private String description;
-    private BigDecimal price;
+    private double price;
     private Integer stock;
 
 
@@ -29,9 +28,9 @@ public class Product implements Serializable {
 
     public void setDescription(String description) {this.description = description; }
 
-    public BigDecimal getPrice() { return price; }
+    public double getPrice() { return price; }
 
-    public void setPrice(BigDecimal price) { this.price = price; }
+    public void setPrice(double price) { this.price = price; }
 
     public Integer getStock() { return stock; }
 
