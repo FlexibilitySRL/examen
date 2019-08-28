@@ -21,7 +21,7 @@ import java.util.List;
 public class ProductController {
 
     private final Logger log = LoggerFactory.getLogger(ProductController.class);
-    //@Autowired
+
     private ProductService service;
 
     public ProductController(ProductService service){

@@ -9,6 +9,8 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
+
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.*;
 
 
@@ -17,7 +19,7 @@ import ar.com.flexibility.examen.domain.repository.ProductRepository;
 import ar.com.flexibility.examen.domain.service.impl.ProductServiceImpl;
 
 @RunWith(MockitoJUnitRunner.class)
-class ProductServiceImplTest {
+public class ProductServiceImplTest {
 
 	private ProductRepository repo = Mockito.mock(ProductRepository.class);
 	
@@ -41,11 +43,11 @@ class ProductServiceImplTest {
 		when(repo.save(any(Product.class))).thenReturn(product);
 		Product result = service.create(product);
 		verify(repo).save(product);
-		
+
+		assertNotNull(result);
 		assertEquals(result.getId(), product.getId());
 	}
-	
-	
+
 	@Test
 	void updateAProduct() {
 		Product originalProduct = new Product();
@@ -55,24 +57,24 @@ class ProductServiceImplTest {
 		originalProduct.setPrice(50000.00);
 		originalProduct.setStock(10);
 		
-		Product produtToUpdate = new Product();
-		produtToUpdate.setId(1L);
-		produtToUpdate.setPrice(100000.00);
-		produtToUpdate.setStock(20);
+		Product productToUpdate = new Product();
+		productToUpdate.setId(1L);
+		productToUpdate.setPrice(100000.00);
+		productToUpdate.setStock(20);
 				
-		when(repo.save(any(Product.class))).thenReturn(originalProduct).thenReturn(produtToUpdate);
-		when(repo.getOne(1L)).thenReturn(originalProduct);
+		when(repo.save(any(Product.class))).thenReturn(originalProduct).thenReturn(productToUpdate);
+		when(repo.findOne(1L)).thenReturn(originalProduct);
 		
 		service.create(originalProduct);
-		Product updatedProduct = service.update(produtToUpdate);
+		Product updatedProduct = service.update(productToUpdate);
 		
-		verify(repo).getOne(1L);
+		verify(repo).findOne(1L);
 		verify(repo,times(2)).save(originalProduct);
 				
 		assertEquals(updatedProduct.getId(), originalProduct.getId());
-		assertEquals(updatedProduct.getId(), produtToUpdate.getId());
-		assertEquals(updatedProduct.getPrice(), produtToUpdate.getPrice(),0.1);
-		assertEquals(updatedProduct.getStock(), produtToUpdate.getStock());
+		assertEquals(updatedProduct.getId(), productToUpdate.getId());
+		assertEquals(updatedProduct.getPrice(), productToUpdate.getPrice(),0.1);
+		assertEquals(updatedProduct.getStock(), productToUpdate.getStock());
 		
 	}
 	
