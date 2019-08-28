@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -111,7 +112,7 @@ public class ProductController {
         log.info("Get de todos los productos");
 
         List<Product> products = service.findAll();
-        List<ProductApi> lista = new LinkedList<>();
+        List<ProductApi> lista = new ArrayList<ProductApi>();
         for (Product product : products)
         {
             lista.add(toApi(product));
