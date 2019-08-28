@@ -29,8 +29,8 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product update(Product product) {
         log.debug("Actualizando : {}", product);
-
-        Product productToUpdate = repo.getOne(product.getId());
+        
+        Product productToUpdate = repo.findOne(product.getId());
         productToUpdate.setName(product.getName());
         productToUpdate.setDescription(product.getDescription());
         productToUpdate.setPrice(product.getPrice());
@@ -53,7 +53,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void deleteById(Long id) {
-        log.debug("Borrando : {}", id);
+        log.debug("Borrando producto: {}", id);
         repo.delete(id);
     }
 }
