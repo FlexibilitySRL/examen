@@ -1,7 +1,7 @@
-package ar.com.flexibility.examen.domain.service.impl;
+package ar.com.flexibility.examen.app.service.impl;
 
 import ar.com.flexibility.examen.domain.model.Message;
-import ar.com.flexibility.examen.domain.service.ProcessMessageService;
+import ar.com.flexibility.examen.app.service.ProcessMessageService;
 import org.springframework.stereotype.Service;
 
 @Service

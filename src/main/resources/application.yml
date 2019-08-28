@@ -6,8 +6,18 @@ spring:
       ddl-auto: update
     show-sql: true
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/aramark?zeroDateTimeBehavior=convertToNull
+    url: jdbc:mysql://db-mysql:3306/aramark?zeroDateTimeBehavior=CONVERT_TO_NULL
     username: root
     password: password
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+# token - 5hs
+access.token:
+  validity.seconds: 18000
+signing.key: "examen"
+issuer: "https://examen-itcrowd.com"
+
+header:
+  string: Authorization
 
 ---

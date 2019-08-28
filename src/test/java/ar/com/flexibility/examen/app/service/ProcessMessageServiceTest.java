@@ -1,7 +1,7 @@
-package ar.com.flexibility.examen.domain.service;
+package ar.com.flexibility.examen.app.service;
 
 import ar.com.flexibility.examen.domain.model.Message;
-import ar.com.flexibility.examen.domain.service.impl.ProcessMessageServiceImpl;
+import ar.com.flexibility.examen.app.service.impl.ProcessMessageServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

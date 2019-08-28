@@ -2,7 +2,7 @@ package ar.com.flexibility.examen.app.rest;
 
 import ar.com.flexibility.examen.app.api.MessageApi;
 import ar.com.flexibility.examen.domain.model.Message;
-import ar.com.flexibility.examen.domain.service.ProcessMessageService;
+import ar.com.flexibility.examen.app.service.ProcessMessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,0 +1,33 @@
+version: '3.3'
+services:
+  db-mysql:
+    container_name: db-mysql
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: "${DATABASE_NAME}"
+      MYSQL_USER: "${DATABASE_USER}"
+      MYSQL_ROOT_PASSWORD: "${DATABASE_PASSWORD}"
+    ports:
+    # <Port exposed> : < MySQL Port running inside container>
+    - '3306:3306'
+    expose:
+    # Opens port 3306 on the container
+    - '3306'
+  app:
+    container_name: examen_app
+    restart: always
+    build: .
+    working_dir: /app
+    volumes:
+    - .:/app
+    - ~/.m2:/root/.m2
+    ports:
+    - "8080:8080"
+    expose:
+    - "8080"
+    command: mvn spring-boot:run -Drun.jvmArguments="-Dspring.profiles.active=local"
+    depends_on:
+    - db-mysql
+    links:
+    - db-mysql
