@@ -15,7 +15,7 @@ import ar.com.flexibility.examen.domain.model.Product;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
-class ProductRepositoryIntegrationTest {
+public class ProductRepositoryIntegrationTest {
 
 	@Autowired
 	private TestEntityManager entityManager;

@@ -54,6 +54,10 @@ public class ProductControllerTest {
 
 	@Test
 	public final void testGetProduct() throws Exception {
+		mockMvc = MockMvcBuilders
+				.standaloneSetup(controller)
+				.build();
+
 		Product product = new Product();
 		product.setId(1L);
 		product.setName("notebook");
@@ -77,6 +81,10 @@ public class ProductControllerTest {
 
 	@Test
 	public final void testGetAllProducts() throws Exception {
+		mockMvc = MockMvcBuilders
+				.standaloneSetup(controller)
+				.build();
+
 		Product product1 = new Product();
 		product1.setId(1L);
 		product1.setName("notebook");

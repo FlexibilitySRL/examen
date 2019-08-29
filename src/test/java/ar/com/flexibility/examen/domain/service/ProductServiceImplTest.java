@@ -3,8 +3,6 @@ package ar.com.flexibility.examen.domain.service;
 import static org.junit.Assert.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-//import org.junit.Test;
-//import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mockito;
@@ -12,7 +10,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.*;
-
 
 import ar.com.flexibility.examen.domain.model.Product;
 import ar.com.flexibility.examen.domain.repository.ProductRepository;
@@ -32,7 +29,7 @@ public class ProductServiceImplTest {
 	}
 	
 	@Test
-	void createAProduct() {
+	public void createAProduct() {
 		Product product = new Product();
 		product.setId(1L);
 		product.setName("notebook");
@@ -49,7 +46,7 @@ public class ProductServiceImplTest {
 	}
 
 	@Test
-	void updateAProduct() {
+	public void updateAProduct() {
 		Product originalProduct = new Product();
 		originalProduct.setId(1L);
 		originalProduct.setName("notebook");
@@ -79,7 +76,7 @@ public class ProductServiceImplTest {
 	}
 	
 	@Test
-	void findById() {
+	public void findById() {
 		Product product = new Product();
 		product.setId(1L);
 		product.setName("notebook");
@@ -95,7 +92,7 @@ public class ProductServiceImplTest {
 	}
 	
 	@Test
-	void deleteById() {
+	public void deleteById() {
 		Product product = new Product();
 		product.setId(1L);
 		product.setName("notebook");
