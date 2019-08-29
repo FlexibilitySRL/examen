@@ -69,7 +69,7 @@ public class ClientController {
 
 	/**
 	 * POST /clients crea cliente nuevo
-	 * @param clienteApi
+	 * @param clientApi
 	 * @return ResponseEntity con status 201
 	 * @throws URISyntaxException
 	 */

@@ -59,14 +59,13 @@ public class ProductServiceImplTest {
 		productToUpdate.setPrice(100000.00);
 		productToUpdate.setStock(20);
 				
-		when(repo.save(any(Product.class))).thenReturn(originalProduct).thenReturn(productToUpdate);
+		when(repo.save(any(Product.class))).thenReturn(originalProduct);
 		when(repo.findOne(1L)).thenReturn(originalProduct);
 		
-		service.create(originalProduct);
 		Product updatedProduct = service.update(productToUpdate);
 		
 		verify(repo).findOne(1L);
-		verify(repo,times(2)).save(originalProduct);
+		verify(repo).save(originalProduct);
 				
 		assertEquals(updatedProduct.getId(), originalProduct.getId());
 		assertEquals(updatedProduct.getId(), productToUpdate.getId());

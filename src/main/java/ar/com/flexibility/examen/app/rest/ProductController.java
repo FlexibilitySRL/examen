@@ -69,7 +69,7 @@ public class ProductController {
     public ResponseEntity<ProductApi> createProduct(@Valid @RequestBody ProductApi productApi) throws URISyntaxException {
         log.debug("Request para crear producto : {}", productApi);
         Product result = service.create(toEntity(productApi));
-        return ResponseEntity.created(new URI("/api/products/" + result.getId()))
+        return ResponseEntity.created(new URI("/rest/products/" + result.getId()))
                .body(toApi(result));
     }
 
@@ -83,12 +83,12 @@ public class ProductController {
     * 
     */
     @PutMapping("/products")
-    public ResponseEntity<?> updateProduct(@Valid @RequestBody ProductApi productApi) throws URISyntaxException {
+    public ResponseEntity<?> updateProduct(@Valid @RequestBody ProductApi productApi) {
         log.debug("Request para actualizar producto : {}", productApi);
 
         if (productApi.getId() == null) {
         	log.error("el producto no existe");
-			return new ResponseEntity<String>("El producto no existe", HttpStatus.NOT_FOUND);
+			return new ResponseEntity<String>("id producto vacio", HttpStatus.NOT_FOUND);
         }
         
         Product result = null;

@@ -2,14 +2,11 @@ package ar.com.flexibility.examen.app.rest;
 
 import ar.com.flexibility.examen.app.api.ProductApi;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyObject;
+import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
@@ -127,19 +124,34 @@ public class ProductControllerTest {
 
 		when(service.update(any(Product.class))).thenReturn(anyObject());
 
-		ResultActions result = mockMvc.perform(put("/rest/products",1)
+		ResultActions result = mockMvc.perform(put("/rest/products")
+				                               .contentType(MediaType.APPLICATION_JSON)
 								               .content(asJsonString(productApi))
 		                                       .accept(MediaType.APPLICATION_JSON))
-				                               .andExpect(status().isCreated());
+											   .andExpect(status().isOk());
 
 	}
 
-	public static String asJsonString(final Object obj) {
-		try {
-			return new ObjectMapper().writeValueAsString(obj);
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+	@Test
+	public final void testUpdateProductWithEmptyId() throws Exception{
+
+		mockMvc = MockMvcBuilders
+				.standaloneSetup(controller)
+				.build();
+
+		ProductApi productApi = new ProductApi();
+		productApi.setId(null);
+		productApi.setName("notebook");
+		productApi.setDescription("Dell");
+		productApi.setPrice(5000.00);
+		productApi.setStock(10);
+
+		ResultActions result = mockMvc.perform(put("/rest/products")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(asJsonString(productApi))
+				.accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isNotFound())
+				.andExpect(content().string("id producto vacio"));
 	}
 
 	@Test
@@ -178,6 +190,49 @@ public class ProductControllerTest {
 
 		result.andExpect(content().json("[{'id' : 1, 'name':'notebook'},"
 				                      + "{'id' : 5, 'name':'mouse'}]"));
+	}
+
+	@Test
+	public final void testCreateProduct() throws Exception{
+		mockMvc = MockMvcBuilders
+				.standaloneSetup(controller)
+				.build();
+
+		Product product1 = new Product();
+		product1.setId(1L);
+		product1.setName("notebook");
+		product1.setDescription("Dell 16gb");
+		product1.setPrice(50000.00);
+		product1.setStock(10);
+
+		ProductApi productApi = new ProductApi();
+		productApi.setId(null);
+		productApi.setName("notebook");
+		productApi.setDescription("Dell");
+		productApi.setPrice(5000.00);
+		productApi.setStock(10);
+
+		when(service.create(any(Product.class))).thenReturn(product1);
+
+		ResultActions result = mockMvc.perform(post("/rest/products")
+											   .contentType(MediaType.APPLICATION_JSON)
+				                               .content(asJsonString(productApi))
+				                               .accept(MediaType.APPLICATION_JSON))
+				                               .andExpect(status().isCreated());
+
+
+		verify(service, times(1)).create(any(Product.class));
+		verifyNoMoreInteractions(service);
+
+		result.andExpect(content().json("{'id' : 1, 'name':'notebook'}"));
+	}
+
+	public static String asJsonString(final Object obj) {
+		try {
+			return new ObjectMapper().writeValueAsString(obj);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 }
