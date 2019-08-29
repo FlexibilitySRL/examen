@@ -90,7 +90,7 @@ public class ClientController {
 	 * 
 	 */
 	@PutMapping("/clients")
-	public ResponseEntity<?> updateProduct(@Valid @RequestBody ClientApi clientApi) throws URISyntaxException {
+	public ResponseEntity<?> updateClient(@Valid @RequestBody ClientApi clientApi) throws URISyntaxException {
 		log.debug("Request para actualizar cliente : {}", clientApi);
 
 		if (clientApi.getDni() == null) {

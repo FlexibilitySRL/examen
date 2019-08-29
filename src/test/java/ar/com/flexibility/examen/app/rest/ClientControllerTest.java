@@ -16,6 +16,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.http.MediaType;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -115,11 +119,80 @@ class ClientControllerTest {
     }
 
     @Test
-    void updateProduct() {
+    void updateClient() throws Exception {
+
+        Client client = new Client();
+        client.setDni(1234567L);
+        client.setEmail("email");
+        client.setName("name");
+
+        when(service.update(any(Client.class))).thenReturn(client);
+
+        ClientApi clientApi = new ClientApi();
+        clientApi.setDni(1234567L);
+        clientApi.setName("name");
+        clientApi.setEmail("email");
+
+        ResultActions result = mockMvc.perform(put("/rest/clients")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(clientApi))
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+
+        verify(service).update(any(Client.class));
+        verifyNoMoreInteractions(service);
+
+        result.andExpect(content().json("{'dni' : 1234567, 'name':'name', 'email':'email'}"));
     }
 
     @Test
-    void getAllClients() {
+    void updateClientWithEmptyId() throws Exception {
+
+        ClientApi clientApi = new ClientApi();
+        clientApi.setDni(null);
+        clientApi.setName("name");
+        clientApi.setEmail("email");
+
+        ResultActions result = mockMvc.perform(put("/rest/clients")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(clientApi))
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound())
+                .andExpect(content().string("El cliente no existe"));
+
+        verifyNoMoreInteractions(service);
+    }
+
+    @Test
+    void getAllClients() throws Exception {
+        Client client1 = new Client();
+        client1.setDni(1234567L);
+        client1.setEmail("email_1");
+        client1.setName("name_1");
+
+        Client client2 = new Client();
+        client2.setDni(7654321L);
+        client2.setEmail("email_2");
+        client2.setName("name_2");
+
+        List<Client> clients = new ArrayList<>();
+        clients.add(client1);
+        clients.add(client2);
+
+        when(service.findAll()).thenReturn(clients);
+
+        ResultActions result = mockMvc.perform(
+                get("/rest/clients"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE));
+
+        verify(service).findAll();
+        verifyNoMoreInteractions(service);
+
+        result.andExpect(content().json("[{'dni' : 1234567, 'name':'name_1','email':'email_1'},"
+                                                  + "{'dni' : 7654321, 'name':'name_2','email':'email_2'}]"));
+
+
     }
 
     public static String asJsonString(final Object obj) {

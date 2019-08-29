@@ -1,15 +1,16 @@
 package ar.com.flexibility.examen.domain.service;
 
-import static org.junit.Assert.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
+
 import org.mockito.InjectMocks;
 import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.*;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import ar.com.flexibility.examen.domain.model.Product;
 import ar.com.flexibility.examen.domain.repository.ProductRepository;
