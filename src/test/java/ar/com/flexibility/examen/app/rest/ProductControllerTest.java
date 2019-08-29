@@ -1,11 +1,15 @@
 package ar.com.flexibility.examen.app.rest;
 
+import ar.com.flexibility.examen.app.api.ProductApi;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyObject;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
@@ -24,8 +28,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -78,6 +81,66 @@ public class ProductControllerTest {
 		result.andExpect(content().json("{'id' : 1, 'name':'notebook','description':'Dell 16gb'},'price':'50000.00'"));
 	}
 
+	@Test
+	public final void testGetProductThatDoesNotExist() throws Exception {
+		mockMvc = MockMvcBuilders
+				.standaloneSetup(controller)
+				.build();
+
+		when(service.findById(1L)).thenReturn(null);
+
+		ResultActions result = mockMvc.perform(
+				get("/rest/products/{id}", 1))
+				.andExpect(status().isNotFound())
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE));
+
+		verify(service, times(1)).findById(1L);
+		verifyNoMoreInteractions(service);
+	}
+
+	@Test
+	public final void testDeleteProduct() throws Exception {
+		mockMvc = MockMvcBuilders
+				.standaloneSetup(controller)
+				.build();
+
+		ResultActions result = mockMvc.perform(
+				delete("/rest/products/{id}", 1))
+				.andExpect(status().isNoContent());
+
+		verify(service, times(1)).deleteById(1L);
+		verifyNoMoreInteractions(service);
+	}
+
+	@Test
+	public final void testUpdateProduct() throws Exception{
+		mockMvc = MockMvcBuilders
+				.standaloneSetup(controller)
+				.build();
+
+		ProductApi productApi = new ProductApi();
+		productApi.setId(1L);
+		productApi.setName("notebook");
+		productApi.setDescription("Dell");
+		productApi.setPrice(5000.00);
+		productApi.setStock(10);
+
+		when(service.update(any(Product.class))).thenReturn(anyObject());
+
+		ResultActions result = mockMvc.perform(put("/rest/products",1)
+								               .content(asJsonString(productApi))
+		                                       .accept(MediaType.APPLICATION_JSON))
+				                               .andExpect(status().isCreated());
+
+	}
+
+	public static String asJsonString(final Object obj) {
+		try {
+			return new ObjectMapper().writeValueAsString(obj);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
 
 	@Test
 	public final void testGetAllProducts() throws Exception {
