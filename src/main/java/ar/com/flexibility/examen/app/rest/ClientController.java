@@ -42,14 +42,14 @@ public class ClientController {
 	 * @return ResponseEntity con status 200 si el cliente existe o 404 si no
 	 */
 	@GetMapping("/clients/{id}")
-	public ResponseEntity<ClientApi> getClient(@PathVariable Long id) {
+	public ResponseEntity<?> getClient(@PathVariable Long id) {
 		log.debug("Request para obtener cliente : {}", id);
 
 		Client client = service.findById(id);
 
 		if (client == null) {
 			log.debug("no existe id: {}", id);
-			return new ResponseEntity<ClientApi>(toApi(null), HttpStatus.NOT_FOUND);
+			return new ResponseEntity<String>("El cliente no existe", HttpStatus.NOT_FOUND);
 		}
 
 		return new ResponseEntity<ClientApi>(toApi(client), HttpStatus.OK);

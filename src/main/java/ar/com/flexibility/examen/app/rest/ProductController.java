@@ -34,13 +34,13 @@ public class ProductController {
      * @return ResponseEntity con status 200 si el producto existe o 404 si no
      */
     @GetMapping("/products/{id}")
-    public ResponseEntity<ProductApi> getProduct(@PathVariable Long id) {
+    public ResponseEntity<?> getProduct(@PathVariable Long id) {
         log.debug("Request para obtener producto : {}", id);
 
         Product product = service.findById(id);
         if (product == null) {
             log.debug("no existe id: {}", id);
-            return new ResponseEntity<ProductApi>(toApi(null), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<String>("id producto vacio", HttpStatus.NOT_FOUND);
         }
 
         return new ResponseEntity<ProductApi>(toApi(product), HttpStatus.OK);
