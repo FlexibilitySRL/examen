@@ -12,7 +12,7 @@ import java.util.List;
 @Service
 public class ProductServiceImpl implements ProductService {
 
-    private final Logger log = LoggerFactory.getLogger(ProductService.class);
+    private final Logger log = LoggerFactory.getLogger(ProductServiceImpl.class);
     private final ProductRepository repo;
 
     public ProductServiceImpl(ProductRepository repo)
@@ -31,6 +31,11 @@ public class ProductServiceImpl implements ProductService {
         log.debug("Actualizando : {}", product);
         
         Product productToUpdate = repo.findOne(product.getId());
+
+        if (productToUpdate == null){
+            return null;
+        }
+
         productToUpdate.setName(product.getName());
         productToUpdate.setDescription(product.getDescription());
         productToUpdate.setPrice(product.getPrice());

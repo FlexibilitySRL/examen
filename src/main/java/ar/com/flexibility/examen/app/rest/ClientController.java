@@ -29,7 +29,6 @@ import ar.com.flexibility.examen.domain.service.ClientService;
 public class ClientController {
 
 	private final Logger log = LoggerFactory.getLogger(ClientController.class);
-	//@Autowired
 	private ClientService service;
 
 	public ClientController(ClientService service) {
@@ -77,7 +76,7 @@ public class ClientController {
 	public ResponseEntity<ClientApi> createClient(@Valid @RequestBody ClientApi clientApi) throws URISyntaxException {
 		log.debug("Request para crear cliente : {}", clientApi);
 		Client result = service.create(toEntity(clientApi));
-		return ResponseEntity.created(new URI("/api/clients/" + result.getDni()))
+		return ResponseEntity.created(new URI("/rest/clients/" + result.getId()))
 				.body(toApi(result));
 	}
 
@@ -93,16 +92,14 @@ public class ClientController {
 	public ResponseEntity<?> updateClient(@Valid @RequestBody ClientApi clientApi) throws URISyntaxException {
 		log.debug("Request para actualizar cliente : {}", clientApi);
 
-		if (clientApi.getDni() == null) {
+		if (clientApi.getId() == null) {
 			log.error("el cliente no existe");
 			return new ResponseEntity<String>("El cliente no existe", HttpStatus.NOT_FOUND);
 		}
 
-		Client result = null;
-		try {
-			result = service.update(toEntity(clientApi));
-		}catch (Exception e)
-		{
+		Client result = result = service.update(toEntity(clientApi));;
+
+		if (result == null){
 			log.error("el cliente no existe");
 			return new ResponseEntity<String>("El cliente no existe", HttpStatus.NOT_FOUND);
 		}
@@ -131,7 +128,7 @@ public class ClientController {
 	private Client toEntity(ClientApi clientApi) {
 
 		Client client = new Client();
-		client.setDni(clientApi.getDni());
+		client.setId(clientApi.getId());
 		client.setName(clientApi.getName());
 		client.setEmail(clientApi.getEmail());
 		return client;
@@ -140,7 +137,7 @@ public class ClientController {
 	private ClientApi toApi(Client client) {
 		ClientApi clientApi = new ClientApi();
 		if (client != null) {
-			clientApi.setDni(client.getDni());
+			clientApi.setId(client.getId());
 			clientApi.setName(client.getName());
 			clientApi.setEmail(client.getEmail());
 		}

@@ -24,8 +24,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class ClientControllerTest {
 
     private MockMvc mockMvc;
@@ -53,7 +51,7 @@ class ClientControllerTest {
     @Test
     void getClient() throws Exception {
         Client client = new Client();
-        client.setDni(1234567L);
+        client.setId(1234567L);
         client.setEmail("email");
         client.setName("name");
 
@@ -66,7 +64,7 @@ class ClientControllerTest {
         verify(service).findById(1234567L);
         verifyNoMoreInteractions(service);
 
-        result.andExpect(content().json("{'dni' : 1234567, 'name':'name','email':'email'}"));
+        result.andExpect(content().json("{'id' : 1234567, 'name':'name','email':'email'}"));
     }
 
     @Test
@@ -76,7 +74,7 @@ class ClientControllerTest {
 
         ResultActions result = mockMvc.perform(get("/rest/clients/{id}",1234567L))
                 .andExpect(status().isNotFound())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE));
+                .andExpect(content().contentType(MediaType.valueOf("text/plain;charset=ISO-8859-1")));
 
         verify(service).findById(1234567L);
         verifyNoMoreInteractions(service);
@@ -95,12 +93,12 @@ class ClientControllerTest {
     @Test
     void createClient() throws Exception {
         Client client = new Client();
-        client.setDni(1234567L);
+        client.setId(1234567L);
         client.setEmail("email");
         client.setName("name");
 
         ClientApi clientApi = new ClientApi();
-        clientApi.setDni(1234567L);
+        clientApi.setId(1234567L);
         clientApi.setName("name");
         clientApi.setEmail("email");
 
@@ -115,21 +113,21 @@ class ClientControllerTest {
         verify(service).create(any(Client.class));
         verifyNoMoreInteractions(service);
 
-        result.andExpect(content().json("{'dni' : 1234567, 'name':'name', 'email':'email'}"));
+        result.andExpect(content().json("{'id' : 1234567, 'name':'name', 'email':'email'}"));
     }
 
     @Test
     void updateClient() throws Exception {
 
         Client client = new Client();
-        client.setDni(1234567L);
+        client.setId(1234567L);
         client.setEmail("email");
         client.setName("name");
 
         when(service.update(any(Client.class))).thenReturn(client);
 
         ClientApi clientApi = new ClientApi();
-        clientApi.setDni(1234567L);
+        clientApi.setId(1234567L);
         clientApi.setName("name");
         clientApi.setEmail("email");
 
@@ -142,14 +140,14 @@ class ClientControllerTest {
         verify(service).update(any(Client.class));
         verifyNoMoreInteractions(service);
 
-        result.andExpect(content().json("{'dni' : 1234567, 'name':'name', 'email':'email'}"));
+        result.andExpect(content().json("{'id' : 1234567, 'name':'name', 'email':'email'}"));
     }
 
     @Test
     void updateClientWithEmptyId() throws Exception {
 
         ClientApi clientApi = new ClientApi();
-        clientApi.setDni(null);
+        clientApi.setId(null);
         clientApi.setName("name");
         clientApi.setEmail("email");
 
@@ -166,12 +164,12 @@ class ClientControllerTest {
     @Test
     void getAllClients() throws Exception {
         Client client1 = new Client();
-        client1.setDni(1234567L);
+        client1.setId(1234567L);
         client1.setEmail("email_1");
         client1.setName("name_1");
 
         Client client2 = new Client();
-        client2.setDni(7654321L);
+        client2.setId(7654321L);
         client2.setEmail("email_2");
         client2.setName("name_2");
 
@@ -189,10 +187,8 @@ class ClientControllerTest {
         verify(service).findAll();
         verifyNoMoreInteractions(service);
 
-        result.andExpect(content().json("[{'dni' : 1234567, 'name':'name_1','email':'email_1'},"
-                                                  + "{'dni' : 7654321, 'name':'name_2','email':'email_2'}]"));
-
-
+        result.andExpect(content().json("[{'id' : 1234567, 'name':'name_1','email':'email_1'},"
+                                                  + "{'id' : 7654321, 'name':'name_2','email':'email_2'}]"));
     }
 
     public static String asJsonString(final Object obj) {

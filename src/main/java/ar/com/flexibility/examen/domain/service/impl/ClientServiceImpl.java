@@ -14,7 +14,7 @@ import ar.com.flexibility.examen.domain.service.ClientService;
 @Service
 public class ClientServiceImpl implements ClientService {
 	
-	private final Logger log = LoggerFactory.getLogger(ClientService.class);
+	private final Logger log = LoggerFactory.getLogger(ClientServiceImpl.class);
 	private final ClientRepository repo;
 	
 	
@@ -33,7 +33,12 @@ public class ClientServiceImpl implements ClientService {
 	public Client update(Client client) {
 		log.debug("Actualizando : {}", client);
 
-		Client clientToUpdate = repo.findOne(client.getDni());
+		Client clientToUpdate = repo.findOne(client.getId());
+
+		if (clientToUpdate == null){
+			return null;
+		}
+
 		clientToUpdate.setName(client.getName());
 		clientToUpdate.setEmail(client.getEmail());
 

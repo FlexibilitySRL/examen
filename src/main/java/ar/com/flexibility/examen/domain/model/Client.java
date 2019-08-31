@@ -6,23 +6,23 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "clients")
+@Table(name = "client")
 public class Client {
 	
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="dni")
-	private Long dni;
+	@Column(name="id")
+	private Long id;
 	
 	private String name;
 	private String email;
 	
-	public Long getDni() {
-		return dni;
+	public Long getId() {
+		return id;
 	}
-	public void setDni(Long dni) {
-		this.dni = dni;
+	public void setId(Long id) {
+		this.id = id;
 	}
 	public String getName() {
 		return name;
@@ -33,6 +33,16 @@ public class Client {
 	public String getEmail() {
 		return email;
 	}
+
+	@Override
+	public String toString() {
+		return "Client{" +
+				"id=" + id +
+				", name='" + name + '\'' +
+				", email='" + email + '\'' +
+				'}';
+	}
+
 	public void setEmail(String email) {
 		this.email = email;
 	}

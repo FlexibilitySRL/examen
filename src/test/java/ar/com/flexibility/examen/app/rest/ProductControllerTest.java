@@ -89,7 +89,7 @@ public class ProductControllerTest {
 		ResultActions result = mockMvc.perform(
 				get("/rest/products/{id}", 1))
 				.andExpect(status().isNotFound())
-				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE));
+				.andExpect(content().contentType(MediaType.valueOf("text/plain;charset=ISO-8859-1")));
 
 		verify(service, times(1)).findById(1L);
 		verifyNoMoreInteractions(service);
@@ -115,6 +115,13 @@ public class ProductControllerTest {
 				.standaloneSetup(controller)
 				.build();
 
+		Product product = new Product();
+		product.setId(1L);
+		product.setName("notebook");
+		product.setDescription("Dell 16gb");
+		product.setPrice(50000.00);
+		product.setStock(10);
+
 		ProductApi productApi = new ProductApi();
 		productApi.setId(1L);
 		productApi.setName("notebook");
@@ -122,7 +129,7 @@ public class ProductControllerTest {
 		productApi.setPrice(5000.00);
 		productApi.setStock(10);
 
-		when(service.update(any(Product.class))).thenReturn(anyObject());
+		when(service.update(any(Product.class))).thenReturn(product);
 
 		ResultActions result = mockMvc.perform(put("/rest/products")
 				                               .contentType(MediaType.APPLICATION_JSON)

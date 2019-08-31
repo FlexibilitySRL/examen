@@ -49,4 +49,12 @@ public class ProductApi {
     public double getPrice() { return price; }
 
     public Integer getStock() { return stock; }
+
+    @Override
+    public String toString() {
+        return "ProductApi{" +
+                "id=" + getId() +
+                "name=" + getName() +
+                "}";
+    }
 }

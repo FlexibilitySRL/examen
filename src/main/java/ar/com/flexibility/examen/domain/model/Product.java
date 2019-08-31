@@ -5,7 +5,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "products")
+@Table(name = "product")
 public class Product implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -41,5 +41,21 @@ public class Product implements Serializable {
     public void setId(Long id)
     {
         this.id = id;
+    }
+
+    @Transient
+    public boolean hasStock(Integer units) {
+        return stock >= units;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", price=" + price +
+                ", stock=" + stock +
+                '}';
     }
 }

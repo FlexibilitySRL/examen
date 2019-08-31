@@ -8,14 +8,14 @@ public interface ClientService {
 	
 	/**
 	 * Crear un cliente
-	 * @param cliente a crear
+	 * @param client a crear
 	 * @return cliente creado
 	 */
 	public Client create(Client client);
 
 	/**
 	 * Actualiza un cliente
-	 * @param cliente a actualizar
+	 * @param client a actualizar
 	 * @return Client actualizado
 	 */
 	public Client update(Client client);

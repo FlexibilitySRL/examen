@@ -34,7 +34,7 @@ class ClientServiceImplTest {
     @Test
     void createClient() {
         Client client = new Client();
-        client.setDni(3125109L);
+        client.setId(3125109L);
         client.setName("alberto");
         client.setEmail("albertok@gmail.com");
 
@@ -46,7 +46,7 @@ class ClientServiceImplTest {
         verifyNoMoreInteractions(repo);
 
         assertNotNull(result);
-        assertEquals(result.getDni(), client.getDni());
+        assertEquals(result.getId(), client.getId());
         assertEquals(result.getName(), client.getName());
         assertEquals(result.getEmail(), client.getEmail());
     }
@@ -54,12 +54,12 @@ class ClientServiceImplTest {
     @Test
     void updateClient() {
         Client original = new Client();
-        original.setDni(31251409L);
+        original.setId(31251409L);
         original.setName("alberto");
         original.setEmail("albertok@gmail.com");
 
         Client toUpdate = new Client();
-        toUpdate.setDni(31251409L);
+        toUpdate.setId(31251409L);
         toUpdate.setName("alberto");
         toUpdate.setEmail("alberto_k_19@gmail.com");
 
@@ -72,7 +72,7 @@ class ClientServiceImplTest {
         verify(repo).save(original);
         verifyNoMoreInteractions(repo);
 
-        assertEquals(updatedClient.getDni(), toUpdate.getDni());
+        assertEquals(updatedClient.getId(), toUpdate.getId());
         assertEquals(updatedClient.getName(), toUpdate.getName());
         assertEquals(updatedClient.getEmail(), toUpdate.getEmail());
 
@@ -81,7 +81,7 @@ class ClientServiceImplTest {
     @Test
     void findById() {
         Client client = new Client();
-        client.setDni(31251409L);
+        client.setId(31251409L);
         client.setName("alberto");
         client.setEmail("albertok@gmail.com");
 
@@ -93,7 +93,7 @@ class ClientServiceImplTest {
         verifyNoMoreInteractions(repo);
 
         assertEquals(found,client);
-        assertEquals(found.getDni(),client.getDni());
+        assertEquals(found.getId(),client.getId());
         assertEquals(found.getName(),client.getName());
         assertEquals(found.getEmail(),client.getEmail());
     }
@@ -101,12 +101,12 @@ class ClientServiceImplTest {
     @Test
     void findAll() {
         Client client1 = new Client();
-        client1.setDni(31251409L);
+        client1.setId(31251409L);
         client1.setName("alberto");
         client1.setEmail("albertok@gmail.com");
 
         Client client2 = new Client();
-        client2.setDni(31251409L);
+        client2.setId(31251409L);
         client2.setName("alberto");
         client2.setEmail("albertok@gmail.com");
 

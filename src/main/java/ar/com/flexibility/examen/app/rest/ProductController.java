@@ -91,15 +91,13 @@ public class ProductController {
 			return new ResponseEntity<String>("id producto vacio", HttpStatus.NOT_FOUND);
         }
         
-        Product result = null;
-        try {
-        	result = service.update(toEntity(productApi));
-        }catch (Exception e)
-        {
-        	log.error("el producto no existe");
-			return new ResponseEntity<String>("El producto no existe", HttpStatus.NOT_FOUND);
-		}
-                
+        Product result = service.update(toEntity(productApi));
+
+        if(result == null){
+            log.error("el producto no existe");
+            return new ResponseEntity<String>("El producto no existe", HttpStatus.NOT_FOUND);
+        }
+
         return ResponseEntity.ok().body(toApi(result));
     }
 

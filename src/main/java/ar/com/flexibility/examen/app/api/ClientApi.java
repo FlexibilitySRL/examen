@@ -7,17 +7,17 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 public class ClientApi {
 	
 	@JsonProperty
-	private Long dni;
+	private Long id;
 	@JsonProperty
 	private String name;
 	@JsonProperty
 	private String email;
 	
-	public Long getDni() {
-		return dni;
+	public Long getId() {
+		return id;
 	}
-	public void setDni(Long dni) {
-		this.dni = dni;
+	public void setId(Long id) {
+		this.id = id;
 	}
 	public String getName() {
 		return name;
@@ -31,6 +31,13 @@ public class ClientApi {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "ClientApi{" +
+				"id=" + getId() +
+				"name=" + getName() +
+				"}";
+	}
 
 }
