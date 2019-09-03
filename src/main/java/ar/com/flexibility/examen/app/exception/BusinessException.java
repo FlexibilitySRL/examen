@@ -1,12 +1,12 @@
 package ar.com.flexibility.examen.app.exception;
 
-public class BussinesException extends RuntimeException {
+public class BusinessException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
 
 	private String[] messages;
 
-	public BussinesException(String... errorMessage) {
+	public BusinessException(String... errorMessage) {
 		this.messages = errorMessage;
 	}
 

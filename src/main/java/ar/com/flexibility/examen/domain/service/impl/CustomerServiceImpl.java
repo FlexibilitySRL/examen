@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ar.com.flexibility.examen.app.errorCode.CustomerErrorCode;
-import ar.com.flexibility.examen.app.exception.BussinesException;
+import ar.com.flexibility.examen.app.exception.BusinessException;
 import ar.com.flexibility.examen.domain.dto.CustomerDTO;
 import ar.com.flexibility.examen.domain.model.Customer;
 import ar.com.flexibility.examen.domain.repository.CustomerRepository;
@@ -33,7 +33,7 @@ public class CustomerServiceImpl implements CustomerService {
 	public CustomerDTO findById(Long id) {
 		Customer entity = repository.findOne(id);
 		if (entity == null) {
-			throw new BussinesException(CustomerErrorCode.CUSTOMER_NOT_FOUND.name());
+			throw new BusinessException(CustomerErrorCode.CUSTOMER_NOT_FOUND.name());
 		}
 		return this.entityToDto(entity);
 	}
@@ -52,7 +52,7 @@ public class CustomerServiceImpl implements CustomerService {
 				repository.delete(entity);
 				deleted = true;
 			} else {
-				throw new BussinesException(CustomerErrorCode.CUSTOMER_NOT_FOUND.name());
+				throw new BusinessException(CustomerErrorCode.CUSTOMER_NOT_FOUND.name());
 			}
 		}
 		return deleted;
@@ -78,7 +78,7 @@ public class CustomerServiceImpl implements CustomerService {
 			this.findById(dto.getId());
 		}
 		if (dto.getCuit() == null) {
-			throw new BussinesException(CustomerErrorCode.CUSTOMER_INVALID_CUIT.name());
+			throw new BusinessException(CustomerErrorCode.CUSTOMER_INVALID_CUIT.name());
 		}
 	}
 
