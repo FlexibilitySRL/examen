@@ -33,7 +33,7 @@ public class ProductServiceImpl implements ProductService {
 	public ProductDTO findById(Long id) {
 		Product entity = repository.findOne(id);
 		if (entity == null) {
-			throw new BusinessException(ProductErrorCode.PRODUCT_NOT_FOUND.name());
+			throw new BusinessException(ProductErrorCode.PRODUCT_NOT_FOUND.getDescription());
 		}
 		return this.entityToDto(entity);
 	}
@@ -52,7 +52,7 @@ public class ProductServiceImpl implements ProductService {
 				repository.delete(entity);
 				deleted = true;
 			} else {
-				throw new BusinessException(ProductErrorCode.PRODUCT_NOT_FOUND.name());
+				throw new BusinessException(ProductErrorCode.PRODUCT_NOT_FOUND.getDescription());
 			}
 		}
 		return deleted;
@@ -79,10 +79,10 @@ public class ProductServiceImpl implements ProductService {
 			this.findById(dto.getId());
 		}
 		if (dto.getName() == null || dto.getName().trim().isEmpty()) {
-			errorMessages.add(ProductErrorCode.PRODUCT_INVALID_NAME.name());
+			errorMessages.add(ProductErrorCode.PRODUCT_INVALID_NAME.getDescription());
 		}
 		if (dto.getCode() == null) {
-			errorMessages.add(ProductErrorCode.PRODUCT_INVALID_CODE.name());
+			errorMessages.add(ProductErrorCode.PRODUCT_INVALID_CODE.getDescription());
 		}
 		if (!errorMessages.isEmpty()) {
 			throw new BusinessException(errorMessages.toArray(new String[errorMessages.size()]));

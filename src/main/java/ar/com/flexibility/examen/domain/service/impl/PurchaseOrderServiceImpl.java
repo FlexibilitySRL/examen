@@ -8,7 +8,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ar.com.flexibility.examen.app.errorCode.ProductErrorCode;
 import ar.com.flexibility.examen.app.errorCode.PurchaseOrderErrorCode;
 import ar.com.flexibility.examen.app.exception.BusinessException;
 import ar.com.flexibility.examen.domain.dto.CustomerDTO;
@@ -44,7 +43,7 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 	public PurchaseOrderDTO findById(Long id) {
 		PurchaseOrder entity = repository.findOne(id);
 		if (entity == null) {
-			throw new BusinessException(ProductErrorCode.PRODUCT_NOT_FOUND.name());
+			throw new BusinessException(PurchaseOrderErrorCode.P_ORDER_NOT_FOUND.getDescription());
 		}
 		return this.entityToDto(entity);
 	}
@@ -88,19 +87,19 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 	private void validateTransactionDto(PurchaseOrderDTO dto) {
 		List<String> errorMessages = new ArrayList<String>();
 		if (dto.getCustomer() == null || dto.getCustomer().getId() == null) {
-			errorMessages.add(PurchaseOrderErrorCode.P_ORDER_INVALID_CUSTOMER_ID.name());
+			errorMessages.add(PurchaseOrderErrorCode.P_ORDER_INVALID_CUSTOMER_ID.getDescription());
 		}
 		if (dto.getProducts() == null || dto.getProducts().isEmpty()) {
-			errorMessages.add(PurchaseOrderErrorCode.P_ORDER_INVALID_PRODUCT_ID.name());
+			errorMessages.add(PurchaseOrderErrorCode.P_ORDER_INVALID_PRODUCT_ID.getDescription());
 		} else {
 			for (ProductDTO productDto : dto.getProducts()) {
 				if (productDto.getId() == null) {
-					errorMessages.add(PurchaseOrderErrorCode.P_ORDER_INVALID_PRODUCT_ID.name());
+					errorMessages.add(PurchaseOrderErrorCode.P_ORDER_INVALID_PRODUCT_ID.getDescription());
 				}
 			}
 		}
 		if (dto.getAmount() == null || dto.getAmount().compareTo(BigDecimal.ZERO) < 0) {
-			errorMessages.add(PurchaseOrderErrorCode.P_ORDER_INVALID_AMOUNT.name());
+			errorMessages.add(PurchaseOrderErrorCode.P_ORDER_INVALID_AMOUNT.getDescription());
 		}
 		if (!errorMessages.isEmpty()) {
 			throw new BusinessException(errorMessages.toArray(new String[errorMessages.size()]));
