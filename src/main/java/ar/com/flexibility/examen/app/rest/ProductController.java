@@ -21,7 +21,7 @@ import ar.com.flexibility.examen.domain.dto.ProductDTO;
 import ar.com.flexibility.examen.domain.service.ProductService;
 
 @RestController
-@RequestMapping("/api/v1/products")
+@RequestMapping("/api/product")
 public class ProductController {
 
 	@Autowired

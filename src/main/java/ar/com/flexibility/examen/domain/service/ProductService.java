@@ -15,7 +15,7 @@ public interface ProductService {
 
 	public Boolean delete(Long id);
 
-	public ProductDTO entityToDto(Product product);
+	public ProductDTO entityToDto(Product entity);
 
-	public Product dtoToEntity(ProductDTO productDto);
+	public Product dtoToEntity(ProductDTO dto);
 }

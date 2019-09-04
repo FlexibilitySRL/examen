@@ -5,22 +5,22 @@ import java.util.Date;
 import java.util.List;
 
 import ar.com.flexibility.examen.domain.base.BaseDTO;
-import ar.com.flexibility.examen.domain.model.TransactionStatus;
+import ar.com.flexibility.examen.domain.model.PurchaseOrderStatus;
 
-public class TransactionDTO extends BaseDTO {
+public class PurchaseOrderDTO extends BaseDTO {
 
 	private static final long serialVersionUID = 1L;
 
 	private List<ProductDTO> products;
 	private CustomerDTO customer;
-	private TransactionStatus status;
+	private PurchaseOrderStatus status;
 	private BigDecimal amount;
 	private Date creationDateTime;
 
-	public TransactionDTO() {
+	public PurchaseOrderDTO() {
 	}
 
-	public TransactionDTO(List<ProductDTO> products, CustomerDTO customer, TransactionStatus status,
+	public PurchaseOrderDTO(List<ProductDTO> products, CustomerDTO customer, PurchaseOrderStatus status,
 			BigDecimal amount) {
 		super();
 		this.setProducts(products);
@@ -45,11 +45,11 @@ public class TransactionDTO extends BaseDTO {
 		this.customer = customer;
 	}
 
-	public TransactionStatus getStatus() {
+	public PurchaseOrderStatus getStatus() {
 		return status;
 	}
 
-	public void setStatus(TransactionStatus status) {
+	public void setStatus(PurchaseOrderStatus status) {
 		this.status = status;
 	}
 

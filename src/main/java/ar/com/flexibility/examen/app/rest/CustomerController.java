@@ -21,7 +21,7 @@ import ar.com.flexibility.examen.domain.dto.CustomerDTO;
 import ar.com.flexibility.examen.domain.service.CustomerService;
 
 @RestController
-@RequestMapping("/api/v1/customers")
+@RequestMapping("/api/customer")
 public class CustomerController {
 	
 	Logger logger = LoggerFactory.getLogger(CustomerController.class);

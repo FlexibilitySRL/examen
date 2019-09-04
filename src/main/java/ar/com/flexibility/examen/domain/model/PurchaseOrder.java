@@ -17,11 +17,11 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import ar.com.flexibility.examen.domain.base.BaseEntity;
 
-@Entity(name = "transaction")
-public class Transaction extends BaseEntity {
+@Entity(name = "purchase_order")
+public class PurchaseOrder extends BaseEntity {
 
 	@ManyToMany
-	@JoinTable(name = "transaction_product", joinColumns = @JoinColumn(name = "transaction_id"), inverseJoinColumns = @JoinColumn(name = "product_id"))
+	@JoinTable(name = "purchase_order_product", joinColumns = @JoinColumn(name = "purchase_order_id"), inverseJoinColumns = @JoinColumn(name = "product_id"))
 	private List<Product> products;
 
 	@ManyToOne
@@ -29,7 +29,7 @@ public class Transaction extends BaseEntity {
 	private Customer customer;
 
 	@Column(name = "status")
-	private TransactionStatus status;
+	private PurchaseOrderStatus status;
 
 	@Column(name = "amount")
 	private BigDecimal amount;
@@ -39,10 +39,10 @@ public class Transaction extends BaseEntity {
 	@Column(name = "creation_datetime", updatable = false)
 	private Date creationDateTime;
 
-	public Transaction() {
+	public PurchaseOrder() {
 	}
 
-	public Transaction(List<Product> products, Customer customer, TransactionStatus status, BigDecimal amount) {
+	public PurchaseOrder(List<Product> products, Customer customer, PurchaseOrderStatus status, BigDecimal amount) {
 		super();
 		this.products = products;
 		this.customer = customer;
@@ -66,11 +66,11 @@ public class Transaction extends BaseEntity {
 		this.customer = customer;
 	}
 
-	public TransactionStatus getStatus() {
+	public PurchaseOrderStatus getStatus() {
 		return status;
 	}
 
-	public void setStatus(TransactionStatus status) {
+	public void setStatus(PurchaseOrderStatus status) {
 		this.status = status;
 	}
 
