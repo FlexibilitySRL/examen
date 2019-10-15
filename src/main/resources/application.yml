@@ -9,5 +9,14 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/aramark?zeroDateTimeBehavior=convertToNull
     username: root
     password: password
-
 ---
+profiles: test
+jpa:
+  database-platform: org.hibernate.dialect.HSQLDialect
+  hibernate:
+    ddl-auto: update
+  show-sql: true
+datasource:
+  url: jdbc:hsqldb:mem:testdb
+  username: sa
+  password:
