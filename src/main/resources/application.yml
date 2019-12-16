@@ -1,13 +1,10 @@
 spring:
-  profiles: local
   jpa:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     hibernate:
       ddl-auto: update
     show-sql: true
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/aramark?zeroDateTimeBehavior=convertToNull
-    username: root
-    password: password
-
----
+    url: jdbc:mysql://@database.host@:@database.port@/aramark?useSSL=false&serverTimezone=UTC&useLegacyDatetimeCode=false&zeroDateTimeBehavior=convertToNull
+    username: examen
+    password: examen

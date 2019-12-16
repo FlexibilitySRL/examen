@@ -1,0 +1,28 @@
+version: "3.5"
+services:
+  examen-app:
+    build: ./
+    container_name: examen-app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - examen-mysql
+    networks:
+      - examen-network
+  examen-mysql:
+    image: mysql:5.7
+    container_name: examen-mysql
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./run/database:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: aramark
+      MYSQL_USER: examen
+      MYSQL_PASSWORD: examen
+    networks:
+      - examen-network
+networks:
+  examen-network:
+    name: examen-network
