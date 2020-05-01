@@ -10,3 +10,8 @@ target
 
 # Mac
 .DS_Store
+
+# Project specific files
+.web.env
+.db.env
+data/

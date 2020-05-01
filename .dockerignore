@@ -1,0 +1,15 @@
+# IntelliJ files
+.idea/
+.examen.iml
+
+# Docker files
+.env
+.web.env
+.db.env
+.dockerignore
+Dockerfile
+docker-compose.yml
+
+# Other project files
+README.md
+.gitignore

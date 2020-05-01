@@ -1,13 +1,15 @@
 spring:
-  profiles: local
   jpa:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     hibernate:
       ddl-auto: update
     show-sql: true
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/aramark?zeroDateTimeBehavior=convertToNull
-    username: root
-    password: password
-
----
+    url: ${DATABASE_URL}
+    username: ${MYSQL_USER}
+    password: ${MYSQL_PASSWORD}
+    driver-class-name: com.mysql.jdbc.Driver
+    tomcat:
+      max-active: 50
+      max-wait: 10000
+      test-on-borrow: true
