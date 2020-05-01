@@ -15,8 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(path = "/custom")
 public class CustomController {
 
-    @Autowired
     private ProcessMessageService messageService;
+
+    public CustomController(ProcessMessageService messageService) {
+        this.messageService = messageService;
+    }
 
     @PostMapping("/echo")
     public ResponseEntity<?> echo(@RequestBody MessageApi message)
