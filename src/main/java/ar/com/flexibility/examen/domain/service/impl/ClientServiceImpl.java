@@ -1,9 +1,7 @@
 package ar.com.flexibility.examen.domain.service.impl;
 
 import ar.com.flexibility.examen.domain.model.Client;
-import ar.com.flexibility.examen.domain.model.Product;
 import ar.com.flexibility.examen.domain.repository.ClientRepository;
-import ar.com.flexibility.examen.domain.repository.ProductRepository;
 import ar.com.flexibility.examen.domain.service.ClientService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +12,7 @@ import java.util.List;
 @Service
 public class ClientServiceImpl implements ClientService {
 
-    private static final Logger logger = Logger.getLogger(ProductServiceImpl.class);
+    private static final Logger logger = Logger.getLogger(ClientServiceImpl.class);
 
     ClientRepository clientRepository;
 
@@ -52,9 +50,8 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public Client updateClient(Long id, Client client) {
-        if (!clientRepository.exists(id))
-        {
-            logger.trace(String.format("Could not update the client with id %s. It does not exist.", client.getId()));
+        if (!clientRepository.exists(id)) {
+            logger.trace(String.format("Could not update the client with id %s. It does not exist.", id));
             return null;
         }
 
@@ -70,8 +67,7 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public boolean deleteClient(Long id) {
-        if (!clientRepository.exists(id))
-        {
+        if (!clientRepository.exists(id)) {
             logger.trace(String.format("Could not delete the client with id %s. It does not exist.", id));
             return false;
         }
