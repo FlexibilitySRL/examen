@@ -2,6 +2,8 @@ package ar.com.flexibility.examen.app.rest;
 
 import ar.com.flexibility.examen.domain.model.Order;
 import ar.com.flexibility.examen.domain.service.OrderService;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +26,9 @@ public class OrdersController {
     }
 
     @GetMapping
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Request was completed successfully.")
+    })
     public ResponseEntity<List<Order>> getOrders() {
         List<Order> orders = orderService.retrieveOrders();
 
@@ -31,6 +36,10 @@ public class OrdersController {
     }
 
     @GetMapping("{id}")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Request was completed successfully."),
+            @ApiResponse(code = 404, message = "Could not retrieve the resource.")
+    })
     public ResponseEntity<Order> getOrderById(@PathVariable("id") Long id) {
         Order order = orderService.retrieveOrderById(id);
 

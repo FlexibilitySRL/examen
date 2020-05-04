@@ -2,6 +2,8 @@ package ar.com.flexibility.examen.app.rest;
 
 import ar.com.flexibility.examen.domain.model.Product;
 import ar.com.flexibility.examen.domain.service.ProductService;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +25,9 @@ public class ProductController {
     }
 
     @GetMapping
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Request was completed successfully.")
+    })
     public ResponseEntity<List<Product>> getAllProducts() {
         List<Product> products = productService.retrieveProducts();
 
@@ -30,6 +35,10 @@ public class ProductController {
     }
 
     @GetMapping(path = "{id}")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Request was completed successfully."),
+            @ApiResponse(code = 404, message = "Could not retrieve the resource.")
+    })
     public ResponseEntity<Product> getProductById(@PathVariable("id") Long id) {
         Product product = productService.retrieveProductById(id);
 
@@ -41,6 +50,10 @@ public class ProductController {
     }
 
     @PostMapping
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Resource was created successfully."),
+            @ApiResponse(code = 400, message = "Could not update the resource.")
+    })
     public ResponseEntity<Product> createProduct(@Valid @NotNull @RequestBody Product product) {
         Product newProduct = productService.addProduct(product);
 
@@ -52,6 +65,10 @@ public class ProductController {
     }
 
     @PutMapping(path = "{id}")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Request was completed successfully."),
+            @ApiResponse(code = 400, message = "Could not update the resource.")
+    })
     public ResponseEntity<Product> updateProduct(@PathVariable("id") Long id, @RequestBody Product product) {
         Product updatedProduct = productService.updateProduct(id, product);
 
@@ -63,6 +80,10 @@ public class ProductController {
     }
 
     @DeleteMapping(path = "{id}")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Request was completed successfully."),
+            @ApiResponse(code = 500, message = "Could not delete the resource.")
+    })
     public ResponseEntity deleteProduct(@PathVariable("id") Long id) {
         boolean deletedProduct = productService.deleteProduct(id);
 

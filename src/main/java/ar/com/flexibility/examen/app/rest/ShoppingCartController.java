@@ -2,6 +2,8 @@ package ar.com.flexibility.examen.app.rest;
 
 import ar.com.flexibility.examen.domain.model.ShoppingCart;
 import ar.com.flexibility.examen.domain.service.ShoppingCartService;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +23,9 @@ public class ShoppingCartController {
     }
 
     @GetMapping
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Request was completed successfully.")
+    })
     public ResponseEntity<List<ShoppingCart>> getCarts() {
         List<ShoppingCart> shoppingCarts = shoppingCartService.retrieveCarts();
 
@@ -28,6 +33,9 @@ public class ShoppingCartController {
     }
 
     @GetMapping(path = "open")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Request was completed successfully.")
+    })
     public ResponseEntity<List<ShoppingCart>> getOpenCarts() {
         List<ShoppingCart> shoppingCarts = shoppingCartService.retrieveCartsByStatus(false);
 
@@ -35,6 +43,9 @@ public class ShoppingCartController {
     }
 
     @GetMapping(path = "processed")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Request was completed successfully.")
+    })
     public ResponseEntity<List<ShoppingCart>> getProcessedCarts() {
         List<ShoppingCart> shoppingCarts = shoppingCartService.retrieveCartsByStatus(true);
 
@@ -42,6 +53,10 @@ public class ShoppingCartController {
     }
 
     @GetMapping(path = "{id}")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Request was completed successfully."),
+            @ApiResponse(code = 404, message = "Could not retrieve the resource.")
+    })
     public ResponseEntity<ShoppingCart> getCartById(@PathVariable("id") Long id) {
         ShoppingCart shoppingCart = shoppingCartService.retrieveCartById(id);
 

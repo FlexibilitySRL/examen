@@ -7,6 +7,8 @@ import ar.com.flexibility.examen.domain.model.ShoppingCart;
 import ar.com.flexibility.examen.domain.service.ClientService;
 import ar.com.flexibility.examen.domain.service.ProductService;
 import ar.com.flexibility.examen.domain.service.ShoppingCartService;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,6 +36,9 @@ public class ClientController {
     }
 
     @GetMapping
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Request was completed successfully.")
+    })
     public ResponseEntity<List<Client>> getAllClients() {
         List<Client> clients = clientService.retrieveClients();
 
@@ -41,6 +46,10 @@ public class ClientController {
     }
 
     @GetMapping(path = "{id}")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Request was completed successfully."),
+            @ApiResponse(code = 404, message = "Could not retrieve the resource.")
+    })
     public ResponseEntity<Client> getClientById(@PathVariable("id") Long id) {
         Client client = clientService.retrieveClientById(id);
 
@@ -52,6 +61,10 @@ public class ClientController {
     }
 
     @PostMapping
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Request was completed successfully."),
+            @ApiResponse(code = 400, message = "Could not create the resource.")
+    })
     public ResponseEntity<Client> createClient(@Valid @NotNull @RequestBody Client client) {
         Client newClient = clientService.addClient(client);
 
@@ -63,6 +76,10 @@ public class ClientController {
     }
 
     @PutMapping(path = "{id}")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Resource was created successfully."),
+            @ApiResponse(code = 400, message = "Could not update the resource.")
+    })
     public ResponseEntity<Client> updateClient(@PathVariable("id") Long id,
                                                @Valid @NotNull @RequestBody Client client) {
         Client updatedClient = clientService.updateClient(id, client);
@@ -75,6 +92,10 @@ public class ClientController {
     }
 
     @DeleteMapping(path = "{id}")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Request was completed successfully."),
+            @ApiResponse(code = 500, message = "Could not delete the resource.")
+    })
     public ResponseEntity deleteClient(@PathVariable("id") Long id) {
         boolean deletedClient = clientService.deleteClient(id);
 
@@ -86,6 +107,10 @@ public class ClientController {
     }
 
     @GetMapping(path = "{id}/cart")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Request was completed successfully."),
+            @ApiResponse(code = 400, message = "Could not create the resource.")
+    })
     public ResponseEntity<ShoppingCart> getClientCart(@PathVariable("id") Long id) {
         Client client = clientService.retrieveClientById(id);
 
@@ -99,6 +124,12 @@ public class ClientController {
     }
 
     @PatchMapping(path = "{id}/cart")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Request was completed successfully."),
+            @ApiResponse(code = 400, message = "Could not create the resource."),
+            @ApiResponse(code = 404, message = "Could not retrieve parent the resource."),
+            @ApiResponse(code = 500, message = "Could not add the resource."),
+    })
     public ResponseEntity<String> addProductToCart(@PathVariable("id") Long id,
                                                    @Valid @NotNull @RequestBody CartItemDto cartItemDto) {
         Client client = clientService.retrieveClientById(id);
@@ -124,6 +155,11 @@ public class ClientController {
     }
 
     @PostMapping(path = "{id}/cart")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Request was completed successfully."),
+            @ApiResponse(code = 404, message = "Could not retrieve parent the resource."),
+            @ApiResponse(code = 500, message = "Could not add the resource."),
+    })
     public ResponseEntity<Long> processCart(@PathVariable("id") Long id) {
         Client client = clientService.retrieveClientById(id);
 
