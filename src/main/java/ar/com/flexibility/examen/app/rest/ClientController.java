@@ -1,7 +1,12 @@
 package ar.com.flexibility.examen.app.rest;
 
+import ar.com.flexibility.examen.app.dto.CartItemDto;
 import ar.com.flexibility.examen.domain.model.Client;
+import ar.com.flexibility.examen.domain.model.Product;
+import ar.com.flexibility.examen.domain.model.ShoppingCart;
 import ar.com.flexibility.examen.domain.service.ClientService;
+import ar.com.flexibility.examen.domain.service.ProductService;
+import ar.com.flexibility.examen.domain.service.ShoppingCartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,10 +21,16 @@ import java.util.List;
 public class ClientController {
 
     private ClientService clientService;
+    private ShoppingCartService shoppingCartService;
+    private ProductService productService;
 
     @Autowired
-    public ClientController(ClientService clientService) {
+    public ClientController(ClientService clientService,
+                            ShoppingCartService shoppingCartService,
+                            ProductService productService) {
         this.clientService = clientService;
+        this.shoppingCartService = shoppingCartService;
+        this.productService = productService;
     }
 
     @GetMapping
@@ -72,5 +83,60 @@ public class ClientController {
         }
 
         return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @GetMapping(path = "{id}/cart")
+    public ResponseEntity<ShoppingCart> getClientCart(@PathVariable("id") Long id) {
+        Client client = clientService.retrieveClientById(id);
+
+        if (client == null) {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+
+        ShoppingCart shoppingCart = shoppingCartService.retrieveOpenCartForClient(client);
+
+        return new ResponseEntity(shoppingCart, HttpStatus.OK);
+    }
+
+    @PatchMapping(path = "{id}/cart")
+    public ResponseEntity<String> addProductToCart(@PathVariable("id") Long id,
+                                                   @Valid @NotNull @RequestBody CartItemDto cartItemDto) {
+        Client client = clientService.retrieveClientById(id);
+
+        if (client == null) {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+
+        Product product = productService.retrieveProductById(cartItemDto.getProductId());
+
+        if (product == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        boolean productAdded = shoppingCartService.addProductToCart(client,
+                product, cartItemDto.getQuantity());
+
+        if (!productAdded) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        return new ResponseEntity<>("", HttpStatus.OK);
+    }
+
+    @PostMapping(path = "{id}/cart")
+    public ResponseEntity<String> processCart(@PathVariable("id") Long id) {
+        Client client = clientService.retrieveClientById(id);
+
+        if (client == null) {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+
+        boolean processed = shoppingCartService.processCart(client);
+
+        if (!processed) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
