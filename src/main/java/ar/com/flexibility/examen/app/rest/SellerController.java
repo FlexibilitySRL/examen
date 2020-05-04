@@ -1,6 +1,9 @@
 package ar.com.flexibility.examen.app.rest;
 
+import ar.com.flexibility.examen.app.dto.OrderApprovalDTO;
+import ar.com.flexibility.examen.domain.model.Order;
 import ar.com.flexibility.examen.domain.model.Seller;
+import ar.com.flexibility.examen.domain.service.OrderService;
 import ar.com.flexibility.examen.domain.service.SellerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,10 +19,12 @@ import java.util.List;
 public class SellerController {
 
     private SellerService sellerService;
+    private OrderService orderService;
 
     @Autowired
-    public SellerController(SellerService sellerService) {
+    public SellerController(SellerService sellerService, OrderService orderService) {
         this.sellerService = sellerService;
+        this.orderService = orderService;
     }
 
     @GetMapping
@@ -61,5 +66,42 @@ public class SellerController {
         }
 
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @GetMapping(path = "{id}/orders")
+    public ResponseEntity<List<Order>> getOrdersBySeller(@PathVariable("id") Long id) {
+        Seller seller = sellerService.retrieveSellerById(id);
+
+        if (seller == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        List<Order> orders = orderService.retrieveOrderBySeller(seller);
+
+        return new ResponseEntity<>(orders, HttpStatus.OK);
+    }
+
+    @PatchMapping(path = "{id}/orders")
+    public ResponseEntity<String> updateOrderStatus(@PathVariable("id") Long id,
+                                                    @Valid @NotNull @RequestBody OrderApprovalDTO orderApprovalDTO) {
+        Seller seller = sellerService.retrieveSellerById(id);
+
+        if (seller == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        Order order = orderService.retrieveOrderById(orderApprovalDTO.getOrderId());
+
+        if (order == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        boolean orderStatusUpdated = orderService.updateOrderStatus(order, orderApprovalDTO.isApproved());
+
+        if (!orderStatusUpdated) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

@@ -17,5 +17,5 @@ public interface ShoppingCartRepository extends JpaRepository<ShoppingCart, Long
     List<ShoppingCart> getShoppingCartsByCompleted(Boolean completed);
 
     @Query("SELECT s from carts s WHERE s.client = :client and s.completed = false")
-    ShoppingCart getOpenShoppingCartByClientId(@Param("client")Client client);
+    ShoppingCart getOpenShoppingCartByClient(@Param("client")Client client);
 }

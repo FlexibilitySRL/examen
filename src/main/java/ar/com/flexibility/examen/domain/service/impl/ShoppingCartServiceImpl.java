@@ -45,7 +45,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     public ShoppingCart retrieveOpenCartForClient(Client client) {
-        ShoppingCart shoppingCart = shoppingCartRepository.getOpenShoppingCartByClientId(client);
+        ShoppingCart shoppingCart = shoppingCartRepository.getOpenShoppingCartByClient(client);
 
         if (shoppingCart == null) {
             shoppingCart = new ShoppingCart(client);
@@ -63,7 +63,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     public Long processCart(Client client) {
-        ShoppingCart shoppingCart = shoppingCartRepository.getOpenShoppingCartByClientId(client);
+        ShoppingCart shoppingCart = shoppingCartRepository.getOpenShoppingCartByClient(client);
 
         if (shoppingCart == null) {
             logger.trace(String.format("Could not retrieve cart for the client with id %s", client.getId()));
@@ -95,7 +95,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     public boolean addProductToCart(Client client, Product product, int quantity) {
-        ShoppingCart shoppingCart = shoppingCartRepository.getOpenShoppingCartByClientId(client);
+        ShoppingCart shoppingCart = shoppingCartRepository.getOpenShoppingCartByClient(client);
 
         if (shoppingCart == null) {
             logger.trace(String.format("Could not retrieve cart for the client with id %s", client.getId()));
