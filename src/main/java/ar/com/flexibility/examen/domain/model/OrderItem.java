@@ -4,8 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 
-@Entity(name = "cart_items")
-public class ShoppingCartItem {
+@Entity(name = "order_items")
+public class OrderItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -13,7 +13,7 @@ public class ShoppingCartItem {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JsonIgnore
-    private ShoppingCart cart;
+    private Order order;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JsonIgnore
@@ -25,18 +25,10 @@ public class ShoppingCartItem {
 
     private float total;
 
-    public ShoppingCartItem() { }
+    public OrderItem() { }
 
-    public ShoppingCartItem(ShoppingCart cart, Product product, int quantity, float price) {
-        this.cart = cart;
-        this.product = product;
-        this.quantity = quantity;
-        this.price = price;
-        this.total = price * quantity;
-    }
-
-    public ShoppingCartItem(ShoppingCart cart, Product product, int quantity, float price, float total) {
-        this.cart = cart;
+    public OrderItem(Order order, Product product, int quantity, float price, float total) {
+        this.order = order;
         this.product = product;
         this.quantity = quantity;
         this.price = price;
@@ -51,12 +43,12 @@ public class ShoppingCartItem {
         this.id = id;
     }
 
-    public ShoppingCart getCart() {
-        return cart;
+    public Order getOrder() {
+        return order;
     }
 
-    public void setCart(ShoppingCart cart) {
-        this.cart = cart;
+    public void setOrder(Order order) {
+        this.order = order;
     }
 
     public Product getProduct() {
@@ -89,10 +81,5 @@ public class ShoppingCartItem {
 
     public void setTotal(float total) {
         this.total = total;
-    }
-
-    public void setNewTotal(int quantity) {
-        this.quantity += quantity;
-        this.total = this.quantity * this.price;
     }
 }

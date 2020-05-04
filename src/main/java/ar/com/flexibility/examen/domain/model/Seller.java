@@ -4,7 +4,7 @@ import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
 
-@Entity
+@Entity(name = "sellers")
 public class Seller {
 
     @Id

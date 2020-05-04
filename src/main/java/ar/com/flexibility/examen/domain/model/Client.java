@@ -5,7 +5,7 @@ import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
 
-@Entity
+@Entity(name = "clients")
 public class Client {
 
     @Id
