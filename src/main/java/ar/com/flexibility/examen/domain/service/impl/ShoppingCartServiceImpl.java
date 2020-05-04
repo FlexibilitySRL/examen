@@ -1,10 +1,9 @@
-package ar.com.flexibility.examen.domain.service;
+package ar.com.flexibility.examen.domain.service.impl;
 
-import ar.com.flexibility.examen.domain.model.Client;
-import ar.com.flexibility.examen.domain.model.Product;
-import ar.com.flexibility.examen.domain.model.ShoppingCart;
-import ar.com.flexibility.examen.domain.model.ShoppingCartItem;
+import ar.com.flexibility.examen.domain.model.*;
+import ar.com.flexibility.examen.domain.repository.OrderRepository;
 import ar.com.flexibility.examen.domain.repository.ShoppingCartRepository;
+import ar.com.flexibility.examen.domain.service.ShoppingCartService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,9 +18,13 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     private ShoppingCartRepository shoppingCartRepository;
 
+    private OrderRepository orderRepository;
+
     @Autowired
-    public ShoppingCartServiceImpl(ShoppingCartRepository shoppingCartRepository) {
+    public ShoppingCartServiceImpl(ShoppingCartRepository shoppingCartRepository,
+                                   OrderRepository orderRepository) {
         this.shoppingCartRepository = shoppingCartRepository;
+        this.orderRepository = orderRepository;
     }
 
     @Override
@@ -33,6 +36,11 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         }
 
         return shoppingCart;
+    }
+
+    @Override
+    public List<ShoppingCart> retrieveCarts() {
+        return shoppingCartRepository.findAll();
     }
 
     @Override
@@ -54,27 +62,35 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
-    public boolean processCart(Client client) {
+    public Long processCart(Client client) {
         ShoppingCart shoppingCart = shoppingCartRepository.getOpenShoppingCartByClientId(client);
 
         if (shoppingCart == null) {
             logger.trace(String.format("Could not retrieve cart for the client with id %s", client.getId()));
-            return false;
+            return 0L;
         }
 
         if (shoppingCart.getItems().size() == 0) {
-            return false;
+            return 0L;
         }
 
-        shoppingCart.setProcessedAt(LocalDateTime.now());
-        shoppingCart.setCompleted(true);
+        try {
+            shoppingCart.setProcessedAt(LocalDateTime.now());
+            shoppingCart.setCompleted(true);
 
-        shoppingCartRepository.save(shoppingCart);
+            shoppingCartRepository.save(shoppingCart);
 
-        // TODO: Wrap this in a transaction.
-        // TODO: Generate an order ID.
+            // TODO: Wrap this in a transaction.
+            Order newOrder = generateOrderFromShoppingCart(shoppingCart);
+            orderRepository.save(newOrder);
 
-        return true;
+            return newOrder.getId();
+        } catch (Exception e) {
+            logger.trace(String.format(
+                    "Could not process the cart %s for the client %s. Exception: %s",
+                    shoppingCart.getId(), client.getId(), e.getMessage()));
+            return 0L;
+        }
     }
 
     @Override
@@ -128,5 +144,25 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
                     product.getId(), client.getId(), e.getMessage()));
             return false;
         }
+    }
+
+    private Order generateOrderFromShoppingCart(ShoppingCart shoppingCart) {
+        Order newOrder = new Order(shoppingCart.getClient(), shoppingCart.getSeller());
+
+        float subtotal = 0;
+
+        for (ShoppingCartItem item : shoppingCart.getItems()) {
+            OrderItem orderItem = new OrderItem(newOrder, item.getProduct(),
+                    item.getQuantity(), item.getPrice(), item.getTotal());
+
+            subtotal += item.getTotal();
+
+            newOrder.getItems().add(orderItem);
+        }
+
+        newOrder.setSubtotal(subtotal);
+        newOrder.setTotal(subtotal + subtotal * (newOrder.getCommissionRate() / 100));
+
+        return newOrder;
     }
 }

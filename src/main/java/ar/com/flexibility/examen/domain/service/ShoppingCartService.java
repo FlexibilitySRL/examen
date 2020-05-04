@@ -11,9 +11,10 @@ public interface ShoppingCartService {
     ShoppingCart retrieveCartById(Long id);
     ShoppingCart retrieveOpenCartForClient(Client client);
 
+    List<ShoppingCart> retrieveCarts();
     List<ShoppingCart> retrieveCartsByStatus(boolean completed);
 
-    boolean processCart(Client client);
+    Long processCart(Client client);
 
     boolean addProductToCart(Client client, Product product, int quantity);
 }

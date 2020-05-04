@@ -124,19 +124,19 @@ public class ClientController {
     }
 
     @PostMapping(path = "{id}/cart")
-    public ResponseEntity<String> processCart(@PathVariable("id") Long id) {
+    public ResponseEntity<Long> processCart(@PathVariable("id") Long id) {
         Client client = clientService.retrieveClientById(id);
 
         if (client == null) {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
 
-        boolean processed = shoppingCartService.processCart(client);
+        Long orderId = shoppingCartService.processCart(client);
 
-        if (!processed) {
+        if (orderId == 0) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(orderId, HttpStatus.OK);
     }
 }

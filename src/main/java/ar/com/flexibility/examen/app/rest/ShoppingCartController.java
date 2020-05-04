@@ -20,6 +20,13 @@ public class ShoppingCartController {
         this.shoppingCartService = shoppingCartService;
     }
 
+    @GetMapping
+    public ResponseEntity<List<ShoppingCart>> getCarts() {
+        List<ShoppingCart> shoppingCarts = shoppingCartService.retrieveCarts();
+
+        return new ResponseEntity<>(shoppingCarts, HttpStatus.OK);
+    }
+
     @GetMapping(path = "open")
     public ResponseEntity<List<ShoppingCart>> getOpenCarts() {
         List<ShoppingCart> shoppingCarts = shoppingCartService.retrieveCartsByStatus(false);
