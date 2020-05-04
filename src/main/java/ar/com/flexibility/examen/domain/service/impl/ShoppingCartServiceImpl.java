@@ -11,6 +11,13 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ *  Implementation of the ShoppingCartService that uses a CrudRepository. It
+ *  connects to a Database defined in the application.yml file.
+ *
+ * @author  Amador Cuenca <sphi02ac@gmail.com>
+ * @version 1.0
+ */
 @Service
 public class ShoppingCartServiceImpl implements ShoppingCartService {
 
@@ -27,6 +34,14 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         this.orderRepository = orderRepository;
     }
 
+    /**
+     *  Retrieves a ShoppingCart model from the repository.
+     *
+     * @author  Amador Cuenca <sphi02ac@gmail.com>
+     * @version 1.0
+     * @param id ShoppingCart ID
+     * @return ShoppingCart POJO or null if it does not exist.
+     */
     @Override
     public ShoppingCart retrieveCartById(Long id) {
         ShoppingCart shoppingCart = shoppingCartRepository.getShoppingCartById(id);
@@ -38,11 +53,27 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         return shoppingCart;
     }
 
+    /**
+     *  Retrieves a list of ShoppingCart models from the repository.
+     *
+     * @author  Amador Cuenca <sphi02ac@gmail.com>
+     * @version 1.0
+     * @return List of ShoppingCart models.
+     */
     @Override
     public List<ShoppingCart> retrieveCarts() {
         return shoppingCartRepository.findAll();
     }
 
+    /**
+     *  Retrieves a ShoppingCart model from the repository.
+     *
+     * @author  Amador Cuenca <sphi02ac@gmail.com>
+     * @version 1.0
+     * @param client client POJO
+     * @return existing ShoppingCart or a new ShoppingCart if there is not
+     * an open cart for the client.
+     */
     @Override
     public ShoppingCart retrieveOpenCartForClient(Client client) {
         ShoppingCart shoppingCart = shoppingCartRepository.getOpenShoppingCartByClient(client);
@@ -56,11 +87,28 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         return shoppingCart;
     }
 
+    /**
+     *  Retrieves a list of ShoppingCart models filtered by completion status
+     *  from the repository.
+     *
+     * @author  Amador Cuenca <sphi02ac@gmail.com>
+     * @version 1.0
+     * @param completed Whether or not the cart is processed.
+     * @return List of ShoppingCart models.
+     */
     @Override
     public List<ShoppingCart> retrieveCartsByStatus(boolean completed) {
         return shoppingCartRepository.getShoppingCartsByCompleted(completed);
     }
 
+    /**
+     *  Processes a ShoppingCart and generates an order for it.
+     *
+     * @author  Amador Cuenca <sphi02ac@gmail.com>
+     * @version 1.0
+     * @param client client POJO
+     * @return Order ID if the cart is processed successfully, otherwise 0.
+     */
     @Override
     public Long processCart(Client client) {
         ShoppingCart shoppingCart = shoppingCartRepository.getOpenShoppingCartByClient(client);
@@ -93,6 +141,17 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         }
     }
 
+    /**
+     *  Adds a product to the cart if it does not exist, if it exists, then update
+     *  the details values.
+     *
+     * @author  Amador Cuenca <sphi02ac@gmail.com>
+     * @version 1.0
+     * @param client Client POJO
+     * @param product Product POJO
+     * @param quantity Quantity of products for the cart.
+     * @return List of order models.
+     */
     @Override
     public boolean addProductToCart(Client client, Product product, int quantity) {
         ShoppingCart shoppingCart = shoppingCartRepository.getOpenShoppingCartByClient(client);
@@ -146,6 +205,14 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         }
     }
 
+    /**
+     *  Utility method: Maps a Cart and its items to a Order POJO.
+     *
+     * @author  Amador Cuenca <sphi02ac@gmail.com>
+     * @version 1.0
+     * @param shoppingCart ShoppingCart POJO
+     * @return Order POJO with the details from the ShoppingCart POJO.
+     */
     private Order generateOrderFromShoppingCart(ShoppingCart shoppingCart) {
         Order newOrder = new Order(shoppingCart.getClient(), shoppingCart.getSeller());
 

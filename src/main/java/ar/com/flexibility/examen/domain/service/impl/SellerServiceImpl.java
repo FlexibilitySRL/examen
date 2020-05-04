@@ -9,6 +9,13 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ *  Implementation of the SellerService that uses a CrudRepository. It
+ *  connects to a Database defined in the application.yml file.
+ *
+ * @author  Amador Cuenca <sphi02ac@gmail.com>
+ * @version 1.0
+ */
 @Service
 public class SellerServiceImpl implements SellerService {
 
@@ -21,6 +28,14 @@ public class SellerServiceImpl implements SellerService {
         this.sellerRepository = sellerRepository;
     }
 
+    /**
+     *  Persists a new Seller in the repository.
+     *
+     * @author  Amador Cuenca <sphi02ac@gmail.com>
+     * @version 1.0
+     * @param seller Seller POJO (without ID)
+     * @return Seller POJO (with ID) or null if there was an error.
+     */
     @Override
     public Seller addSeller(Seller seller) {
         Seller newSeller = sellerRepository.save(seller);
@@ -32,6 +47,15 @@ public class SellerServiceImpl implements SellerService {
         return newSeller;
     }
 
+    /**
+     *  Persists changes to a Seller model to the repository.
+     *
+     * @author  Amador Cuenca <sphi02ac@gmail.com>
+     * @version 1.0
+     * @param id Seller ID
+     * @param seller Seller POJO
+     * @return Updated POJO or null if there was an error.
+     */
     @Override
     public Seller updateSeller(Long id, Seller seller) {
         if (!sellerRepository.exists(id)) {
@@ -49,6 +73,14 @@ public class SellerServiceImpl implements SellerService {
         return updatedSeller;
     }
 
+    /**
+     *  Deletes a Seller model from the repository.
+     *
+     * @author  Amador Cuenca <sphi02ac@gmail.com>
+     * @version 1.0
+     * @param id Seller ID
+     * @return true if it was deleted, otherwise false.
+     */
     @Override
     public boolean deleteSeller(Long id) {
         if (!sellerRepository.exists(id)) {
@@ -67,11 +99,26 @@ public class SellerServiceImpl implements SellerService {
         return true;
     }
 
+    /**
+     *  Retrieves a list of Seller models from the repository.
+     *
+     * @author  Amador Cuenca <sphi02ac@gmail.com>
+     * @version 1.0
+     * @return List of client models.
+     */
     @Override
     public List<Seller> retrieveSellers() {
         return (List<Seller>) sellerRepository.findAll();
     }
 
+    /**
+     *  Retrieves a Seller model from the repository.
+     *
+     * @author  Amador Cuenca <sphi02ac@gmail.com>
+     * @version 1.0
+     * @param id Seller ID
+     * @return Seller POJO or null if it does not exist.
+     */
     @Override
     public Seller retrieveSellerById(Long id) {
         Seller seller = sellerRepository.findOne(id);

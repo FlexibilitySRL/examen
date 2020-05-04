@@ -11,6 +11,12 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ *  The ClientController class exposes the basic operations for the shopping cart model.
+ *
+ * @author  Amador Cuenca <sphi02ac@gmail.com>
+ * @version 1.0
+ */
 @RestController
 @RequestMapping(path = "/carts")
 public class ShoppingCartController {

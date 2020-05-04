@@ -13,6 +13,12 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
+/**
+ *  The ClientController class exposes the CRUD operations for the product model
+ *
+ * @author  Amador Cuenca <sphi02ac@gmail.com>
+ * @version 1.0
+ */
 @RestController
 @RequestMapping(path = "/products")
 public class ProductController {

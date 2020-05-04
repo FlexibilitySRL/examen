@@ -4,6 +4,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 
+/**
+ *  OrderItem POJO mapped to the order_items table in the Db.
+ *
+ * @author  Amador Cuenca <sphi02ac@gmail.com>
+ * @version 1.0
+ */
 @Entity(name = "order_items")
 public class OrderItem {
 

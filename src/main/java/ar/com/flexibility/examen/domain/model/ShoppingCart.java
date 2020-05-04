@@ -7,6 +7,12 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *  ShoppingCart POJO mapped to the carts table in the Db.
+ *
+ * @author  Amador Cuenca <sphi02ac@gmail.com>
+ * @version 1.0
+ */
 @Entity(name = "carts")
 public class ShoppingCart {
 

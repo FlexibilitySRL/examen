@@ -9,6 +9,14 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
+/**
+ *  Client repository to manage CRUD operations for the Order POJO.
+ *  Additionally, it exposes query methods to list orders by client
+ *  and seller.
+ *
+ * @author  Amador Cuenca <sphi02ac@gmail.com>
+ * @version 1.0
+ */
 public interface OrderRepository extends JpaRepository<Order, Long> {
 
     @Query("SELECT o from orders o WHERE o.client = :client")

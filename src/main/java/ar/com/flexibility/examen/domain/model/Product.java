@@ -4,6 +4,12 @@ import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
 
+/**
+ *  Product POJO mapped to the products table in the Db.
+ *
+ * @author  Amador Cuenca <sphi02ac@gmail.com>
+ * @version 1.0
+ */
 @Entity(name = "products")
 public class Product {
 

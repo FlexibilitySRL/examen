@@ -4,6 +4,12 @@ import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
 
+/**
+ *  Seller POJO mapped to the sellers table in the Db.
+ *
+ * @author  Amador Cuenca <sphi02ac@gmail.com>
+ * @version 1.0
+ */
 @Entity(name = "sellers")
 public class Seller {
 

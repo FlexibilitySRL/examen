@@ -4,6 +4,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 
+/**
+ *  ShoppingCartItem POJO mapped to the cart_items table in the Db.
+ *
+ * @author  Amador Cuenca <sphi02ac@gmail.com>
+ * @version 1.0
+ */
 @Entity(name = "cart_items")
 public class ShoppingCartItem {
 

@@ -14,6 +14,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ *  The ClientController class exposes the query operations for the orders models.
+ *
+ * @author  Amador Cuenca <sphi02ac@gmail.com>
+ * @version 1.0
+ */
 @RestController
 @RequestMapping(path = "/orders")
 public class OrdersController {

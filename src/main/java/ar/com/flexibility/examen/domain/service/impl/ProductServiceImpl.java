@@ -9,6 +9,13 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ *  Implementation of the ProductService that uses a CrudRepository. It
+ *  connects to a Database defined in the application.yml file.
+ *
+ * @author  Amador Cuenca <sphi02ac@gmail.com>
+ * @version 1.0
+ */
 @Service
 public class ProductServiceImpl implements ProductService {
 
@@ -21,11 +28,26 @@ public class ProductServiceImpl implements ProductService {
         this.productRepository = productRepository;
     }
 
+    /**
+     *  Retrieves a list of Product models from the repository.
+     *
+     * @author  Amador Cuenca <sphi02ac@gmail.com>
+     * @version 1.0
+     * @return List of product models.
+     */
     @Override
     public List<Product> retrieveProducts() {
         return (List<Product>) productRepository.findAll();
     }
 
+    /**
+     *  Retrieves a Product model from the repository.
+     *
+     * @author  Amador Cuenca <sphi02ac@gmail.com>
+     * @version 1.0
+     * @param id Product ID
+     * @return Product POJO or null if it does not exist.
+     */
     @Override
     public Product retrieveProductById(Long id) {
         Product product = productRepository.findOne(id);
@@ -37,6 +59,14 @@ public class ProductServiceImpl implements ProductService {
         return product;
     }
 
+    /**
+     *  Persists a new Product in the repository.
+     *
+     * @author  Amador Cuenca <sphi02ac@gmail.com>
+     * @version 1.0
+     * @param product Product POJO (without ID)
+     * @return Product POJO (with ID) or null if there was an error.
+     */
     @Override
     public Product addProduct(Product product) {
         Product newProduct = productRepository.save(product);
@@ -48,6 +78,15 @@ public class ProductServiceImpl implements ProductService {
         return newProduct;
     }
 
+    /**
+     *  Persists changes to a Product model to the repository.
+     *
+     * @author  Amador Cuenca <sphi02ac@gmail.com>
+     * @version 1.0
+     * @param id Product ID
+     * @param product Product POJO
+     * @return Updated POJO or null if there was an error.
+     */
     @Override
     public Product updateProduct(Long id, Product product) {
         if (!productRepository.exists(id))
@@ -66,6 +105,14 @@ public class ProductServiceImpl implements ProductService {
         return updatedProduct;
     }
 
+    /**
+     *  Deletes a Product model from the repository.
+     *
+     * @author  Amador Cuenca <sphi02ac@gmail.com>
+     * @version 1.0
+     * @param id Product ID
+     * @return true if it was deleted, otherwise false.
+     */
     @Override
     public boolean deleteProduct(Long id) {
         if (!productRepository.exists(id)) {

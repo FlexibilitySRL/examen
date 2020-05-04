@@ -18,6 +18,13 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
+/**
+ *  The ClientController class exposes the CRUD operations for the client model,
+ *  additionally it exposes the cart actions for a particular client.
+ *
+ * @author  Amador Cuenca <sphi02ac@gmail.com>
+ * @version 1.0
+ */
 @RestController
 @RequestMapping(path = "/clients")
 public class ClientController {

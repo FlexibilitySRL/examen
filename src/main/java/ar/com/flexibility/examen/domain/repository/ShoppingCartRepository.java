@@ -9,6 +9,14 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ *  Shopping Cart repository to manage CRUD operations for the ShoppingCart POJO.
+ *  Additionally, it exposes query methods to get completed carts and carts by
+ *  client.
+ *
+ * @author  Amador Cuenca <sphi02ac@gmail.com>
+ * @version 1.0
+ */
 @Repository
 public interface ShoppingCartRepository extends JpaRepository<ShoppingCart, Long> {
 

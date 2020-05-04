@@ -9,6 +9,13 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ *  Implementation of the ClientService that uses a CrudRepository. It
+ *  connects to a Database defined in the application.yml file.
+ *
+ * @author  Amador Cuenca <sphi02ac@gmail.com>
+ * @version 1.0
+ */
 @Service
 public class ClientServiceImpl implements ClientService {
 
@@ -21,11 +28,26 @@ public class ClientServiceImpl implements ClientService {
         this.clientRepository = clientRepository;
     }
 
+    /**
+     *  Retrieves a list of Client models from the repository.
+     *
+     * @author  Amador Cuenca <sphi02ac@gmail.com>
+     * @version 1.0
+     * @return List of Client models.
+     */
     @Override
     public List<Client> retrieveClients() {
         return (List<Client>) clientRepository.findAll();
     }
 
+    /**
+     *  Retrieves a Client model from the repository.
+     *
+     * @author  Amador Cuenca <sphi02ac@gmail.com>
+     * @version 1.0
+     * @param id Client ID
+     * @return Client POJO or null if it does not exist.
+     */
     @Override
     public Client retrieveClientById(Long id) {
         Client client = clientRepository.findOne(id);
@@ -37,6 +59,14 @@ public class ClientServiceImpl implements ClientService {
         return client;
     }
 
+    /**
+     *  Persists a new Client in the repository.
+     *
+     * @author  Amador Cuenca <sphi02ac@gmail.com>
+     * @version 1.0
+     * @param client Client POJO (without ID)
+     * @return Client POJO (with ID) or null if there was an error.
+     */
     @Override
     public Client addClient(Client client) {
         Client newClient = clientRepository.save(client);
@@ -48,6 +78,15 @@ public class ClientServiceImpl implements ClientService {
         return newClient;
     }
 
+    /**
+     *  Persists changes to a Client model to the repository.
+     *
+     * @author  Amador Cuenca <sphi02ac@gmail.com>
+     * @version 1.0
+     * @param id Client ID
+     * @param client Client POJO
+     * @return Updated POJO or null if there was an error.
+     */
     @Override
     public Client updateClient(Long id, Client client) {
         if (!clientRepository.exists(id)) {
@@ -65,6 +104,14 @@ public class ClientServiceImpl implements ClientService {
         return updatedClient;
     }
 
+    /**
+     *  Deletes a Client model from the repository.
+     *
+     * @author  Amador Cuenca <sphi02ac@gmail.com>
+     * @version 1.0
+     * @param id Client ID
+     * @return true if it was deleted, otherwise false.
+     */
     @Override
     public boolean deleteClient(Long id) {
         if (!clientRepository.exists(id)) {
