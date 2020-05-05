@@ -40,10 +40,12 @@ public class OrderServiceImpl implements OrderService {
      */
     @Override
     public Order retrieveOrderById(Long id) {
+        logger.trace(String.format("Calling the retrieveOrderById(%s) method.", id));
+
         Order order = orderRepository.findOne(id);
 
         if (order == null) {
-            logger.trace(String.format("Could not retrieve order with id %s", id));
+            logger.debug(String.format("Could not retrieve order with id %s", id));
         }
 
         return order;
@@ -58,6 +60,8 @@ public class OrderServiceImpl implements OrderService {
      */
     @Override
     public List<Order> retrieveOrders() {
+        logger.trace("Calling the retrieveOrders method.");
+
         return orderRepository.findAll();
     }
 
@@ -71,6 +75,8 @@ public class OrderServiceImpl implements OrderService {
      */
     @Override
     public List<Order> retrieveOrderBySeller(Seller seller) {
+        logger.trace(String.format("Calling the retrieveOrderBySeller(%s) method.", seller.toString()));
+
         return orderRepository.getOrdersBySeller(seller);
     }
 
@@ -85,11 +91,15 @@ public class OrderServiceImpl implements OrderService {
      */
     @Override
     public boolean updateOrderStatus(Order order, boolean status) {
+        logger.trace(String.format(
+                "Calling the retrieveOrderBySeller(%s, %s) method.",
+                order.toString(), status));
+
         try {
             order.setApproved(status);
             order.setApprovedAt(LocalDateTime.now());
         } catch (Exception e) {
-            logger.trace(String.format(
+            logger.warn(String.format(
                     "Could not set the status for order %s to %s. Exception: %s",
                     order.getId(),
                     status,

@@ -37,6 +37,8 @@ public class ClientServiceImpl implements ClientService {
      */
     @Override
     public List<Client> retrieveClients() {
+        logger.trace("Calling the retrieveClients method.");
+
         return (List<Client>) clientRepository.findAll();
     }
 
@@ -50,10 +52,12 @@ public class ClientServiceImpl implements ClientService {
      */
     @Override
     public Client retrieveClientById(Long id) {
+        logger.trace(String.format("Calling the retrieveClientById(%s) method.", id));
+
         Client client = clientRepository.findOne(id);
 
         if (client == null) {
-            logger.trace(String.format("Could not retrieve client with id %s", id));
+            logger.debug(String.format("Could not retrieve client with id %s", id));
         }
 
         return client;
@@ -69,10 +73,12 @@ public class ClientServiceImpl implements ClientService {
      */
     @Override
     public Client addClient(Client client) {
+        logger.trace(String.format("Calling the addClient(%s) method.", client.toString()));
+
         Client newClient = clientRepository.save(client);
 
         if (newClient == null) {
-            logger.trace(String.format("Could not create the client %s", client.getFullName()));
+            logger.debug(String.format("Could not create the client %s", client.getFullName()));
         }
 
         return newClient;
@@ -89,8 +95,10 @@ public class ClientServiceImpl implements ClientService {
      */
     @Override
     public Client updateClient(Long id, Client client) {
+        logger.trace(String.format("Calling the updateClient(%s) method.", client.toString()));
+
         if (!clientRepository.exists(id)) {
-            logger.trace(String.format("Could not update the client with id %s. It does not exist.", id));
+            logger.debug(String.format("Could not update the client with id %s. It does not exist.", id));
             return null;
         }
 
@@ -98,7 +106,7 @@ public class ClientServiceImpl implements ClientService {
         Client updatedClient = clientRepository.save(client);
 
         if (updatedClient == null) {
-            logger.trace(String.format("Could not update the client with id %s", client.getId()));
+            logger.debug(String.format("Could not update the client with id %s", client.getId()));
         }
 
         return updatedClient;
@@ -114,15 +122,17 @@ public class ClientServiceImpl implements ClientService {
      */
     @Override
     public boolean deleteClient(Long id) {
+        logger.trace(String.format("Calling the deleteClient(%s) method.", id));
+
         if (!clientRepository.exists(id)) {
-            logger.trace(String.format("Could not delete the client with id %s. It does not exist.", id));
+            logger.debug(String.format("Could not delete the client with id %s. It does not exist.", id));
             return false;
         }
 
         try {
             clientRepository.delete(id);
         } catch (Exception e) {
-            logger.trace(String.format("Could not delete the client with id %s. An internal error occurred: %s.",
+            logger.warn(String.format("Could not delete the client with id %s. An internal error occurred: %s.",
                     id, e.getMessage()));
             return false;
         }

@@ -37,6 +37,8 @@ public class ProductServiceImpl implements ProductService {
      */
     @Override
     public List<Product> retrieveProducts() {
+        logger.trace("Calling the retrieveProducts method.");
+
         return (List<Product>) productRepository.findAll();
     }
 
@@ -50,10 +52,12 @@ public class ProductServiceImpl implements ProductService {
      */
     @Override
     public Product retrieveProductById(Long id) {
+        logger.trace(String.format("Calling the retrieveProducts(%s) method.", id));
+
         Product product = productRepository.findOne(id);
 
         if (product == null) {
-            logger.trace(String.format("Could not retrieve product with id %s", id));
+            logger.debug(String.format("Could not retrieve product with id %s", id));
         }
 
         return product;
@@ -69,10 +73,12 @@ public class ProductServiceImpl implements ProductService {
      */
     @Override
     public Product addProduct(Product product) {
+        logger.trace(String.format("Calling the addProduct(%s) method.", product.toString()));
+
         Product newProduct = productRepository.save(product);
 
         if (newProduct == null) {
-            logger.trace(String.format("Could not create the product %s", product.getName()));
+            logger.debug(String.format("Could not create the product %s", product.getName()));
         }
 
         return newProduct;
@@ -89,9 +95,11 @@ public class ProductServiceImpl implements ProductService {
      */
     @Override
     public Product updateProduct(Long id, Product product) {
+        logger.trace(String.format("Calling the updateProduct(%s) method.", product.toString()));
+
         if (!productRepository.exists(id))
         {
-            logger.trace(String.format("Could not update the product with id %s. It does not exist.", product.getId()));
+            logger.debug(String.format("Could not update the product with id %s. It does not exist.", product.getId()));
             return null;
         }
 
@@ -99,7 +107,7 @@ public class ProductServiceImpl implements ProductService {
         Product updatedProduct = productRepository.save(product);
 
         if (updatedProduct == null) {
-            logger.trace(String.format("Could not update the product with id %s", product.getId()));
+            logger.debug(String.format("Could not update the product with id %s", product.getId()));
         }
 
         return updatedProduct;
@@ -115,15 +123,17 @@ public class ProductServiceImpl implements ProductService {
      */
     @Override
     public boolean deleteProduct(Long id) {
+        logger.trace(String.format("Calling the deleteProduct(%s) method.", id));
+
         if (!productRepository.exists(id)) {
-            logger.trace(String.format("Could not delete the product with id %s. It does not exist.", id));
+            logger.debug(String.format("Could not delete the product with id %s. It does not exist.", id));
             return false;
         }
 
         try {
             productRepository.delete(id);
         } catch (Exception e) {
-            logger.trace(String.format("Could not delete the product with id %s. An internal error occurred: %s.",
+            logger.warn(String.format("Could not delete the product with id %s. An internal error occurred: %s.",
                     id, e.getMessage()));
             return false;
         }

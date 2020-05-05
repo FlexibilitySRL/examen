@@ -44,10 +44,12 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
      */
     @Override
     public ShoppingCart retrieveCartById(Long id) {
+        logger.trace(String.format("Calling the retrieveCartById(%s) method.", id));
+
         ShoppingCart shoppingCart = shoppingCartRepository.getShoppingCartById(id);
 
         if (shoppingCart == null) {
-            logger.trace(String.format("Could not retrieve cart with id %s", id));
+            logger.debug(String.format("Could not retrieve cart with id %s", id));
         }
 
         return shoppingCart;
@@ -62,6 +64,8 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
      */
     @Override
     public List<ShoppingCart> retrieveCarts() {
+        logger.trace("Calling the retrieveCarts method.");
+
         return shoppingCartRepository.findAll();
     }
 
@@ -76,9 +80,15 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
      */
     @Override
     public ShoppingCart retrieveOpenCartForClient(Client client) {
+        logger.trace(String.format("Calling the retrieveOpenCartForClient(%s) method.", client.toString()));
+
         ShoppingCart shoppingCart = shoppingCartRepository.getOpenShoppingCartByClient(client);
 
         if (shoppingCart == null) {
+            logger.trace(String.format(
+                    "retrieveOpenCartForClient(%s): There wasn't an open cart. Creating a new one",
+                    client.toString()));
+
             shoppingCart = new ShoppingCart(client);
 
             shoppingCartRepository.save(shoppingCart);
@@ -98,6 +108,8 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
      */
     @Override
     public List<ShoppingCart> retrieveCartsByStatus(boolean completed) {
+        logger.trace(String.format("Calling the retrieveCartsByStatus method.", completed));
+
         return shoppingCartRepository.getShoppingCartsByCompleted(completed);
     }
 
@@ -111,14 +123,17 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
      */
     @Override
     public Long processCart(Client client) {
+        logger.trace(String.format("Calling the processCart(%s) method.", client));
+
         ShoppingCart shoppingCart = shoppingCartRepository.getOpenShoppingCartByClient(client);
 
         if (shoppingCart == null) {
-            logger.trace(String.format("Could not retrieve cart for the client with id %s", client.getId()));
+            logger.debug(String.format("processCart(%s): Could not retrieve cart for the client", client));
             return 0L;
         }
 
         if (shoppingCart.getItems().size() == 0) {
+            logger.debug(String.format("processCart(%s): Could not process the cart as it's empty", client));
             return 0L;
         }
 
@@ -134,7 +149,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
             return newOrder.getId();
         } catch (Exception e) {
-            logger.trace(String.format(
+            logger.warn(String.format(
                     "Could not process the cart %s for the client %s. Exception: %s",
                     shoppingCart.getId(), client.getId(), e.getMessage()));
             return 0L;
@@ -154,15 +169,19 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
      */
     @Override
     public boolean addProductToCart(Client client, Product product, int quantity) {
+        logger.trace(String.format(
+                "Calling the addProductToCart(%s, %s, %s) method.",
+                client, product, quantity));
+
         ShoppingCart shoppingCart = shoppingCartRepository.getOpenShoppingCartByClient(client);
 
         if (shoppingCart == null) {
-            logger.trace(String.format("Could not retrieve cart for the client with id %s", client.getId()));
+            logger.debug(String.format("Could not retrieve cart for the client with id %s", client.getId()));
             return false;
         }
 
         if (quantity < 0) {
-            logger.trace(String.format(
+            logger.debug(String.format(
                     "Client %s attempted to add a negative number to the cart. Check API implementation.",
                     client.getId()));
             return false;
@@ -198,7 +217,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
             return true;
         } catch (Exception e) {
-            logger.trace(String.format(
+            logger.warn(String.format(
                     "Could not add the product %s to the cart for the client %s. Exception: %s",
                     product.getId(), client.getId(), e.getMessage()));
             return false;

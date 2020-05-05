@@ -21,13 +21,12 @@ public class SellerServiceImpl implements SellerService {
 
     private static final Logger logger = Logger.getLogger(SellerService.class);
 
-    @Autowired
     private SellerRepository sellerRepository;
 
     @Autowired
-//    public SellerServiceImpl(SellerRepository sellerRepository) {
-//        this.sellerRepository = sellerRepository;
-//    }
+    public SellerServiceImpl(SellerRepository sellerRepository) {
+        this.sellerRepository = sellerRepository;
+    }
 
     /**
      *  Persists a new Seller in the repository.
@@ -39,10 +38,12 @@ public class SellerServiceImpl implements SellerService {
      */
     @Override
     public Seller addSeller(Seller seller) {
+        logger.trace(String.format("Calling the addSeller(%s) method.", seller.toString()));
+
         Seller newSeller = sellerRepository.save(seller);
 
         if (newSeller == null) {
-            logger.trace(String.format("Could not create the seller %s", seller.getFullName()));
+            logger.debug(String.format("Could not create the seller %s", seller.getFullName()));
         }
 
         return newSeller;
@@ -59,8 +60,10 @@ public class SellerServiceImpl implements SellerService {
      */
     @Override
     public Seller updateSeller(Long id, Seller seller) {
+        logger.trace(String.format("Calling the updateSeller(%s) method.", seller.toString()));
+
         if (!sellerRepository.exists(id)) {
-            logger.trace(String.format("Could not update the seller with id %s. It does not exist.", id));
+            logger.debug(String.format("Could not update the seller with id %s. It does not exist.", id));
             return null;
         }
 
@@ -68,7 +71,7 @@ public class SellerServiceImpl implements SellerService {
         Seller updatedSeller = sellerRepository.save(seller);
 
         if (updatedSeller == null) {
-            logger.trace(String.format("Could not update the seller with id %s", seller.getId()));
+            logger.debug(String.format("Could not update the seller with id %s", seller.getId()));
         }
 
         return updatedSeller;
@@ -84,15 +87,17 @@ public class SellerServiceImpl implements SellerService {
      */
     @Override
     public boolean deleteSeller(Long id) {
+        logger.trace(String.format("Calling the deleteSeller(%s) method.", id));
+
         if (!sellerRepository.exists(id)) {
-            logger.trace(String.format("Could not delete the seller with id %s. It does not exist.", id));
+            logger.debug(String.format("Could not delete the seller with id %s. It does not exist.", id));
             return false;
         }
 
         try {
             sellerRepository.delete(id);
         } catch (Exception e) {
-            logger.trace(String.format("Could not delete the seller with id %s. An internal error occurred: %s.",
+            logger.warn(String.format("Could not delete the seller with id %s. An internal error occurred: %s.",
                     id, e.getMessage()));
             return false;
         }
@@ -109,6 +114,8 @@ public class SellerServiceImpl implements SellerService {
      */
     @Override
     public List<Seller> retrieveSellers() {
+        logger.trace("Calling the retrieveSellers method.");
+
         return (List<Seller>) sellerRepository.findAll();
     }
 
@@ -122,6 +129,8 @@ public class SellerServiceImpl implements SellerService {
      */
     @Override
     public Seller retrieveSellerById(Long id) {
+        logger.trace(String.format("Calling the retrieveSellerById(%s) method.", id));
+
         Seller seller = sellerRepository.findOne(id);
 
         if (seller == null) {
