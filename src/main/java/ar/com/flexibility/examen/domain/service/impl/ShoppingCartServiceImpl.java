@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -19,6 +20,7 @@ import java.util.List;
  * @version 1.0
  */
 @Service
+@Transactional
 public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     private static final Logger logger = Logger.getLogger(ShoppingCartServiceImpl.class);
@@ -143,7 +145,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
             shoppingCartRepository.save(shoppingCart);
 
-            // TODO: Wrap this in a transaction.
             Order newOrder = generateOrderFromShoppingCart(shoppingCart);
             orderRepository.save(newOrder);
 
@@ -212,9 +213,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
             shoppingCart.getItems().add(item);
             shoppingCartRepository.save(shoppingCart);
-
-            // TODO: Wrap this in a transaction.
-
+            
             return true;
         } catch (Exception e) {
             logger.warn(String.format(

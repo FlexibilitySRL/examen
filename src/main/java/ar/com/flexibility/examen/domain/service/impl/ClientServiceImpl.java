@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 /**
@@ -17,6 +18,7 @@ import java.util.List;
  * @version 1.0
  */
 @Service
+@Transactional
 public class ClientServiceImpl implements ClientService {
 
     private static final Logger logger = Logger.getLogger(ClientServiceImpl.class);
