@@ -33,6 +33,13 @@ public class Seller {
         this.commissionRate = commissionRate;
     }
 
+    public Seller(Long id, String firstName, String lastName, float commissionRate) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.commissionRate = commissionRate;
+    }
+
     public Long getId() {
         return id;
     }

@@ -57,6 +57,17 @@ public class ShoppingCart {
         this.completed = completed;
     }
 
+    public ShoppingCart(Long id, Client client, Seller seller, List<ShoppingCartItem> items,
+                        LocalDateTime createdAt, LocalDateTime processedAt, boolean completed) {
+        this.id = id;
+        this.client = client;
+        this.seller = seller;
+        this.items = items;
+        this.createdAt = createdAt;
+        this.processedAt = processedAt;
+        this.completed = completed;
+    }
+
     public Long getId() {
         return id;
     }

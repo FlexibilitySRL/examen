@@ -21,12 +21,13 @@ public class SellerServiceImpl implements SellerService {
 
     private static final Logger logger = Logger.getLogger(SellerService.class);
 
-    SellerRepository sellerRepository;
+    @Autowired
+    private SellerRepository sellerRepository;
 
     @Autowired
-    public SellerServiceImpl(SellerRepository sellerRepository) {
-        this.sellerRepository = sellerRepository;
-    }
+//    public SellerServiceImpl(SellerRepository sellerRepository) {
+//        this.sellerRepository = sellerRepository;
+//    }
 
     /**
      *  Persists a new Seller in the repository.

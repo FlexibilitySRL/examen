@@ -40,6 +40,21 @@ public class Client {
         this.seller = seller;
     }
 
+    public Client(Long id, String firstName, String lastName, String address) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address = address;
+    }
+
+    public Client(Long id, String firstName, String lastName, String address, Seller seller) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address = address;
+        this.seller = seller;
+    }
+
     public Long getId() {
         return id;
     }

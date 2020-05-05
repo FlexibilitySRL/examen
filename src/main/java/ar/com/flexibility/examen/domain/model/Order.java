@@ -37,7 +37,7 @@ public class Order {
 
     private float total;
 
-    private boolean approved;
+    private Boolean approved;
 
     private LocalDateTime createdAt;
 
@@ -55,7 +55,22 @@ public class Order {
 
     public Order(Client client, Seller seller, List<OrderItem> items,
                  float subtotal, float commissionRate, float total,
-                 boolean approved, LocalDateTime createdAt, LocalDateTime approvedAt) {
+                 Boolean approved, LocalDateTime createdAt, LocalDateTime approvedAt) {
+        this.client = client;
+        this.seller = seller;
+        this.items = items;
+        this.subtotal = subtotal;
+        this.commissionRate = commissionRate;
+        this.total = total;
+        this.approved = approved;
+        this.createdAt = createdAt;
+        this.approvedAt = approvedAt;
+    }
+
+    public Order(Long id, Client client, Seller seller, List<OrderItem> items,
+                 float subtotal, float commissionRate, float total,
+                 Boolean approved, LocalDateTime createdAt, LocalDateTime approvedAt) {
+        this.id = id;
         this.client = client;
         this.seller = seller;
         this.items = items;
@@ -131,11 +146,11 @@ public class Order {
         this.createdAt = createdAt;
     }
 
-    public boolean isApproved() {
+    public Boolean isApproved() {
         return approved;
     }
 
-    public void setApproved(boolean approved) {
+    public void setApproved(Boolean approved) {
         this.approved = approved;
     }
 

@@ -41,6 +41,15 @@ public class OrderItem {
         this.total = total;
     }
 
+    public OrderItem(Long id, Order order, Product product, int quantity, float price, float total) {
+        this.id = id;
+        this.order = order;
+        this.product = product;
+        this.quantity = quantity;
+        this.price = price;
+        this.total = total;
+    }
+
     public Long getId() {
         return id;
     }

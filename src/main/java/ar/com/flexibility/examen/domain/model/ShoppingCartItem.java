@@ -49,6 +49,15 @@ public class ShoppingCartItem {
         this.total = total;
     }
 
+    public ShoppingCartItem(Long id, ShoppingCart cart, Product product, int quantity, float price, float total) {
+        this.id = id;
+        this.cart = cart;
+        this.product = product;
+        this.quantity = quantity;
+        this.price = price;
+        this.total = total;
+    }
+
     public Long getId() {
         return id;
     }
