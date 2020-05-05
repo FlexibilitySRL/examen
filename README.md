@@ -24,14 +24,13 @@ La aplicación utiliza las siguientes tecnologías:
 
 ## Endpoints
 
-La lista de endpoints puede ser consultada en [Swagger](https://localhost:8080/swagger-ui.html).
+La lista de endpoints puede ser consultada en [Swagger](https://frozen-chamber-56289.herokuapp.com/swagger-ui.html#/).
 
 La aplicación se encuentra en Heroku y puede ser consultada.
 
 Así mismo, se puede utilizar la siguiente colección de [Postman](https://www.postman.com/):
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/9a756f5ea52c0d97d991)
-
 ## Testing
 
 La API cuenta con pruebas unitarias para la capa de servicios.
