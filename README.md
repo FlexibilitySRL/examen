@@ -24,7 +24,7 @@ La aplicación utiliza las siguientes tecnologías:
 
 ## Endpoints
 
-La lista de endpoints puede ser consultada en [Swagger](https://localhost:8080/swagger-ui.html).
+La lista de endpoints puede ser consultada en [Swagger](https://frozen-chamber-56289.herokuapp.com/swagger-ui.html#/).
 
 La aplicación se encuentra en Heroku y puede ser consultada.
 
