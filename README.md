@@ -36,3 +36,6 @@ Bonus
 4) Correr pruebas con base de datos en memoria.
 5) Calcular la covertura de los tests.
 6) Crear Docker Image.
+
+**********************
+Suite postman: https://www.getpostman.com/collections/c854d329b0b271cd5027
