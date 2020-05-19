@@ -20,13 +20,13 @@ La prueba consiste en agregar nueva funcionalidad a la API REST que corre en est
  
 6) Enviar un Pull Request con todos los cambios realizados. 
 
-Para correr la aplicación se puede utilizar maven: 
-
-mvn spring-boot:run -Drun.jvmArguments="-Dspring.profiles.active=local"
+Para correr la aplicación se puede utilizar maven (DB fisica o en memoria): 
+- mvn spring-boot:run -Dspring-boot.run.profiles=local
+- mvn spring-boot:run -Dspring-boot.run.profiles=test
 
 Pueden probar el servicio de prueba con un curl de la siguiente forma:
 
-`curl -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' -d '{"message":"mensaje de prueba"}' localhost:8080/custom/echo `
+`curl -X POST  http://localhost:8080/custom/echo  -H "accept: application/json"  -H "cache-control: no-cache"  -H "content-type: application/json"  -d "{\"message\":\"mensaje de prueba\"}"`
 
 Bonus
 

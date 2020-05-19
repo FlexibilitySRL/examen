@@ -1,13 +1,26 @@
 spring:
-  profiles: local
-  jpa:
-    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
-    hibernate:
-      ddl-auto: update
-    show-sql: true
-  datasource:
-    url: jdbc:mysql://127.0.0.1:3306/aramark?zeroDateTimeBehavior=convertToNull
-    username: root
-    password: password
-
+   profiles: local
+   jpa:
+      database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+      hibernate:
+         ddl-auto: update
+      show-sql: false
+   datasource:
+      url: jdbc:mysql://127.0.0.1:3306/aramark?zeroDateTimeBehavior=convertToNull
+      username: root
+      password: root
+      driver-class-name: com.mysql.cj.jdbc.Driver
 ---
+spring:
+   profiles: test
+   jpa:
+      database-platform: org.hibernate.dialect.H2Dialect
+      hibernate:
+         ddl-auto: update
+      show-sql: true
+   datasource:
+      url: jdbc:h2:mem:testdb
+      username: sa
+      password: sa
+      driver-class-name: org.h2.Driver     
+      
