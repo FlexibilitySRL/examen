@@ -42,7 +42,7 @@ public class Purchase {
 
 	private Date createDate = new Date();
 
-	@ManyToMany(cascade = { CascadeType.PERSIST })
+	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST })
 	@JoinTable(name = "purchase_product", joinColumns = { @JoinColumn(name = "purchase_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "product_id") })
 	private Set<Product> products = new HashSet<Product>();
