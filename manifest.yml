@@ -1,0 +1,7 @@
+---
+applications:
+- name: flexibility-exam
+memory: 1G
+path: target\flexibility-exam.jar
+random-route: true
+instances: 1

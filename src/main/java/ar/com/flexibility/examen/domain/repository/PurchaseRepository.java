@@ -12,5 +12,5 @@ import ar.com.flexibility.examen.utils.PurchaseStatus;
 public interface PurchaseRepository extends JpaRepository<Purchase, Long> {
 
 	@Query("FROM purchases p WHERE p.id = :id AND p.status = :status ")
-	public Optional<Purchase> findUnApprovedPurchaseById(@Param("id") Long id, @Param("status") PurchaseStatus status);
+	public Optional<Purchase> findByIdAndStatus(@Param("id") Long id, @Param("status") PurchaseStatus status);
 }

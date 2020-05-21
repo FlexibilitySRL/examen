@@ -102,7 +102,7 @@ public class PurchaseServiceImpl implements PurchaseService {
 
 	private Purchase getUnapprovedPurchaseById(Long purchaseId) throws GenericException {
 
-		Optional<Purchase> purchase = purchaseRepository.findUnApprovedPurchaseById(purchaseId, PurchaseStatus.CREATED);
+		Optional<Purchase> purchase = purchaseRepository.findByIdAndStatus(purchaseId, PurchaseStatus.IN_PROGRESS);
 		if (!purchase.isPresent()) {
 			String msg = String.format("Error retrieving the purchase %s", purchaseId);
 			logger.error(msg);

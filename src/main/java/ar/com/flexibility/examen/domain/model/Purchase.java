@@ -1,6 +1,6 @@
 package ar.com.flexibility.examen.domain.model;
 
-import static ar.com.flexibility.examen.utils.PurchaseStatus.CREATED;
+import static ar.com.flexibility.examen.utils.PurchaseStatus.IN_PROGRESS;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -56,6 +56,6 @@ public class Purchase {
 	private Seller seller;
 
 	@Enumerated(EnumType.STRING)
-	private PurchaseStatus status = CREATED;
+	private PurchaseStatus status = IN_PROGRESS;
 
 }

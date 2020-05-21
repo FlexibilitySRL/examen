@@ -6,7 +6,7 @@ spring:
          ddl-auto: update
       show-sql: false
    datasource:
-      url: jdbc:mysql://127.0.0.1:3306/aramark?zeroDateTimeBehavior=convertToNull
+      url: jdbc:mysql://127.0.0.1:3306/aramark?createDatabaseIfNotExist=true&zeroDateTimeBehavior=convertToNull&autoReconnect=true&useSSL=false
       username: root
       password: root
       driver-class-name: com.mysql.cj.jdbc.Driver

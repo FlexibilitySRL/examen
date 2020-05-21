@@ -36,3 +36,48 @@ Bonus
 4) Correr pruebas con base de datos en memoria.
 5) Calcular la covertura de los tests.
 6) Crear Docker Image.
+
+#    
+
+# SOLUCION:
+
+    Tech Stack
+        - Java 8
+        - Spring Boot
+        - Maven
+        - MySql 8
+        - Swagger
+        - Jackson
+        - Jacoco
+
+## Instrucciones
+
+Para correr la aplicación usando Mysql ejecutar:
+
+	mvn spring-boot:run -Dspring-boot.run.profiles=local
+
+Para correr la aplicación usando la base de datos en memoria (H2) ejecutar:
+
+	mvn spring-boot:run -Dspring-boot.run.profiles=test
+	
+Para obtener métricas de Test coverage:
+
+	1) Ejecutar:
+		
+		mvn clean package
+		
+	2) Abrir el archvio de reporte que se encuentra en la ruta:
+		
+		.\target\site\jacoco\index.html
+	
+Para obtener información sobre los servicios y probar los mismos. Ejecutar la aplicación y acceder via browser a:
+
+	http://localhost:8080/swagger-ui.html
+
+Para acceder a la instancia de Pivotal, acceder via browser a:
+
+	https://flexibility-exam-terrific-gelada-zr.cfapps.io/swagger-ui.html
+	
+	
+	
+

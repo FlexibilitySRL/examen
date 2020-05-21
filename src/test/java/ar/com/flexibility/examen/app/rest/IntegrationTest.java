@@ -199,7 +199,7 @@ public class IntegrationTest {
 		assertEquals(seller, purchase.getSeller());
 		assertTrue(purchase.getProducts().contains(productOne));
 		assertTrue(purchase.getProducts().contains(productTwo));
-		assertEquals(PurchaseStatus.CREATED, purchase.getStatus());
+		assertEquals(PurchaseStatus.IN_PROGRESS, purchase.getStatus());
 
 		// Approve purchase
 		Assert.assertEquals(200, restTemplate.exchange(new URI(urlPurchases + purchaseId), HttpMethod.PUT,

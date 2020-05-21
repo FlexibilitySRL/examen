@@ -153,7 +153,7 @@ class PurchaseServiceTest {
 			Purchase resultPurchase = new Purchase();
 			resultPurchase.setProducts(new HashSet<>());
 
-			when(purchaseRepository.findUnApprovedPurchaseById(anyLong(), eq(PurchaseStatus.CREATED)))
+			when(purchaseRepository.findByIdAndStatus(anyLong(), eq(PurchaseStatus.IN_PROGRESS)))
 					.thenReturn(Optional.of(resultPurchase));
 
 			when(productService.getById(anyLong())).thenReturn(new Product(-1L, "productData", new TreeSet<>()));
@@ -162,7 +162,7 @@ class PurchaseServiceTest {
 
 			purchaseService.addProductTo(-1L, -1L);
 
-			verify(purchaseRepository, times(1)).findUnApprovedPurchaseById(anyLong(), eq(PurchaseStatus.CREATED));
+			verify(purchaseRepository, times(1)).findByIdAndStatus(anyLong(), eq(PurchaseStatus.IN_PROGRESS));
 			verify(productService, times(1)).getById(anyLong());
 			verify(purchaseRepository, times(1)).save(any(Purchase.class));
 		}
@@ -173,7 +173,7 @@ class PurchaseServiceTest {
 
 			Purchase resultPurchase = new Purchase();
 			resultPurchase.setProducts(new HashSet<>());
-			when(purchaseRepository.findUnApprovedPurchaseById(anyLong(), eq(PurchaseStatus.CREATED)))
+			when(purchaseRepository.findByIdAndStatus(anyLong(), eq(PurchaseStatus.IN_PROGRESS)))
 					.thenReturn(Optional.of(resultPurchase));
 			when(productService.getById(anyLong())).thenReturn(new Product());
 			when(purchaseRepository.save(any(Purchase.class))).thenReturn(null);
@@ -187,7 +187,7 @@ class PurchaseServiceTest {
 
 			Purchase resultPurchase = new Purchase();
 			resultPurchase.setProducts(new TreeSet<>());
-			when(purchaseRepository.findUnApprovedPurchaseById(anyLong(), eq(PurchaseStatus.CREATED)))
+			when(purchaseRepository.findByIdAndStatus(anyLong(), eq(PurchaseStatus.IN_PROGRESS)))
 					.thenReturn(Optional.of(resultPurchase));
 			when(productService.getById(anyLong())).thenThrow(new EntityNotFoundException("product"));
 
@@ -198,7 +198,7 @@ class PurchaseServiceTest {
 		@DisplayName("Should throw exception when cant find the purchase")
 		void cantFindPurchase() throws GenericException {
 
-			when(purchaseRepository.findUnApprovedPurchaseById(anyLong(), eq(PurchaseStatus.CREATED)))
+			when(purchaseRepository.findByIdAndStatus(anyLong(), eq(PurchaseStatus.IN_PROGRESS)))
 					.thenReturn(Optional.empty());
 
 			assertThrows(EntityNotUpdatedException.class, () -> purchaseService.addProductTo(-1L, -1L));
@@ -214,13 +214,13 @@ class PurchaseServiceTest {
 
 			Purchase resultPurchase = new Purchase();
 			resultPurchase.setProducts(new HashSet<>());
-			when(purchaseRepository.findUnApprovedPurchaseById(anyLong(), eq(PurchaseStatus.CREATED)))
+			when(purchaseRepository.findByIdAndStatus(anyLong(), eq(PurchaseStatus.IN_PROGRESS)))
 					.thenReturn(Optional.of(resultPurchase));
 			when(purchaseRepository.save(any(Purchase.class))).thenReturn(new Purchase());
 
 			purchaseService.approvePurchase(-1L);
 
-			verify(purchaseRepository, times(1)).findUnApprovedPurchaseById(anyLong(), eq(PurchaseStatus.CREATED));
+			verify(purchaseRepository, times(1)).findByIdAndStatus(anyLong(), eq(PurchaseStatus.IN_PROGRESS));
 			verify(purchaseRepository, times(1)).save(any(Purchase.class));
 		}
 
@@ -230,7 +230,7 @@ class PurchaseServiceTest {
 
 			Purchase resultPurchase = new Purchase();
 			resultPurchase.setProducts(new HashSet<>());
-			when(purchaseRepository.findUnApprovedPurchaseById(anyLong(), eq(PurchaseStatus.CREATED)))
+			when(purchaseRepository.findByIdAndStatus(anyLong(), eq(PurchaseStatus.IN_PROGRESS)))
 					.thenReturn(Optional.of(resultPurchase));
 			when(purchaseRepository.save(any(Purchase.class))).thenReturn(null);
 
@@ -241,7 +241,7 @@ class PurchaseServiceTest {
 		@DisplayName("Should throw exception when cant find the purchase")
 		void cantFindPurchase() throws GenericException {
 
-			when(purchaseRepository.findUnApprovedPurchaseById(anyLong(), eq(PurchaseStatus.CREATED)))
+			when(purchaseRepository.findByIdAndStatus(anyLong(), eq(PurchaseStatus.IN_PROGRESS)))
 					.thenReturn(Optional.empty());
 
 			assertThrows(EntityNotUpdatedException.class, () -> purchaseService.approvePurchase(-1L));
