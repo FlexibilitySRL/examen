@@ -1,5 +1,5 @@
 spring:
-  profiles: local
+  profiles: localxx
   jpa:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     hibernate:
@@ -11,3 +11,30 @@ spring:
     password: password
 
 ---
+spring:
+  profiles: local
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  datasource:
+    url: jdbc:mysql://localhost:3306/test?zeroDateTimeBehavior=convertToNull
+    username: root
+    password: mysql
+
+---
+spring:
+  profiles: localhsqldb
+  datasource:
+    platform: hsqldb
+    initialize: true
+    continue-on-error: false
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.HSQLDialect
+    hibernate:
+      ddl-auto: create
+    show-sql: false
+

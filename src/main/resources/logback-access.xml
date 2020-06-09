@@ -1,0 +1,17 @@
+<configuration>
+    <property name="LOGS" value="./logs" />
+
+    <appender name="ACCESSFILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOGS}/access.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOGS}/archived/access_%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>100MB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%t{yyyy-MM-dd:HH:mm:ss Z} %remoteIP %user %requestURL %statusCode %bytesSent %elapsedTime %header{X-B3-TraceId} %requestContent %responseContent</pattern>
+        </encoder>
+    </appender>
+
+    <appender-ref ref="ACCESSFILE" />
+</configuration>
