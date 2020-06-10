@@ -21,6 +21,6 @@ public class CustomController {
     @PostMapping("/echo")
     public ResponseEntity<?> echo(@RequestBody MessageApi message)
     {
-        return new ResponseEntity<Message>(messageService.processMessage(message.getMessage()), HttpStatus.OK);
+        return new ResponseEntity<>(messageService.processMessage(message.getMessage()), HttpStatus.OK);
     }
 }

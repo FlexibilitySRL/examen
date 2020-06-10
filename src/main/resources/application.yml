@@ -1,13 +1,13 @@
 spring:
   profiles: local
   jpa:
-    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
       ddl-auto: update
     show-sql: true
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/aramark?zeroDateTimeBehavior=convertToNull
-    username: root
-    password: password
+    url: jdbc:postgresql://localhost:5438/postgres
+    username: postgres
+    password: admin
 
 ---

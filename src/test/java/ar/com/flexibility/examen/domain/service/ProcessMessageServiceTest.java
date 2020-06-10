@@ -16,8 +16,7 @@ public class ProcessMessageServiceTest {
     private ProcessMessageServiceImpl messageService;
 
     @Test
-    public void processMessage()
-    {
+    public void processMessage() {
         String messageTest = "TEST";
         Message message = messageService.processMessage(messageTest);
 
