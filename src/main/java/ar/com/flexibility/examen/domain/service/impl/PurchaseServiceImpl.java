@@ -3,6 +3,8 @@ package ar.com.flexibility.examen.domain.service.impl;
 import ar.com.flexibility.examen.domain.model.Customer;
 import ar.com.flexibility.examen.domain.model.Product;
 import ar.com.flexibility.examen.domain.model.Purchase;
+import ar.com.flexibility.examen.domain.repo.CustomerRepository;
+import ar.com.flexibility.examen.domain.repo.ProductRepository;
 import ar.com.flexibility.examen.domain.repo.PurchaseRepository;
 import ar.com.flexibility.examen.domain.service.PurchaseService;
 import java.util.List;
@@ -15,6 +17,12 @@ public class PurchaseServiceImpl implements PurchaseService {
     @Autowired
     PurchaseRepository repo;
     
+    @Autowired
+    CustomerRepository customerRepo;
+    
+    @Autowired
+    ProductRepository productRepo; 
+   
     @Override
     public Purchase createPurchase(Customer customer, Product product) {
         Purchase purchase = new Purchase();
@@ -23,6 +31,13 @@ public class PurchaseServiceImpl implements PurchaseService {
         purchase.setAporoved(false);
         
         return repo.save(purchase);
+    }
+    
+    @Override
+    public Purchase createPurchase(Long customerId, Long productId) {
+        Customer customer = customerRepo.findOne(customerId);
+        Product product = productRepo.findOne(productId);
+        return this.createPurchase(customer, product);
     }
 
     @Override
@@ -38,10 +53,22 @@ public class PurchaseServiceImpl implements PurchaseService {
             return false;
         }
     }
+    
+    @Override
+    public boolean approve(Long purchaseId) {
+        Purchase purchase = repo.findOne(purchaseId);
+        return this.approve(purchase);
+    }
 
     @Override
-    public List<Purchase> listPurchases(Customer customer, Product product, boolean approved) {
+    public List<Purchase> listPurchases(Customer customer, Product product) {
         return repo.findByCustomerAndProduct(customer, product);
     }
-    
+
+    @Override
+    public List<Purchase> listPurchases(Long customerId, Long productId) {
+        Customer customer = customerRepo.findOne(customerId);
+        Product product = productRepo.findOne(productId);
+        return this.listPurchases(customer, product);
+    }
 }
