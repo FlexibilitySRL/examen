@@ -11,7 +11,7 @@ public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String maskname;
+    private String name;
 
     /**
      * @return the id
@@ -28,16 +28,16 @@ public class Customer {
     }
 
     /**
-     * @return the maskname
+     * @return the name
      */
-    public String getMaskname() {
-        return maskname;
+    public String getName() {
+        return name;
     }
 
     /**
-     * @param maskname the maskname to set
+     * @param name the name to set
      */
-    public void setMaskname(String maskname) {
-        this.maskname = maskname;
+    public void setName(String name) {
+        this.name = name;
     }
 }
