@@ -29,7 +29,7 @@ public class PurchaseRepositoryTest {
         prod = productRepo.save(prod);
         
         Customer cust = new Customer();
-        cust.setMaskname("Good Customer");
+        cust.setName("Good Customer");
         cust = customerRepo.save(cust);
         
         Purchase purchase = new Purchase();
@@ -51,7 +51,7 @@ public class PurchaseRepositoryTest {
         prod = productRepo.save(prod);
         
         Customer cust = new Customer();
-        cust.setMaskname("Query Customer");
+        cust.setName("Query Customer");
         cust = customerRepo.save(cust);
         
         Purchase purchase = new Purchase();

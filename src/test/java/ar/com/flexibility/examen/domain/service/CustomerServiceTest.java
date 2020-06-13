@@ -18,44 +18,44 @@ public class CustomerServiceTest {
     @Test
     public void createTest() {
         Customer customer = new Customer();
-        customer.setMaskname("Maskname 1");
+        customer.setName("Maskname 1");
         Customer customerRes = svc.create(customer);
-        Assert.assertEquals(customer.getMaskname(), customerRes.getMaskname());
+        Assert.assertEquals(customer.getName(), customerRes.getName());
     }
     
     @Test
     public void readTest() {
         String maskname = "maskname 1";
         Customer customer = new Customer();
-        customer.setMaskname(maskname);
+        customer.setName(maskname);
         customer = svc.create(customer);
 
         Customer customerRead = svc.read(customer.getId());
-        Assert.assertEquals(maskname, customerRead.getMaskname());
+        Assert.assertEquals(maskname, customerRead.getName());
     }
 
     @Test
     public void updateTest() {
         String maskname = "maskname 2";
         Customer customer = new Customer();
-        customer.setMaskname(maskname);
+        customer.setName(maskname);
         customer = svc.create(customer);
 
         String newmaskname = "Updated maskname";
         Long id = customer.getId();
         Customer updCustomer = new Customer();
         updCustomer.setId(id);
-        updCustomer.setMaskname(newmaskname);
+        updCustomer.setName(newmaskname);
         updCustomer = svc.update(updCustomer);
         Assert.assertEquals("A new object were created", customer.getId(), updCustomer.getId());
-        Assert.assertEquals("Maskname hans't updated", newmaskname, svc.read(id).getMaskname());
+        Assert.assertEquals("Maskname hans't updated", newmaskname, svc.read(id).getName());
     }
 
     @Test
     public void deleteTest() {
         String maskname = "maskname 3";
         Customer customer = new Customer();
-        customer.setMaskname(maskname);
+        customer.setName(maskname);
         customer = svc.create(customer);
 
         svc.delete(customer.getId());

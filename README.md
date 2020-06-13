@@ -1,38 +1,136 @@
 # REST Test
 
-# Bienvenidos!
+# REST service endpoints documentation
 
-La prueba consiste en agregar nueva funcionalidad a la API REST que corre en este repositorio. Para eso vamos a guiarnos por los siguientes puntos:
+## /customer
+Under this path was implemented the Customers CRUD 
 
-1) Hacer un fork del repositorio, crear un nuevo branch y realizar las tareas enunciadas a continuación.
+### GET /customer/{customerId}
+Returns:
+**HTTP200 OK** The Customer was found
+Response Body:
+`{
+    "id": *customerId*
+    "name": *Customers name. Single line.*
+}`
 
-2) Proveer servicios para la administración de la compra de productos. Los mismos deberán incluir:
-- ABM de productos.
-- ABM de clientes.
-- Consulta de transacciones de compra.
-- Aprobación de compras.
- 
-3) Los servicios deben contar con logs que indiquen si el servicio respondió correctamente o no.
-  
-4) Documentar brevemente los servicios implementados.
- 
-5) Todos los servicios deben contar, al menos, con test unitarios.
- 
-6) Enviar un Pull Request con todos los cambios realizados. 
+**HTTP404 NOT FOUND** The Customer wasn't found
 
-Para correr la aplicación se puede utilizar maven: 
+### DELETE /customer/{customerId}
+Returns:
+**HTTP200 OK** Customer succesfully deleted
+**HTTP404 NOT FOUND** Customer wasn't found
 
-mvn spring-boot:run -Drun.jvmArguments="-Dspring.profiles.active=local"
+### PUT /customer
+Creates a new customer
+Request Body:
+`{
+    "name": *Customers name. Single line.*
+}`
 
-Pueden probar el servicio de prueba con un curl de la siguiente forma:
+Returns:
+**HTTP201 CREATED** if successully createrd
+Response body:
+`{
+    "id": *customerId*
+    "name": *Customers name. Single line.*
+}`
 
-`curl -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' -d '{"message":"mensaje de prueba"}' localhost:8080/custom/echo `
+**HTTP400 BAD REQUEST** if the received JSON is malformed
+Response body empty
 
-Bonus
+## /product
+Under this path was implemented the Products CRUD 
 
-1) Hostear la app en un cloud computing libre (Cloudfoudry o APP Engine) y enviar la URL para consultar.
-2) ABM de vendedores.
-3) Agregar test de integración.
-4) Correr pruebas con base de datos en memoria.
-5) Calcular la covertura de los tests.
-6) Crear Docker Image.
+### GET /product/{productId}
+Returns:
+**HTTP200 OK** The Product was found
+Response Body:
+`{
+    "id": *productId*
+    "name": *Product name.*
+}`
+
+**HTTP404 NOT FOUND** The Customer wasn't found
+
+### DELETE /product/{productId}
+Returns:
+**HTTP200 OK** Product succesfully deleted
+**HTTP404 NOT FOUND** Product wasn't found
+
+### PUT /product
+Creates a new product
+Request Body:
+`{
+    "name": *Products name. Single line.*
+}`
+
+Returns:
+**HTTP201 CREATED** if successully createrd
+Response body:
+`{
+    "id": *productId*
+    "name": *Product name. Single line.*
+}`
+
+**HTTP400 BAD REQUEST** if the received JSON is malformed
+Response body empty
+
+
+
+## /purchase
+Under this path was implemented the Products CRUD 
+
+### GET /purchase/{customerId}/{productId}
+Gets the purchase orders list for the given clientId and productId
+Returns:
+**HTTP200 OK** The Product was found
+Response Body:
+`
+[
+    {
+        "id": {purchaseID},
+        "product": {
+            "id": {productID},
+            "name": Product Name
+        },
+        "customer": {
+            "id": {customerId},
+            "name": Customer Name
+        },
+        "aporoved": whether is already approved or not
+    },
+...
+]
+`
+This list may be empty if no purchases are already placed for that customer and product
+
+### PUT /purchase/{customerId}/{productId}
+Creates a new purchase order for the given customer and product IDs.
+The order will be still unapproved
+request body: empty
+
+Returns:
+**200OK** If the purchase order
+`{
+    "id": {purchaseID},
+    "product": {
+        "id": {productID},
+        "name": Product Name
+    },
+    "customer": {
+        "id": {customerId},
+        "name": Customer Name
+    },
+    "aporoved": false
+}`
+
+**400 BAD REQUEST** if the purchase order can´t be placed for any reason
+
+
+### POST /approve/{purchaseId}
+sets the approved value of the purchase to truw
+Request Body: empty
+Response:
+**200 OK** Purchase succesfully approved
+**400 BAD REQUEST** The purchase either does not exists of approval was rejected
