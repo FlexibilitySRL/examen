@@ -1,0 +1,19 @@
+spring:
+  profiles: local
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  datasource:
+    driver: org.h2.Driver
+    url: jdbc:h2:mem:testdb
+    username: sa
+    password: password
+
+logging:
+    level:
+    ROOT: DEBUG
+
+---
+   
