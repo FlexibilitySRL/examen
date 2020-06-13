@@ -9,10 +9,12 @@ Under this path was implemented the Customers CRUD
 Returns:
 **HTTP200 OK** The Customer was found
 Response Body:
-`{
+```javascript
+{
     "id": *customerId*
     "name": *Customers name. Single line.*
-}`
+}
+```
 
 **HTTP404 NOT FOUND** The Customer wasn't found
 
@@ -24,17 +26,21 @@ Returns:
 ### PUT /customer
 Creates a new customer
 Request Body:
-`{
+```javascript
+{
     "name": *Customers name. Single line.*
-}`
+}
+```
 
 Returns:
 **HTTP201 CREATED** if successully createrd
 Response body:
-`{
+```javascript
+{
     "id": *customerId*
     "name": *Customers name. Single line.*
-}`
+}
+```
 
 **HTTP400 BAD REQUEST** if the received JSON is malformed
 Response body empty
@@ -46,10 +52,12 @@ Under this path was implemented the Products CRUD
 Returns:
 **HTTP200 OK** The Product was found
 Response Body:
-`{
+```javascript
+{
     "id": *productId*
     "name": *Product name.*
-}`
+}
+```
 
 **HTTP404 NOT FOUND** The Customer wasn't found
 
@@ -61,17 +69,21 @@ Returns:
 ### PUT /product
 Creates a new product
 Request Body:
-`{
+```javascript
+{
     "name": *Products name. Single line.*
-}`
+}
+```
 
 Returns:
 **HTTP201 CREATED** if successully createrd
 Response body:
-`{
+```javascript
+{
     "id": *productId*
     "name": *Product name. Single line.*
-}`
+}
+```
 
 **HTTP400 BAD REQUEST** if the received JSON is malformed
 Response body empty
@@ -86,7 +98,7 @@ Gets the purchase orders list for the given clientId and productId
 Returns:
 **HTTP200 OK** The Product was found
 Response Body:
-`
+```javascript
 [
     {
         "id": {purchaseID},
@@ -102,7 +114,7 @@ Response Body:
     },
 ...
 ]
-`
+```
 This list may be empty if no purchases are already placed for that customer and product
 
 ### PUT /purchase/{customerId}/{productId}
@@ -112,7 +124,8 @@ request body: empty
 
 Returns:
 **200OK** If the purchase order
-`{
+```javascript
+{
     "id": {purchaseID},
     "product": {
         "id": {productID},
@@ -123,7 +136,8 @@ Returns:
         "name": Customer Name
     },
     "aporoved": false
-}`
+}
+```
 
 **400 BAD REQUEST** if the purchase order can´t be placed for any reason
 
