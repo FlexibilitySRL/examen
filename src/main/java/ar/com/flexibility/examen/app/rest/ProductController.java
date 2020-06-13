@@ -6,10 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -20,7 +23,7 @@ public class ProductController {
     @Autowired
     ProductService service;
     
-    @RequestMapping(path = "/{productId}", method = RequestMethod.GET)
+    @GetMapping(path = "/{productId}")
     public ResponseEntity<Product> get(@PathVariable Long productId) {
         Product product = service.read(productId);
         if (product == null) {
@@ -31,13 +34,13 @@ public class ProductController {
         }
     }
     
-    @RequestMapping(path = "/{productId}", method = RequestMethod.DELETE)
+    @DeleteMapping(path = "/{productId}")
     public ResponseEntity<?> delete(@PathVariable Long productId) {
         service.delete(productId);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
-    @RequestMapping(method = RequestMethod.PUT)
+    @PutMapping
     public ResponseEntity<Product> create(@RequestBody Product product) {
         Product created = service.create(product);
         if (created != null) {
@@ -48,7 +51,7 @@ public class ProductController {
         }
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping
     public ResponseEntity<Product> modify(@RequestBody Product product) {
         Product updated = service.update(product);
         if (updated != null) {

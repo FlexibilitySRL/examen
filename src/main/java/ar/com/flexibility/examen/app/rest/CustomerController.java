@@ -6,10 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -20,7 +23,7 @@ public class CustomerController {
     @Autowired
     CustomerService service;
     
-    @RequestMapping(path = "/{customerId}", method = RequestMethod.GET)
+    @GetMapping(path = "/{customerId}")
     public ResponseEntity<Customer> get(@PathVariable Long customerId) {
         Customer customer = service.read(customerId);
         if (customer == null) {
@@ -31,14 +34,14 @@ public class CustomerController {
         }
     }
     
-    @RequestMapping(path = "/{customerId}", method = RequestMethod.DELETE)
+    @DeleteMapping(path = "/{customerId}")
     public ResponseEntity<?> delete(@PathVariable Long customerId) {
         service.delete(customerId);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
     
-    @RequestMapping(method = RequestMethod.PUT)
+    @PutMapping
     public ResponseEntity<Customer> create(@RequestBody Customer customer) {
         Customer created = service.create(customer);
         if (created != null) {
@@ -49,7 +52,7 @@ public class CustomerController {
         }
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping
     public ResponseEntity<Customer> modify(@RequestBody Customer customer) {
         Customer updated = service.update(customer);
         if (updated != null) {

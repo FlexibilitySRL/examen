@@ -7,9 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -20,17 +22,17 @@ public class PurchaseController {
     @Autowired
     PurchaseService service;
     
-    @RequestMapping(path = "/{customerId}/{productId}", method = RequestMethod.GET)
+    @GetMapping(path = "/{customerId}/{productId}")
     public ResponseEntity<List<Purchase>> find(@PathVariable Long customerId, @PathVariable Long productId) {
         return new ResponseEntity<>(service.listPurchases(customerId, productId), HttpStatus.OK);
     }
     
-    @RequestMapping(path = "/{customerId}/{productId}", method = RequestMethod.PUT)
+    @PutMapping(path = "/{customerId}/{productId}")
     public ResponseEntity<Purchase> create(@PathVariable Long customerId, @PathVariable Long productId) {
         return new ResponseEntity<>(service.createPurchase(customerId, productId), HttpStatus.CREATED);
     }
     
-    @RequestMapping(path = "/approve/{purchaseId}", method = RequestMethod.POST)
+    @PostMapping(path = "/approve/{purchaseId}")
     public ResponseEntity<?> approve(@PathVariable Long purchaseId) {
         if (service.approve(purchaseId)) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
