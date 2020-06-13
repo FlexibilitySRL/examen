@@ -10,3 +10,4 @@ target
 
 # Mac
 .DS_Store
+/nb-configuration.xml
