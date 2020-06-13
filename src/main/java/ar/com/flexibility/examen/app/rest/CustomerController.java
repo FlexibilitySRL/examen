@@ -4,7 +4,6 @@ import ar.com.flexibility.examen.domain.model.Customer;
 import ar.com.flexibility.examen.domain.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -24,42 +24,41 @@ public class CustomerController {
     CustomerService service;
     
     @GetMapping(path = "/{customerId}")
-    public ResponseEntity<Customer> get(@PathVariable Long customerId) {
+    public Customer get(@PathVariable Long customerId) throws NotFoundException {
         Customer customer = service.read(customerId);
         if (customer == null) {
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
+            throw new NotFoundException();
         }
-        else {
-            return new ResponseEntity<>(customer, HttpStatus.OK);
-        }
+        
+        return customer;
     }
     
     @DeleteMapping(path = "/{customerId}")
-    public ResponseEntity<?> delete(@PathVariable Long customerId) {
-        service.delete(customerId);
-        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    public void delete(@PathVariable Long customerId) throws NotFoundException {
+        try{
+            service.delete(customerId);
+        }
+        catch (Exception e) {
+            throw new NotFoundException();
+        }
     }
-
     
     @PutMapping
-    public ResponseEntity<Customer> create(@RequestBody Customer customer) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public Customer create(@RequestBody Customer customer) throws BadRequestException {
         Customer created = service.create(customer);
-        if (created != null) {
-            return new ResponseEntity<>(created, HttpStatus.CREATED);
+        if (created == null) {
+            throw new BadRequestException();
         }
-        else {
-            return new ResponseEntity<>(customer, HttpStatus.BAD_REQUEST);
-        }
+        return created;
     }
 
     @PostMapping
-    public ResponseEntity<Customer> modify(@RequestBody Customer customer) {
+    public Customer modify(@RequestBody Customer customer) throws BadRequestException {
         Customer updated = service.update(customer);
-        if (updated != null) {
-            return new ResponseEntity<>(updated, HttpStatus.ACCEPTED);
+        if (updated == null) {
+            throw new BadRequestException();
         }
-        else {
-            return new ResponseEntity<>(customer, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        return updated;
     }
 }

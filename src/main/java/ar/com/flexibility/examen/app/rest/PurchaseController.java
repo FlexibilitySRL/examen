@@ -4,8 +4,6 @@ import ar.com.flexibility.examen.domain.model.Purchase;
 import ar.com.flexibility.examen.domain.service.PurchaseService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,22 +21,24 @@ public class PurchaseController {
     PurchaseService service;
     
     @GetMapping(path = "/{customerId}/{productId}")
-    public ResponseEntity<List<Purchase>> find(@PathVariable Long customerId, @PathVariable Long productId) {
-        return new ResponseEntity<>(service.listPurchases(customerId, productId), HttpStatus.OK);
+    public List<Purchase> find(@PathVariable Long customerId, @PathVariable Long productId) {
+        return service.listPurchases(customerId, productId);
     }
     
     @PutMapping(path = "/{customerId}/{productId}")
-    public ResponseEntity<Purchase> create(@PathVariable Long customerId, @PathVariable Long productId) {
-        return new ResponseEntity<>(service.createPurchase(customerId, productId), HttpStatus.CREATED);
+    public Purchase create(@PathVariable Long customerId, @PathVariable Long productId) throws BadRequestException {
+        try {
+            return service.createPurchase(customerId, productId);
+        }
+        catch (Exception e) {
+            throw new BadRequestException();
+        }
     }
     
     @PostMapping(path = "/approve/{purchaseId}")
-    public ResponseEntity<?> approve(@PathVariable Long purchaseId) {
-        if (service.approve(purchaseId)) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-        else {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+    public void approve(@PathVariable Long purchaseId) throws BadRequestException {
+        if (!service.approve(purchaseId)) {
+            throw new BadRequestException();
         }
     }
 }

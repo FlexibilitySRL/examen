@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -24,41 +25,40 @@ public class ProductController {
     ProductService service;
     
     @GetMapping(path = "/{productId}")
-    public ResponseEntity<Product> get(@PathVariable Long productId) {
+    public Product get(@PathVariable Long productId) throws NotFoundException {
         Product product = service.read(productId);
         if (product == null) {
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
+            throw new NotFoundException();
         }
-        else {
-            return new ResponseEntity<>(product, HttpStatus.OK);
-        }
+        return product;
     }
     
     @DeleteMapping(path = "/{productId}")
-    public ResponseEntity<?> delete(@PathVariable Long productId) {
-        service.delete(productId);
-        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    public void delete(@PathVariable Long productId) throws NotFoundException {
+        try {
+            service.delete(productId);
+        }
+        catch (Exception e) {
+            throw new NotFoundException();
+        }
     }
 
     @PutMapping
-    public ResponseEntity<Product> create(@RequestBody Product product) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public Product create(@RequestBody Product product) throws BadRequestException {
         Product created = service.create(product);
-        if (created != null) {
-            return new ResponseEntity<>(created, HttpStatus.CREATED);
+        if (created == null) {
+            throw new BadRequestException();
         }
-        else {
-            return new ResponseEntity<>(product, HttpStatus.BAD_REQUEST);
-        }
+        return created;
     }
 
     @PostMapping
-    public ResponseEntity<Product> modify(@RequestBody Product product) {
+    public Product modify(@RequestBody Product product) throws BadRequestException {
         Product updated = service.update(product);
-        if (updated != null) {
-            return new ResponseEntity<>(updated, HttpStatus.ACCEPTED);
+        if (updated == null) {
+            throw new BadRequestException();
         }
-        else {
-            return new ResponseEntity<>(product, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        return updated;
     }
 }
