@@ -34,7 +34,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductApi get(Long id) throws NotFoundException {
-        log.info("Retrieving product from repository with id: " + id);
+        log.info("Retrieving product from repository with id: {}", id);
         Product product = productRepository.findOne(id);
         if (product == null)
             throw new NotFoundException("Product with id " + id);
@@ -50,7 +50,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductApi update(Long id, ProductApi productApi) throws BadRequestException, NotFoundException {
-        log.info("Updating product with id " + id + " in product repository with product: " + productApi);
+        log.info("Updating product with id {} in product repository with product: {}", id, productApi);
         Product product = productRepository.findOne(id);
         if (product == null)
             throw new NotFoundException("Product with id " + id);
@@ -62,7 +62,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void remove(Long id) throws NotFoundException {
-        log.info("Deleting id " + id + " from product repository");
+        log.info("Deleting id {} from product repository", id);
         if (!productRepository.exists(id)) {
             throw new NotFoundException("Client id " + id + "doesn't exist");
         }

@@ -34,7 +34,7 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public ClientApi get(Long id) throws NotFoundException {
-        log.info("Retrieving client from repository with id: " + id);
+        log.info("Retrieving client from repository with id: {}", id);
         Client client = clientRepository.findOne(id);
         if (client == null)
             throw new NotFoundException("Client with id " + id);
@@ -43,14 +43,14 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public ClientApi create(ClientApi clientApi) throws BadRequestException {
-        log.info("Saving to client repository client: " + clientApi);
+        log.info("Saving to client repository client: {}", clientApi);
         Client client = clientRepository.save(apiMapper.toClient(clientApi));
         return entityMapper.toClientApi(client);
     }
 
     @Override
     public ClientApi update(Long id, ClientApi clientApi) throws BadRequestException, NotFoundException {
-        log.info("Updating client with id " + id + " in client repository with client: " + clientApi);
+        log.info("Updating client with id {} in client repository with client: {}", id, clientApi);
         Client client = clientRepository.findOne(id);
         if (client == null)
             throw new NotFoundException("Client with id " + id);
@@ -60,9 +60,9 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public void remove(Long id) throws NotFoundException {
-        log.info("Deleting id " + id + " from client repository");
+        log.info("Deleting id {} from client repository", id);
         if (!clientRepository.exists(id)) {
-            throw new NotFoundException("Client id " + id + "doesn't exist");
+            throw new NotFoundException("Client id " + id + " doesn't exist");
         }
         clientRepository.delete(id);
     }

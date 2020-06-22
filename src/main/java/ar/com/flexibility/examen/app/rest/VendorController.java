@@ -28,31 +28,31 @@ public class VendorController {
 
     @GetMapping()
     public ResponseEntity<List<VendorApi>> listVendors() {
-        log.info("Request to GET all the vendors");
+        log.trace("Request to GET all the vendors");
         return ResponseEntity.status(HttpStatus.OK).body(vendorService.all());
     }
 
     @GetMapping(value = "/{vendorId}")
     public ResponseEntity<VendorApi> getVendor(@PathVariable Long vendorId) {
-        log.info("Request to GET vendorId: " + vendorId);
+        log.trace("Request to GET vendorId: {}", vendorId);
         return ResponseEntity.status(HttpStatus.OK).body(vendorService.get(vendorId));
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<VendorApi> createVendor(@Valid @RequestBody VendorApi vendorApi) {
-        log.info("Request to POST new vendor: " + vendorApi);
+        log.trace("Request to POST new vendor: {}", vendorApi);
         return ResponseEntity.status(HttpStatus.CREATED).body(vendorService.create(vendorApi));
     }
 
     @PutMapping(value = "/{vendorId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<VendorApi> updateVendors(@PathVariable Long vendorId, @Valid @RequestBody VendorApi vendorApi) {
-        log.info("Request to PUT vendor with vendorId" + vendorId + "  with vendor: " + vendorApi);
+        log.trace("Request to PUT vendor with vendorId {} with vendor: {}", vendorId, vendorApi);
         return ResponseEntity.status(HttpStatus.OK).body(vendorService.update(vendorId, vendorApi));
     }
 
     @DeleteMapping(value = "/{vendorId}")
     public ResponseEntity<?> removeVendors(@PathVariable Long vendorId) {
-        log.info("Request to DELETE vendor with vendorId" + vendorId);
+        log.trace("Request to DELETE vendor with vendorId {}", vendorId);
         vendorService.remove(vendorId);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
@@ -60,7 +60,7 @@ public class VendorController {
     @PostMapping(value = "/{vendorId}/transactions", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<TransactionApi> createTransaction(@PathVariable Long vendorId,
                                                             @Valid @RequestBody TransactionApi transactionApi) {
-        log.info("Request to POST a transaction for vendor vendorId " + vendorId + " with transaction details: " + transactionApi);
+        log.trace("Request to POST a transaction for vendor vendorId {} with transaction details: {}", vendorId, transactionApi);
         if (!transactionApi.getStatus().equals(Status.PENDING))
             throw new BadRequestException("The only possible status a new transaction is PENDING");
         return ResponseEntity.status(HttpStatus.CREATED).body(transactionService.create(vendorId, transactionApi));
@@ -68,14 +68,14 @@ public class VendorController {
 
     @GetMapping(value = "/{vendorId}/transactions")
     public ResponseEntity<List<TransactionApi>> allTransactionsForVendorId(@PathVariable Long vendorId) {
-        log.info("Request to GET all transaction for vendor vendorId: " + vendorId);
+        log.trace("Request to GET all transaction for vendor vendorId: {}", vendorId);
         return ResponseEntity.status(HttpStatus.OK).body(transactionService.allByVendor(vendorId));
     }
 
     @PutMapping(value = "/{vendorId}/transactions", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<TransactionApi> updateTransaction(@PathVariable Long vendorId,
                                                             @Valid @RequestBody TransactionApi transactionApi) {
-        log.info("Request to PUT a transaction with vendorId: " + vendorId + ", with transaction " + transactionApi);
+        log.trace("Request to PUT a transaction with vendorId: {}, with transaction {}", vendorId, transactionApi);
         if (transactionApi.getStatus().equals(Status.PENDING))
             throw new BadRequestException("The only possible status for a PENDING transaction is APPROVED or DENIED");
         return ResponseEntity.status(HttpStatus.OK).body(transactionService.updateStatus(vendorId, transactionApi));

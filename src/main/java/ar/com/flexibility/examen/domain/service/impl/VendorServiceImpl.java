@@ -33,23 +33,23 @@ public class VendorServiceImpl implements VendorService {
 
     @Override
     public VendorApi get(Long id) throws NotFoundException {
-        log.info("Retrieving vendor from repository with id: " + id);
+        log.info("Retrieving vendor from repository with id: {}", id);
         Vendor vendor = vendorRepository.findOne(id);
-        if(vendor == null)
+        if (vendor == null)
             throw new NotFoundException("Vendor with id " + id);
         return entityMapper.toVendorApi(vendor);
     }
 
     @Override
     public VendorApi create(VendorApi vendorApi) throws BadRequestException {
-        log.info("Saving to vendor repository vendor: " + vendorApi);
+        log.info("Saving to vendor repository vendor: {}", vendorApi);
         Vendor vendor = vendorRepository.save(apiMapper.toVendor(vendorApi));
         return entityMapper.toVendorApi(vendor);
     }
 
     @Override
     public VendorApi update(Long id, VendorApi vendorApi) throws BadRequestException, NotFoundException {
-        log.info("Updating vendor with id " + id + " in vendor repository with vendor: " + vendorApi);
+        log.info("Updating vendor with id {} in vendor repository with vendor: {}", id, vendorApi);
         Vendor vendor = vendorRepository.findOne(id);
         if (vendor == null)
             throw new NotFoundException("Vendor with id " + id);
@@ -59,7 +59,7 @@ public class VendorServiceImpl implements VendorService {
 
     @Override
     public void remove(Long id) throws NotFoundException {
-        log.info("Deleting id " + id + " from vendor repository");
+        log.info("Deleting id {} from vendor repository", id);
         if (!vendorRepository.exists(id)) {
             throw new NotFoundException("Vendor id " + id + "doesn't exist");
         }

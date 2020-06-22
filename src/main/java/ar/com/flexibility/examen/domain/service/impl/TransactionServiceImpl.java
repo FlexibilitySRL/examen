@@ -39,19 +39,19 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public TransactionApi create(Long vendorId, TransactionApi transactionApi) {
-        log.info("Creating a new transaction for vendorId " + vendorId + " with data: " + transactionApi);
+        log.info("Creating a new transaction for vendorId {} with data: {}", vendorId, transactionApi);
         Transaction transaction = apiMapper.toTransaction(transactionApi);
 
         Vendor vendor = vendorRepository.findOne(vendorId);
-        if(vendor == null)
+        if (vendor == null)
             throw new NotFoundException("Vendor with id " + vendorId);
 
         List<Product> product = productRepository.findAll(transactionApi.getProductId());
-        if(product.isEmpty())
+        if (product.isEmpty())
             throw new NotFoundException("Products for ids " + transactionApi.getProductId());
 
         Client client = clientRepository.findOne(transactionApi.getClientId());
-        if(client == null)
+        if (client == null)
             throw new NotFoundException("Product with id " + transactionApi.getClientId());
 
         transaction.setVendor(vendor);
@@ -63,30 +63,30 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public List<TransactionApi> allByVendor(Long vendorId) {
-        log.info("Retrieving all transactions from transaction repository for vendor id: " + vendorId);
-        if(vendorRepository.findOne(vendorId) == null)
+        log.info("Retrieving all transactions from transaction repository for vendor id: {}", vendorId);
+        if (vendorRepository.findOne(vendorId) == null)
             throw new NotFoundException("Vendor with id " + vendorId);
         return entityMapper.toTransactionsApi(transactionRepository.findByVendorId(vendorId));
     }
 
     @Override
     public List<TransactionApi> allByClient(Long clientId) {
-        log.info("Retrieving all transactions from transaction repository for client id: " + clientId);
-        if(clientRepository.findOne(clientId) == null)
+        log.info("Retrieving all transactions from transaction repository for client id: {}", clientId);
+        if (clientRepository.findOne(clientId) == null)
             throw new NotFoundException("Client with id " + clientId);
         return entityMapper.toTransactionsApi(transactionRepository.findByClientId(clientId));
     }
 
     @Override
     public TransactionApi updateStatus(Long vendorId, TransactionApi transactionApi) {
-        log.info("Updating transaction for vendorId " + vendorId + " with data " + transactionApi);
+        log.info("Updating transaction for vendorId {} with data {}", vendorId, transactionApi);
         Vendor vendor = vendorRepository.findOne(vendorId);
-        if(vendor == null)
+        if (vendor == null)
             throw new NotFoundException("Vendor with id " + vendorId);
         Transaction transaction = transactionRepository.findOne(transactionApi.getId());
-        if(transaction == null)
+        if (transaction == null)
             throw new NotFoundException("Transaction with id " + transactionApi.getId());
-        if(!transaction.getVendor().getId().equals(vendorId))
+        if (!transaction.getVendor().getId().equals(vendorId))
             throw new BadRequestException("Transaction doesn't belong to vendor");
         transaction.setStatus(transactionApi.getStatus());
         return entityMapper.toTransactionApi(transactionRepository.save(transaction));

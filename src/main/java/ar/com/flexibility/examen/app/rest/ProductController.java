@@ -22,31 +22,31 @@ public class ProductController {
 
     @GetMapping(value = "/{productId}")
     public ResponseEntity<ProductApi> getProduct(@PathVariable Long productId) {
-        log.info("Request to GET productId: " + productId);
+        log.trace("Request to GET productId: {}", productId);
         return ResponseEntity.status(HttpStatus.OK).body(productService.get(productId));
     }
 
     @GetMapping()
     public ResponseEntity<List<ProductApi>> listProducts() {
-        log.info("Request to GET all the products");
+        log.trace("Request to GET all the products");
         return ResponseEntity.status(HttpStatus.OK).body(productService.all());
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ProductApi> createProduct(@Valid @RequestBody ProductApi productApi) {
-        log.info("Request to POST new product: " + productApi);
+        log.trace("Request to POST new product: {}", productApi);
         return ResponseEntity.status(HttpStatus.CREATED).body(productService.create(productApi));
     }
 
     @PutMapping(value = "/{productId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ProductApi> updateProduct(@PathVariable Long productId, @Valid @RequestBody ProductApi productApi) {
-        log.info("Request to PUT with productId" + productId + "  with product: " + productApi);
+        log.trace("Request to PUT with productId {} with product: {} ", productId, productApi);
         return ResponseEntity.status(HttpStatus.OK).body(productService.update(productId, productApi));
     }
 
     @DeleteMapping(value = "/{productId}")
     public ResponseEntity<?> removeProduct(@PathVariable Long productId) {
-        log.info("Request to DELETE with productId" + productId);
+        log.trace("Request to DELETE with productId {}", productId);
         productService.remove(productId);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
