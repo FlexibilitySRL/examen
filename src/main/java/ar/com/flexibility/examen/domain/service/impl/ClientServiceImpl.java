@@ -27,14 +27,14 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public List<ClientApi> all() {
-        log.info("Retrieving all clients from client repository.");
+        log.trace("Retrieving all clients from client repository.");
         List<Client> clients = clientRepository.findAll();
         return entityMapper.toClientsApi(clients);
     }
 
     @Override
     public ClientApi get(Long id) throws NotFoundException {
-        log.info("Retrieving client from repository with id: {}", id);
+        log.trace("Retrieving client from repository with id: {}", id);
         Client client = clientRepository.findOne(id);
         if (client == null)
             throw new NotFoundException("Client with id " + id);
@@ -43,14 +43,14 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public ClientApi create(ClientApi clientApi) throws BadRequestException {
-        log.info("Saving to client repository client: {}", clientApi);
+        log.trace("Saving to client repository client: {}", clientApi);
         Client client = clientRepository.save(apiMapper.toClient(clientApi));
         return entityMapper.toClientApi(client);
     }
 
     @Override
     public ClientApi update(Long id, ClientApi clientApi) throws BadRequestException, NotFoundException {
-        log.info("Updating client with id {} in client repository with client: {}", id, clientApi);
+        log.trace("Updating client with id {} in client repository with client: {}", id, clientApi);
         Client client = clientRepository.findOne(id);
         if (client == null)
             throw new NotFoundException("Client with id " + id);
@@ -60,7 +60,7 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public void remove(Long id) throws NotFoundException {
-        log.info("Deleting id {} from client repository", id);
+        log.trace("Deleting id {} from client repository", id);
         if (!clientRepository.exists(id)) {
             throw new NotFoundException("Client id " + id + " doesn't exist");
         }

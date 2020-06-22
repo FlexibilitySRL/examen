@@ -39,7 +39,7 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public TransactionApi create(Long vendorId, TransactionApi transactionApi) {
-        log.info("Creating a new transaction for vendorId {} with data: {}", vendorId, transactionApi);
+        log.trace("Creating a new transaction for vendorId {} with data: {}", vendorId, transactionApi);
         Transaction transaction = apiMapper.toTransaction(transactionApi);
 
         Vendor vendor = vendorRepository.findOne(vendorId);
@@ -63,7 +63,7 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public List<TransactionApi> allByVendor(Long vendorId) {
-        log.info("Retrieving all transactions from transaction repository for vendor id: {}", vendorId);
+        log.trace("Retrieving all transactions from transaction repository for vendor id: {}", vendorId);
         if (vendorRepository.findOne(vendorId) == null)
             throw new NotFoundException("Vendor with id " + vendorId);
         return entityMapper.toTransactionsApi(transactionRepository.findByVendorId(vendorId));
@@ -71,7 +71,7 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public List<TransactionApi> allByClient(Long clientId) {
-        log.info("Retrieving all transactions from transaction repository for client id: {}", clientId);
+        log.trace("Retrieving all transactions from transaction repository for client id: {}", clientId);
         if (clientRepository.findOne(clientId) == null)
             throw new NotFoundException("Client with id " + clientId);
         return entityMapper.toTransactionsApi(transactionRepository.findByClientId(clientId));
@@ -79,7 +79,7 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public TransactionApi updateStatus(Long vendorId, TransactionApi transactionApi) {
-        log.info("Updating transaction for vendorId {} with data {}", vendorId, transactionApi);
+        log.trace("Updating transaction for vendorId {} with data {}", vendorId, transactionApi);
         Vendor vendor = vendorRepository.findOne(vendorId);
         if (vendor == null)
             throw new NotFoundException("Vendor with id " + vendorId);

@@ -26,14 +26,14 @@ public class VendorServiceImpl implements VendorService {
 
     @Override
     public List<VendorApi> all() {
-        log.info("Retrieving all vendors from vendor repository.");
+        log.trace("Retrieving all vendors from vendor repository.");
         List<Vendor> vendors = vendorRepository.findAll();
         return entityMapper.toVendorsApi(vendors);
     }
 
     @Override
     public VendorApi get(Long id) throws NotFoundException {
-        log.info("Retrieving vendor from repository with id: {}", id);
+        log.trace("Retrieving vendor from repository with id: {}", id);
         Vendor vendor = vendorRepository.findOne(id);
         if (vendor == null)
             throw new NotFoundException("Vendor with id " + id);
@@ -42,14 +42,14 @@ public class VendorServiceImpl implements VendorService {
 
     @Override
     public VendorApi create(VendorApi vendorApi) throws BadRequestException {
-        log.info("Saving to vendor repository vendor: {}", vendorApi);
+        log.trace("Saving to vendor repository vendor: {}", vendorApi);
         Vendor vendor = vendorRepository.save(apiMapper.toVendor(vendorApi));
         return entityMapper.toVendorApi(vendor);
     }
 
     @Override
     public VendorApi update(Long id, VendorApi vendorApi) throws BadRequestException, NotFoundException {
-        log.info("Updating vendor with id {} in vendor repository with vendor: {}", id, vendorApi);
+        log.trace("Updating vendor with id {} in vendor repository with vendor: {}", id, vendorApi);
         Vendor vendor = vendorRepository.findOne(id);
         if (vendor == null)
             throw new NotFoundException("Vendor with id " + id);
@@ -59,7 +59,7 @@ public class VendorServiceImpl implements VendorService {
 
     @Override
     public void remove(Long id) throws NotFoundException {
-        log.info("Deleting id {} from vendor repository", id);
+        log.trace("Deleting id {} from vendor repository", id);
         if (!vendorRepository.exists(id)) {
             throw new NotFoundException("Vendor id " + id + "doesn't exist");
         }
