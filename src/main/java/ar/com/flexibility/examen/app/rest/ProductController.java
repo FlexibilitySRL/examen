@@ -41,7 +41,7 @@ public class ProductController {
      * {@code POST  /create} : Create a new customer.
      *
      * @param product the product to create.
-     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new productDTO,
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new product,
      * or with status {@code 400 (Bad Request)} if the product has already an ID.
      */
     @PostMapping("/create")
@@ -114,9 +114,9 @@ public class ProductController {
     }
     
     /**
-     * Get all the products.
+     * {@code GET  /products} : get all products.
      *
-     * @return the list of entities.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of customer in body.
      */
     @GetMapping("")
     @Transactional(readOnly = true)

@@ -1,14 +1,17 @@
 package ar.com.flexibility.examen.domain.model;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+@Entity
 public class Address {
 
 	@Id
@@ -27,7 +30,7 @@ public class Address {
 	@NotBlank(message = "direction cannot be null")
 	private String direction;
 	
-	@NotBlank(message = "number cannot be null")
+	@NotNull(message = "number cannot be null")
 	private Integer number;
 
 	@ManyToOne
@@ -41,6 +44,9 @@ public class Address {
 		this.city = city;
 		this.direction = direction;
 		this.number = number;
+	}
+	
+	public Address() {
 	}
 
 	public Long getId() {
