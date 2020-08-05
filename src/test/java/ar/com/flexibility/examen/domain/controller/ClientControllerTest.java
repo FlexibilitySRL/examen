@@ -16,14 +16,14 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import ar.com.flexibility.examen.app.api.ProductApi;
+import ar.com.flexibility.examen.app.api.ClientApi;
 import ar.com.flexibility.examen.config.MessagesProps;
 
 @RunWith(SpringRunner.class)
 @AutoConfigureMockMvc
 @SpringBootTest
 @ActiveProfiles ("test")
-public class ProductControllerTest {
+public class ClientControllerTest {
 	
 	@Autowired
 	private MessagesProps messages;
@@ -39,7 +39,7 @@ public class ProductControllerTest {
         
         // Action
         mvc.perform( MockMvcRequestBuilders
-            .get("/product")
+            .get("/client")
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON))
     		// Assert
@@ -47,62 +47,62 @@ public class ProductControllerTest {
     }
     
     @Test
-    public void getProductNotFound() throws Exception
+    public void getClientNotFound() throws Exception
     {
     	// Arrange
-    	String code = "LEN010";
+    	String identifier = "123470";
         
         // Action
         mvc.perform( MockMvcRequestBuilders
-            .get("/product/{code}", code)
+            .get("/client/{identifier}", identifier)
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON))
     		// Assert
-    		.andExpect(MockMvcResultMatchers.jsonPath("$").value(this.messages.getProductNotFound()))
+    		.andExpect(MockMvcResultMatchers.jsonPath("$").value(this.messages.getClientNotFound()))
             .andExpect(status().isInternalServerError());
     }
     
     @Test
-    public void getProductSuccess() throws Exception
+    public void getClientSuccess() throws Exception
     {
     	// Arrange
-    	String code = "DELL01";
+    	String identifier = "123456";
         
         // Action
         mvc.perform( MockMvcRequestBuilders
-            .get("/product/{code}", code)
+            .get("/client/{identifier}", identifier)
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON))
     		// Assert
-        	.andExpect(MockMvcResultMatchers.jsonPath("$.code").value(code))
+        	.andExpect(MockMvcResultMatchers.jsonPath("$.identifier").value(identifier))
             .andExpect(status().isOk());
     }
     
     @Test
-    public void deleteNotFoundProduct() throws Exception
+    public void deleteNotFoundClient() throws Exception
     {
     	// Arrange
-    	String code = "LEN010";
+    	String identifier = "123480";
         
         // Action
         mvc.perform( MockMvcRequestBuilders
-            .delete("/product/{code}", code)
+            .delete("/client/{identifier}", identifier)
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON))
     		// Assert
-    		.andExpect(MockMvcResultMatchers.jsonPath("$").value(this.messages.getProductNotFound()))
+    		.andExpect(MockMvcResultMatchers.jsonPath("$").value(this.messages.getClientNotFound()))
             .andExpect(status().isInternalServerError());
     }
     
     @Test
-    public void deleteProduct() throws Exception
+    public void deleteClient() throws Exception
     {
     	// Arrange
-    	String code = "TOSH02";
+    	String identifier = "123460";
         
         // Action
         mvc.perform( MockMvcRequestBuilders
-            .delete("/product/{code}", code)
+            .delete("/client/{identifier}", identifier)
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON))
     		// Assert
@@ -111,32 +111,32 @@ public class ProductControllerTest {
     }
     
     @Test
-    public void saveProductCodeExists() throws Exception
+    public void saveClientIdentifierExists() throws Exception
     {
     	// Arrange
-    	String code = "DELL01";
+    	String identifier = "123456";
         
         // Action
         mvc.perform( MockMvcRequestBuilders
-            .post("/product")
-            .content(objectMapper.writeValueAsString(this.buildRequest(code)))
+            .post("/client")
+            .content(objectMapper.writeValueAsString(this.buildRequest(identifier)))
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON))
     		// Assert
-    		.andExpect(MockMvcResultMatchers.jsonPath("$").value(this.messages.getProductDuplicated()))
+    		.andExpect(MockMvcResultMatchers.jsonPath("$").value(this.messages.getClientDuplicated()))
             .andExpect(status().isInternalServerError());
     }
     
     @Test
-    public void saveProductSuccess() throws Exception
+    public void saveClientSuccess() throws Exception
     {
     	// Arrange
-    	String code = "LEN019";
+    	String identifier = "123499";
         
         // Action
         mvc.perform( MockMvcRequestBuilders
-            .post("/product")
-            .content(objectMapper.writeValueAsString(this.buildRequest(code)))
+            .post("/client")
+            .content(objectMapper.writeValueAsString(this.buildRequest(identifier)))
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON))
     		// Assert
@@ -145,34 +145,34 @@ public class ProductControllerTest {
     }
     
     @Test
-    public void updateProductNewCodeExists() throws Exception
+    public void updateClientNewIdentifierExists() throws Exception
     {
     	// Arrange
-    	String code = "LEN01";
-    	String newCode = "MAC01";
+    	String identifier = "123456";
+    	String newIdentifier = "123457";
         
         // Action
         mvc.perform( MockMvcRequestBuilders
-            .put("/product/{code}", code)
-            .content(objectMapper.writeValueAsString(this.buildRequest(newCode)))
+            .put("/client/{identifier}", identifier)
+            .content(objectMapper.writeValueAsString(this.buildRequest(newIdentifier)))
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON))
     		// Assert
-        	.andExpect(MockMvcResultMatchers.jsonPath("$").value(this.messages.getProductDuplicated()))
+        	.andExpect(MockMvcResultMatchers.jsonPath("$").value(this.messages.getClientDuplicated()))
             .andExpect(status().isInternalServerError());
     }
     
     @Test
-    public void updateProductSuccess() throws Exception
+    public void updateClientSuccess() throws Exception
     {
     	// Arrange
-    	String code = "LEN01";
-    	String newCode = "MAC019";
+    	String identifier = "123458";
+    	String newIdentifier = "123461";
         
         // Action
         mvc.perform( MockMvcRequestBuilders
-            .put("/product/{code}", code)
-            .content(objectMapper.writeValueAsString(this.buildRequest(newCode)))
+            .put("/client/{identifier}", identifier)
+            .content(objectMapper.writeValueAsString(this.buildRequest(newIdentifier)))
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON))
     		// Assert
@@ -180,12 +180,11 @@ public class ProductControllerTest {
             .andExpect(status().isOk());
     }
     
-    private ProductApi buildRequest (String code) {
-    	ProductApi request = new ProductApi();
-    	request.setAmount(10);
-    	request.setCode(code);
-    	request.setName("New Product");
-    	request.setPrice(47.50);
+    private ClientApi buildRequest (String identifier) {
+    	ClientApi request = new ClientApi();
+    	request.setIdentifier(identifier);
+    	request.setName("New Client");
+    	request.setSurname("New Surname");
     	
     	return request;
     }

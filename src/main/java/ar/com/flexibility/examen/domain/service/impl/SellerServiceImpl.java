@@ -52,7 +52,7 @@ public class SellerServiceImpl implements SellerService {
 			logger.info("delete seller");
 			if (this.sellerRepository.deleteByIdentifier(identifier) != 1) {
 				logger.warn("It was not possible to removes the seller");
-				throw new ServiceException(this.messages.getSellerNotFound());
+				throw new ServiceException(this.messages.getSellerSalesError());
 			}
 			logger.info("delete seller success");
 		} catch (ServiceException e) {
@@ -127,7 +127,7 @@ public class SellerServiceImpl implements SellerService {
 			// Checks if a seller already exists with the identifier
 			if (existsSeller(identifier)) {
 				logger.warn("One seller already exists with the identifier");
-				throw new ServiceException(this.messages.getClientDuplicated());
+				throw new ServiceException(this.messages.getSellerDuplicated());
 			}
 
 			Seller entity = new Seller();
@@ -161,7 +161,7 @@ public class SellerServiceImpl implements SellerService {
 			if (!Strings.isNullOrEmpty(newIdentifier)) {
 				if (!newIdentifier.equals(identifier) && existsSeller(newIdentifier)) {
 					logger.warn("One seller already exists with the new identifier");
-					throw new ServiceException(this.messages.getClientDuplicated());
+					throw new ServiceException(this.messages.getSellerDuplicated());
 				}
 				logger.info("update seller's identifier");
 				entity.setIdentifier(newIdentifier);

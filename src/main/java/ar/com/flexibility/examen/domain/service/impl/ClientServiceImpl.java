@@ -52,7 +52,7 @@ public class ClientServiceImpl implements ClientService {
 			logger.info("delete client");
 			if (this.clientRepository.deleteByIdentifier(identifier) != 1) {
 				logger.warn("It was not possible to removes the client");
-				throw new ServiceException(this.messages.getClientNotFound());
+				throw new ServiceException(this.messages.getClientPurchasesError());
 			}
 			logger.info("delete client success");
 		} catch (ServiceException e) {

@@ -55,7 +55,7 @@ public class ProductServiceImpl implements ProductService {
 			logger.info("delete product");
 			if (this.productRepository.deleteByCode(code) != 1) {
 				logger.warn("It was not possible to removes the product");
-				throw new ServiceException(this.messages.getProductNotFound());
+				throw new ServiceException(this.messages.getProductSalesError());
 			}
 			logger.info("delete product success");
 		} catch (ServiceException e) {

@@ -44,7 +44,7 @@
         <guava.version>19.0</guava.version>
 
         <!-- JaCoCo props -->
-        <jacoco.cov.percent>0.40</jacoco.cov.percent>
+        <jacoco.cov.percent>0.70</jacoco.cov.percent>
         <jacoco.file.data>${project.build.directory}/jacoco.exec</jacoco.file.data>
         <jacoco.out.dir>${project.reporting.outputDirectory}/jacoco-ut</jacoco.out.dir>
 
@@ -157,6 +157,7 @@
                     <excludes>
 
                         <!-- Files -->
+                        <exclude>**/app/rest/CustomController*</exclude>
                         <exclude>**/examen/NopPreMain*</exclude>
                         <exclude>**/examen/Application*</exclude>
 
@@ -165,7 +166,6 @@
                         <exclude>**/config/*</exclude>
                         <exclude>**/domain/enu/*</exclude>
                         <exclude>**/domain/model/*</exclude>
-                        <exclude>**/domain/repository/*</exclude>
 
                     </excludes>
                 </configuration>
