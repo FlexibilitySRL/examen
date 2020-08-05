@@ -150,6 +150,7 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.7.7.201606060606</version>
 
                 <configuration>
                     <!-- Excludes files/packages -->
@@ -160,10 +161,11 @@
                         <exclude>**/examen/Application*</exclude>
 
                         <!-- Packages -->
-                        <exclude>**/configuration/*</exclude>
-                        <exclude>**/domain/*</exclude>
-                        <exclude>**/exceptions/*</exclude>
-                        <exclude>**/utils/**</exclude>
+                        <exclude>**/app/exception/*</exclude>
+                        <exclude>**/config/*</exclude>
+                        <exclude>**/domain/enu/*</exclude>
+                        <exclude>**/domain/model/*</exclude>
+                        <exclude>**/domain/repository/*</exclude>
 
                     </excludes>
                 </configuration>

@@ -30,6 +30,11 @@ import org.springframework.stereotype.Service;
 public class SaleServiceImpl implements SaleService {
 
 	// ---------------
+	// Constants
+	// ---------------
+	private static final String EXCEPTION = "SaleServiceImpl exception: %s";
+
+	// ---------------
 	// Logger
 	// ---------------
 	private final Logger logger = LogManager.getLogger(SaleServiceImpl.class);
@@ -57,23 +62,23 @@ public class SaleServiceImpl implements SaleService {
 	public void approveSale(String code) throws ServiceException {
 		try {
 			logger.info("approve sale");
-			
+
 			Sale entity = this.getEntity(code);
-			
+
 			if (entity.getStatus() == SaleStatus.APROBADO) {
 				logger.warn("Sale is already approved");
 				throw new ServiceException(this.messages.getSaleAlreadyApproved());
 			}
-			
+
 			entity.setStatus(SaleStatus.APROBADO);
 			entity.setDateApproved(new Date());
-			
+
 			this.saleRepository.save(entity);
 			logger.info("approve sale success");
 		} catch (ServiceException e) {
 			throw e;
 		} catch (Exception e) {
-			logger.error(String.format(this.constants.getExceptionError(), e.getMessage()));
+			logger.error(String.format(EXCEPTION, e.getMessage()));
 			throw new ServiceException(this.messages.getServerError());
 		}
 	}
@@ -94,7 +99,7 @@ public class SaleServiceImpl implements SaleService {
 		} catch (ServiceException e) {
 			throw e;
 		} catch (Exception e) {
-			logger.error(String.format(this.constants.getExceptionError(), e.getMessage()));
+			logger.error(String.format(EXCEPTION, e.getMessage()));
 			throw new ServiceException(this.messages.getServerError());
 		}
 	}
@@ -110,7 +115,7 @@ public class SaleServiceImpl implements SaleService {
 		} catch (ServiceException e) {
 			throw e;
 		} catch (Exception e) {
-			logger.error(String.format(this.constants.getExceptionError(), e.getMessage()));
+			logger.error(String.format(EXCEPTION, e.getMessage()));
 			throw new ServiceException(this.messages.getServerError());
 		}
 	}
@@ -121,16 +126,17 @@ public class SaleServiceImpl implements SaleService {
 			logger.info("list of sales by status");
 
 			SaleStatus saleStatus = SaleStatus.valueOf(status);
-			
+
 			List<SaleApiResponse> response = new ArrayList<>();
 
 			List<Sale> data = this.saleRepository.findByStatus(saleStatus);
-			data.stream().forEach(e -> response.add(this.mergeResponse(e)));
+			if (Objects.nonNull(data))
+				data.stream().forEach(e -> response.add(this.mergeResponse(e)));
 
 			logger.info("list of sales by status success");
 			return response;
 		} catch (Exception e) {
-			logger.error(String.format(this.constants.getExceptionError(), e.getMessage()));
+			logger.error(String.format(EXCEPTION, e.getMessage()));
 			throw new ServiceException(this.messages.getServerError());
 		}
 	}
@@ -139,16 +145,17 @@ public class SaleServiceImpl implements SaleService {
 	public List<SaleApiResponse> list() throws ServiceException {
 		try {
 			logger.info("list of sales");
-			
+
 			List<SaleApiResponse> response = new ArrayList<>();
 
 			List<Sale> data = this.saleRepository.findAll();
-			data.stream().forEach(e -> response.add(this.mergeResponse(e)));
+			if (Objects.nonNull(data))
+				data.stream().forEach(e -> response.add(this.mergeResponse(e)));
 
 			logger.info("list of sales success");
 			return response;
 		} catch (Exception e) {
-			logger.error(String.format(this.constants.getExceptionError(), e.getMessage()));
+			logger.error(String.format(EXCEPTION, e.getMessage()));
 			throw new ServiceException(this.messages.getServerError());
 		}
 	}
@@ -159,22 +166,23 @@ public class SaleServiceImpl implements SaleService {
 
 		try {
 			logger.info("new sale");
-			
+
 			if (existsSale(code)) {
 				logger.warn("One sale already exists with the code");
 				throw new ServiceException(this.messages.getSaleDuplicated());
 			}
-
-			Client client = this.clientService.getEntity(clientIdentifier);
-			Seller seller = this.sellerService.getEntity(sellerIdentifier);
-			Product product = this.productService.getEntity(productCode);
 			
+			Product product = this.productService.getEntity(productCode);
+
 			int totalAvailable = product.getAmount() - productAmount;
 
 			if (totalAvailable < this.constants.getProductMinAmount()) {
 				logger.warn("Product amount not available");
 				throw new ServiceException(this.messages.getSaleProductAmountError());
 			}
+
+			Client client = this.clientService.getEntity(clientIdentifier);
+			Seller seller = this.sellerService.getEntity(sellerIdentifier);
 
 			Sale entity = new Sale();
 			entity.setAmount(productAmount);
@@ -194,17 +202,17 @@ public class SaleServiceImpl implements SaleService {
 		} catch (ServiceException e) {
 			throw e;
 		} catch (Exception e) {
-			logger.error(String.format(this.constants.getExceptionError(), e.getMessage()));
+			logger.error(String.format(EXCEPTION, e.getMessage()));
 			throw new ServiceException(this.messages.getServerError());
 		}
 	}
 
-	private boolean existsSale (String code) {
+	private boolean existsSale(String code) {
 		return Objects.nonNull(this.saleRepository.getFirstByCode(code));
 	}
-	
+
 	private SaleApiResponse mergeResponse(Sale entity) {
 		return SaleResponseBuilder.mergeResponse(entity);
 	}
-	
+
 }

@@ -24,6 +24,11 @@ import com.google.common.base.Strings;
 
 @Service("productService")
 public class ProductServiceImpl implements ProductService {
+	
+	// ---------------
+	// Constants
+	// ---------------
+	private static final String EXCEPTION = "ProductServiceImpl exception: %s";
 
 	// ---------------
 	// Logger
@@ -56,7 +61,7 @@ public class ProductServiceImpl implements ProductService {
 		} catch (ServiceException e) {
 			throw e;
 		} catch (Exception e) {
-			logger.error(String.format(this.constants.getExceptionError(), e.getMessage()));
+			logger.error(String.format(EXCEPTION, e.getMessage()));
 			throw new ServiceException(this.messages.getServerError());
 		}
 	}
@@ -77,7 +82,7 @@ public class ProductServiceImpl implements ProductService {
 		} catch (ServiceException e) { 
 			throw e;
 		} catch (Exception e) {
-			logger.error(String.format(this.constants.getExceptionError(), e.getMessage()));
+			logger.error(String.format(EXCEPTION, e.getMessage()));
 			throw new ServiceException(this.messages.getServerError());
 		}
 	}
@@ -93,7 +98,7 @@ public class ProductServiceImpl implements ProductService {
 		} catch (ServiceException e) { 
 			throw e;
 		} catch (Exception e) {
-			logger.error(String.format(this.constants.getExceptionError(), e.getMessage()));
+			logger.error(String.format(EXCEPTION, e.getMessage()));
 			throw new ServiceException(this.messages.getServerError());
 		}
 	}
@@ -106,12 +111,13 @@ public class ProductServiceImpl implements ProductService {
 			List<ProductApiResponse> response = new ArrayList<>();
 
 			List<Product> data = this.productRepository.findAll();
-			data.stream().forEach(e -> response.add(this.mergeResponse(e)));
+			if (Objects.nonNull(data))
+				data.stream().forEach(e -> response.add(this.mergeResponse(e)));
 
 			logger.info("list of products success");
 			return response;
 		} catch (Exception e) {
-			logger.error(String.format(this.constants.getExceptionError(), e.getMessage()));
+			logger.error(String.format(EXCEPTION, e.getMessage()));
 			throw new ServiceException(this.messages.getServerError());
 		}
 	}
@@ -141,7 +147,7 @@ public class ProductServiceImpl implements ProductService {
 		} catch (ServiceException e) {
 			throw e;
 		} catch (Exception e) {
-			logger.error(String.format(this.constants.getExceptionError(), e.getMessage()));
+			logger.error(String.format(EXCEPTION, e.getMessage()));
 			throw new ServiceException(this.messages.getServerError());
 		}
 	}
@@ -181,7 +187,7 @@ public class ProductServiceImpl implements ProductService {
 		} catch (ServiceException e) {
 			throw e;
 		} catch (Exception e) {
-			logger.error(String.format(this.constants.getExceptionError(), e.getMessage()));
+			logger.error(String.format(EXCEPTION, e.getMessage()));
 			throw new ServiceException(this.messages.getServerError());
 		}
 	}
@@ -199,7 +205,7 @@ public class ProductServiceImpl implements ProductService {
 		} catch (ServiceException e) {
 			throw e;
 		} catch (Exception e) {
-			logger.error(String.format(this.constants.getExceptionError(), e.getMessage()));
+			logger.error(String.format(EXCEPTION, e.getMessage()));
 			throw new ServiceException(this.messages.getServerError());
 		}
 

@@ -3,7 +3,6 @@ package ar.com.flexibility.examen.domain.service.impl;
 import ar.com.flexibility.examen.app.api.build.ClientResponseBuilder;
 import ar.com.flexibility.examen.app.api.response.ClientApiResponse;
 import ar.com.flexibility.examen.app.exception.ServiceException;
-import ar.com.flexibility.examen.config.ConstantsProps;
 import ar.com.flexibility.examen.config.MessagesProps;
 import ar.com.flexibility.examen.domain.model.Client;
 import ar.com.flexibility.examen.domain.repository.ClientRepository;
@@ -26,6 +25,11 @@ import com.google.common.base.Strings;
 public class ClientServiceImpl implements ClientService {
 
 	// ---------------
+	// Constants
+	// ---------------
+	private static final String EXCEPTION = "ClientServiceImpl exception: %s";
+
+	// ---------------
 	// Logger
 	// ---------------
 	private final Logger logger = LogManager.getLogger(ClientServiceImpl.class);
@@ -33,8 +37,6 @@ public class ClientServiceImpl implements ClientService {
 	// ---------------
 	// Attributes
 	// ---------------
-	@Autowired
-	private ConstantsProps constants;
 	@Autowired
 	private MessagesProps messages;
 	@Autowired
@@ -53,10 +55,10 @@ public class ClientServiceImpl implements ClientService {
 				throw new ServiceException(this.messages.getClientNotFound());
 			}
 			logger.info("delete client success");
-		} catch (ServiceException e) { 
+		} catch (ServiceException e) {
 			throw e;
 		} catch (Exception e) {
-			logger.error(String.format(this.constants.getExceptionError(), e.getMessage()));
+			logger.error(String.format(EXCEPTION, e.getMessage()));
 			throw new ServiceException(this.messages.getServerError());
 		}
 	}
@@ -65,20 +67,20 @@ public class ClientServiceImpl implements ClientService {
 	public Client getEntity(String identifier) throws ServiceException {
 		try {
 			logger.info("get client entity");
-			
+
 			Client entity = this.clientRepository.getFirstByIdentifier(identifier);
-			
+
 			if (Objects.isNull(entity)) {
 				logger.warn("Client not found with the identifier");
 				throw new ServiceException(this.messages.getClientNotFound());
 			}
-			
+
 			logger.info("get client entity success");
 			return entity;
-		} catch (ServiceException e) { 
+		} catch (ServiceException e) {
 			throw e;
 		} catch (Exception e) {
-			logger.error(String.format(this.constants.getExceptionError(), e.getMessage()));
+			logger.error(String.format(EXCEPTION, e.getMessage()));
 			throw new ServiceException(this.messages.getServerError());
 		}
 	}
@@ -88,13 +90,13 @@ public class ClientServiceImpl implements ClientService {
 		try {
 			logger.info("get client");
 			Client entity = this.getEntity(identifier);
-			
+
 			logger.info("get client success");
 			return this.mergeResponse(entity);
-		} catch (ServiceException e) { 
+		} catch (ServiceException e) {
 			throw e;
 		} catch (Exception e) {
-			logger.error(String.format(this.constants.getExceptionError(), e.getMessage()));
+			logger.error(String.format(EXCEPTION, e.getMessage()));
 			throw new ServiceException(this.messages.getServerError());
 		}
 	}
@@ -103,16 +105,17 @@ public class ClientServiceImpl implements ClientService {
 	public List<ClientApiResponse> list() throws ServiceException {
 		try {
 			logger.info("list of clients");
-			
+
 			List<ClientApiResponse> response = new ArrayList<>();
-			
+
 			List<Client> data = this.clientRepository.findAll();
-			data.stream().forEach(e -> response.add(this.mergeResponse(e)));
+			if (Objects.nonNull(data))
+				data.stream().forEach(e -> response.add(this.mergeResponse(e)));
 
 			logger.info("list of clients success");
 			return response;
 		} catch (Exception e) {
-			logger.error(String.format(this.constants.getExceptionError(), e.getMessage()));
+			logger.error(String.format(EXCEPTION, e.getMessage()));
 			throw new ServiceException(this.messages.getServerError());
 		}
 	}
@@ -135,10 +138,10 @@ public class ClientServiceImpl implements ClientService {
 
 			this.clientRepository.save(entity);
 			logger.info("save client success");
-		} catch (ServiceException e) { 
+		} catch (ServiceException e) {
 			throw e;
 		} catch (Exception e) {
-			logger.error(String.format(this.constants.getExceptionError(), e.getMessage()));
+			logger.error(String.format(EXCEPTION, e.getMessage()));
 			throw new ServiceException(this.messages.getServerError());
 		}
 	}
@@ -169,10 +172,10 @@ public class ClientServiceImpl implements ClientService {
 
 			this.clientRepository.save(entity);
 			logger.info("update client success");
-		} catch (ServiceException e) { 
+		} catch (ServiceException e) {
 			throw e;
 		} catch (Exception e) {
-			logger.error(String.format(this.constants.getExceptionError(), e.getMessage()));
+			logger.error(String.format(EXCEPTION, e.getMessage()));
 			throw new ServiceException(this.messages.getServerError());
 		}
 	}
@@ -184,5 +187,5 @@ public class ClientServiceImpl implements ClientService {
 	private ClientApiResponse mergeResponse(Client entity) {
 		return ClientResponseBuilder.mergeResponse(entity);
 	}
-	
+
 }

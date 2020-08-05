@@ -3,7 +3,6 @@ package ar.com.flexibility.examen.domain.service.impl;
 import ar.com.flexibility.examen.app.api.build.SellerResponseBuilder;
 import ar.com.flexibility.examen.app.api.response.SellerApiResponse;
 import ar.com.flexibility.examen.app.exception.ServiceException;
-import ar.com.flexibility.examen.config.ConstantsProps;
 import ar.com.flexibility.examen.config.MessagesProps;
 import ar.com.flexibility.examen.domain.model.Seller;
 import ar.com.flexibility.examen.domain.repository.SellerRepository;
@@ -26,6 +25,11 @@ import com.google.common.base.Strings;
 public class SellerServiceImpl implements SellerService {
 
 	// ---------------
+	// Constants
+	// ---------------
+	private static final String EXCEPTION = "SellerServiceImpl exception: %s";
+
+	// ---------------
 	// Logger
 	// ---------------
 	private final Logger logger = LogManager.getLogger(SellerServiceImpl.class);
@@ -33,8 +37,6 @@ public class SellerServiceImpl implements SellerService {
 	// ---------------
 	// Attributes
 	// ---------------
-	@Autowired
-	private ConstantsProps constants;
 	@Autowired
 	private MessagesProps messages;
 	@Autowired
@@ -56,7 +58,7 @@ public class SellerServiceImpl implements SellerService {
 		} catch (ServiceException e) {
 			throw e;
 		} catch (Exception e) {
-			logger.error(String.format(this.constants.getExceptionError(), e.getMessage()));
+			logger.error(String.format(EXCEPTION, e.getMessage()));
 			throw new ServiceException(this.messages.getServerError());
 		}
 	}
@@ -71,13 +73,13 @@ public class SellerServiceImpl implements SellerService {
 				logger.warn("Seller not found with the identifier");
 				throw new ServiceException(this.messages.getSellerNotFound());
 			}
-			
+
 			logger.info("get seller entity success");
 			return entity;
 		} catch (ServiceException e) {
 			throw e;
 		} catch (Exception e) {
-			logger.error(String.format(this.constants.getExceptionError(), e.getMessage()));
+			logger.error(String.format(EXCEPTION, e.getMessage()));
 			throw new ServiceException(this.messages.getServerError());
 		}
 	}
@@ -87,13 +89,13 @@ public class SellerServiceImpl implements SellerService {
 		try {
 			logger.info("get seller");
 			Seller entity = this.getEntity(identifier);
-			
+
 			logger.info("get seller success");
 			return this.mergeResponse(entity);
 		} catch (ServiceException e) {
 			throw e;
 		} catch (Exception e) {
-			logger.error(String.format(this.constants.getExceptionError(), e.getMessage()));
+			logger.error(String.format(EXCEPTION, e.getMessage()));
 			throw new ServiceException(this.messages.getServerError());
 		}
 	}
@@ -102,16 +104,17 @@ public class SellerServiceImpl implements SellerService {
 	public List<SellerApiResponse> list() throws ServiceException {
 		try {
 			logger.info("list of sellers");
-			
+
 			List<SellerApiResponse> response = new ArrayList<>();
 
 			List<Seller> data = this.sellerRepository.findAll();
-			data.stream().forEach(e -> response.add(this.mergeResponse(e)));
+			if (Objects.nonNull(data))
+				data.stream().forEach(e -> response.add(this.mergeResponse(e)));
 
 			logger.info("list of sellers success");
 			return response;
 		} catch (Exception e) {
-			logger.error(String.format(this.constants.getExceptionError(), e.getMessage()));
+			logger.error(String.format(EXCEPTION, e.getMessage()));
 			throw new ServiceException(this.messages.getServerError());
 		}
 	}
@@ -137,7 +140,7 @@ public class SellerServiceImpl implements SellerService {
 		} catch (ServiceException e) {
 			throw e;
 		} catch (Exception e) {
-			logger.error(String.format(this.constants.getExceptionError(), e.getMessage()));
+			logger.error(String.format(EXCEPTION, e.getMessage()));
 			throw new ServiceException(this.messages.getServerError());
 		}
 	}
@@ -171,7 +174,7 @@ public class SellerServiceImpl implements SellerService {
 		} catch (ServiceException e) {
 			throw e;
 		} catch (Exception e) {
-			logger.error(String.format(this.constants.getExceptionError(), e.getMessage()));
+			logger.error(String.format(EXCEPTION, e.getMessage()));
 			throw new ServiceException(this.messages.getServerError());
 		}
 	}
@@ -179,7 +182,7 @@ public class SellerServiceImpl implements SellerService {
 	private boolean existsSeller(String identifier) {
 		return Objects.nonNull(this.sellerRepository.getFirstByIdentifier(identifier));
 	}
-	
+
 	private SellerApiResponse mergeResponse(Seller entity) {
 		return SellerResponseBuilder.mergeResponse(entity);
 	}
