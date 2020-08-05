@@ -1,9 +1,9 @@
 package ar.com.flexibility.examen.app.rest;
 
 import ar.com.flexibility.examen.app.api.SaleApi;
+import ar.com.flexibility.examen.app.api.response.SaleApiResponse;
 import ar.com.flexibility.examen.app.exception.ServiceException;
 import ar.com.flexibility.examen.config.MessagesProps;
-import ar.com.flexibility.examen.domain.model.Sale;
 import ar.com.flexibility.examen.domain.service.SaleService;
 
 import java.util.List;
@@ -49,8 +49,7 @@ public class SaleController {
 	@GetMapping ("/{code}")
 	public ResponseEntity<?> getSale (@PathVariable String code) {
 		try {
-			Sale sale = this.saleService.getSale (code);
-			
+			SaleApiResponse sale = this.saleService.getSale (code);
 			
 			return new ResponseEntity<>(sale, HttpStatus.OK);
 		} catch (ServiceException e) {
@@ -62,7 +61,7 @@ public class SaleController {
 	public ResponseEntity<?> getSalesByStatus (@PathVariable String status) {
 		try {
 			// To get sales by status
-			List<Sale> data = this.saleService.getSalesByStatus (status);
+			List<SaleApiResponse> data = this.saleService.getSalesByStatus (status);
 			
 			return new ResponseEntity<>(data, HttpStatus.OK);
 		} catch (ServiceException e) {
@@ -74,7 +73,7 @@ public class SaleController {
 	public ResponseEntity<?> list () {
 		try {
 			// To get list of sales
-			List<Sale> data = this.saleService.list ();
+			List<SaleApiResponse> data = this.saleService.list ();
 			
 			return new ResponseEntity<>(data, HttpStatus.OK);
 		} catch (ServiceException e) {

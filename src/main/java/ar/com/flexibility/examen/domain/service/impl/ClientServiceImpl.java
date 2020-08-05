@@ -1,5 +1,7 @@
 package ar.com.flexibility.examen.domain.service.impl;
 
+import ar.com.flexibility.examen.app.api.build.ClientResponseBuilder;
+import ar.com.flexibility.examen.app.api.response.ClientApiResponse;
 import ar.com.flexibility.examen.app.exception.ServiceException;
 import ar.com.flexibility.examen.config.ConstantsProps;
 import ar.com.flexibility.examen.config.MessagesProps;
@@ -7,6 +9,7 @@ import ar.com.flexibility.examen.domain.model.Client;
 import ar.com.flexibility.examen.domain.repository.ClientRepository;
 import ar.com.flexibility.examen.domain.service.ClientService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -59,9 +62,9 @@ public class ClientServiceImpl implements ClientService {
 	}
 
 	@Override
-	public Client get(String identifier) throws ServiceException {
+	public Client getEntity(String identifier) throws ServiceException {
 		try {
-			logger.info("get client");
+			logger.info("get client entity");
 			
 			Client entity = this.clientRepository.getFirstByIdentifier(identifier);
 			
@@ -70,9 +73,7 @@ public class ClientServiceImpl implements ClientService {
 				throw new ServiceException(this.messages.getClientNotFound());
 			}
 			
-			this.cleanPurchases(entity);
-			
-			logger.info("get client success");
+			logger.info("get client entity success");
 			return entity;
 		} catch (ServiceException e) { 
 			throw e;
@@ -83,14 +84,33 @@ public class ClientServiceImpl implements ClientService {
 	}
 
 	@Override
-	public List<Client> list() throws ServiceException {
+	public ClientApiResponse get(String identifier) throws ServiceException {
+		try {
+			logger.info("get client");
+			Client entity = this.getEntity(identifier);
+			
+			logger.info("get client success");
+			return this.mergeResponse(entity);
+		} catch (ServiceException e) { 
+			throw e;
+		} catch (Exception e) {
+			logger.error(String.format(this.constants.getExceptionError(), e.getMessage()));
+			throw new ServiceException(this.messages.getServerError());
+		}
+	}
+
+	@Override
+	public List<ClientApiResponse> list() throws ServiceException {
 		try {
 			logger.info("list of clients");
 			
-			List<Client> data = this.clientRepository.findAll();
-			data.stream().forEach( e -> this.cleanPurchases(e) );
+			List<ClientApiResponse> response = new ArrayList<>();
 			
-			return data;
+			List<Client> data = this.clientRepository.findAll();
+			data.stream().forEach(e -> response.add(this.mergeResponse(e)));
+
+			logger.info("list of clients success");
+			return response;
 		} catch (Exception e) {
 			logger.error(String.format(this.constants.getExceptionError(), e.getMessage()));
 			throw new ServiceException(this.messages.getServerError());
@@ -156,21 +176,13 @@ public class ClientServiceImpl implements ClientService {
 			throw new ServiceException(this.messages.getServerError());
 		}
 	}
-	
-	@Override
-	public void cleanPurchases (Client entity) {
-		if (Objects.nonNull(entity)) {
-			entity.getPurchases().stream().forEach(
-					s -> {
-						s.setClient(null);
-						s.setProduct(null);
-						s.setSeller(null);
-					});
-		}
-	}
 
 	private boolean existsClient(String identifier) {
 		return Objects.nonNull(this.clientRepository.getFirstByIdentifier(identifier));
 	}
 
+	private ClientApiResponse mergeResponse(Client entity) {
+		return ClientResponseBuilder.mergeResponse(entity);
+	}
+	
 }

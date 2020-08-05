@@ -1,5 +1,7 @@
 package ar.com.flexibility.examen.domain.service.impl;
 
+import ar.com.flexibility.examen.app.api.build.ProductResponseBuilder;
+import ar.com.flexibility.examen.app.api.response.ProductApiResponse;
 import ar.com.flexibility.examen.app.exception.ServiceException;
 import ar.com.flexibility.examen.config.ConstantsProps;
 import ar.com.flexibility.examen.config.MessagesProps;
@@ -7,6 +9,7 @@ import ar.com.flexibility.examen.domain.model.Product;
 import ar.com.flexibility.examen.domain.repository.ProductRepository;
 import ar.com.flexibility.examen.domain.service.ProductService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -59,19 +62,17 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public Product getProduct(String code) throws ServiceException {
+	public Product getEntity(String code) throws ServiceException {
 		try {
-			logger.info("get product");
+			logger.info("get product entity");
 			Product entity = this.productRepository.getFirstByCode(code);
 
 			if (Objects.isNull(entity)) {
 				logger.warn("Product not found with the code");
 				throw new ServiceException(this.messages.getProductNotFound());
 			}
-
-			this.cleanSales (entity);
 			
-			logger.info("get product success");
+			logger.info("get product entity success");
 			return entity;
 		} catch (ServiceException e) { 
 			throw e;
@@ -82,14 +83,33 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public List<Product> list() throws ServiceException {
+	public ProductApiResponse getProduct(String code) throws ServiceException {
+		try {
+			logger.info("get product");
+			Product entity = this.getEntity(code);
+			
+			logger.info("get product success");
+			return this.mergeResponse (entity);
+		} catch (ServiceException e) { 
+			throw e;
+		} catch (Exception e) {
+			logger.error(String.format(this.constants.getExceptionError(), e.getMessage()));
+			throw new ServiceException(this.messages.getServerError());
+		}
+	}
+
+	@Override
+	public List<ProductApiResponse> list() throws ServiceException {
 		try {
 			logger.info("list of products");
+			
+			List<ProductApiResponse> response = new ArrayList<>();
 
 			List<Product> data = this.productRepository.findAll();
-			data.stream().forEach(e -> this.cleanSales(e));
+			data.stream().forEach(e -> response.add(this.mergeResponse(e)));
 
-			return data;
+			logger.info("list of products success");
+			return response;
 		} catch (Exception e) {
 			logger.error(String.format(this.constants.getExceptionError(), e.getMessage()));
 			throw new ServiceException(this.messages.getServerError());
@@ -184,17 +204,6 @@ public class ProductServiceImpl implements ProductService {
 		}
 
 	}
-	
-	@Override
-	public void cleanSales(Product entity) {
-		if (Objects.nonNull(entity)) {
-			entity.getSales().stream().forEach(s -> {
-				s.setClient(null);
-				s.setProduct(null);
-				s.setSeller(null);
-			});
-		}
-	}
 
 	private boolean existsProduct(String code) {
 		return Objects.nonNull(this.productRepository.getFirstByCode(code));
@@ -215,6 +224,10 @@ public class ProductServiceImpl implements ProductService {
 		if (price < this.constants.getProductMinPrice())
 			throw new ServiceException(this.messages.getProductPriceMinError());
 
+	}
+
+	private ProductApiResponse mergeResponse(Product entity) {
+		return ProductResponseBuilder.mergeResponse(entity);
 	}
 	
 }

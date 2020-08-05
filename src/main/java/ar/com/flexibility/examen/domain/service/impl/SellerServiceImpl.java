@@ -1,5 +1,7 @@
 package ar.com.flexibility.examen.domain.service.impl;
 
+import ar.com.flexibility.examen.app.api.build.SellerResponseBuilder;
+import ar.com.flexibility.examen.app.api.response.SellerApiResponse;
 import ar.com.flexibility.examen.app.exception.ServiceException;
 import ar.com.flexibility.examen.config.ConstantsProps;
 import ar.com.flexibility.examen.config.MessagesProps;
@@ -7,6 +9,7 @@ import ar.com.flexibility.examen.domain.model.Seller;
 import ar.com.flexibility.examen.domain.repository.SellerRepository;
 import ar.com.flexibility.examen.domain.service.SellerService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -59,25 +62,17 @@ public class SellerServiceImpl implements SellerService {
 	}
 
 	@Override
-	public Seller get(String identifier) throws ServiceException {
+	public Seller getEntity(String identifier) throws ServiceException {
 		try {
-			logger.info("get seller");
+			logger.info("get seller entity");
 			Seller entity = this.sellerRepository.getFirstByIdentifier(identifier);
 
 			if (Objects.isNull(entity)) {
 				logger.warn("Seller not found with the identifier");
 				throw new ServiceException(this.messages.getSellerNotFound());
 			}
-
-			this.cleanSales(entity);
-
-			entity.getSales().stream().forEach(s -> {
-				s.setClient(null);
-				s.setProduct(null);
-				s.setSeller(null);
-			});
-
-			logger.info("get seller success");
+			
+			logger.info("get seller entity success");
 			return entity;
 		} catch (ServiceException e) {
 			throw e;
@@ -88,14 +83,33 @@ public class SellerServiceImpl implements SellerService {
 	}
 
 	@Override
-	public List<Seller> list() throws ServiceException {
+	public SellerApiResponse get(String identifier) throws ServiceException {
+		try {
+			logger.info("get seller");
+			Seller entity = this.getEntity(identifier);
+			
+			logger.info("get seller success");
+			return this.mergeResponse(entity);
+		} catch (ServiceException e) {
+			throw e;
+		} catch (Exception e) {
+			logger.error(String.format(this.constants.getExceptionError(), e.getMessage()));
+			throw new ServiceException(this.messages.getServerError());
+		}
+	}
+
+	@Override
+	public List<SellerApiResponse> list() throws ServiceException {
 		try {
 			logger.info("list of sellers");
+			
+			List<SellerApiResponse> response = new ArrayList<>();
 
 			List<Seller> data = this.sellerRepository.findAll();
-			data.stream().forEach(e -> this.cleanSales(e));
+			data.stream().forEach(e -> response.add(this.mergeResponse(e)));
 
-			return data;
+			logger.info("list of sellers success");
+			return response;
 		} catch (Exception e) {
 			logger.error(String.format(this.constants.getExceptionError(), e.getMessage()));
 			throw new ServiceException(this.messages.getServerError());
@@ -162,19 +176,12 @@ public class SellerServiceImpl implements SellerService {
 		}
 	}
 
-	@Override
-	public void cleanSales(Seller entity) {
-		if (Objects.nonNull(entity)) {
-			entity.getSales().stream().forEach(s -> {
-				s.setClient(null);
-				s.setProduct(null);
-				s.setSeller(null);
-			});
-		}
-	}
-
 	private boolean existsSeller(String identifier) {
 		return Objects.nonNull(this.sellerRepository.getFirstByIdentifier(identifier));
+	}
+	
+	private SellerApiResponse mergeResponse(Seller entity) {
+		return SellerResponseBuilder.mergeResponse(entity);
 	}
 
 }

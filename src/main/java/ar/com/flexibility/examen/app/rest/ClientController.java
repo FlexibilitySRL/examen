@@ -1,9 +1,9 @@
 package ar.com.flexibility.examen.app.rest;
 
 import ar.com.flexibility.examen.app.api.ClientApi;
+import ar.com.flexibility.examen.app.api.response.ClientApiResponse;
 import ar.com.flexibility.examen.app.exception.ServiceException;
 import ar.com.flexibility.examen.config.MessagesProps;
-import ar.com.flexibility.examen.domain.model.Client;
 import ar.com.flexibility.examen.domain.service.ClientService;
 
 import java.util.List;
@@ -51,7 +51,7 @@ public class ClientController {
 	public ResponseEntity<?> getClient (@PathVariable String identifier) {
 		try {
 			// To get a client by its identifier
-			Client client = this.clientService.get (identifier);
+			ClientApiResponse client = this.clientService.get (identifier);
 			
 			return new ResponseEntity<>(client, HttpStatus.OK);
 		} catch (ServiceException e) {
@@ -63,7 +63,7 @@ public class ClientController {
 	public ResponseEntity<?> list () {
 		try {
 			// To get a list of clients
-			List<Client> data = this.clientService.list ();
+			List<ClientApiResponse> data = this.clientService.list ();
 			
 			return new ResponseEntity<>(data, HttpStatus.OK);
 		} catch (ServiceException e) {

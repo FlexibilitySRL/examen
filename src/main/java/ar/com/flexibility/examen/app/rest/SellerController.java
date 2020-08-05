@@ -1,9 +1,9 @@
 package ar.com.flexibility.examen.app.rest;
 
 import ar.com.flexibility.examen.app.api.SellerApi;
+import ar.com.flexibility.examen.app.api.response.SellerApiResponse;
 import ar.com.flexibility.examen.app.exception.ServiceException;
 import ar.com.flexibility.examen.config.MessagesProps;
-import ar.com.flexibility.examen.domain.model.Seller;
 import ar.com.flexibility.examen.domain.service.SellerService;
 
 import java.util.List;
@@ -51,7 +51,7 @@ public class SellerController {
 	public ResponseEntity<?> getSeller (@PathVariable String identifier) {
 		try {
 			// To get a seller by its identifier
-			Seller seller = this.sellerService.get (identifier);
+			SellerApiResponse seller = this.sellerService.get (identifier);
 			
 			return new ResponseEntity<>(seller, HttpStatus.OK);
 		} catch (ServiceException e) {
@@ -63,7 +63,7 @@ public class SellerController {
 	public ResponseEntity<?> list () {
 		try {
 			// To get a list of sellers
-			List<Seller> data = this.sellerService.list ();
+			List<SellerApiResponse> data = this.sellerService.list ();
 			
 			return new ResponseEntity<>(data, HttpStatus.OK);
 		} catch (ServiceException e) {

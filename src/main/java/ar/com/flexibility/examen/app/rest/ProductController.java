@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import ar.com.flexibility.examen.app.api.ProductApi;
+import ar.com.flexibility.examen.app.api.response.ProductApiResponse;
 import ar.com.flexibility.examen.app.exception.ServiceException;
 import ar.com.flexibility.examen.config.MessagesProps;
-import ar.com.flexibility.examen.domain.model.Product;
 import ar.com.flexibility.examen.domain.service.ProductService;
 
 @RestController
@@ -51,7 +51,7 @@ public class ProductController {
 	public ResponseEntity<?> getProduct (@PathVariable String code) {
 		try {
 			// To save a new product
-			Product product = this.productService.getProduct (code);
+			ProductApiResponse product = this.productService.getProduct (code);
 			
 			return new ResponseEntity<>(product, HttpStatus.OK);
 		} catch (ServiceException e) {
@@ -63,7 +63,7 @@ public class ProductController {
 	public ResponseEntity<?> list () {
 		try {
 			// To save a new product
-			List<Product> data = this.productService.list ();
+			List<ProductApiResponse> data = this.productService.list ();
 			
 			return new ResponseEntity<>(data, HttpStatus.OK);
 		} catch (ServiceException e) {

@@ -1,5 +1,7 @@
 package ar.com.flexibility.examen.domain.service.impl;
 
+import ar.com.flexibility.examen.app.api.build.SaleResponseBuilder;
+import ar.com.flexibility.examen.app.api.response.SaleApiResponse;
 import ar.com.flexibility.examen.app.exception.ServiceException;
 import ar.com.flexibility.examen.config.ConstantsProps;
 import ar.com.flexibility.examen.config.MessagesProps;
@@ -14,6 +16,7 @@ import ar.com.flexibility.examen.domain.service.ProductService;
 import ar.com.flexibility.examen.domain.service.SaleService;
 import ar.com.flexibility.examen.domain.service.SellerService;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -55,7 +58,7 @@ public class SaleServiceImpl implements SaleService {
 		try {
 			logger.info("approve sale");
 			
-			Sale entity = this.getSale(code);
+			Sale entity = this.getEntity(code);
 			
 			if (entity.getStatus() == SaleStatus.APROBADO) {
 				logger.warn("Sale is already approved");
@@ -76,20 +79,17 @@ public class SaleServiceImpl implements SaleService {
 	}
 
 	@Override
-	public Sale getSale(String code) throws ServiceException {
+	public Sale getEntity(String code) throws ServiceException {
 		try {
-			logger.info("get sale");
+			logger.info("get sale entity");
 			Sale entity = this.saleRepository.getFirstByCode(code);
 
 			if (Objects.isNull(entity)) {
 				logger.warn("Sale not found with the code");
 				throw new ServiceException(this.messages.getSaleNotFound());
 			}
-			
-			this.cleanForeingData(entity);
-			this.setDates(entity);
 
-			logger.info("get sale success");
+			logger.info("get sale entity success");
 			return entity;
 		} catch (ServiceException e) {
 			throw e;
@@ -100,20 +100,15 @@ public class SaleServiceImpl implements SaleService {
 	}
 
 	@Override
-	public List<Sale> getSalesByStatus(String status) throws ServiceException {
+	public SaleApiResponse getSale(String code) throws ServiceException {
 		try {
-			logger.info("list of sales by status");
+			logger.info("get sale");
+			Sale entity = this.getEntity(code);
 
-			SaleStatus saleStatus = SaleStatus.valueOf(status);
-
-			List<Sale> data = this.saleRepository.findByStatus(saleStatus);
-			data.stream().forEach( e -> { 
-				this.cleanForeingData(e); 
-				this.setDates (e);
-			});
-			
-			
-			return data;
+			logger.info("get sale success");
+			return this.mergeResponse(entity);
+		} catch (ServiceException e) {
+			throw e;
 		} catch (Exception e) {
 			logger.error(String.format(this.constants.getExceptionError(), e.getMessage()));
 			throw new ServiceException(this.messages.getServerError());
@@ -121,17 +116,37 @@ public class SaleServiceImpl implements SaleService {
 	}
 
 	@Override
-	public List<Sale> list() throws ServiceException {
+	public List<SaleApiResponse> getSalesByStatus(String status) throws ServiceException {
+		try {
+			logger.info("list of sales by status");
+
+			SaleStatus saleStatus = SaleStatus.valueOf(status);
+			
+			List<SaleApiResponse> response = new ArrayList<>();
+
+			List<Sale> data = this.saleRepository.findByStatus(saleStatus);
+			data.stream().forEach(e -> response.add(this.mergeResponse(e)));
+
+			logger.info("list of sales by status success");
+			return response;
+		} catch (Exception e) {
+			logger.error(String.format(this.constants.getExceptionError(), e.getMessage()));
+			throw new ServiceException(this.messages.getServerError());
+		}
+	}
+
+	@Override
+	public List<SaleApiResponse> list() throws ServiceException {
 		try {
 			logger.info("list of sales");
+			
+			List<SaleApiResponse> response = new ArrayList<>();
 
 			List<Sale> data = this.saleRepository.findAll();
-			data.stream().forEach( e -> { 
-				this.cleanForeingData(e); 
-				this.setDates (e);
-			});
-			
-			return data;
+			data.stream().forEach(e -> response.add(this.mergeResponse(e)));
+
+			logger.info("list of sales success");
+			return response;
 		} catch (Exception e) {
 			logger.error(String.format(this.constants.getExceptionError(), e.getMessage()));
 			throw new ServiceException(this.messages.getServerError());
@@ -150,9 +165,9 @@ public class SaleServiceImpl implements SaleService {
 				throw new ServiceException(this.messages.getSaleDuplicated());
 			}
 
-			Client client = this.clientService.get(clientIdentifier);
-			Seller seller = this.sellerService.get(sellerIdentifier);
-			Product product = this.productService.getProduct(productCode);
+			Client client = this.clientService.getEntity(clientIdentifier);
+			Seller seller = this.sellerService.getEntity(sellerIdentifier);
+			Product product = this.productService.getEntity(productCode);
 			
 			int totalAvailable = product.getAmount() - productAmount;
 
@@ -183,21 +198,13 @@ public class SaleServiceImpl implements SaleService {
 			throw new ServiceException(this.messages.getServerError());
 		}
 	}
-	
-	private void cleanForeingData (Sale entity) {
-		this.clientService.cleanPurchases(entity.getClient());
-		this.productService.cleanSales(entity.getProduct());
-		this.sellerService.cleanSales(entity.getSeller());
-	}
-	
-	private void setDates (Sale entity) {
-		entity.setDate(new Date (entity.getDate().getTime()));
-		if (Objects.nonNull(entity.getDateApproved()))
-			entity.setDateApproved(new Date (entity.getDateApproved().getTime()));
-	}
 
 	private boolean existsSale (String code) {
 		return Objects.nonNull(this.saleRepository.getFirstByCode(code));
+	}
+	
+	private SaleApiResponse mergeResponse(Sale entity) {
+		return SaleResponseBuilder.mergeResponse(entity);
 	}
 	
 }
