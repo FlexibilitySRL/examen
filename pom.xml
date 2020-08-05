@@ -48,6 +48,8 @@
         <jacoco.file.data>${project.build.directory}/jacoco.exec</jacoco.file.data>
         <jacoco.out.dir>${project.reporting.outputDirectory}/jacoco-ut</jacoco.out.dir>
 
+        <!-- Swagger -->
+        <springfox.version>2.9.2</springfox.version>
     </properties>
 
     <dependencies>
@@ -105,7 +107,21 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-        
+
+        <!-- Swagger -->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>${springfox.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>${springfox.version}</version>
+        </dependency>
+
+        <!-- H2 Database -->
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
