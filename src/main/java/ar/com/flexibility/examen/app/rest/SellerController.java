@@ -5,6 +5,9 @@ import ar.com.flexibility.examen.app.api.response.SellerApiResponse;
 import ar.com.flexibility.examen.app.exception.ServiceException;
 import ar.com.flexibility.examen.config.MessagesProps;
 import ar.com.flexibility.examen.domain.service.SellerService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 import java.util.List;
 
@@ -22,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(path = "/seller")
-public class SellerController {
+public class SellerController extends CustomController {
 
     // ---------------
     // Attributes
@@ -35,19 +38,31 @@ public class SellerController {
     // ---------------
     // Methods
     // ---------------
-	@DeleteMapping ("/{identifier}")
+	@DeleteMapping (path = "/{identifier}", produces = "application/json")
+	@ApiOperation(value = "Removes a seller")
+	@ApiResponses(value = {
+		    @ApiResponse(code = 200, message = "Successful operation"),
+		    @ApiResponse(code = 400, message = "Bad Request"),
+		    @ApiResponse(code = 500, message = "Internal Server Error"),
+	})
 	public ResponseEntity<?> deleteSeller (@PathVariable String identifier) {
 		try {
 			// To delete/remove a seller
 			this.sellerService.delete (identifier);
 			
-			return new ResponseEntity<>(messages.getSucessTransaction(), HttpStatus.OK);
+			return new ResponseEntity<>(buildResponse(messages.getSucessTransaction()), HttpStatus.OK);
 		} catch (ServiceException e) {
-			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(buildResponse(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
-	@GetMapping ("/{identifier}")
+	@GetMapping (path = "/{identifier}", produces = "application/json")
+	@ApiOperation(value = "Gets a seller")
+	@ApiResponses(value = {
+		    @ApiResponse(code = 200, message = "Successful operation"),
+		    @ApiResponse(code = 400, message = "Bad Request"),
+		    @ApiResponse(code = 500, message = "Internal Server Error"),
+	})
 	public ResponseEntity<?> getSeller (@PathVariable String identifier) {
 		try {
 			// To get a seller by its identifier
@@ -55,11 +70,17 @@ public class SellerController {
 			
 			return new ResponseEntity<>(seller, HttpStatus.OK);
 		} catch (ServiceException e) {
-			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(buildResponse(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
-	@GetMapping
+	@GetMapping (produces = "application/json")
+	@ApiOperation(value = "List of sellers")
+	@ApiResponses(value = {
+		    @ApiResponse(code = 200, message = "Successful operation"),
+		    @ApiResponse(code = 400, message = "Bad Request"),
+		    @ApiResponse(code = 500, message = "Internal Server Error"),
+	})
 	public ResponseEntity<?> list () {
 		try {
 			// To get a list of sellers
@@ -67,33 +88,45 @@ public class SellerController {
 			
 			return new ResponseEntity<>(data, HttpStatus.OK);
 		} catch (ServiceException e) {
-			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(buildResponse(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
-	@PostMapping
+	@PostMapping (produces = "application/json")
+	@ApiOperation(value = "Inserts a new seller")
+	@ApiResponses(value = {
+		    @ApiResponse(code = 200, message = "Successful operation"),
+		    @ApiResponse(code = 400, message = "Bad Request"),
+		    @ApiResponse(code = 500, message = "Internal Server Error"),
+	})
 	public ResponseEntity<?> newSeller (@RequestBody SellerApi seller) {
 		try {
 			// To save a new seller
 			this.sellerService.save (seller.getIdentifier(), 
 					seller.getName(), seller.getSurname());
 			
-			return new ResponseEntity<>(messages.getSucessTransaction(), HttpStatus.OK);
+			return new ResponseEntity<>(buildResponse(messages.getSucessTransaction()), HttpStatus.OK);
 		} catch (ServiceException e) {
-			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(buildResponse(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
-	@PutMapping ("/{identifier}")
+	@PutMapping (path = "/{identifier}", produces = "application/json")
+	@ApiOperation(value = "Updates a seller")
+	@ApiResponses(value = {
+		    @ApiResponse(code = 200, message = "Successful operation"),
+		    @ApiResponse(code = 400, message = "Bad Request"),
+		    @ApiResponse(code = 500, message = "Internal Server Error"),
+	})
 	public ResponseEntity<?> updateSeller (@RequestBody SellerApi seller, @PathVariable String identifier) {
 		try {
 			// To update a seller
 			this.sellerService.update (identifier, seller.getIdentifier(), 
 					seller.getName(), seller.getSurname());
 			
-			return new ResponseEntity<>(messages.getSucessTransaction(), HttpStatus.OK);
+			return new ResponseEntity<>(buildResponse(messages.getSucessTransaction()), HttpStatus.OK);
 		} catch (ServiceException e) {
-			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(buildResponse(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 

@@ -8,15 +8,15 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SaleApi {
 
-    @JsonProperty 
+    @JsonProperty (required = true) 
 	private String code;
-    @JsonProperty
+    @JsonProperty (required = true)
 	private String clientIdentifier;
-    @JsonProperty
+    @JsonProperty (required = true)
 	private String productCode;
-    @JsonProperty
+    @JsonProperty (required = true)
 	private int productAmount;
-    @JsonProperty
+    @JsonProperty (required = true)
 	private String sellerIdentifier;
     
 	public String getCode() {

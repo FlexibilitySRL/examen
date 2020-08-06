@@ -8,13 +8,13 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ProductApi {
 
-    @JsonProperty
+    @JsonProperty (required = true)
 	private int amount;
-    @JsonProperty
+    @JsonProperty (required = true)
 	private String code;
-    @JsonProperty
+    @JsonProperty (required = true)
 	private String name;
-    @JsonProperty
+    @JsonProperty (required = true)
 	private double price;
     
 	public int getAmount() {

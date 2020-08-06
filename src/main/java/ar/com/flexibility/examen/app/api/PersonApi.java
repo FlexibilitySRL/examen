@@ -4,11 +4,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class PersonApi {
 
-    @JsonProperty
+    @JsonProperty (required = true)
 	private String identifier;
-    @JsonProperty
+    @JsonProperty (required = true)
 	private String name;
-    @JsonProperty
+    @JsonProperty (required = true)
 	private String surname;
     
 	public String getIdentifier() {

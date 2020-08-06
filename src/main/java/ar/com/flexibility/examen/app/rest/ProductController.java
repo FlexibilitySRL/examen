@@ -19,10 +19,13 @@ import ar.com.flexibility.examen.app.api.response.ProductApiResponse;
 import ar.com.flexibility.examen.app.exception.ServiceException;
 import ar.com.flexibility.examen.config.MessagesProps;
 import ar.com.flexibility.examen.domain.service.ProductService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 @RestController
 @RequestMapping(path = "/product")
-public class ProductController {
+public class ProductController extends CustomController {
 
     // ---------------
     // Attributes
@@ -35,19 +38,31 @@ public class ProductController {
     // ---------------
     // Methods
     // ---------------
-	@DeleteMapping ("/{code}")
+	@DeleteMapping (path = "/{code}", produces = "application/json")
+	@ApiOperation(value = "Removes a product")
+	@ApiResponses(value = {
+		    @ApiResponse(code = 200, message = "Successful operation"),
+		    @ApiResponse(code = 400, message = "Bad Request"),
+		    @ApiResponse(code = 500, message = "Internal Server Error"),
+	})
 	public ResponseEntity<?> deleteProduct (@PathVariable String code) {
 		try {
 			// To save a new product
 			this.productService.deleteProduct (code);
 			
-			return new ResponseEntity<>(messages.getSucessTransaction(), HttpStatus.OK);
+			return new ResponseEntity<>(buildResponse(messages.getSucessTransaction()), HttpStatus.OK);
 		} catch (ServiceException e) {
-			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(buildResponse(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
-	@GetMapping ("/{code}")
+	@GetMapping (path = "/{code}", produces = "application/json")
+	@ApiOperation(value = "Gets a product")
+	@ApiResponses(value = {
+		    @ApiResponse(code = 200, message = "Successful operation"),
+		    @ApiResponse(code = 400, message = "Bad Request"),
+		    @ApiResponse(code = 500, message = "Internal Server Error"),
+	})
 	public ResponseEntity<?> getProduct (@PathVariable String code) {
 		try {
 			// To save a new product
@@ -55,11 +70,17 @@ public class ProductController {
 			
 			return new ResponseEntity<>(product, HttpStatus.OK);
 		} catch (ServiceException e) {
-			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(buildResponse(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
-	@GetMapping
+	@GetMapping (produces = "application/json")
+	@ApiOperation(value = "List of products")
+	@ApiResponses(value = {
+		    @ApiResponse(code = 200, message = "Successful operation"),
+		    @ApiResponse(code = 400, message = "Bad Request"),
+		    @ApiResponse(code = 500, message = "Internal Server Error"),
+	})
 	public ResponseEntity<?> list () {
 		try {
 			// To save a new product
@@ -67,33 +88,45 @@ public class ProductController {
 			
 			return new ResponseEntity<>(data, HttpStatus.OK);
 		} catch (ServiceException e) {
-			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(buildResponse(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
-	@PostMapping
+	@PostMapping (produces = "application/json")
+	@ApiOperation(value = "Inserts a new product")
+	@ApiResponses(value = {
+		    @ApiResponse(code = 200, message = "Successful operation"),
+		    @ApiResponse(code = 400, message = "Bad Request"),
+		    @ApiResponse(code = 500, message = "Internal Server Error"),
+	})
 	public ResponseEntity<?> newProduct (@RequestBody ProductApi product) {
 		try {
 			// To save a new product
 			this.productService.newProduct(product.getCode(), 
 					product.getName(), product.getAmount(), product.getPrice());
 			
-			return new ResponseEntity<>(messages.getSucessTransaction(), HttpStatus.OK);
+			return new ResponseEntity<>(buildResponse(messages.getSucessTransaction()), HttpStatus.OK);
 		} catch (ServiceException e) {
-			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(buildResponse(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
-	@PutMapping ("/{code}")
+	@PutMapping (path = "/{code}", produces = "application/json")
+	@ApiOperation(value = "Updates a new product")
+	@ApiResponses(value = {
+		    @ApiResponse(code = 200, message = "Successful operation"),
+		    @ApiResponse(code = 400, message = "Bad Request"),
+		    @ApiResponse(code = 500, message = "Internal Server Error"),
+	})
 	public ResponseEntity<?> updateProduct (@RequestBody ProductApi product, @PathVariable String code) {
 		try {
 			// To save a new product
 			this.productService.updateProduct(code, product.getCode(), 
 					product.getName(), product.getAmount(), product.getPrice());
 			
-			return new ResponseEntity<>(messages.getSucessTransaction(), HttpStatus.OK);
+			return new ResponseEntity<>(buildResponse(messages.getSucessTransaction()), HttpStatus.OK);
 		} catch (ServiceException e) {
-			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(buildResponse(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 }

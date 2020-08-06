@@ -1,4 +1,4 @@
-package ar.com.flexibility.examen.domain.controller;
+package ar.com.flexibility.examen.app.rest;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -16,14 +16,14 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import ar.com.flexibility.examen.app.api.SellerApi;
+import ar.com.flexibility.examen.app.api.ClientApi;
 import ar.com.flexibility.examen.config.MessagesProps;
 
 @RunWith(SpringRunner.class)
 @AutoConfigureMockMvc
 @SpringBootTest
 @ActiveProfiles ("test")
-public class SellerControllerTest {
+public class ClientControllerTest {
 	
 	@Autowired
 	private MessagesProps messages;
@@ -39,7 +39,7 @@ public class SellerControllerTest {
         
         // Action
         mvc.perform( MockMvcRequestBuilders
-            .get("/seller")
+            .get("/client")
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON))
     		// Assert
@@ -47,30 +47,30 @@ public class SellerControllerTest {
     }
     
     @Test
-    public void getSellerNotFound() throws Exception
+    public void getClientNotFound() throws Exception
     {
     	// Arrange
     	String identifier = "123470";
         
         // Action
         mvc.perform( MockMvcRequestBuilders
-            .get("/seller/{identifier}", identifier)
+            .get("/client/{identifier}", identifier)
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON))
     		// Assert
-    		.andExpect(MockMvcResultMatchers.jsonPath("$").value(this.messages.getSellerNotFound()))
+    		.andExpect(MockMvcResultMatchers.jsonPath("$.message").value(this.messages.getClientNotFound()))
             .andExpect(status().isInternalServerError());
     }
     
     @Test
-    public void getSellerSuccess() throws Exception
+    public void getClientSuccess() throws Exception
     {
     	// Arrange
     	String identifier = "123456";
         
         // Action
         mvc.perform( MockMvcRequestBuilders
-            .get("/seller/{identifier}", identifier)
+            .get("/client/{identifier}", identifier)
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON))
     		// Assert
@@ -79,73 +79,73 @@ public class SellerControllerTest {
     }
     
     @Test
-    public void deleteNotFoundSeller() throws Exception
+    public void deleteNotFoundClient() throws Exception
     {
     	// Arrange
     	String identifier = "123480";
         
         // Action
         mvc.perform( MockMvcRequestBuilders
-            .delete("/seller/{identifier}", identifier)
+            .delete("/client/{identifier}", identifier)
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON))
     		// Assert
-    		.andExpect(MockMvcResultMatchers.jsonPath("$").value(this.messages.getSellerNotFound()))
+    		.andExpect(MockMvcResultMatchers.jsonPath("$.message").value(this.messages.getClientPurchasesError()))
             .andExpect(status().isInternalServerError());
     }
     
     @Test
-    public void deleteSeller() throws Exception
+    public void deleteClient() throws Exception
     {
     	// Arrange
     	String identifier = "123460";
         
         // Action
         mvc.perform( MockMvcRequestBuilders
-            .delete("/seller/{identifier}", identifier)
+            .delete("/client/{identifier}", identifier)
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON))
     		// Assert
-			.andExpect(MockMvcResultMatchers.jsonPath("$").value(this.messages.getSucessTransaction()))
+			.andExpect(MockMvcResultMatchers.jsonPath("$.message").value(this.messages.getSucessTransaction()))
             .andExpect(status().isOk());
     }
     
     @Test
-    public void saveSellerIdentifierExists() throws Exception
+    public void saveClientIdentifierExists() throws Exception
     {
     	// Arrange
     	String identifier = "123456";
         
         // Action
         mvc.perform( MockMvcRequestBuilders
-            .post("/seller")
+            .post("/client")
             .content(objectMapper.writeValueAsString(this.buildRequest(identifier)))
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON))
     		// Assert
-    		.andExpect(MockMvcResultMatchers.jsonPath("$").value(this.messages.getSellerDuplicated()))
+    		.andExpect(MockMvcResultMatchers.jsonPath("$.message").value(this.messages.getClientDuplicated()))
             .andExpect(status().isInternalServerError());
     }
     
     @Test
-    public void saveSellerSuccess() throws Exception
+    public void saveClientSuccess() throws Exception
     {
     	// Arrange
     	String identifier = "123499";
         
         // Action
         mvc.perform( MockMvcRequestBuilders
-            .post("/seller")
+            .post("/client")
             .content(objectMapper.writeValueAsString(this.buildRequest(identifier)))
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON))
     		// Assert
-			.andExpect(MockMvcResultMatchers.jsonPath("$").value(this.messages.getSucessTransaction()))
+			.andExpect(MockMvcResultMatchers.jsonPath("$.message").value(this.messages.getSucessTransaction()))
 			.andExpect(status().isOk());
     }
     
     @Test
-    public void updateSellerNewIdentifierExists() throws Exception
+    public void updateClientNewIdentifierExists() throws Exception
     {
     	// Arrange
     	String identifier = "123456";
@@ -153,17 +153,17 @@ public class SellerControllerTest {
         
         // Action
         mvc.perform( MockMvcRequestBuilders
-            .put("/seller/{identifier}", identifier)
+            .put("/client/{identifier}", identifier)
             .content(objectMapper.writeValueAsString(this.buildRequest(newIdentifier)))
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON))
     		// Assert
-        	.andExpect(MockMvcResultMatchers.jsonPath("$").value(this.messages.getSellerDuplicated()))
+        	.andExpect(MockMvcResultMatchers.jsonPath("$.message").value(this.messages.getClientDuplicated()))
             .andExpect(status().isInternalServerError());
     }
     
     @Test
-    public void updateSellerSuccess() throws Exception
+    public void updateClientSuccess() throws Exception
     {
     	// Arrange
     	String identifier = "123458";
@@ -171,19 +171,19 @@ public class SellerControllerTest {
         
         // Action
         mvc.perform( MockMvcRequestBuilders
-            .put("/seller/{identifier}", identifier)
+            .put("/client/{identifier}", identifier)
             .content(objectMapper.writeValueAsString(this.buildRequest(newIdentifier)))
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON))
     		// Assert
-			.andExpect(MockMvcResultMatchers.jsonPath("$").value(this.messages.getSucessTransaction()))
+			.andExpect(MockMvcResultMatchers.jsonPath("$.message").value(this.messages.getSucessTransaction()))
             .andExpect(status().isOk());
     }
     
-    private SellerApi buildRequest (String identifier) {
-    	SellerApi request = new SellerApi();
+    private ClientApi buildRequest (String identifier) {
+    	ClientApi request = new ClientApi();
     	request.setIdentifier(identifier);
-    	request.setName("New Seller");
+    	request.setName("New Client");
     	request.setSurname("New Surname");
     	
     	return request;

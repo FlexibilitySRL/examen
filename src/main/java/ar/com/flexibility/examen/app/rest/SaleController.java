@@ -5,6 +5,9 @@ import ar.com.flexibility.examen.app.api.response.SaleApiResponse;
 import ar.com.flexibility.examen.app.exception.ServiceException;
 import ar.com.flexibility.examen.config.MessagesProps;
 import ar.com.flexibility.examen.domain.service.SaleService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 import java.util.List;
 
@@ -21,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(path = "/sale")
-public class SaleController {
+public class SaleController extends CustomController {
 
     // ---------------
     // Attributes
@@ -34,30 +37,48 @@ public class SaleController {
     // ---------------
     // Methods
     // ---------------
-	@PutMapping ("/{code}")
+	@PutMapping (path = "/{code}", produces = "application/json")
+	@ApiOperation(value = "Approves a sale")
+	@ApiResponses(value = {
+		    @ApiResponse(code = 200, message = "Successful operation"),
+		    @ApiResponse(code = 400, message = "Bad Request"),
+		    @ApiResponse(code = 500, message = "Internal Server Error"),
+	})
 	public ResponseEntity<?> approveSale (@PathVariable String code) {
 		try {
 			// To update a sale
 			this.saleService.approveSale (code);
 			
-			return new ResponseEntity<>(messages.getSucessTransaction(), HttpStatus.OK);
+			return new ResponseEntity<>(buildResponse(messages.getSucessTransaction()), HttpStatus.OK);
 		} catch (ServiceException e) {
-			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(buildResponse(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
-	@GetMapping ("/{code}")
+	@GetMapping (path = "/{code}", produces = "application/json")
+	@ApiOperation(value = "Gets a sale")
+	@ApiResponses(value = {
+		    @ApiResponse(code = 200, message = "Successful operation"),
+		    @ApiResponse(code = 400, message = "Bad Request"),
+		    @ApiResponse(code = 500, message = "Internal Server Error"),
+	})
 	public ResponseEntity<?> getSale (@PathVariable String code) {
 		try {
 			SaleApiResponse sale = this.saleService.getSale (code);
 			
 			return new ResponseEntity<>(sale, HttpStatus.OK);
 		} catch (ServiceException e) {
-			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(buildResponse(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
-	@GetMapping ("/status/{status}")
+	@GetMapping (path = "/status/{status}", produces = "application/json")
+	@ApiOperation(value = "List of sales by status")
+	@ApiResponses(value = {
+		    @ApiResponse(code = 200, message = "Successful operation"),
+		    @ApiResponse(code = 400, message = "Bad Request"),
+		    @ApiResponse(code = 500, message = "Internal Server Error"),
+	})
 	public ResponseEntity<?> getSalesByStatus (@PathVariable String status) {
 		try {
 			// To get sales by status
@@ -65,11 +86,17 @@ public class SaleController {
 			
 			return new ResponseEntity<>(data, HttpStatus.OK);
 		} catch (ServiceException e) {
-			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(buildResponse(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
-	@GetMapping
+	@GetMapping (produces = "application/json")
+	@ApiOperation(value = "List of sales")
+	@ApiResponses(value = {
+		    @ApiResponse(code = 200, message = "Successful operation"),
+		    @ApiResponse(code = 400, message = "Bad Request"),
+		    @ApiResponse(code = 500, message = "Internal Server Error"),
+	})
 	public ResponseEntity<?> list () {
 		try {
 			// To get list of sales
@@ -77,20 +104,26 @@ public class SaleController {
 			
 			return new ResponseEntity<>(data, HttpStatus.OK);
 		} catch (ServiceException e) {
-			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(buildResponse(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
-	@PostMapping
+	@PostMapping (produces = "application/json")
+	@ApiOperation(value = "Inserts a new sale")
+	@ApiResponses(value = {
+		    @ApiResponse(code = 200, message = "Successful operation"),
+		    @ApiResponse(code = 400, message = "Bad Request"),
+		    @ApiResponse(code = 500, message = "Internal Server Error"),
+	})
 	public ResponseEntity<?> newSale (@RequestBody SaleApi sale) {
 		try {
 			// To save a new sale
 			this.saleService.newSale (sale.getCode(), sale.getClientIdentifier(), sale.getSellerIdentifier(),
 					sale.getProductCode(), sale.getProductAmount());
 			
-			return new ResponseEntity<>(messages.getSucessTransaction(), HttpStatus.OK);
+			return new ResponseEntity<>(buildResponse(messages.getSucessTransaction()), HttpStatus.OK);
 		} catch (ServiceException e) {
-			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(buildResponse(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
