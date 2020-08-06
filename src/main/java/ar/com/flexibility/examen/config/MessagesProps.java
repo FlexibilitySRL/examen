@@ -48,6 +48,8 @@ public class MessagesProps {
 	private String saleNotFound;
 	@Value("${sale.product.amount.error}")
 	private String saleProductAmountError;
+	@Value("${sale.product.amount.invalid}")
+	private String saleProductAmountInvalid;
 
 	@Value("${seller.duplicated}")
 	private String sellerDuplicated;
@@ -113,6 +115,9 @@ public class MessagesProps {
 	}
 	public String getSaleProductAmountError() {
 		return saleProductAmountError;
+	}
+	public String getSaleProductAmountInvalid() {
+		return saleProductAmountInvalid;
 	}
 	public String getSellerDuplicated() {
 		return sellerDuplicated;

@@ -172,11 +172,16 @@ public class SaleServiceImpl implements SaleService {
 				throw new ServiceException(this.messages.getSaleDuplicated());
 			}
 			
+			if (productAmount < 1) {
+				logger.warn("Product amount invalid");
+				throw new ServiceException(this.messages.getSaleProductAmountInvalid());
+			}
+			
 			Product product = this.productService.getEntity(productCode);
 
 			int totalAvailable = product.getAmount() - productAmount;
 
-			if (totalAvailable < this.constants.getProductMinAmount()) {
+			if (totalAvailable < this.constants.getProductMinAmount() - 1) {
 				logger.warn("Product amount not available");
 				throw new ServiceException(this.messages.getSaleProductAmountError());
 			}

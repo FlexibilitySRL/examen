@@ -270,7 +270,7 @@ public class ProductServiceTest {
 	@Test (expected = ServiceException.class)
 	public void updateAmountInvalidMinValue () throws ServiceException {
 		// Arrange
-		int amount = 0;
+		int amount = -1;
 		
 		// Action
 		this.productService.updateProductAmount(entity, amount);

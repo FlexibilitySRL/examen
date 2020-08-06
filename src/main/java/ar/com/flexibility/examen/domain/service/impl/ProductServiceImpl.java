@@ -201,7 +201,7 @@ public class ProductServiceImpl implements ProductService {
 	public void updateProductAmount(Product entity, int amount) throws ServiceException {
 		try {
 			logger.info("update product amount");
-			this.validateProductAmount(amount);
+			this.validateProductAmountZero(amount);
 
 			entity.setAmount(amount);
 			logger.info("update product amount success");
@@ -218,12 +218,20 @@ public class ProductServiceImpl implements ProductService {
 	private boolean existsProduct(String code) {
 		return Objects.nonNull(this.productRepository.getFirstByCode(code));
 	}
+	
+	private void validateProductAmountZero (int amount) throws ServiceException {
+		if (amount == 0) {
+			return;
+		}
+		
+		this.validateProductAmount(amount);
+	}
 
 	private void validateProductAmount(int amount) throws ServiceException {
 		if (amount > this.constants.getProductMaxAmount())
 			throw new ServiceException(this.messages.getProductAmountError());
 
-		if (amount < this.constants.getProductMinAmount())
+		if (amount < 0 || amount < this.constants.getProductMinAmount())
 			throw new ServiceException(this.messages.getProductAmountMinError());
 	}
 
@@ -231,7 +239,7 @@ public class ProductServiceImpl implements ProductService {
 		if (price > this.constants.getProductMaxPrice())
 			throw new ServiceException(this.messages.getProductPriceError());
 
-		if (price < this.constants.getProductMinPrice())
+		if (price < 0.0 || price < this.constants.getProductMinPrice())
 			throw new ServiceException(this.messages.getProductPriceMinError());
 
 	}

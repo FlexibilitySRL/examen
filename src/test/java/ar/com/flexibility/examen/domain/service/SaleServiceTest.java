@@ -351,12 +351,31 @@ public class SaleServiceTest {
 		// Assert
 	}
 
+	@Test (expected = ServiceException.class)
+	public void newSaleAmountInvalid() throws ServiceException {
+		// Arrange
+		String code = CODE;
+		String clientIdentifier = "C123456";
+		int productAmount = 0;
+		String productCode = "P001";
+		String sellerIdentifier = "S123456";
+		
+		when(this.constants.getProductMinAmount()).thenReturn(1);
+		when(this.saleRepository.getFirstByCode(code)).thenReturn(null);
+		when(this.productService.getEntity(productCode)).thenReturn(ProductBuilder.builder().build());
+		
+		// Action
+		this.saleService.newSale(code, clientIdentifier, sellerIdentifier, productCode, productAmount);
+		
+		// Assert
+	}
+
 	@Test
 	public void newSaleSuccess() throws ServiceException {
 		// Arrange
 		String code = CODE;
 		String clientIdentifier = "C123456";
-		int productAmount = 20;
+		int productAmount = 40;
 		String productCode = "P001";
 		String sellerIdentifier = "S123456";
 		
