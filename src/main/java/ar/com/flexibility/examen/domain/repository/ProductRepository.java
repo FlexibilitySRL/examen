@@ -8,6 +8,9 @@ import org.springframework.data.repository.query.Param;
 import ar.com.flexibility.examen.domain.model.Product;
 
 public interface ProductRepository extends JpaRepository<Product, Long> {
+
+	@Query ("select COUNT(*) from Sale p where p.product.code=:code")
+	int countSalesByCode(@Param("code") String code);
 	
 	@Modifying
 	@Query ("delete from Product p where p.code=:code")

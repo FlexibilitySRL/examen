@@ -95,6 +95,22 @@ public class ClientControllerTest {
     }
     
     @Test
+    public void deleteWithPurchases() throws Exception
+    {
+    	// Arrange
+    	String identifier = "123456";
+        
+        // Action
+        mvc.perform( MockMvcRequestBuilders
+            .delete("/client/{identifier}", identifier)
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON))
+    		// Assert
+    		.andExpect(MockMvcResultMatchers.jsonPath("$.message").value(this.messages.getClientPurchasesError()))
+            .andExpect(status().isInternalServerError());
+    }
+    
+    @Test
     public void deleteClient() throws Exception
     {
     	// Arrange

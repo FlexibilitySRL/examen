@@ -53,6 +53,12 @@ public class ProductServiceImpl implements ProductService {
 	public void deleteProduct(String code) throws ServiceException {
 		try {
 			logger.info("delete product");
+			
+			if (this.productRepository.countSalesByCode (code) > 0) {
+				logger.warn("It was not possible to removes the product, it has sales");
+				throw new ServiceException(this.messages.getProductSalesError());
+			}
+			
 			if (this.productRepository.deleteByCode(code) != 1) {
 				logger.warn("It was not possible to removes the product");
 				throw new ServiceException(this.messages.getProductSalesError());
@@ -123,7 +129,6 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	@Transactional
 	public void newProduct(String code, String name, int amount, double price) throws ServiceException {
 		try {
 			logger.info("save product");
@@ -153,7 +158,6 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	@Transactional
 	public void updateProduct(String code, String newCode, String name, int amount, double price)
 			throws ServiceException {
 		try {
@@ -166,6 +170,9 @@ public class ProductServiceImpl implements ProductService {
 				throw new ServiceException(this.messages.getProductNotFound());
 			}
 
+			this.validateProductAmount(amount);
+			this.validateProductPrice(price);
+
 			if (!Strings.isNullOrEmpty(newCode)) {
 				if (!newCode.equals(code) && existsProduct(newCode)) {
 					logger.warn("One product already exists with the new code");
@@ -174,9 +181,6 @@ public class ProductServiceImpl implements ProductService {
 				logger.info("update product's code");
 				entity.setCode(newCode);
 			}
-
-			this.validateProductAmount(amount);
-			this.validateProductPrice(price);
 
 			entity.setAmount(amount);
 			entity.setName(name);

@@ -95,6 +95,22 @@ public class SellerControllerTest {
     }
     
     @Test
+    public void deleteWithSales() throws Exception
+    {
+    	// Arrange
+    	String identifier = "123456";
+        
+        // Action
+        mvc.perform( MockMvcRequestBuilders
+            .delete("/seller/{identifier}", identifier)
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON))
+    		// Assert
+    		.andExpect(MockMvcResultMatchers.jsonPath("$.message").value(this.messages.getSellerSalesError()))
+            .andExpect(status().isInternalServerError());
+    }
+    
+    @Test
     public void deleteSeller() throws Exception
     {
     	// Arrange

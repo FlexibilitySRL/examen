@@ -9,6 +9,9 @@ import ar.com.flexibility.examen.domain.model.Seller;
 
 public interface SellerRepository extends JpaRepository<Seller, Long> {
 
+	@Query ("select COUNT(*) from Sale p where p.seller.identifier=:identifier")
+	int countSalesByIdentifier(@Param("identifier") String identifier);
+
 	@Modifying
 	@Query ("delete from Seller p where p.identifier=:identifier")
 	int deleteByIdentifier(@Param("identifier") String identifier);

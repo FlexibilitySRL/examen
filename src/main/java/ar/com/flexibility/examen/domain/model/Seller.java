@@ -23,8 +23,7 @@ import javax.persistence.UniqueConstraint;
 public class Seller extends Person {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seller_seq")
-	@SequenceGenerator(initialValue = 1, allocationSize = 1, name = "seller_seq", sequenceName = "seller_seq")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@OneToMany(mappedBy="seller", fetch = FetchType.LAZY)

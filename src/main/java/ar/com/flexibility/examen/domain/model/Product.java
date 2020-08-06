@@ -24,8 +24,7 @@ import javax.persistence.UniqueConstraint;
 public class Product {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_seq")
-	@SequenceGenerator(initialValue = 1, allocationSize = 1, name = "product_seq", sequenceName = "product_seq")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
     @Column (name = "amount", nullable = false, precision = 3)
 	private int amount;

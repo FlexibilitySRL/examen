@@ -50,6 +50,10 @@ public class SellerServiceImpl implements SellerService {
 	public void delete(String identifier) throws ServiceException {
 		try {
 			logger.info("delete seller");
+			if (this.sellerRepository.countSalesByIdentifier(identifier) > 0) {
+				logger.warn("It was not possible to removes the seller, it has sales");
+				throw new ServiceException(this.messages.getSellerSalesError());
+			}
 			if (this.sellerRepository.deleteByIdentifier(identifier) != 1) {
 				logger.warn("It was not possible to removes the seller");
 				throw new ServiceException(this.messages.getSellerSalesError());
@@ -120,7 +124,6 @@ public class SellerServiceImpl implements SellerService {
 	}
 
 	@Override
-	@Transactional
 	public void save(String identifier, String name, String surname) throws ServiceException {
 		try {
 			logger.info("save seller");
@@ -146,7 +149,6 @@ public class SellerServiceImpl implements SellerService {
 	}
 
 	@Override
-	@Transactional
 	public void update(String identifier, String newIdentifier, String name, String surname) throws ServiceException {
 		try {
 			logger.info("update seller");

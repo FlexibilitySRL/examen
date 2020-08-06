@@ -73,7 +73,7 @@ public class SaleController extends CustomController {
 	}
 	
 	@GetMapping (path = "/status/{status}", produces = "application/json")
-	@ApiOperation(value = "List of sales by status")
+	@ApiOperation(value = "List of sales by status. Two options: 'APROBADO' and 'PENDIENTE'")
 	@ApiResponses(value = {
 		    @ApiResponse(code = 200, message = "Successful operation"),
 		    @ApiResponse(code = 400, message = "Bad Request"),

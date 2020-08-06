@@ -77,12 +77,28 @@ public class ProductControllerTest {
         	.andExpect(MockMvcResultMatchers.jsonPath("$.code").value(code))
             .andExpect(status().isOk());
     }
-    
+
     @Test
     public void deleteNotFoundProduct() throws Exception
     {
     	// Arrange
     	String code = "LEN010";
+        
+        // Action
+        mvc.perform( MockMvcRequestBuilders
+            .delete("/product/{code}", code)
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON))
+    		// Assert
+    		.andExpect(MockMvcResultMatchers.jsonPath("$.message").value(this.messages.getProductSalesError()))
+            .andExpect(status().isInternalServerError());
+    }
+
+    @Test
+    public void deleteWithSales() throws Exception
+    {
+    	// Arrange
+    	String code = "MAC01";
         
         // Action
         mvc.perform( MockMvcRequestBuilders

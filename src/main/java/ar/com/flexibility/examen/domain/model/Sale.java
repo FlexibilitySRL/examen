@@ -31,8 +31,7 @@ import ar.com.flexibility.examen.domain.enu.SaleStatus;
 public class Sale {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sale_seq")
-	@SequenceGenerator(initialValue = 1, allocationSize = 1, name = "sale_seq", sequenceName = "sale_seq")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
     @Column (name = "amount", nullable = false, precision = 3)
 	private int amount;

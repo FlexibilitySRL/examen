@@ -50,6 +50,11 @@ public class ClientServiceImpl implements ClientService {
 	public void delete(String identifier) throws ServiceException {
 		try {
 			logger.info("delete client");
+			if (this.clientRepository.countPurchasesByIdentifier(identifier) > 0) {
+				logger.warn("It was not possible to removes the client, it has purchases");
+				throw new ServiceException(this.messages.getClientPurchasesError());
+			}
+			
 			if (this.clientRepository.deleteByIdentifier(identifier) != 1) {
 				logger.warn("It was not possible to removes the client");
 				throw new ServiceException(this.messages.getClientPurchasesError());
@@ -121,7 +126,6 @@ public class ClientServiceImpl implements ClientService {
 	}
 
 	@Override
-	@Transactional
 	public void save(String identifier, String name, String surname) throws ServiceException {
 		try {
 			logger.info("save client");
@@ -147,7 +151,6 @@ public class ClientServiceImpl implements ClientService {
 	}
 
 	@Override
-	@Transactional
 	public void update(String identifier, String newIdentifier, String name, String surname) throws ServiceException {
 		try {
 			logger.info("update client");
