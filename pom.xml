@@ -50,6 +50,10 @@
 
         <!-- Swagger -->
         <springfox.version>2.9.2</springfox.version>
+        
+        <!-- Docker -->
+        <docker.image.name>api-flexibility</docker.image.name>
+        <docker.version>1.4.9</docker.version>
     </properties>
 
     <dependencies>
@@ -261,8 +265,31 @@
                     </execution>
 
                 </executions>
-
             </plugin>
+
+            <!-- Docker -->
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>dockerfile-maven-plugin</artifactId>
+                <version>${docker.version}</version>
+                <configuration>
+                    <repository>${docker.image.name}</repository>
+                    <buildArgs>
+                        <JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE>
+                    </buildArgs>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>default</id>
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>build</goal>
+                            <goal>push</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            
         </plugins>
 
     </build>

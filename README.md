@@ -41,31 +41,40 @@ Bonus
 
 ## Retos cumplidos
 
-Se logró dar solución a la mayoria de los retos propuestos. Solo quedaron pendientes los puntos 1 (Hostear la app...) y 6 (Crear Docker Image) de la sección 'Bonus'.
+Se logró dar solución a la mayoria de los retos propuestos. Solo quedó pendiente el punto 1 (Hostear la app...) de la sección 'Bonus'.
 
 ## Ejecución la solución
 
-La aplicación tiene configurado dos perfiles: local y dev. Se puede ejecutar la aplicación de las siguientes maneras:
+La aplicación tiene configurado dos perfiles: *local* y *dev*. Se puede ejecutar la aplicación de las siguientes maneras:
 
-1) mvn spring-boot:run -Drun.jvmArguments="-Dspring.profiles.active=local"	Este perfil tiene configurada la conexión a base de datos mysql.
-2) mvn spring-boot:run -Drun.jvmArguments="-Dspring.profiles.active=dev"	Este perfil tiene configurada la conexión a base de datos H2 (en memoria)
+1) *local* -> Este perfil tiene configurada la conexión a base de datos *mysql*. Desde la raiz del proyecto ejecutar el comando:
 
-La configuración de los perfiles se encuentra en el archivo application.yml (ubicado en el directorio 'src/main/resources')
+```bash
+mvn spring-boot:run -Drun.jvmArguments="-Dspring.profiles.active=local"	
+```
+2) *dev* -> Este perfil tiene configurada la conexión a base de datos *H2* (en memoria). Desde la raiz del proyecto ejecutar el comando:
+```bash
+mvn spring-boot:run -Drun.jvmArguments="-Dspring.profiles.active=dev"
+```
+La configuración de los perfiles se encuentra en el archivo *application.yml* (ubicado en el directorio 'src/main/resources')
 
 La aplicación se expone en el puerto (por defecto) 8080.
 
-## Scipts y base de datos
+## Scripts y base de datos
 
 Se incluye la creación de scripts para gestionar los elementos den base de datos. Los archivos se ubican en el directorio 'src/main/resources', son los siguientes:
 
-- data-h2.sql => Este script contiene los registros para iniciar la base de datos H2 (solo aplica para el perfil 'test')
-- schema-mysql.sql => Contiene los DDL para la creeación los elementos (entidades, indíces y demas) en base de datos.
+- *data-h2.sql* -> Este script contiene los registros para iniciar la base de datos H2 (solo aplica para el perfil 'test')
+- *schema-mysql.sql* -> Contiene los DDL para la creeación los elementos (entidades, indíces y demas) en base de datos.
 
 ## Pruebas unitarias e integración
 
-La ejecución de las pruebas se puede observar al ejecutar el comando: **mvn test**. 
+La pruebas se pueden observar al ejecutar el comando: 
+```bash
+mvn test
+```
 
-Las prueba de integración están configuradas para que se realice la gestión de datos en la base H2. 
+Las prueba de integración están configuradas para que se realice la gestión de datos con *H2*. 
 
 Nota: Las pruebas de integración se ubican en el directorio 'src/test/java/ar/com/flexibility/examen/app/rest/'
 
@@ -77,13 +86,54 @@ http://localhost:8080/swagger-ui.html
 
 ## Covertura de código
 
-Se hace uso de la herramienta 'jacoco' para calcular la covertura de código. 
+Se hace uso de la herramienta *jacoco* para calcular la covertura de código. 
 Para poder observar la covertura se debe:
-1) Ejecutar el comando: **mvn clean verify** (puede tambier ejecutar **mvn clean install**)
+1) Desde la terminal de comandos, ejecutar el comando:
+```bash
+mvn clean verify
+```
 2) Ubicarse en el directorio 'target/site/jacoco-ut'
 3) Localizar el archivo 'index.html' el cual se puede abrir en un navegador (chrome, mozilla etc.)
 
 Nota: La configuración de la covertura de código se encuentra en el archivo 'pom.xml'
+
+## Imágen Docker
+
+### Crear imagen apartir del archivo Dockerfile
+
+1) Desde la terminal de comandos, ubicarse en el directorio dónde se encuentra el archivo *Dockerfile*, en raiz del proyecto.
+2) Ejecutar, para crear la imagen, el comando: 
+```bash
+docker build -t api-flexibility . (inlcuye el punto final)
+```
+Nota: El valor **api-flexibility** representa el nombre de la imagen
+
+### Crear imagen apartir de maven
+
+1) Desde la terminal de comandos, ubicarse en el directorio dónde se encuentra el archivo *pom.xml*, en raiz del proyecto.
+2) Ejecutar, para crear la imagen, el comando:
+```bash
+mvn dockerfile:build
+```
+Nota: La configuración para la cración de la imagén se encuentra en el archivo *pom.xl*
+
+### Descargar imagen apartir de DockerHub
+
+1) Desde la terminal de comandos, ejecutar el comando:
+```bash
+docker pull juanpablo14/api-flexibility
+```
+Nota: Para esta opción, la imagen tiene el nombre **juanpablo14/api-flexibility**
+
+### Ejecutar imagen y crear contenedor
+
+1) Desde la terminal de comandos, ejecutar el comando:
+```bash
+docker run  -p 8080:8080 api-flexibility
+```
+- El valor **api-flexibility** representa el nombre de la imagen previamente creada. La imagen descargada puede tener un nombre diferente
+- El valor 8080 (primero) representa el puerto donde se ejecutará la aplicación en el servidor
+- El valor 8080 (segundo) representa el puerto donde se ejecuta la aplicación en el contenedor
 
 ## Diseño
 
