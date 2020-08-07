@@ -45,7 +45,7 @@ public class ClientController extends CustomController {
 		    @ApiResponse(code = 400, message = "Bad Request"),
 		    @ApiResponse(code = 500, message = "Internal Server Error"),
 	})
-	public ResponseEntity<?> deleteClient (@PathVariable String identifier) {
+	public ResponseEntity<Object> deleteClient (@PathVariable String identifier) {
 		try {
 			// To delete/remove a client
 			this.clientService.delete (identifier);
@@ -63,7 +63,7 @@ public class ClientController extends CustomController {
 		    @ApiResponse(code = 400, message = "Bad Request"),
 		    @ApiResponse(code = 500, message = "Internal Server Error"),
 	})
-	public ResponseEntity<?> getClient (@PathVariable String identifier) {
+	public ResponseEntity<Object> getClient (@PathVariable String identifier) {
 		try {
 			// To get a client by its identifier
 			ClientApiResponse client = this.clientService.get (identifier);
@@ -81,7 +81,7 @@ public class ClientController extends CustomController {
 		    @ApiResponse(code = 400, message = "Bad Request"),
 		    @ApiResponse(code = 500, message = "Internal Server Error"),
 	})
-	public ResponseEntity<?> list () {
+	public ResponseEntity<Object> list () {
 		try {
 			// To get a list of clients
 			List<ClientApiResponse> data = this.clientService.list ();
@@ -99,7 +99,7 @@ public class ClientController extends CustomController {
 		    @ApiResponse(code = 400, message = "Bad Request"),
 		    @ApiResponse(code = 500, message = "Internal Server Error"),
 	})
-	public ResponseEntity<?> newClient (@RequestBody ClientApi client) {
+	public ResponseEntity<Object> newClient (@RequestBody ClientApi client) {
 		try {
 			// To save a new client
 			this.clientService.save (client.getIdentifier(), 
@@ -118,7 +118,7 @@ public class ClientController extends CustomController {
 		    @ApiResponse(code = 400, message = "Bad Request"),
 		    @ApiResponse(code = 500, message = "Internal Server Error"),
 	})
-	public ResponseEntity<?> updateClient (@RequestBody ClientApi client, @PathVariable String identifier) {
+	public ResponseEntity<Object> updateClient (@RequestBody ClientApi client, @PathVariable String identifier) {
 		try {
 			// To update a client
 			this.clientService.update (identifier, client.getIdentifier(), 

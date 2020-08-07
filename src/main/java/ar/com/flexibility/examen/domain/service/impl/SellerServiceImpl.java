@@ -62,8 +62,7 @@ public class SellerServiceImpl implements SellerService {
 		} catch (ServiceException e) {
 			throw e;
 		} catch (Exception e) {
-			logger.error(String.format(EXCEPTION, e.getMessage()));
-			throw new ServiceException(this.messages.getServerError());
+			throw throwException(e);
 		}
 	}
 
@@ -83,8 +82,7 @@ public class SellerServiceImpl implements SellerService {
 		} catch (ServiceException e) {
 			throw e;
 		} catch (Exception e) {
-			logger.error(String.format(EXCEPTION, e.getMessage()));
-			throw new ServiceException(this.messages.getServerError());
+			throw throwException(e);
 		}
 	}
 
@@ -99,8 +97,7 @@ public class SellerServiceImpl implements SellerService {
 		} catch (ServiceException e) {
 			throw e;
 		} catch (Exception e) {
-			logger.error(String.format(EXCEPTION, e.getMessage()));
-			throw new ServiceException(this.messages.getServerError());
+			throw throwException(e);
 		}
 	}
 
@@ -118,8 +115,7 @@ public class SellerServiceImpl implements SellerService {
 			logger.info("list of sellers success");
 			return response;
 		} catch (Exception e) {
-			logger.error(String.format(EXCEPTION, e.getMessage()));
-			throw new ServiceException(this.messages.getServerError());
+			throw throwException(e);
 		}
 	}
 
@@ -143,8 +139,7 @@ public class SellerServiceImpl implements SellerService {
 		} catch (ServiceException e) {
 			throw e;
 		} catch (Exception e) {
-			logger.error(String.format(EXCEPTION, e.getMessage()));
-			throw new ServiceException(this.messages.getServerError());
+			throw throwException(e);
 		}
 	}
 
@@ -176,8 +171,7 @@ public class SellerServiceImpl implements SellerService {
 		} catch (ServiceException e) {
 			throw e;
 		} catch (Exception e) {
-			logger.error(String.format(EXCEPTION, e.getMessage()));
-			throw new ServiceException(this.messages.getServerError());
+			throw throwException(e);
 		}
 	}
 
@@ -187,6 +181,11 @@ public class SellerServiceImpl implements SellerService {
 
 	private SellerApiResponse mergeResponse(Seller entity) {
 		return SellerResponseBuilder.mergeResponse(entity);
+	}
+	
+	private ServiceException throwException(Exception e) {
+		logger.error(String.format(EXCEPTION, e.getMessage()));
+		return new ServiceException(this.messages.getServerError());
 	}
 
 }

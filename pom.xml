@@ -1,263 +1,270 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.4.1.RELEASE</version>
-	</parent>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.4.1.RELEASE</version>
+    </parent>
 
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>ar.com.flexibility</groupId>
-	<artifactId>examen</artifactId>
-	<version>0.0.1</version>
-	<packaging>jar</packaging>
-	<name>examen</name>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>ar.com.flexibility</groupId>
+    <artifactId>examen</artifactId>
+    <version>0.0.1</version>
+    <packaging>jar</packaging>
+    <name>examen</name>
 
-	<url>https://github.com/FlexibilitySRL/examen</url>
-	<description>Examen Rest</description>
-	<inceptionYear>2017</inceptionYear>
+    <url>https://github.com/FlexibilitySRL/examen</url>
+    <description>Examen Rest</description>
+    <inceptionYear>2017</inceptionYear>
 
-	<scm>
-		<url>https://github.com/FlexibilitySRL/examen</url>
-		<connection>scm:git:https://github.com/FlexibilitySRL/examen.git</connection>
-		<developerConnection>scm:git:https://github.com/FlexibilitySRL/examen.git</developerConnection>
-		<tag>HEAD</tag>
-	</scm>
+    <scm>
+        <url>https://github.com/FlexibilitySRL/examen</url>
+        <connection>scm:git:https://github.com/FlexibilitySRL/examen.git</connection>
+        <developerConnection>scm:git:https://github.com/FlexibilitySRL/examen.git</developerConnection>
+        <tag>HEAD</tag>
+    </scm>
 
-	<issueManagement>
-		<system>GitHub Issues</system>
-		<url>https://github.com/FlexibilitySRL/examen/issues</url>
-	</issueManagement>
+    <issueManagement>
+        <system>GitHub Issues</system>
+        <url>https://github.com/FlexibilitySRL/examen/issues</url>
+    </issueManagement>
 
-	<properties>
-		<java.version>1.8</java.version>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<start-class>ar.com.flexibility.examen.Application</start-class>
-		<hibernate-jpamodelgen.version>5.0.6.Final</hibernate-jpamodelgen.version>
-		<joda-time-version>2.9.1</joda-time-version>
-		<jadira-usertype-version>5.0.0.GA</jadira-usertype-version>
-		<commons-lang3.version>3.4</commons-lang3.version>
-		<commons-codec.version>1.10</commons-codec.version>
-		<guava.version>19.0</guava.version>
+    <properties>
+        <java.version>1.8</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <start-class>ar.com.flexibility.examen.Application</start-class>
+        <hibernate-jpamodelgen.version>5.0.6.Final</hibernate-jpamodelgen.version>
+        <joda-time-version>2.9.1</joda-time-version>
+        <jadira-usertype-version>5.0.0.GA</jadira-usertype-version>
+        <commons-lang3.version>3.4</commons-lang3.version>
+        <commons-codec.version>1.10</commons-codec.version>
+        <guava.version>19.0</guava.version>
 
-		<!-- JaCoCo props -->
-		<jacoco.cov.percent>0.70</jacoco.cov.percent>
-		<jacoco.file.data>${project.build.directory}/jacoco.exec</jacoco.file.data>
-		<jacoco.out.dir>${project.reporting.outputDirectory}/jacoco-ut</jacoco.out.dir>
+        <!-- JaCoCo props -->
+        <jacoco.cov.percent>0.70</jacoco.cov.percent>
+        <jacoco.file.data>${project.build.directory}/jacoco.exec</jacoco.file.data>
+        <jacoco.out.dir>${project.reporting.outputDirectory}/jacoco-ut</jacoco.out.dir>
 
-		<!-- Swagger -->
-		<springfox.version>2.9.2</springfox.version>
-	</properties>
+        <!-- Swagger -->
+        <springfox.version>2.9.2</springfox.version>
+    </properties>
 
-	<dependencies>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-actuator</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-hateoas</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-jpamodelgen</artifactId>
-			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>joda-time</groupId>
-			<artifactId>joda-time</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.jadira.usertype</groupId>
-			<artifactId>usertype.core</artifactId>
-			<version>${jadira-usertype-version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-lang3</artifactId>
-			<version>${commons-lang3.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.google.guava</groupId>
-			<artifactId>guava</artifactId>
-			<version>${guava.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>commons-codec</groupId>
-			<artifactId>commons-codec</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-actuator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-hateoas</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-jpamodelgen</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jadira.usertype</groupId>
+            <artifactId>usertype.core</artifactId>
+            <version>${jadira-usertype-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${commons-lang3.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${guava.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
 
-		<!-- Swagger -->
-		<dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-swagger2</artifactId>
-			<version>${springfox.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-swagger-ui</artifactId>
-			<version>${springfox.version}</version>
-		</dependency>
+        <!-- Swagger -->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>${springfox.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>${springfox.version}</version>
+        </dependency>
 
-		<!-- H2 Database -->
-		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-		</dependency>
+        <!-- H2 Database -->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+        </dependency>
 
-		<dependency>
-			<groupId>com.google.guava</groupId>
-			<artifactId>guava</artifactId>
-			<version>20.0</version>
-			<exclusions>
-				<exclusion>
-					<groupId>com.google.guava</groupId>
-					<artifactId>guava</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-		    <groupId>net.bytebuddy</groupId>
-		    <artifactId>byte-buddy</artifactId>
-		    <version>1.8.17</version>
-		</dependency>
-	</dependencies>
+        <!-- https://mvnrepository.com/artifact/org.sonarsource.scanner.maven/sonar-maven-plugin -->
+        <dependency>
+            <groupId>org.sonarsource.scanner.maven</groupId>
+            <artifactId>sonar-maven-plugin</artifactId>
+            <version>3.2</version>
+        </dependency>
 
-	<build>
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-jar-plugin</artifactId>
-					<configuration>
-						<archive>
-							<manifestEntries>
-								<Premain-Class>ar.com.flexibility.examen.NopPreMain</Premain-Class>
-							</manifestEntries>
-						</archive>
-					</configuration>
-				</plugin>
-			</plugins>
-		</pluginManagement>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>20.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.google.guava</groupId>
+                    <artifactId>guava</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>net.bytebuddy</groupId>
+            <artifactId>byte-buddy</artifactId>
+            <version>1.8.17</version>
+        </dependency>
+    </dependencies>
 
-			<!-- JaCoCo - Agent -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<configuration>
-					<argLine>${surefireArgLine}</argLine>
-					<excludes>
-						<exclude>**/IT.java</exclude>
-					</excludes>
-				</configuration>
-			</plugin>
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <configuration>
+                        <archive>
+                            <manifestEntries>
+                                <Premain-Class>ar.com.flexibility.examen.NopPreMain</Premain-Class>
+                            </manifestEntries>
+                        </archive>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
 
-			<!-- JaCoCo - Report -->
-			<plugin>
-				<groupId>org.jacoco</groupId>
-				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>0.7.7.201606060606</version>
+            <!-- JaCoCo - Agent -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <argLine>${surefireArgLine}</argLine>
+                    <excludes>
+                        <exclude>**/IT.java</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
 
-				<configuration>
-					<!-- Excludes files/packages -->
-					<excludes>
+            <!-- JaCoCo - Report -->
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.7.7.201606060606</version>
 
-						<!-- Files -->
-						<exclude>**/app/rest/CustomController*</exclude>
-						<exclude>**/examen/NopPreMain*</exclude>
-						<exclude>**/examen/Application*</exclude>
+                <configuration>
+                    <!-- Excludes files/packages -->
+                    <excludes>
 
-						<!-- Packages -->
-						<exclude>**/app/exception/*</exclude>
-						<exclude>**/config/*</exclude>
-						<exclude>**/domain/enu/*</exclude>
-						<exclude>**/domain/model/*</exclude>
+                        <!-- Files -->
+                        <exclude>**/app/rest/CustomController*</exclude>
+                        <exclude>**/examen/NopPreMain*</exclude>
+                        <exclude>**/examen/Application*</exclude>
 
-					</excludes>
-				</configuration>
+                        <!-- Packages -->
+                        <exclude>**/app/exception/*</exclude>
+                        <exclude>**/config/*</exclude>
+                        <exclude>**/domain/enu/*</exclude>
+                        <exclude>**/domain/model/*</exclude>
 
-				<executions>
+                    </excludes>
+                </configuration>
 
-					<!-- Data file -->
-					<execution>
-						<id>pre-unit-test</id>
-						<goals>
-							<goal>prepare-agent</goal>
-						</goals>
-						<configuration>
-							<dataFile>${jacoco.file.data}</dataFile>
-							<propertyName>surefireArgLine</propertyName>
-						</configuration>
-					</execution>
+                <executions>
 
-					<!-- Report -->
-					<execution>
-						<id>post-unit-test</id>
-						<phase>test</phase>
-						<goals>
-							<goal>report</goal>
-						</goals>
-						<configuration>
-							<dataFile>${jacoco.file.data}</dataFile>
-							<outputDirectory>${jacoco.out.dir}</outputDirectory>
-						</configuration>
-					</execution>
+                    <!-- Data file -->
+                    <execution>
+                        <id>pre-unit-test</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                        <configuration>
+                            <dataFile>${jacoco.file.data}</dataFile>
+                            <propertyName>surefireArgLine</propertyName>
+                        </configuration>
+                    </execution>
 
-					<!-- Report checking -->
-					<execution>
-						<id>default-check</id>
-						<goals>
-							<goal>check</goal>
-						</goals>
-						<configuration>
+                    <!-- Report -->
+                    <execution>
+                        <id>post-unit-test</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                        <configuration>
+                            <dataFile>${jacoco.file.data}</dataFile>
+                            <outputDirectory>${jacoco.out.dir}</outputDirectory>
+                        </configuration>
+                    </execution>
 
-							<!-- Rules -->
-							<rules>
-								<rule>
-									<element>BUNDLE</element>
-									<limits>
-										<limit>
-											<counter>LINE</counter>
-											<value>COVEREDRATIO</value>
-											<minimum>${jacoco.cov.percent}</minimum>
-										</limit>
-									</limits>
-								</rule>
-							</rules>
-						</configuration>
-					</execution>
+                    <!-- Report checking -->
+                    <execution>
+                        <id>default-check</id>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                        <configuration>
 
-				</executions>
+                            <!-- Rules -->
+                            <rules>
+                                <rule>
+                                    <element>BUNDLE</element>
+                                    <limits>
+                                        <limit>
+                                            <counter>LINE</counter>
+                                            <value>COVEREDRATIO</value>
+                                            <minimum>${jacoco.cov.percent}</minimum>
+                                        </limit>
+                                    </limits>
+                                </rule>
+                            </rules>
+                        </configuration>
+                    </execution>
 
-			</plugin>
-		</plugins>
+                </executions>
 
-	</build>
+            </plugin>
+        </plugins>
+
+    </build>
 
 </project>

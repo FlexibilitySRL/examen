@@ -58,8 +58,8 @@ La aplicación se expone en el puerto (por defecto) 8080.
 
 Se incluye la creación de scripts para gestionar los elementos den base de datos. Los archivos se ubican en el directorio 'src/main/resources', son los siguientes:
 
-- data.sql => Este script contiene los registros para iniciar la base de datos
-- schema-db.sql => Contiene los DDL para la creeación los elementos (entidades, indíces y demas) en base de datos.
+- data-h2.sql => Este script contiene los registros para iniciar la base de datos H2 (solo aplica para el perfil 'test')
+- schema-mysql.sql => Contiene los DDL para la creeación los elementos (entidades, indíces y demas) en base de datos.
 
 ## Pruebas unitarias e integración
 

@@ -45,7 +45,7 @@ public class SellerController extends CustomController {
 		    @ApiResponse(code = 400, message = "Bad Request"),
 		    @ApiResponse(code = 500, message = "Internal Server Error"),
 	})
-	public ResponseEntity<?> deleteSeller (@PathVariable String identifier) {
+	public ResponseEntity<Object> deleteSeller (@PathVariable String identifier) {
 		try {
 			// To delete/remove a seller
 			this.sellerService.delete (identifier);
@@ -63,7 +63,7 @@ public class SellerController extends CustomController {
 		    @ApiResponse(code = 400, message = "Bad Request"),
 		    @ApiResponse(code = 500, message = "Internal Server Error"),
 	})
-	public ResponseEntity<?> getSeller (@PathVariable String identifier) {
+	public ResponseEntity<Object> getSeller (@PathVariable String identifier) {
 		try {
 			// To get a seller by its identifier
 			SellerApiResponse seller = this.sellerService.get (identifier);
@@ -81,7 +81,7 @@ public class SellerController extends CustomController {
 		    @ApiResponse(code = 400, message = "Bad Request"),
 		    @ApiResponse(code = 500, message = "Internal Server Error"),
 	})
-	public ResponseEntity<?> list () {
+	public ResponseEntity<Object> list () {
 		try {
 			// To get a list of sellers
 			List<SellerApiResponse> data = this.sellerService.list ();
@@ -99,7 +99,7 @@ public class SellerController extends CustomController {
 		    @ApiResponse(code = 400, message = "Bad Request"),
 		    @ApiResponse(code = 500, message = "Internal Server Error"),
 	})
-	public ResponseEntity<?> newSeller (@RequestBody SellerApi seller) {
+	public ResponseEntity<Object> newSeller (@RequestBody SellerApi seller) {
 		try {
 			// To save a new seller
 			this.sellerService.save (seller.getIdentifier(), 
@@ -118,7 +118,7 @@ public class SellerController extends CustomController {
 		    @ApiResponse(code = 400, message = "Bad Request"),
 		    @ApiResponse(code = 500, message = "Internal Server Error"),
 	})
-	public ResponseEntity<?> updateSeller (@RequestBody SellerApi seller, @PathVariable String identifier) {
+	public ResponseEntity<Object> updateSeller (@RequestBody SellerApi seller, @PathVariable String identifier) {
 		try {
 			// To update a seller
 			this.sellerService.update (identifier, seller.getIdentifier(), 

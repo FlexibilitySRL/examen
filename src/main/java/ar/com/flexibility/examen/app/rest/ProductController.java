@@ -45,7 +45,7 @@ public class ProductController extends CustomController {
 		    @ApiResponse(code = 400, message = "Bad Request"),
 		    @ApiResponse(code = 500, message = "Internal Server Error"),
 	})
-	public ResponseEntity<?> deleteProduct (@PathVariable String code) {
+	public ResponseEntity<Object> deleteProduct (@PathVariable String code) {
 		try {
 			// To save a new product
 			this.productService.deleteProduct (code);
@@ -63,7 +63,7 @@ public class ProductController extends CustomController {
 		    @ApiResponse(code = 400, message = "Bad Request"),
 		    @ApiResponse(code = 500, message = "Internal Server Error"),
 	})
-	public ResponseEntity<?> getProduct (@PathVariable String code) {
+	public ResponseEntity<Object> getProduct (@PathVariable String code) {
 		try {
 			// To save a new product
 			ProductApiResponse product = this.productService.getProduct (code);
@@ -81,7 +81,7 @@ public class ProductController extends CustomController {
 		    @ApiResponse(code = 400, message = "Bad Request"),
 		    @ApiResponse(code = 500, message = "Internal Server Error"),
 	})
-	public ResponseEntity<?> list () {
+	public ResponseEntity<Object> list () {
 		try {
 			// To save a new product
 			List<ProductApiResponse> data = this.productService.list ();
@@ -99,7 +99,7 @@ public class ProductController extends CustomController {
 		    @ApiResponse(code = 400, message = "Bad Request"),
 		    @ApiResponse(code = 500, message = "Internal Server Error"),
 	})
-	public ResponseEntity<?> newProduct (@RequestBody ProductApi product) {
+	public ResponseEntity<Object> newProduct (@RequestBody ProductApi product) {
 		try {
 			// To save a new product
 			this.productService.newProduct(product.getCode(), 
@@ -118,7 +118,7 @@ public class ProductController extends CustomController {
 		    @ApiResponse(code = 400, message = "Bad Request"),
 		    @ApiResponse(code = 500, message = "Internal Server Error"),
 	})
-	public ResponseEntity<?> updateProduct (@RequestBody ProductApi product, @PathVariable String code) {
+	public ResponseEntity<Object> updateProduct (@RequestBody ProductApi product, @PathVariable String code) {
 		try {
 			// To save a new product
 			this.productService.updateProduct(code, product.getCode(), 

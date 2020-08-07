@@ -6,8 +6,10 @@ public class PersonApi {
 
     @JsonProperty (required = true)
 	private String identifier;
+    
     @JsonProperty (required = true)
 	private String name;
+    
     @JsonProperty (required = true)
 	private String surname;
     

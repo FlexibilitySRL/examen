@@ -44,7 +44,7 @@ public class SaleController extends CustomController {
 		    @ApiResponse(code = 400, message = "Bad Request"),
 		    @ApiResponse(code = 500, message = "Internal Server Error"),
 	})
-	public ResponseEntity<?> approveSale (@PathVariable String code) {
+	public ResponseEntity<Object> approveSale (@PathVariable String code) {
 		try {
 			// To update a sale
 			this.saleService.approveSale (code);
@@ -62,7 +62,7 @@ public class SaleController extends CustomController {
 		    @ApiResponse(code = 400, message = "Bad Request"),
 		    @ApiResponse(code = 500, message = "Internal Server Error"),
 	})
-	public ResponseEntity<?> getSale (@PathVariable String code) {
+	public ResponseEntity<Object> getSale (@PathVariable String code) {
 		try {
 			SaleApiResponse sale = this.saleService.getSale (code);
 			
@@ -79,7 +79,7 @@ public class SaleController extends CustomController {
 		    @ApiResponse(code = 400, message = "Bad Request"),
 		    @ApiResponse(code = 500, message = "Internal Server Error"),
 	})
-	public ResponseEntity<?> getSalesByStatus (@PathVariable String status) {
+	public ResponseEntity<Object> getSalesByStatus (@PathVariable String status) {
 		try {
 			// To get sales by status
 			List<SaleApiResponse> data = this.saleService.getSalesByStatus (status);
@@ -97,7 +97,7 @@ public class SaleController extends CustomController {
 		    @ApiResponse(code = 400, message = "Bad Request"),
 		    @ApiResponse(code = 500, message = "Internal Server Error"),
 	})
-	public ResponseEntity<?> list () {
+	public ResponseEntity<Object> list () {
 		try {
 			// To get list of sales
 			List<SaleApiResponse> data = this.saleService.list ();
@@ -115,7 +115,7 @@ public class SaleController extends CustomController {
 		    @ApiResponse(code = 400, message = "Bad Request"),
 		    @ApiResponse(code = 500, message = "Internal Server Error"),
 	})
-	public ResponseEntity<?> newSale (@RequestBody SaleApi sale) {
+	public ResponseEntity<Object> newSale (@RequestBody SaleApi sale) {
 		try {
 			// To save a new sale
 			this.saleService.newSale (sale.getCode(), sale.getClientIdentifier(), sale.getSellerIdentifier(),

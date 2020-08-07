@@ -6,6 +6,8 @@ import ar.com.flexibility.examen.app.api.response.SaleApiResponse;
 import ar.com.flexibility.examen.domain.model.Sale;
 
 public class SaleResponseBuilder {
+	
+	private SaleResponseBuilder () {}
 
 	public static SaleApiResponse mergeResponse (Sale entity) {		
 		SaleApiResponse response = new SaleApiResponse();

@@ -8,6 +8,8 @@ import ar.com.flexibility.examen.app.api.response.SaleApiResponse;
 import ar.com.flexibility.examen.domain.model.Client;
 
 public class ClientResponseBuilder {
+	
+	private ClientResponseBuilder () { }
 
 	public static ClientApiResponse mergeResponse(Client entity) {
 		ClientApiResponse response = new ClientApiResponse();
