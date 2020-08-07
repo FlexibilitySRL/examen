@@ -16,6 +16,7 @@ import ar.com.flexibility.examen.domain.service.ProductService;
 import ar.com.flexibility.examen.domain.service.SaleService;
 import ar.com.flexibility.examen.domain.service.SellerService;
 import ar.com.flexibility.examen.domain.service.ValidatorService;
+import ar.com.flexibility.examen.domain.utils.NumberUtils;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -92,7 +93,7 @@ public class SaleServiceImpl implements SaleService {
 		try {
 			logger.info("get sale entity");
 			this.validatorService.validateStringFields(code);
-			
+
 			Sale entity = this.saleRepository.getFirstByCode(code);
 
 			if (Objects.isNull(entity)) {
@@ -115,7 +116,7 @@ public class SaleServiceImpl implements SaleService {
 		try {
 			logger.info("get sale");
 			this.validatorService.validateStringFields(code);
-			
+
 			Sale entity = this.getEntity(code);
 
 			logger.info("get sale success");
@@ -180,12 +181,12 @@ public class SaleServiceImpl implements SaleService {
 				logger.warn("One sale already exists with the code");
 				throw new ServiceException(this.messages.getSaleDuplicated());
 			}
-			
+
 			if (productAmount < 1) {
 				logger.warn("Product amount invalid");
 				throw new ServiceException(this.messages.getSaleProductAmountInvalid());
 			}
-			
+
 			Product product = this.productService.getEntity(productCode);
 
 			int totalAvailable = product.getAmount() - productAmount;
@@ -198,6 +199,8 @@ public class SaleServiceImpl implements SaleService {
 			Client client = this.clientService.getEntity(clientIdentifier);
 			Seller seller = this.sellerService.getEntity(sellerIdentifier);
 
+			double value = NumberUtils.roundNumber(product.getPrice() * (double) productAmount);
+
 			Sale entity = new Sale();
 			entity.setAmount(productAmount);
 			entity.setClient(client);
@@ -206,7 +209,7 @@ public class SaleServiceImpl implements SaleService {
 			entity.setProduct(product);
 			entity.setSeller(seller);
 			entity.setStatus(SaleStatus.PENDIENTE);
-			entity.setValue(product.getPrice() * (double) productAmount);
+			entity.setValue(value);
 
 			this.saleRepository.save(entity);
 

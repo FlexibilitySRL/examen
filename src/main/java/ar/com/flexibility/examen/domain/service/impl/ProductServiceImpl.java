@@ -9,6 +9,7 @@ import ar.com.flexibility.examen.domain.model.Product;
 import ar.com.flexibility.examen.domain.repository.ProductRepository;
 import ar.com.flexibility.examen.domain.service.ProductService;
 import ar.com.flexibility.examen.domain.service.ValidatorService;
+import ar.com.flexibility.examen.domain.utils.NumberUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -155,7 +156,7 @@ public class ProductServiceImpl implements ProductService {
 			entity.setAmount(amount);
 			entity.setCode(code);
 			entity.setName(name);
-			entity.setPrice(price);
+			entity.setPrice(NumberUtils.roundNumber(price));
 
 			this.productRepository.save(entity);
 			logger.info("save product success");
@@ -195,7 +196,7 @@ public class ProductServiceImpl implements ProductService {
 
 			entity.setAmount(amount);
 			entity.setName(name);
-			entity.setPrice(price);
+			entity.setPrice(NumberUtils.roundNumber(price));
 
 			this.productRepository.save(entity);
 			logger.info("update product success");
