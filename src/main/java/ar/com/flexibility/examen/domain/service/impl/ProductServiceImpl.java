@@ -8,6 +8,7 @@ import ar.com.flexibility.examen.config.MessagesProps;
 import ar.com.flexibility.examen.domain.model.Product;
 import ar.com.flexibility.examen.domain.repository.ProductRepository;
 import ar.com.flexibility.examen.domain.service.ProductService;
+import ar.com.flexibility.examen.domain.service.ValidatorService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +45,8 @@ public class ProductServiceImpl implements ProductService {
 	private MessagesProps messages;
 	@Autowired
 	private ProductRepository productRepository;
+	@Autowired
+	private ValidatorService validatorService;
 
 	// ---------------
 	// Methods
@@ -53,6 +56,7 @@ public class ProductServiceImpl implements ProductService {
 	public void deleteProduct(String code) throws ServiceException {
 		try {
 			logger.info("delete product");
+			this.validatorService.validateStringFields(code);
 			
 			if (this.productRepository.countSalesByCode (code) > 0) {
 				logger.warn("It was not possible to removes the product, it has sales");
@@ -76,6 +80,8 @@ public class ProductServiceImpl implements ProductService {
 	public Product getEntity(String code) throws ServiceException {
 		try {
 			logger.info("get product entity");
+			this.validatorService.validateStringFields(code);
+			
 			Product entity = this.productRepository.getFirstByCode(code);
 
 			if (Objects.isNull(entity)) {
@@ -97,6 +103,8 @@ public class ProductServiceImpl implements ProductService {
 	public ProductApiResponse getProduct(String code) throws ServiceException {
 		try {
 			logger.info("get product");
+			this.validatorService.validateStringFields(code);
+			
 			Product entity = this.getEntity(code);
 			
 			logger.info("get product success");
@@ -132,14 +140,16 @@ public class ProductServiceImpl implements ProductService {
 	public void newProduct(String code, String name, int amount, double price) throws ServiceException {
 		try {
 			logger.info("save product");
-			// Checks if a seller already exists with the identifier
+			this.validatorService.validateStringFields(code, name);
+
+			this.validateProductAmount(amount);
+			this.validateProductPrice(price);
+			
+			// Checks if a product already exists with the code
 			if (existsProduct(code)) {
 				logger.warn("One product already exists with the code");
 				throw new ServiceException(this.messages.getProductDuplicated());
 			}
-
-			this.validateProductAmount(amount);
-			this.validateProductPrice(price);
 
 			Product entity = new Product();
 			entity.setAmount(amount);
@@ -162,6 +172,10 @@ public class ProductServiceImpl implements ProductService {
 			throws ServiceException {
 		try {
 			logger.info("update product");
+			this.validatorService.validateStringFields(code, name);
+
+			this.validateProductAmount(amount);
+			this.validateProductPrice(price);
 
 			Product entity = this.productRepository.getFirstByCode(code);
 
@@ -169,9 +183,6 @@ public class ProductServiceImpl implements ProductService {
 				logger.warn("Product not found with the current code");
 				throw new ServiceException(this.messages.getProductNotFound());
 			}
-
-			this.validateProductAmount(amount);
-			this.validateProductPrice(price);
 
 			if (!Strings.isNullOrEmpty(newCode)) {
 				if (!newCode.equals(code) && existsProduct(newCode)) {
@@ -231,7 +242,7 @@ public class ProductServiceImpl implements ProductService {
 		if (amount > this.constants.getProductMaxAmount())
 			throw new ServiceException(this.messages.getProductAmountError());
 
-		if (amount < 0 || amount < this.constants.getProductMinAmount())
+		if (amount <= 0 || amount < this.constants.getProductMinAmount())
 			throw new ServiceException(this.messages.getProductAmountMinError());
 	}
 
@@ -239,7 +250,7 @@ public class ProductServiceImpl implements ProductService {
 		if (price > this.constants.getProductMaxPrice())
 			throw new ServiceException(this.messages.getProductPriceError());
 
-		if (price < 0.0 || price < this.constants.getProductMinPrice())
+		if (price <= 0.0 || price < this.constants.getProductMinPrice())
 			throw new ServiceException(this.messages.getProductPriceMinError());
 
 	}

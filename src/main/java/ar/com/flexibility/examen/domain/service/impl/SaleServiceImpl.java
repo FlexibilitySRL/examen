@@ -15,6 +15,7 @@ import ar.com.flexibility.examen.domain.service.ClientService;
 import ar.com.flexibility.examen.domain.service.ProductService;
 import ar.com.flexibility.examen.domain.service.SaleService;
 import ar.com.flexibility.examen.domain.service.SellerService;
+import ar.com.flexibility.examen.domain.service.ValidatorService;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -54,6 +55,8 @@ public class SaleServiceImpl implements SaleService {
 	private ProductService productService;
 	@Autowired
 	private SellerService sellerService;
+	@Autowired
+	private ValidatorService validatorService;
 
 	// ---------------
 	// Methods
@@ -62,6 +65,7 @@ public class SaleServiceImpl implements SaleService {
 	public void approveSale(String code) throws ServiceException {
 		try {
 			logger.info("approve sale");
+			this.validatorService.validateStringFields(code);
 
 			Sale entity = this.getEntity(code);
 
@@ -87,6 +91,8 @@ public class SaleServiceImpl implements SaleService {
 	public Sale getEntity(String code) throws ServiceException {
 		try {
 			logger.info("get sale entity");
+			this.validatorService.validateStringFields(code);
+			
 			Sale entity = this.saleRepository.getFirstByCode(code);
 
 			if (Objects.isNull(entity)) {
@@ -108,6 +114,8 @@ public class SaleServiceImpl implements SaleService {
 	public SaleApiResponse getSale(String code) throws ServiceException {
 		try {
 			logger.info("get sale");
+			this.validatorService.validateStringFields(code);
+			
 			Sale entity = this.getEntity(code);
 
 			logger.info("get sale success");
@@ -166,6 +174,7 @@ public class SaleServiceImpl implements SaleService {
 
 		try {
 			logger.info("new sale");
+			this.validatorService.validateStringFields(code, clientIdentifier, sellerIdentifier, productCode);
 
 			if (existsSale(code)) {
 				logger.warn("One sale already exists with the code");

@@ -52,6 +52,8 @@ public class ClientServiceTest {
 	private MessagesProps messages;
 	@Mock
 	private ClientRepository clientRepository;
+	@Mock
+	private ValidatorService validatorService;
 	
 	@InjectMocks
 	private ClientServiceImpl clientService;

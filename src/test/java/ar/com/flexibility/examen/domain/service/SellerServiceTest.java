@@ -52,6 +52,8 @@ public class SellerServiceTest {
 	private MessagesProps messages;
 	@Mock
 	private SellerRepository sellerRepository;
+	@Mock
+	private ValidatorService validatorService;
 	
 	@InjectMocks
 	private SellerServiceImpl sellerService;

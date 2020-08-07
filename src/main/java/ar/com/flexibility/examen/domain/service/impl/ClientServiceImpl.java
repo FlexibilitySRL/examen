@@ -7,6 +7,7 @@ import ar.com.flexibility.examen.config.MessagesProps;
 import ar.com.flexibility.examen.domain.model.Client;
 import ar.com.flexibility.examen.domain.repository.ClientRepository;
 import ar.com.flexibility.examen.domain.service.ClientService;
+import ar.com.flexibility.examen.domain.service.ValidatorService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +42,8 @@ public class ClientServiceImpl implements ClientService {
 	private MessagesProps messages;
 	@Autowired
 	private ClientRepository clientRepository;
+	@Autowired
+	private ValidatorService validatorService;
 
 	// ---------------
 	// Methods
@@ -50,6 +53,8 @@ public class ClientServiceImpl implements ClientService {
 	public void delete(String identifier) throws ServiceException {
 		try {
 			logger.info("delete client");
+			this.validatorService.validateStringFields(identifier);
+			
 			if (this.clientRepository.countPurchasesByIdentifier(identifier) > 0) {
 				logger.warn("It was not possible to removes the client, it has purchases");
 				throw new ServiceException(this.messages.getClientPurchasesError());
@@ -72,6 +77,7 @@ public class ClientServiceImpl implements ClientService {
 	public Client getEntity(String identifier) throws ServiceException {
 		try {
 			logger.info("get client entity");
+			this.validatorService.validateStringFields(identifier);
 
 			Client entity = this.clientRepository.getFirstByIdentifier(identifier);
 
@@ -94,6 +100,8 @@ public class ClientServiceImpl implements ClientService {
 	public ClientApiResponse get(String identifier) throws ServiceException {
 		try {
 			logger.info("get client");
+			this.validatorService.validateStringFields(identifier);
+			
 			Client entity = this.getEntity(identifier);
 
 			logger.info("get client success");
@@ -129,6 +137,8 @@ public class ClientServiceImpl implements ClientService {
 	public void save(String identifier, String name, String surname) throws ServiceException {
 		try {
 			logger.info("save client");
+			this.validatorService.validateStringFields(identifier, name, surname);
+			
 			// Checks if a client already exists with the identifier
 			if (existsClient(identifier)) {
 				logger.warn("One client already exists with the identifier");
@@ -154,6 +164,7 @@ public class ClientServiceImpl implements ClientService {
 	public void update(String identifier, String newIdentifier, String name, String surname) throws ServiceException {
 		try {
 			logger.info("update client");
+			this.validatorService.validateStringFields(identifier, newIdentifier, name, surname);
 
 			Client entity = this.clientRepository.getFirstByIdentifier(identifier);
 

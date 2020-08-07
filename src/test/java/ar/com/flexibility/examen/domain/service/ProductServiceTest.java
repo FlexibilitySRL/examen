@@ -54,6 +54,8 @@ public class ProductServiceTest {
 	private MessagesProps messages;
 	@Mock
 	private ProductRepository productRepository;
+	@Mock
+	private ValidatorService validatorService;
 	
 	@InjectMocks
 	private ProductServiceImpl productService;

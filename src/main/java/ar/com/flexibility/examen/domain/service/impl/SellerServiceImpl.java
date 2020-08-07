@@ -7,6 +7,7 @@ import ar.com.flexibility.examen.config.MessagesProps;
 import ar.com.flexibility.examen.domain.model.Seller;
 import ar.com.flexibility.examen.domain.repository.SellerRepository;
 import ar.com.flexibility.examen.domain.service.SellerService;
+import ar.com.flexibility.examen.domain.service.ValidatorService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +42,8 @@ public class SellerServiceImpl implements SellerService {
 	private MessagesProps messages;
 	@Autowired
 	private SellerRepository sellerRepository;
+	@Autowired
+	private ValidatorService validatorService;
 
 	// ---------------
 	// Methods
@@ -50,14 +53,19 @@ public class SellerServiceImpl implements SellerService {
 	public void delete(String identifier) throws ServiceException {
 		try {
 			logger.info("delete seller");
+			
+			this.validatorService.validateStringFields(identifier);
+			
 			if (this.sellerRepository.countSalesByIdentifier(identifier) > 0) {
 				logger.warn("It was not possible to removes the seller, it has sales");
 				throw new ServiceException(this.messages.getSellerSalesError());
 			}
+			
 			if (this.sellerRepository.deleteByIdentifier(identifier) != 1) {
 				logger.warn("It was not possible to removes the seller");
 				throw new ServiceException(this.messages.getSellerSalesError());
 			}
+			
 			logger.info("delete seller success");
 		} catch (ServiceException e) {
 			throw e;
@@ -70,6 +78,9 @@ public class SellerServiceImpl implements SellerService {
 	public Seller getEntity(String identifier) throws ServiceException {
 		try {
 			logger.info("get seller entity");
+			
+			this.validatorService.validateStringFields(identifier);
+			
 			Seller entity = this.sellerRepository.getFirstByIdentifier(identifier);
 
 			if (Objects.isNull(entity)) {
@@ -90,6 +101,9 @@ public class SellerServiceImpl implements SellerService {
 	public SellerApiResponse get(String identifier) throws ServiceException {
 		try {
 			logger.info("get seller");
+			
+			this.validatorService.validateStringFields(identifier);
+			
 			Seller entity = this.getEntity(identifier);
 
 			logger.info("get seller success");
@@ -123,6 +137,9 @@ public class SellerServiceImpl implements SellerService {
 	public void save(String identifier, String name, String surname) throws ServiceException {
 		try {
 			logger.info("save seller");
+			
+			this.validatorService.validateStringFields(identifier, name, surname);
+			
 			// Checks if a seller already exists with the identifier
 			if (existsSeller(identifier)) {
 				logger.warn("One seller already exists with the identifier");
@@ -147,6 +164,8 @@ public class SellerServiceImpl implements SellerService {
 	public void update(String identifier, String newIdentifier, String name, String surname) throws ServiceException {
 		try {
 			logger.info("update seller");
+			
+			this.validatorService.validateStringFields(identifier, newIdentifier, name, surname);
 
 			Seller entity = this.sellerRepository.getFirstByIdentifier(identifier);
 

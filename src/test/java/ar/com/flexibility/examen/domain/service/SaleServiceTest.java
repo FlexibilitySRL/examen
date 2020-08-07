@@ -61,6 +61,8 @@ public class SaleServiceTest {
 	private ProductService productService;
 	@Mock
 	private SellerService sellerService;
+	@Mock
+	private ValidatorService validatorService;
 	
 	@InjectMocks
 	private SaleServiceImpl saleService;
