@@ -1,10 +1,10 @@
 package ar.com.flexibility.examen.domain.model;
 
-public class Message {
+public class MessageResponse {
 
     private String message;
 
-    public Message(String message) {
+    public MessageResponse(String message) {
         this.message = message;
     }
 

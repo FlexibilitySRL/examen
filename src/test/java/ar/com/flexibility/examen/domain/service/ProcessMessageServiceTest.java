@@ -1,6 +1,6 @@
 package ar.com.flexibility.examen.domain.service;
 
-import ar.com.flexibility.examen.domain.model.Message;
+import ar.com.flexibility.examen.domain.model.MessageResponse;
 import ar.com.flexibility.examen.domain.service.impl.ProcessMessageServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,7 +19,7 @@ public class ProcessMessageServiceTest {
     public void processMessage()
     {
         String messageTest = "TEST";
-        Message message = messageService.processMessage(messageTest);
+        MessageResponse message = messageService.processMessage(messageTest);
 
         assertNotNull(message);
         assertEquals(message.getMessage(), messageTest);

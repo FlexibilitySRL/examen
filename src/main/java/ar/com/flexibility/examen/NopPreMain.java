@@ -9,5 +9,6 @@ public class NopPreMain {
     }
 
     public static void premain(final String opts, final Instrumentation inst) {
+        // No instances
     }
 }
