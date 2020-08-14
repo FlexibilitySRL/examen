@@ -2,14 +2,13 @@ package ar.com.flexibility.examen.domain.service;
 
 import ar.com.flexibility.examen.domain.model.Message;
 import ar.com.flexibility.examen.domain.service.impl.ProcessMessageServiceImpl;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import static org.junit.Assert.*;
-
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(SpringExtension.class)
 public class ProcessMessageServiceTest {
 
     @InjectMocks
@@ -21,7 +20,7 @@ public class ProcessMessageServiceTest {
         String messageTest = "TEST";
         Message message = messageService.processMessage(messageTest);
 
-        assertNotNull(message);
-        assertEquals(message.getMessage(), messageTest);
+        Assertions.assertNotNull(message);
+        Assertions.assertEquals(message.getMessage(), messageTest);
     }
 }
