@@ -9,4 +9,6 @@ public interface ProcessProductService {
 	ProductApi update(Long productId, ProductApi productApi);
 	
 	String delete(ProductApi productApi);
+	
+	ProductApi searchByName(String name);
 }

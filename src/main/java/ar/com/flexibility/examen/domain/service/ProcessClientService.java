@@ -9,4 +9,6 @@ public interface ProcessClientService {
 	ClientApi update(Long clientId, ClientApi clientApi);
 	
 	String delete(ClientApi clientApi);
+	
+	ClientApi searchByName(String name);
 }

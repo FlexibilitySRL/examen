@@ -51,4 +51,14 @@ public class ProcessClientServiceImpl implements ProcessClientService {
 		log.info("Client successfully deleted.");
 		return "Client successfully deleted.";
 	}
+	
+	@Override
+	public ClientApi searchByName(String name) {
+		Client client = clientRepository.findByName(name);
+		ClientApi clientApi = null;
+		if(client != null) {
+			clientApi = modelMapper.map(client, ClientApi.class);
+		}
+		return clientApi;
+	}
 }

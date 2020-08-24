@@ -50,4 +50,14 @@ public class ProcessProductServiceImpl implements ProcessProductService {
 		log.info("Product successfully deleted.");
 		return "Product successfully deleted.";
 	}
+	
+	@Override
+	public ProductApi searchByName(String name) {
+		Product product = productRepository.findByName(name);		
+		ProductApi productApi = null;
+		if(product != null) {
+			productApi = modelMapper.map(product, ProductApi.class);
+		}
+		return productApi;
+	}
 }

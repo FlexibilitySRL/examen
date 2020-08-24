@@ -11,5 +11,8 @@ public interface ProductRepository extends JpaRepository<Product, String> {
 
 	@Query(value = "SELECT * FROM PRODUCT WHERE ID = ?1", nativeQuery = true)
 	Product findById(Long id);
+	
+	@Query(value = "SELECT * FROM PRODUCT WHERE NAME = ?1", nativeQuery = true)
+	Product findByName(String name);
 
 }
