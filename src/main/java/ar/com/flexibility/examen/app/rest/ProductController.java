@@ -62,25 +62,6 @@ public class ProductController {
 		}
 	}
 
-//	/**
-//	 * Operation 
-//	 * @param productId
-//	 * @param productApi
-//	 * @return
-//	 */
-//	@GetMapping("/search")
-//	public ResponseEntity<?> search(@RequestParam("id") Long productId, @RequestBody ProductApi productApi) {
-//		String mensaje = "";
-//		log.info("Searching a product...");
-//		try {
-//			return new ResponseEntity<ProductApi>(productService.search(productId), HttpStatus.OK);
-//		} catch (Exception e) {
-//			mensaje = "There was an error searching a product.";
-//			log.error(mensaje, e.getMessage());
-//			return new ResponseEntity<String>(mensaje + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-//		}
-//	}
-
 	@DeleteMapping("/delete")
 	public ResponseEntity<?> delete(@RequestBody ProductApi productApi) {
 		String mensaje = "";
