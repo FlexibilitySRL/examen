@@ -2,9 +2,17 @@ package ar.com.flexibility.examen.domain.service.impl;
 
 import ar.com.flexibility.examen.domain.model.Message;
 import ar.com.flexibility.examen.domain.service.ProcessMessageService;
+
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+/**
+ * 
+ * @author Daniel Camilo 
+ * Date 20-09-2020
+ */
 @Service
+@Qualifier("ProcessMessageServiceImpl")
 public class ProcessMessageServiceImpl implements ProcessMessageService {
 
     @Override
