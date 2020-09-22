@@ -1,0 +1,357 @@
+{
+	"info": {
+		"_postman_id": "53592aa1-b204-4a37-acdd-ea2319c4f5c4",
+		"name": "PRUEBAS CONSUMO SERVICIO",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "save-client",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f1ac565b-c8f0-4208-a117-9a233f822b11",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"names\": \"Daniel Correa\",\r\n    \"identification\": \"123123123\",\r\n    \"cellphone\": \"9999999\",\r\n    \"country\": \"colombia\",\r\n    \"enterprise\": \"presto\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/clients/save-client",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"clients",
+						"save-client"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update-client",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "66b03e0d-227c-4f55-a699-d56b92ff061c",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"names\": \"Daniel Correa\",\r\n    \"identification\": \"123123123\",\r\n    \"cellphone\": \"9999999\",\r\n    \"country\": \"colombia\",\r\n    \"enterprise\": \"presto\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/clients/update-client/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"clients",
+						"update-client",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-client-by-id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/clients/get-client/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"clients",
+						"get-client",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-all-product",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/products/get-all-product",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"products",
+						"get-all-product"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-product-by-id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/clients/get-client/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"clients",
+						"get-client",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-purchases-transactions-by-id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/purchases-transactions/get-purchases-transactions/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"purchases-transactions",
+						"get-purchases-transactions",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete-product",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/products/delete-product/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"products",
+						"delete-product",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-all-clients",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/clients/get-all-client",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"clients",
+						"get-all-client"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-all-purchases-transactions",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/purchases-transactions/get-all-purchases-transactions",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"purchases-transactions",
+						"get-all-purchases-transactions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete-client",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/clients/delete-client/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"clients",
+						"delete-client",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete-client Copy",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/clients/delete-client/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"clients",
+						"delete-client",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "save-product",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"0\",\r\n    \"names\": \"Jabon\",\r\n    \"values\": \"1500\",\r\n    \"numberReferences\": \"010101\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/products/save-product",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"products",
+						"save-product"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "save-product-purchases-transactions",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"comments\": \"pruebas\",\r\n    \"date\": \"2020-09-10\",\r\n    \"fkProduct\": {\r\n        \"id\": 2\r\n    },\r\n    \"fkClient\": {\r\n        \"id\": 2\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/purchases-transactions/save-purchases-transactions",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"purchases-transactions",
+						"save-purchases-transactions"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
