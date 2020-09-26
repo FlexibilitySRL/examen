@@ -1,0 +1,417 @@
+swagger: "2.0"
+info:
+  description: "Swagger que permite definir los servicios para la administracion de compra de productos"
+  version: "1.0.0"
+  title: "Swagger Administracion compra de producto"
+host: "localhost"
+tags:
+- name: "producto"
+  description: "Contiene las operaciones para los productos"
+- name: "cliente"
+  description: "Contiene las operaciones para los clientes"
+- name: "compra"
+  description: "Contiene las operaciones para las compras"
+schemes:
+- "http"
+paths:
+  /cliente:
+    post:
+      tags:
+      - "cliente"
+      summary: "Agregar un nuevo cliente"
+      description: ""
+      operationId: "crearCliente"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Objeto que contiene la informacion para la creacion de un cliente"
+        required: true
+        schema:
+          $ref: "#/definitions/ClienteDTO"
+      responses:
+        "200":
+          description: "Objeto con informacion del cliente creado"
+          schema: 
+            $ref: '#/definitions/ClienteDTO'
+        "412":
+          description: "Objeto en caso de error"
+          schema:
+            $ref: '#/definitions/ErrorDTO'
+        "500":
+          description: "Erro no controlado"
+          schema:
+            $ref: '#/definitions/ErrorDTO'
+  /cliente/{id}:
+    put:
+      tags:
+      - "cliente"
+      summary: "Metodo que permite modificar la informacion de un cliente"
+      description: ""
+      operationId: "actualizarCliente"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: id
+        in: path
+        description: Identificador del usuario
+        required: true
+        type: string
+      - in: "body"
+        name: "body"
+        description: "Objeto que contiene la informacion para la creacion de un cliente"
+        required: true
+        schema:
+          $ref: "#/definitions/ClienteDTO"
+      responses:
+        "200":
+          description: "Objeto con informacion del cliente actualizado"
+          schema: 
+            $ref: '#/definitions/ClienteDTO'
+        "412":
+          description: "Objeto en caso de error"
+          schema:
+            $ref: '#/definitions/ErrorDTO'
+        "500":
+          description: "Erro no controlado"
+          schema:
+            $ref: '#/definitions/ErrorDTO'
+    delete:
+      tags:
+      - "cliente"
+      summary: ""
+      description: ""
+      operationId: "eliminarCliente"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: id
+        in: path
+        description: Identificador del usuario
+        required: true
+        type: string
+        
+      responses:
+        "200":
+          description: "Objeto con informacion del cliente creado"
+          schema: 
+            $ref: '#/definitions/RespuestaDTO'
+        "412":
+          description: "Objeto en caso de error"
+          schema:
+            $ref: '#/definitions/ErrorDTO'
+        "500":
+          description: "Erro no controlado"
+          schema:
+            $ref: '#/definitions/ErrorDTO'
+  /producto:
+    post:
+      tags:
+      - "producto"
+      summary: "Agregar un nuevo producto"
+      description: ""
+      operationId: "crearProducto"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Objeto que contiene la informacion para la creacion de un producto"
+        required: true
+        schema:
+          $ref: '#/definitions/ProductoDTO'
+      responses:
+        "200":
+          description: "Objeto con informacion del producto creado"
+          schema: 
+            $ref: '#/definitions/ProductoDTO'
+        "412":
+          description: "Objeto en caso de error"
+          schema:
+            $ref: '#/definitions/ErrorDTO'
+        "500":
+          description: "Erro no controlado"
+          schema:
+            $ref: '#/definitions/ErrorDTO'
+  /producto/{id}:
+    put:
+      tags:
+      - "producto"
+      summary: "Metodo que permite modificar la informacion de un producto"
+      description: ""
+      operationId: "actualizarProducto"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: id
+        in: path
+        description: Identificador del usuario
+        required: true
+        type: string
+      - in: "body"
+        name: "body"
+        description: "Objeto que contiene la informacion para la creacion de un producto"
+        required: true
+        schema:
+          $ref: "#/definitions/ProductoDTO"
+      responses:
+        "200":
+          description: "Objeto con informacion del producto actualizado"
+          schema: 
+            $ref: '#/definitions/ProductoDTO'
+        "412":
+          description: "Objeto en caso de error"
+          schema:
+            $ref: '#/definitions/ErrorDTO'
+        "500":
+          description: "Erro no controlado"
+          schema:
+            $ref: '#/definitions/ErrorDTO'
+    delete:
+      tags:
+      - "producto"
+      summary: ""
+      description: ""
+      operationId: "eliminarProducto"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: id
+        in: path
+        description: Eliminar producto
+        required: true
+        type: string
+      responses:
+        "200":
+          description: "Objeto con informacion del producto actualizado"
+          schema: 
+            $ref: '#/definitions/RespuestaDTO'
+        "412":
+          description: "Objeto en caso de error"
+          schema:
+            $ref: '#/definitions/ErrorDTO'
+        "500":
+          description: "Erro no controlado"
+          schema:
+            $ref: '#/definitions/ErrorDTO'
+  /compras:
+    get:
+      tags:
+      - compra
+      summary: ""
+      description: ""
+      operationId: "consultaCompras"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "Objeto con informacion de las compras realizadas"
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/FacturaDTO'
+        "412":
+          description: "Objeto en caso de error"
+          schema:
+            $ref: '#/definitions/ErrorDTO'
+        "500":
+          description: "Erro no controlado"
+          schema:
+            $ref: '#/definitions/ErrorDTO'
+    post:
+      tags:
+      - compra
+      summary: ""
+      description: ""
+      operationId: "crearCompra"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Objeto que contiene la informacion para la creacion de un factura de compra"
+        required: true
+        schema:
+          $ref: "#/definitions/FacturaDTO"
+      responses:
+        "200":
+          description: "Objeto con informacion de las compras realizadas"
+          schema:
+            $ref: '#/definitions/RespuestaDTO'
+        "412":
+          description: "Objeto en caso de error"
+          schema:
+            $ref: '#/definitions/ErrorDTO'
+        "500":
+          description: "Erro no controlado"
+          schema:
+            $ref: '#/definitions/ErrorDTO'
+            
+  /compras/{id}:
+    get:
+      tags:
+      - compra
+      summary: ""
+      description: ""
+      operationId: "consultaCompra"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: id
+        in: path
+        description: Identificador de la compra a consultar
+        required: true
+        type: string
+      responses:
+        "200":
+          description: "Objeto con informacion de la compra"
+          schema: 
+            $ref: '#/definitions/FacturaDTO'
+        "412":
+          description: "Objeto en caso de error"
+          schema:
+            $ref: '#/definitions/ErrorDTO'
+        "500":
+          description: "Erro no controlado"
+          schema:
+            $ref: '#/definitions/ErrorDTO'
+    put:
+      tags:
+      - compra
+      summary: ""
+      description: ""
+      operationId: "aprobarCompra"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: id
+        in: path
+        description: Identificador de la compra a actualizar
+        required: true
+        type: string
+      responses:
+        "200":
+          description: "Objeto con informacion de la compra aprobada"
+          schema: 
+            $ref: '#/definitions/FacturaDTO'
+        "412":
+          description: "Objeto en caso de error"
+          schema:
+            $ref: '#/definitions/ErrorDTO'
+        "500":
+          description: "Erro no controlado"
+          schema:
+            $ref: '#/definitions/ErrorDTO'
+      
+definitions:
+  ClienteDTO:
+    type: "object"
+    properties:
+      udid:
+        type: integer
+      numeroDocumento:
+        type: string
+      tipoDocumento:
+        type: string
+      nombre:
+        type: string
+      apellido:
+        type: string
+      sexo:
+        type: string
+        enum:
+        - "M"
+        - "F"
+      edad:
+        type: "integer"
+        minimum: 1 
+        maximum: 20
+  FacturaDTO:
+    type: "object"
+    properties:
+      udid:
+        type: integer
+      subtotal:
+        type: number
+      total:
+        type: number
+      fecha:
+        type: string
+        pattern: dd/MM/yyyy HH:mm:ss
+      estado:
+        type: boolean
+      cliente:
+        $ref: '#/definitions/ClienteDTO'
+      detalle:
+        type: array
+        items:
+          $ref: '#/definitions/DetalleFacturaDTO'
+  DetalleFacturaDTO:
+    type: "object"
+    properties:
+      cantidad: 
+        type: number
+      valor:
+        type: number
+      identificadorProducto:
+        type: integer
+  ProductoDTO:
+    type: "object"
+    properties:
+      udid:
+        type: integer
+      nombre:
+        type: string
+      descripcion:
+        type: string
+      costo:
+        type: number
+      precioVenta:
+        type: number
+      cantidad:
+        type: integer
+      proveedor:
+        type: string
+  
+  RespuestaDTO:
+    title: RespuestaDTO
+    type: object
+    properties:
+      code:
+        type: integer
+        description: Código que identifica el error correspondiente a la petición.
+      message:
+        type: string
+        description: Describe la causa del error  
+  
+  ErrorDTO:
+    title: Error
+    type: object
+    properties:
+      code:
+        type: integer
+        description: Código que identifica el error correspondiente a la petición.
+      message:
+        type: string
+        description: Describe la causa del error
