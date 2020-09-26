@@ -5,3 +5,5 @@ logging:
   level:
     org.springframework: INFO
     ar.com.flexibility: DEBUG
+
+spring:  profiles:    active:    - local
