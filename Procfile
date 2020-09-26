@@ -1,1 +1,1 @@
-web: java -Dserver.port=$PORT -jar target/examen-0.0.1.jar
+web: java -jar target/examen-0.0.1.jar
