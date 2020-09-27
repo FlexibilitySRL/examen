@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class ClientServiceImplCRUDTest {
+public class ClientServiceImplCrudTest {
 
     @Autowired
     private ClientService clientService;
