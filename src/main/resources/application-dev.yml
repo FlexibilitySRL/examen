@@ -1,0 +1,19 @@
+spring:
+  devtools:
+    restart:
+      enabled: true
+      
+server:
+  port: ${PORT:8081}
+      
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driverClassName: org.h2.Driver
+    username: prueba
+    password: 
+    
+  h2:
+    console:
+      enabled: true
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
