@@ -8,6 +8,7 @@ public interface ProductService {
 
     Product createProduct(Product product);
     Product getProduct(String cod) throws ProductNotFoundException;
+    boolean exists(String cod);
     Product updateProduct(Product product) throws ProductNotFoundException;
     void deleteProduct(String cod) throws  ProductNotFoundException;
 

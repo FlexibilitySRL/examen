@@ -40,6 +40,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public boolean exists(String cod) {
+        return productRepository.existsById(cod);
+    }
+
+    @Override
     public void deleteProduct(String cod) throws ProductNotFoundException {
         try {
             productRepository.deleteById(cod);

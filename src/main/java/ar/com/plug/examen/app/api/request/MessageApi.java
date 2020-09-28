@@ -1,4 +1,4 @@
-package ar.com.plug.examen.app.api;
+package ar.com.plug.examen.app.api.request;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
