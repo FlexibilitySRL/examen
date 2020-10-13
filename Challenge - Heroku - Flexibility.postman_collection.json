@@ -1,0 +1,677 @@
+{
+	"info": {
+		"_postman_id": "f56a5686-9135-4a7e-8af0-1ed4324129c6",
+		"name": "Challenge - Heroku - Flexibility",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Messages - Echo",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"message\": \"Hola\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://challenge-flex-cromero.herokuapp.com/payments/echo/",
+					"protocol": "https",
+					"host": [
+						"challenge-flex-cromero",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"payments",
+						"echo",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Client - FindAll",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://challenge-flex-cromero.herokuapp.com/payments/clients/",
+					"protocol": "https",
+					"host": [
+						"challenge-flex-cromero",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"payments",
+						"clients",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Client - Get",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://challenge-flex-cromero.herokuapp.com/payments/clients/1",
+					"protocol": "https",
+					"host": [
+						"challenge-flex-cromero",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"payments",
+						"clients",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Client - Create",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"NombrePrueba\",\r\n    \"surname\": \"ApellidoPrueba\",\r\n    \"email\": \"mail@prueba.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://challenge-flex-cromero.herokuapp.com/payments/clients/",
+					"protocol": "https",
+					"host": [
+						"challenge-flex-cromero",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"payments",
+						"clients",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Client - Modify",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"NombreModificadoPrueba\",\r\n    \"surname\": \"ApellidoModificadoPrueba\",\r\n    \"email\": \"emailmodificado@prueba.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://challenge-flex-cromero.herokuapp.com/payments/clients/1",
+					"protocol": "https",
+					"host": [
+						"challenge-flex-cromero",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"payments",
+						"clients",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Client - Delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://challenge-flex-cromero.herokuapp.com/payments/clients/1",
+					"protocol": "https",
+					"host": [
+						"challenge-flex-cromero",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"payments",
+						"clients",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Product - FindAll",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://challenge-flex-cromero.herokuapp.com/payments/products/",
+					"protocol": "https",
+					"host": [
+						"challenge-flex-cromero",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"payments",
+						"products",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Product - Get",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://challenge-flex-cromero.herokuapp.com/payments/products/2",
+					"protocol": "https",
+					"host": [
+						"challenge-flex-cromero",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"payments",
+						"products",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Product - Create",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"NombreProductoPrueba\",\r\n    \"price\": 123.45\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://challenge-flex-cromero.herokuapp.com/payments/products/",
+					"protocol": "https",
+					"host": [
+						"challenge-flex-cromero",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"payments",
+						"products",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Product - Modify",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"NombreProductoModificadoPrueba\",\r\n    \"price\": 456.78\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://challenge-flex-cromero.herokuapp.com/payments/products/1",
+					"protocol": "https",
+					"host": [
+						"challenge-flex-cromero",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"payments",
+						"products",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Product - Delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://challenge-flex-cromero.herokuapp.com/payments/products/1",
+					"protocol": "https",
+					"host": [
+						"challenge-flex-cromero",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"payments",
+						"products",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Seller - FindAll",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://challenge-flex-cromero.herokuapp.com/payments/sellers/",
+					"protocol": "https",
+					"host": [
+						"challenge-flex-cromero",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"payments",
+						"sellers",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Seller - Get",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://challenge-flex-cromero.herokuapp.com/payments/sellers/1",
+					"protocol": "https",
+					"host": [
+						"challenge-flex-cromero",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"payments",
+						"sellers",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Seller - Create",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"NombreVendedorPrueba\",\r\n    \"email\": \"vende@dor.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://challenge-flex-cromero.herokuapp.com/payments/sellers/",
+					"protocol": "https",
+					"host": [
+						"challenge-flex-cromero",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"payments",
+						"sellers",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Seller - Modify",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"NombreVendedorModificadoPrueba\",\r\n    \"email\": \"emailvendedormodificado@prueba.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://challenge-flex-cromero.herokuapp.com/payments/sellers/1",
+					"protocol": "https",
+					"host": [
+						"challenge-flex-cromero",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"payments",
+						"sellers",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Seller - Delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://challenge-flex-cromero.herokuapp.com/payments/sellers/1",
+					"protocol": "https",
+					"host": [
+						"challenge-flex-cromero",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"payments",
+						"sellers",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Purchase - FindAll",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://challenge-flex-cromero.herokuapp.com/payments/purchases/",
+					"protocol": "https",
+					"host": [
+						"challenge-flex-cromero",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"payments",
+						"purchases",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Purchase - Create",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"description\": \"Orden de compra - Prueba\",\r\n    \"client\": 2,\r\n    \"seller\": 3,\r\n    \"items\": [\r\n        {\r\n        \"quantity\" : 1,\r\n        \"product\" : 1\r\n        },\r\n        {\r\n        \"quantity\" : 2,\r\n        \"product\" : 3\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://challenge-flex-cromero.herokuapp.com/payments/purchases/",
+					"protocol": "https",
+					"host": [
+						"challenge-flex-cromero",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"payments",
+						"purchases",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Purchase - Delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://challenge-flex-cromero.herokuapp.com/payments/purchases/1",
+					"protocol": "https",
+					"host": [
+						"challenge-flex-cromero",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"payments",
+						"purchases",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Purchase - approve by purchase id",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "https://challenge-flex-cromero.herokuapp.com/payments/manage/approve/1",
+					"protocol": "https",
+					"host": [
+						"challenge-flex-cromero",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"payments",
+						"manage",
+						"approve",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Purchase - cancel by purchase id",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "https://challenge-flex-cromero.herokuapp.com/payments/purchases/cancel/5",
+					"protocol": "https",
+					"host": [
+						"challenge-flex-cromero",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"payments",
+						"purchases",
+						"cancel",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Purchase - Bulk approve by client",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "https://challenge-flex-cromero.herokuapp.com/payments/purchases/bulkApproveByClient/15",
+					"protocol": "https",
+					"host": [
+						"challenge-flex-cromero",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"payments",
+						"purchases",
+						"bulkApproveByClient",
+						"15"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Purchase - Bulk cancel by client",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\": \"NombreModificadoPrueba\",\r\n    \"apellido\": \"ApellidoModificadoPrueba\",\r\n    \"email\": \"emailmodificado@prueba.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://challenge-flex-cromero.herokuapp.com/payments/purchases/bulkCancelByClient/1",
+					"protocol": "https",
+					"host": [
+						"challenge-flex-cromero",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"payments",
+						"purchases",
+						"bulkCancelByClient",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
