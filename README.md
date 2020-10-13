@@ -52,7 +52,7 @@ determinados paths.
 ·La documentación de los servicios expuestos se realizó utilizando Swagger. Para acceder a esta documentación basta con ir a la url: 
 	
 	Local: http://localhost:8080/payments/swagger-ui/
-	Desplegado remoto: https://challenge-flex-cromero.herokuapp.com//payments/swagger-ui/
+	Desplegado remoto: https://challenge-flex-cromero.herokuapp.com/payments/swagger-ui/
 	
 
 ·Para calcular la cobertura de los tests se utilizó Jacoco. Para generar el reporte es necesario abrir una consola, posicionarse sobre el directorio raíz /examen y correr el siguiente comando:
