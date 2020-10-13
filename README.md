@@ -50,14 +50,14 @@ ________________________________________________________________________________
 determinados paths.
 
 ·La documentación de los servicios expuestos se realizó utilizando Swagger. Para acceder a esta documentación basta con ir a la url: 
-	- Local: http://localhost:8080/payments/swagger-ui/
-	- Desplegado remoto: https://challenge-flex-cromero.herokuapp.com//payments/swagger-ui/
-
-·Los tests se encuentran en src/test/java
+	
+	Local: http://localhost:8080/payments/swagger-ui/
+	Desplegado remoto: https://challenge-flex-cromero.herokuapp.com//payments/swagger-ui/
+	
 
 ·Para calcular la cobertura de los tests se utilizó Jacoco. Para generar el reporte es necesario abrir una consola, posicionarse sobre el directorio raíz /examen y correr el siguiente comando:
 	- mvn clean test
-Para ver el reporte es necesario abrir el archivo index.html ubicado en /examen-heroku/target/site/jacoco/
+Para ver el reporte es necesario abrir el archivo index.html ubicado en /examen/target/site/jacoco/
 
 ·Para generar la imagen de Docker se utiliza el archivo /examen/Dockerfile. Es necesario abrir una consola, posicionarse en el directorio raíz /examen y correr el siguiente comando:
 	- docker build -t examen-flex-cromero:1.0
