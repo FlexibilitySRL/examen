@@ -75,9 +75,10 @@ Finalmente para montar la imagen en un contenedor es necesario correr lo siguien
 ·Se agregan dos archivos en el directorio raíz que contienen las colecciones de requests tanto para las pruebas locales como para las pruebas contra Heroku. Estos archivos pueden ser importados en Postman.
 
 ·Por último, el archivo data.sql agrega información básica de prueba:
-	- Se insertan 2 Clientes.
-	- Se insertan 2 Vendedores.
-	- Se insertan 8 Productos.
-	- Se insertan 4 Compras con distinta cantidad de productos.
+	
+	· Se insertan 2 Clientes.
+	· Se insertan 2 Vendedores.
+	· Se insertan 8 Productos.
+	· Se insertan 4 Compras con distinta cantidad de productos.
 	
 
