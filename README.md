@@ -36,3 +36,38 @@ Bonus
 4) Correr pruebas con base de datos en memoria.
 5) Crear Docker Image.
 6) Hostear la app en un cloud computing libre y enviar la URL para consultar.
+
+
+___________________________________________________________________________________________________________________________________________________________
+
+# Solución propuesta
+
+·Se agrega la funcionalidad pedida en la API REST dada.
+
+·Se hace uso de base de datos en memoria.
+
+·El log de los servicios fue resuelto utilizando un interceptor (LoggerInterceptor) el cual intercepta todos los requests que sean dirigidos a los controladores de 
+determinados paths.
+
+·La documentación de los servicios expuestos se realizó utilizando Swagger. Para acceder a esta documentación basta con ir a la url: 
+	- Local: http://localhost:8080/payments/swagger-ui/
+	- Desplegado remoto: https://challenge-flex-cromero.herokuapp.com//payments/swagger-ui/
+
+·Los tests se encuentran en src/test/java
+
+·Para calcular la cobertura de los tests se utilizó Jacoco. Para generar el reporte es necesario abrir una consola, posicionarse sobre el directorio raíz /examen y correr el siguiente comando:
+	- mvn clean test
+Para ver el reporte es necesario abrir el archivo index.html ubicado en /examen-heroku/target/site/jacoco/
+
+·Para generar la imagen de Docker se utiliza el archivo /examen/Dockerfile. Es necesario abrir una consola, posicionarse en el directorio raíz /examen y correr el siguiente comando:
+	- docker build -t examen-flex-cromero:1.0
+Finalmente para montar la imagen en un contenedor es necesario correr lo siguiente:
+	- docker run -d -p 8080:8080 --name examen-flex-cromero-cont examen-flex-cromero:1.0
+
+·La aplicación se encuentra hosteada en Heroku (https://challenge-flex-cromero.herokuapp.com/payments/)
+
+·Se agregan dos archivos en el directorio raíz que contienen las colecciones de requests tanto para las pruebas locales como para las pruebas contra Heroku. Estos archivos pueden ser importados en Postman.
+
+
+	
+
