@@ -56,13 +56,19 @@ determinados paths.
 	
 
 ·Para calcular la cobertura de los tests se utilizó Jacoco. Para generar el reporte es necesario abrir una consola, posicionarse sobre el directorio raíz /examen y correr el siguiente comando:
-	- mvn clean test
+	
+	 mvn clean test
+	
 Para ver el reporte es necesario abrir el archivo index.html ubicado en /examen/target/site/jacoco/
 
 ·Para generar la imagen de Docker se utiliza el archivo /examen/Dockerfile. Es necesario abrir una consola, posicionarse en el directorio raíz /examen y correr el siguiente comando:
-	- docker build -t examen-flex-cromero:1.0
+	
+	 docker build -t examen-flex-cromero:1.0
+	
 Finalmente para montar la imagen en un contenedor es necesario correr lo siguiente:
-	- docker run -d -p 8080:8080 --name examen-flex-cromero-cont examen-flex-cromero:1.0
+	
+	 docker run -d -p 8080:8080 --name examen-flex-cromero-cont examen-flex-cromero:1.0
+	
 
 ·La aplicación se encuentra hosteada en Heroku (https://challenge-flex-cromero.herokuapp.com/payments/)
 
