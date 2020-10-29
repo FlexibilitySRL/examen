@@ -12,8 +12,14 @@ spring:
       username: root
       password: password
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+        
 server:
   port: 8080
   servlet:
     context-path: '/payments'
----
+
