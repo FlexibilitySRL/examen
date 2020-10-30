@@ -4,11 +4,12 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import ar.com.plug.examen.domain.model.Customer;
 import ar.com.plug.examen.domain.repository.CustomerRepository;
 
-@Component
+@Service
 public class CustomerServiceImpl {
 	@Autowired
 	CustomerRepository customerRepo;
