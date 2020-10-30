@@ -7,6 +7,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import ar.com.plug.examen.domain.model.Product;
 import ar.com.plug.examen.domain.repository.ProductRepository;
@@ -15,7 +16,7 @@ import ar.com.plug.examen.domain.repository.ProductRepository;
  * @author hellraiser
  *
  */
-@Component
+@Service
 public class ProductServiceImpl {
 
 	@Autowired
