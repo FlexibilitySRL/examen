@@ -10,9 +10,6 @@ info:
             - ABM de vendedores.
             - Consulta de transacciones de compra.
             - Aprobación de compras.
-
-   
-     
 paths:
     /vendors:
         summary: Path used to manage the list of vendors.
@@ -73,6 +70,10 @@ paths:
                 required: true
             responses:
                 '202':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Vendor'
                     description: Successful response.
             operationId: updateVendor
             summary: Update a Vendor
@@ -106,6 +107,29 @@ paths:
                                 type: array
                                 items:
                                     $ref: '#/components/schemas/Customer'
+                            examples:
+                                clientes:
+                                    value:
+                                        -
+                                            id: 63
+                                            firstName: some text
+                                            middletName: some text
+                                            lastName: some text
+                                            salutation: some text
+                                            cuit: some text
+                                            address_l1: some text
+                                            address_l2: some text
+                                            address_l3: some text
+                                        -
+                                            id: 55
+                                            firstName: some text
+                                            middletName: some text
+                                            lastName: some text
+                                            salutation: some text
+                                            cuit: some text
+                                            address_l1: some text
+                                            address_l2: some text
+                                            address_l3: some text
                     description: Successful response - returns an array of `Customer` entities.
             operationId: getCustomers
             summary: List All customers
@@ -137,6 +161,18 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Customer'
+                            examples:
+                                cliente:
+                                    value:
+                                        id: 46
+                                        firstName: some text
+                                        middletName: some text
+                                        lastName: some text
+                                        salutation: some text
+                                        cuit: some text
+                                        address_l1: some text
+                                        address_l2: some text
+                                        address_l3: some text
                     description: Successful response - returns a single `Customer`.
             operationId: getCustomer
             summary: Get a Customer
@@ -229,6 +265,17 @@ paths:
                 required: true
             responses:
                 '202':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Product'
+                            examples:
+                                bolsa:
+                                    value:
+                                        id: 57
+                                        name: bolsa
+                                        color: verde
+                                        thumbnail: 'https://..'
                     description: Successful response.
             operationId: updateProduct
             summary: Update a Product
@@ -276,6 +323,22 @@ paths:
                 required: true
             responses:
                 '201':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/PurchaseTransaction'
+                            examples:
+                                PENDING:
+                                    value: |-
+                                        {
+                                            "id": "23123123123"
+                                            "approverId": "some text",
+                                            "approvalDateTime": "2018-02-10T09:30Z",
+                                            "rejectionDateTime": "2018-02-10T09:30Z",
+                                            "createDateTime": "2018-02-10T09:30Z",
+                                            "status": "PENDING",
+                                            "purchaseOrderId": "some text"
+                                        }
                     description: Successful response.
             operationId: createPurchaseTransaction
             summary: Create a PurchaseTransaction
@@ -307,6 +370,10 @@ paths:
                 required: true
             responses:
                 '202':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/PurchaseTransaction'
                     description: Successful response.
             operationId: updatePurchaseTransaction
             summary: Update a PurchaseTransaction
@@ -338,6 +405,9 @@ components:
                     type: integer
                 message:
                     type: string
+            example:
+                code: 49
+                message: some text
         Product:
             title: Root Type for Product
             description: >
@@ -348,7 +418,7 @@ components:
             type: object
             properties:
                 id:
-                    type: string
+                    type: integer
                 name:
                     type: string
                 color:
@@ -356,7 +426,7 @@ components:
                 thumbnail:
                     type: string
             example:
-                id: abc123
+                id: 12223
                 name: Teléfono a disco
                 color: Verde agua
                 thumbnail: 'https://via.placeholder.com/468x60?text=Tel%C3%A9fono+a+Disco'
@@ -364,11 +434,13 @@ components:
             title: Root Type for Vendor
             description: 'Representa a un vendedor en el sistema, o al mejor de todos en caso de Stan'
             required:
-              - firstName
-              - lastName
-              - username
+                - firstName
+                - lastName
+                - username
             type: object
             properties:
+                id:
+                    type: integer
                 firstName:
                     type: string
                 middleName:
@@ -378,6 +450,7 @@ components:
                 username:
                     type: string
             example:
+                id: 70
                 firstName: Stan
                 middleName: S.
                 lastName: Stanman
@@ -393,6 +466,8 @@ components:
                 - lastName
             type: object
             properties:
+                id:
+                    type: integer
                 firstName:
                     type: string
                 middletName:
@@ -410,6 +485,7 @@ components:
                 address_l3:
                     type: string
             example:
+                id: 12
                 firstName: Bartolomeo
                 middleName: J.
                 lastName: Simpson
@@ -426,6 +502,8 @@ components:
                 - purchaseOrderId
             type: object
             properties:
+                id:
+                    type: integer
                 approverId:
                     type: string
                 approvalDateTime:
