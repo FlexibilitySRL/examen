@@ -3,6 +3,8 @@ package ar.com.plug.examen.domain.model;
 import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -24,45 +26,46 @@ import lombok.NoArgsConstructor;
 public class PurchaseTransaction {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	  private String approverId;
-	  private LocalDateTime approvalDateTime;
-	  private LocalDateTime rejectionDateTime;
-	  private LocalDateTime createDateTime;
-	  private StatusEnum status;
-	  private String purchaseOrderId;
+	private String approverId;
+	private LocalDateTime approvalDateTime;
+	private LocalDateTime rejectionDateTime;
+	private LocalDateTime createDateTime;
+	private StatusEnum status;
+	private String purchaseOrderId;
 
-	  /**
-	   * Gets or Sets status
-	   */
-	  public enum StatusEnum {
-	    PENDING("PENDING"),
-	    
-	    APPROVED("APPROVED"),
-	    
-	    REJECTED("REJECTED");
+	/**
+	 * Gets or Sets status
+	 */
+	public enum StatusEnum {
+		PENDING("PENDING"),
 
-	    private String value;
+		APPROVED("APPROVED"),
 
-	    StatusEnum(String value) {
-	      this.value = value;
-	    }
+		REJECTED("REJECTED");
 
-	    @Override
-	    @JsonValue
-	    public String toString() {
-	      return String.valueOf(value);
-	    }
+		private String value;
 
-	    @JsonCreator
-	    public static StatusEnum fromValue(String value) {
-	      for (StatusEnum b : StatusEnum.values()) {
-	        if (b.value.equals(value)) {
-	          return b;
-	        }
-	      }
-	      throw new IllegalArgumentException("Unexpected value '" + value + "'");
-	    }
-	  }
+		StatusEnum(String value) {
+			this.value = value;
+		}
+
+		@Override
+		@JsonValue
+		public String toString() {
+			return String.valueOf(value);
+		}
+
+		@JsonCreator
+		public static StatusEnum fromValue(String value) {
+			for (StatusEnum b : StatusEnum.values()) {
+				if (b.value.equals(value)) {
+					return b;
+				}
+			}
+			throw new IllegalArgumentException("Unexpected value '" + value + "'");
+		}
+	}
 
 }
