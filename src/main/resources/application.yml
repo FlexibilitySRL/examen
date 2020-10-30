@@ -1,3 +1,5 @@
+logging.level.web: DEBUG
+
 spring:
   jackson:
     serialization:
@@ -5,7 +7,7 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop
     show-sql: true
   datasource:
       url: jdbc:mysql://127.0.0.1:3306/payments?zeroDateTimeBehavior=convertToNull
