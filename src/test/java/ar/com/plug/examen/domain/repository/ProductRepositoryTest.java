@@ -20,7 +20,7 @@ import ar.com.plug.examen.domain.model.Product;
  *
  */
 @SpringBootTest
-public class ProductRepositoryTest {
+class ProductRepositoryTest {
 
 	@Autowired
 	private ProductRepository productRepo;
@@ -30,7 +30,7 @@ public class ProductRepositoryTest {
 	 * {@link org.springframework.data.repository.CrudRepository#save(S)}.
 	 */
 	@Test
-	public final void given_aProduct_when_savingProductIntoRepo_isSuccessful() throws Exception {
+	final void given_aProduct_when_savingProductIntoRepo_isSuccessful() throws Exception {
 		Product newProduct = new Product(null, "Coso", "Rojo", "http://...");
 
 		Product c = productRepo.save(newProduct);
@@ -42,7 +42,7 @@ public class ProductRepositoryTest {
 	 * {@link org.springframework.data.repository.CrudRepository#findById(java.lang.Object)}.
 	 */
 	@Test
-	public final void given_aSavedProduct_when_findingById_isFound() throws Exception {
+	final void given_aSavedProduct_when_findingById_isFound() throws Exception {
 		Product newProduct = new Product(null, "Coso", "Rojo", "http://...");
 
 		Product c = productRepo.save(newProduct);
