@@ -89,7 +89,7 @@ paths:
                 name: vendorId
                 description: A unique identifier for a `Vendor`.
                 schema:
-                    type: string
+                    type: integer
                 in: path
                 required: true
     /customers:
@@ -167,7 +167,7 @@ paths:
                 name: customerId
                 description: A unique identifier for a `Customer`.
                 schema:
-                    type: string
+                    type: integer
                 in: path
                 required: true
     /products:
@@ -245,10 +245,10 @@ paths:
                 name: productId
                 description: A unique identifier for a `Product`.
                 schema:
-                    type: string
+                    type: integer
                 in: path
                 required: true
-    /PurchaseTransactions:
+    /purchaseTransactions:
         summary: Path used to manage the list of PurchaseTransactions.
         description: >-
             The REST endpoint/path used to list and create zero or more `PurchaseTransaction` entities.  This
@@ -280,7 +280,7 @@ paths:
             operationId: createPurchaseTransaction
             summary: Create a PurchaseTransaction
             description: Creates a new instance of a `PurchaseTransaction`.
-    '/PurchaseTransactions/{PurchaseTransactionId}':
+    '/purchaseTransactions/{purchaseTransactionId}':
         summary: Path used to manage a single PurchaseTransaction.
         description: >-
             The REST endpoint/path used to get, update, and delete single instances of an
@@ -320,10 +320,10 @@ paths:
             description: Deletes an existing `PurchaseTransaction`.
         parameters:
             -
-                name: PurchaseTransactionId
+                name: purchaseTransactionId
                 description: A unique identifier for a `PurchaseTransaction`.
                 schema:
-                    type: string
+                    type: integer
                 in: path
                 required: true
 components:
