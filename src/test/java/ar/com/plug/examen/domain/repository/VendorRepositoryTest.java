@@ -31,7 +31,7 @@ public class VendorRepositoryTest {
 	 */
 	@Test
 	public final void given_aVendor_when_savingVendorIntoRepo_isSuccessful() throws Exception {
-		Vendor newVendor = 			new Vendor(1L, "nombre", "segundo nombre", "apellido", "username");
+		Vendor newVendor = 			new Vendor(null, "nombre", "segundo nombre", "apellido", "username");
 
 		Vendor c = VendorRepo.save(newVendor);
 		assertNotNull(c, "No se pudo almacenar Vendor en la base de datos");
@@ -43,12 +43,12 @@ public class VendorRepositoryTest {
 	 */
 	@Test
 	public final void given_aSavedVendor_when_findingById_isFound() throws Exception {
-		Vendor newVendor = 			new Vendor(221L, "nombre", "segundo nombre", "apellido", "username");
+		Vendor newVendor = 			new Vendor(null, "nombre", "segundo nombre", "apellido", "username");
 
 		Vendor c = VendorRepo.save(newVendor);
 		assertNotNull(c, "No se pudo almacenar Vendor en la base de datos");
 
-		Optional<Vendor> c2 = VendorRepo.findById(221L);
+		Optional<Vendor> c2 = VendorRepo.findById(c.getId());
 
 		Assertions.assertTrue(c2.isPresent(), "El Vendor almacenado en el repo no se pudo recuperar");
 

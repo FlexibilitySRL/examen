@@ -31,7 +31,7 @@ public class CustomerRepositoryTest {
 	 */
 	@Test
 	public final void given_aCustomer_when_savingCustomerIntoRepo_isSuccessful() throws Exception {
-		Customer newCustomer = new Customer(21L, "nom1", "nom2", "ap", "mr.", "2312312312", "addr1", "addr2", "addr3");
+		Customer newCustomer = new Customer(null, "nom1", "nom2", "ap", "mr.", "2312312312", "addr1", "addr2", "addr3");
 
 		Customer c = customerRepo.save(newCustomer);
 		assertNotNull(c, "No se pudo almacenar customer en la base de datos");
@@ -43,12 +43,12 @@ public class CustomerRepositoryTest {
 	 */
 	@Test
 	public final void given_aSavedCustomer_when_findingById_isFound() throws Exception {
-		Customer newCustomer = new Customer(23L, "nom1", "nom2", "ap", "mr.", "2312312312", "addr1", "addr2", "addr3");
+		Customer newCustomer = new Customer(null, "nom1", "nom2", "ap", "mr.", "2312312312", "addr1", "addr2", "addr3");
 
 		Customer c = customerRepo.save(newCustomer);
 		assertNotNull(c, "No se pudo almacenar customer en la base de datos");
 
-		Optional<Customer> c2 = customerRepo.findById(23L);
+		Optional<Customer> c2 = customerRepo.findById(c.getId());
 
 		Assertions.assertTrue(c2.isPresent(), "El customer almacenado en el repo no se pudo recuperar");
 

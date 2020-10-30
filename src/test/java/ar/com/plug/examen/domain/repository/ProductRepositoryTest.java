@@ -31,7 +31,7 @@ public class ProductRepositoryTest {
 	 */
 	@Test
 	public final void given_aProduct_when_savingProductIntoRepo_isSuccessful() throws Exception {
-		Product newProduct = new Product(1L, "Coso", "Rojo", "http://...");
+		Product newProduct = new Product(null, "Coso", "Rojo", "http://...");
 
 		Product c = productRepo.save(newProduct);
 		assertNotNull(c, "No se pudo almacenar Product en la base de datos");
@@ -43,12 +43,12 @@ public class ProductRepositoryTest {
 	 */
 	@Test
 	public final void given_aSavedProduct_when_findingById_isFound() throws Exception {
-		Product newProduct = new Product(34234L, "Coso", "Rojo", "http://...");
+		Product newProduct = new Product(null, "Coso", "Rojo", "http://...");
 
 		Product c = productRepo.save(newProduct);
 		assertNotNull(c, "No se pudo almacenar Product en la base de datos");
 
-		Optional<Product> c2 = productRepo.findById(34234L);
+		Optional<Product> c2 = productRepo.findById(c.getId());
 
 		Assertions.assertTrue(c2.isPresent(), "El Product almacenado en el repo no se pudo recuperar");
 
