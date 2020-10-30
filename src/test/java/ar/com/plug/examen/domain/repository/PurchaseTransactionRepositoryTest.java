@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import ar.com.plug.examen.domain.model.PurchaseTransaction;
 import ar.com.plug.examen.domain.model.PurchaseTransaction.StatusEnum;
@@ -22,6 +23,7 @@ import ar.com.plug.examen.domain.model.PurchaseTransaction.StatusEnum;
  *
  */
 @SpringBootTest
+@ActiveProfiles("test")
 public class PurchaseTransactionRepositoryTest {
 
 	@Autowired
