@@ -10,3 +10,8 @@ target
 
 # Mac
 .DS_Store
+/.classpath
+/.factorypath
+/.settings/
+/.project
+/node_modules/

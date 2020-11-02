@@ -1,0 +1,1332 @@
+{
+	"info": {
+		"_postman_id": "c1b1c98e-1173-403b-8767-390b8afe3e03",
+		"name": "PaymentManagement Integration Tests",
+		"description": "API que expone y permite gestionar recursos asociados al proceso de venta y pago de productos.\nPermite realizar las siguientes funciones:\n    - ABM de productos.\n    - ABM de clientes.\n    - ABM de vendedores.\n    - Consulta de transacciones de compra.\n    - Aprobación de compras.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "vendors",
+			"item": [
+				{
+					"name": "{vendor Id}",
+					"item": [
+						{
+							"name": "Get a Vendor",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/vendors/:vendorId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"vendors",
+										":vendorId"
+									],
+									"variable": [
+										{
+											"id": "a04c4b0f-5305-4e8c-9489-3523afad8456",
+											"key": "vendorId",
+											"value": "-45159830",
+											"type": "string",
+											"description": "(Required) A unique identifier for a `Vendor`."
+										}
+									]
+								},
+								"description": "Gets the details of a single instance of a `Vendor`."
+							},
+							"response": [
+								{
+									"name": "Successful response - returns a single `Vendor`.",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/vendors/:vendorId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"vendors",
+												":vendorId"
+											],
+											"variable": [
+												{
+													"key": "vendorId"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"firstName\": \"Stan\",\n \"middleName\": \"S.\",\n \"lastName\": \"Stanman\",\n \"username\": \"thebest\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Update a Vendor",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"firstName\": \"Stan\",\n    \"middleName\": \"S.\",\n    \"lastName\": \"Stanman\",\n    \"username\": \"thebest\"\n}",
+									"options": {
+										"raw": {}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/vendors/:vendorId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"vendors",
+										":vendorId"
+									],
+									"variable": [
+										{
+											"id": "85c0e636-0c65-469a-9942-4267efaa7a3a",
+											"key": "vendorId",
+											"value": "-45159830",
+											"type": "string",
+											"description": "(Required) A unique identifier for a `Vendor`."
+										}
+									]
+								},
+								"description": "Updates an existing `Vendor`."
+							},
+							"response": [
+								{
+									"name": "Successful response.",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"firstName\": \"Stan\",\n    \"middleName\": \"S.\",\n    \"lastName\": \"Stanman\",\n    \"username\": \"thebest\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/vendors/:vendorId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"vendors",
+												":vendorId"
+											],
+											"variable": [
+												{
+													"key": "vendorId"
+												}
+											]
+										}
+									},
+									"status": "Accepted",
+									"code": 202,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Delete a Vendor",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/vendors/:vendorId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"vendors",
+										":vendorId"
+									],
+									"variable": [
+										{
+											"id": "2e87b8d1-ba99-43cd-bd33-949f2d44edbe",
+											"key": "vendorId",
+											"value": "-45159830",
+											"type": "string",
+											"description": "(Required) A unique identifier for a `Vendor`."
+										}
+									]
+								},
+								"description": "Deletes an existing `Vendor`."
+							},
+							"response": [
+								{
+									"name": "Successful response.",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/vendors/:vendorId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"vendors",
+												":vendorId"
+											],
+											"variable": [
+												{
+													"key": "vendorId"
+												}
+											]
+										}
+									},
+									"status": "No Content",
+									"code": 204,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "List All vendors",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/vendors",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"vendors"
+							]
+						},
+						"description": "Gets a list of all `Vendor` entities."
+					},
+					"response": [
+						{
+							"name": "Successful response - returns an array of `Vendor` entities.",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/vendors",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"vendors"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "[\n {\n  \"firstName\": \"Stan\",\n  \"middleName\": \"S.\",\n  \"lastName\": \"Stanman\",\n  \"username\": \"thebest\"\n },\n {\n  \"firstName\": \"Stan\",\n  \"middleName\": \"S.\",\n  \"lastName\": \"Stanman\",\n  \"username\": \"thebest\"\n }\n]"
+						}
+					]
+				},
+				{
+					"name": "Create a Vendor",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"Stan\",\n    \"middleName\": \"S.\",\n    \"lastName\": \"Stanman\",\n    \"username\": \"thebest\"\n}",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/vendors",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"vendors"
+							]
+						},
+						"description": "Creates a new instance of a `Vendor`."
+					},
+					"response": [
+						{
+							"name": "Successful response.",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"firstName\": \"Stan\",\n    \"middleName\": \"S.\",\n    \"lastName\": \"Stanman\",\n    \"username\": \"thebest\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/vendors",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"vendors"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "customers",
+			"item": [
+				{
+					"name": "{customer Id}",
+					"item": [
+						{
+							"name": "Get a Customer",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/customers/:customerId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"customers",
+										":customerId"
+									],
+									"variable": [
+										{
+											"id": "753fc865-aa42-4c25-b3a7-5eaf0f4cabd3",
+											"key": "customerId",
+											"value": "-45159830",
+											"type": "string",
+											"description": "(Required) A unique identifier for a `Customer`."
+										}
+									]
+								},
+								"description": "Gets the details of a single instance of a `Customer`."
+							},
+							"response": [
+								{
+									"name": "Successful response - returns a single `Customer`.",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/customers/:customerId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"customers",
+												":customerId"
+											],
+											"variable": [
+												{
+													"key": "customerId"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"firstName\": \"Bartolomeo\",\n \"middleName\": \"J.\",\n \"lastName\": \"Simpson\",\n \"salutation\": \"Mr.\",\n \"cuit\": \"20191919197\",\n \"address_l1\": \"Fake Street 123\",\n \"address_l2\": \"Springfield\",\n \"address_l3\": \"Chafachussetts\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Update a Customer",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"firstName\": \"Bartolomeo\",\n    \"middleName\": \"J.\",\n    \"lastName\": \"Simpson\",\n    \"salutation\": \"Mr.\",\n    \"cuit\": \"20191919197\",\n    \"address_l1\": \"Fake Street 123\",\n    \"address_l2\": \"Springfield\",\n    \"address_l3\": \"Chafachussetts\"\n}",
+									"options": {
+										"raw": {}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/customers/:customerId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"customers",
+										":customerId"
+									],
+									"variable": [
+										{
+											"id": "3a67134a-dc17-441a-8cfc-f2c4c69b425f",
+											"key": "customerId",
+											"value": "-45159830",
+											"type": "string",
+											"description": "(Required) A unique identifier for a `Customer`."
+										}
+									]
+								},
+								"description": "Updates an existing `Customer`."
+							},
+							"response": [
+								{
+									"name": "Successful response.",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"firstName\": \"Bartolomeo\",\n    \"middleName\": \"J.\",\n    \"lastName\": \"Simpson\",\n    \"salutation\": \"Mr.\",\n    \"cuit\": \"20191919197\",\n    \"address_l1\": \"Fake Street 123\",\n    \"address_l2\": \"Springfield\",\n    \"address_l3\": \"Chafachussetts\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/customers/:customerId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"customers",
+												":customerId"
+											],
+											"variable": [
+												{
+													"key": "customerId"
+												}
+											]
+										}
+									},
+									"status": "Accepted",
+									"code": 202,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Delete a Customer",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/customers/:customerId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"customers",
+										":customerId"
+									],
+									"variable": [
+										{
+											"id": "b2eab9e4-5d5a-4aba-b1fc-c6e2b0817de5",
+											"key": "customerId",
+											"value": "-45159830",
+											"type": "string",
+											"description": "(Required) A unique identifier for a `Customer`."
+										}
+									]
+								},
+								"description": "Deletes an existing `Customer`."
+							},
+							"response": [
+								{
+									"name": "Successful response.",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/customers/:customerId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"customers",
+												":customerId"
+											],
+											"variable": [
+												{
+													"key": "customerId"
+												}
+											]
+										}
+									},
+									"status": "No Content",
+									"code": 204,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "List All customers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/customers",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"customers"
+							]
+						},
+						"description": "Gets a list of all `Customer` entities."
+					},
+					"response": [
+						{
+							"name": "Successful response - returns an array of `Customer` entities.",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/customers",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"customers"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "[\n {\n  \"firstName\": \"Bartolomeo\",\n  \"middleName\": \"J.\",\n  \"lastName\": \"Simpson\",\n  \"salutation\": \"Mr.\",\n  \"cuit\": \"20191919197\",\n  \"address_l1\": \"Fake Street 123\",\n  \"address_l2\": \"Springfield\",\n  \"address_l3\": \"Chafachussetts\"\n },\n {\n  \"firstName\": \"Bartolomeo\",\n  \"middleName\": \"J.\",\n  \"lastName\": \"Simpson\",\n  \"salutation\": \"Mr.\",\n  \"cuit\": \"20191919197\",\n  \"address_l1\": \"Fake Street 123\",\n  \"address_l2\": \"Springfield\",\n  \"address_l3\": \"Chafachussetts\"\n }\n]"
+						}
+					]
+				},
+				{
+					"name": "Create a Customer",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"Bartolomeo\",\n    \"middleName\": \"J.\",\n    \"lastName\": \"Simpson\",\n    \"salutation\": \"Mr.\",\n    \"cuit\": \"20191919197\",\n    \"address_l1\": \"Fake Street 123\",\n    \"address_l2\": \"Springfield\",\n    \"address_l3\": \"Chafachussetts\"\n}",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/customers",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"customers"
+							]
+						},
+						"description": "Creates a new instance of a `Customer`."
+					},
+					"response": [
+						{
+							"name": "Successful response.",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"firstName\": \"Bartolomeo\",\n    \"middleName\": \"J.\",\n    \"lastName\": \"Simpson\",\n    \"salutation\": \"Mr.\",\n    \"cuit\": \"20191919197\",\n    \"address_l1\": \"Fake Street 123\",\n    \"address_l2\": \"Springfield\",\n    \"address_l3\": \"Chafachussetts\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/customers",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"customers"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "products",
+			"item": [
+				{
+					"name": "{product Id}",
+					"item": [
+						{
+							"name": "Get a Product",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/products/:productId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"products",
+										":productId"
+									],
+									"variable": [
+										{
+											"id": "75198d19-6c6f-489f-a5d3-a33a3fb2bc3d",
+											"key": "productId",
+											"value": "-45159830",
+											"type": "string",
+											"description": "(Required) A unique identifier for a `Product`."
+										}
+									]
+								},
+								"description": "Gets the details of a single instance of a `Product`."
+							},
+							"response": [
+								{
+									"name": "Successful response - returns a single `Product`.",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/products/:productId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"products",
+												":productId"
+											],
+											"variable": [
+												{
+													"key": "productId"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"name\": \"Teléfono a disco\",\n \"color\": \"Verde agua\",\n \"thumbnail\": \"https://via.placeholder.com/468x60?text=Tel%C3%A9fono+a+Disco\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Update a Product",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Teléfono a disco\",\n    \"color\": \"Verde agua\",\n    \"thumbnail\": \"https://via.placeholder.com/468x60?text=Tel%C3%A9fono+a+Disco\"\n}",
+									"options": {
+										"raw": {}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/products/:productId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"products",
+										":productId"
+									],
+									"variable": [
+										{
+											"id": "81af3b6e-465f-4fc3-b111-020b00917093",
+											"key": "productId",
+											"value": "-45159830",
+											"type": "string",
+											"description": "(Required) A unique identifier for a `Product`."
+										}
+									]
+								},
+								"description": "Updates an existing `Product`."
+							},
+							"response": [
+								{
+									"name": "Successful response.",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"Teléfono a disco\",\n    \"color\": \"Verde agua\",\n    \"thumbnail\": \"https://via.placeholder.com/468x60?text=Tel%C3%A9fono+a+Disco\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/products/:productId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"products",
+												":productId"
+											],
+											"variable": [
+												{
+													"key": "productId"
+												}
+											]
+										}
+									},
+									"status": "Accepted",
+									"code": 202,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Delete a Product",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/products/:productId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"products",
+										":productId"
+									],
+									"variable": [
+										{
+											"id": "4d7a26d4-8ae5-4b04-b4c8-122b5189da4f",
+											"key": "productId",
+											"value": "-45159830",
+											"type": "string",
+											"description": "(Required) A unique identifier for a `Product`."
+										}
+									]
+								},
+								"description": "Deletes an existing `Product`."
+							},
+							"response": [
+								{
+									"name": "Successful response.",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/products/:productId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"products",
+												":productId"
+											],
+											"variable": [
+												{
+													"key": "productId"
+												}
+											]
+										}
+									},
+									"status": "No Content",
+									"code": 204,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "List All products",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/products",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"products"
+							]
+						},
+						"description": "Gets a list of all `Product` entities."
+					},
+					"response": [
+						{
+							"name": "Successful response - returns an array of `Product` entities.",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/products",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"products"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "[\n {\n  \"name\": \"Teléfono a disco\",\n  \"color\": \"Verde agua\",\n  \"thumbnail\": \"https://via.placeholder.com/468x60?text=Tel%C3%A9fono+a+Disco\"\n },\n {\n  \"name\": \"Teléfono a disco\",\n  \"color\": \"Verde agua\",\n  \"thumbnail\": \"https://via.placeholder.com/468x60?text=Tel%C3%A9fono+a+Disco\"\n }\n]"
+						}
+					]
+				},
+				{
+					"name": "Create a Product",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Teléfono a disco\",\n    \"color\": \"Verde agua\",\n    \"thumbnail\": \"https://via.placeholder.com/468x60?text=Tel%C3%A9fono+a+Disco\"\n}",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/products",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"products"
+							]
+						},
+						"description": "Creates a new instance of a `Product`."
+					},
+					"response": [
+						{
+							"name": "Successful response.",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Teléfono a disco\",\n    \"color\": \"Verde agua\",\n    \"thumbnail\": \"https://via.placeholder.com/468x60?text=Tel%C3%A9fono+a+Disco\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/products",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"products"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "purchase Transactions",
+			"item": [
+				{
+					"name": "{purchase Transaction Id}",
+					"item": [
+						{
+							"name": "Get a PurchaseTransaction",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/purchaseTransactions/:purchaseTransactionId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"purchaseTransactions",
+										":purchaseTransactionId"
+									],
+									"variable": [
+										{
+											"id": "91062b90-9315-41c6-9aff-2616b6f9442c",
+											"key": "purchaseTransactionId",
+											"value": "-45159830",
+											"type": "string",
+											"description": "(Required) A unique identifier for a `PurchaseTransaction`."
+										}
+									]
+								},
+								"description": "Gets the details of a single instance of a `PurchaseTransaction`."
+							},
+							"response": [
+								{
+									"name": "Successful response - returns a single `PurchaseTransaction`.",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/purchaseTransactions/:purchaseTransactionId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"purchaseTransactions",
+												":purchaseTransactionId"
+											],
+											"variable": [
+												{
+													"key": "purchaseTransactionId"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"status\": \"REJECTED\",\n \"purchaseOrderId\": \"et do quis\",\n \"approverId\": \"dolore Duis ut\",\n \"approvalDateTime\": \"1962-02-14T04:47:25.846Z\",\n \"rejectionDateTime\": \"2000-07-22T14:46:21.059Z\",\n \"createDateTime\": \"1982-12-21T15:06:11.408Z\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Update a PurchaseTransaction",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"status\": \"REJECTED\",\n    \"purchaseOrderId\": \"et do quis\",\n    \"approverId\": \"dolore Duis ut\",\n    \"approvalDateTime\": \"1962-02-14T04:47:25.846Z\",\n    \"rejectionDateTime\": \"2000-07-22T14:46:21.059Z\",\n    \"createDateTime\": \"1982-12-21T15:06:11.408Z\"\n}",
+									"options": {
+										"raw": {}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/purchaseTransactions/:purchaseTransactionId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"purchaseTransactions",
+										":purchaseTransactionId"
+									],
+									"variable": [
+										{
+											"id": "ff19aaf8-5eb2-4333-a144-21763bd3e488",
+											"key": "purchaseTransactionId",
+											"value": "-45159830",
+											"type": "string",
+											"description": "(Required) A unique identifier for a `PurchaseTransaction`."
+										}
+									]
+								},
+								"description": "Updates an existing `PurchaseTransaction`."
+							},
+							"response": [
+								{
+									"name": "Successful response.",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"status\": \"REJECTED\",\n    \"purchaseOrderId\": \"et do quis\",\n    \"approverId\": \"dolore Duis ut\",\n    \"approvalDateTime\": \"1962-02-14T04:47:25.846Z\",\n    \"rejectionDateTime\": \"2000-07-22T14:46:21.059Z\",\n    \"createDateTime\": \"1982-12-21T15:06:11.408Z\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/purchaseTransactions/:purchaseTransactionId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"purchaseTransactions",
+												":purchaseTransactionId"
+											],
+											"variable": [
+												{
+													"key": "purchaseTransactionId"
+												}
+											]
+										}
+									},
+									"status": "Accepted",
+									"code": 202,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Delete a PurchaseTransaction",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/purchaseTransactions/:purchaseTransactionId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"purchaseTransactions",
+										":purchaseTransactionId"
+									],
+									"variable": [
+										{
+											"id": "0d183715-7cd0-4945-a576-84b039dd2720",
+											"key": "purchaseTransactionId",
+											"value": "-45159830",
+											"type": "string",
+											"description": "(Required) A unique identifier for a `PurchaseTransaction`."
+										}
+									]
+								},
+								"description": "Deletes an existing `PurchaseTransaction`."
+							},
+							"response": [
+								{
+									"name": "Successful response.",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/purchaseTransactions/:purchaseTransactionId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"purchaseTransactions",
+												":purchaseTransactionId"
+											],
+											"variable": [
+												{
+													"key": "purchaseTransactionId"
+												}
+											]
+										}
+									},
+									"status": "No Content",
+									"code": 204,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "List All PurchaseTransactions",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/purchaseTransactions",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"purchaseTransactions"
+							]
+						},
+						"description": "Gets a list of all `PurchaseTransaction` entities."
+					},
+					"response": [
+						{
+							"name": "Successful response - returns an array of `PurchaseTransaction` entities.",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/purchaseTransactions",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"purchaseTransactions"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "[\n {\n  \"status\": \"PENDING\",\n  \"purchaseOrderId\": \"qui quis in sit Excepteur\",\n  \"approverId\": \"non ut ut\",\n  \"approvalDateTime\": \"2008-11-01T02:56:58.312Z\",\n  \"rejectionDateTime\": \"2007-07-12T22:34:50.198Z\",\n  \"createDateTime\": \"1953-11-06T22:29:12.784Z\"\n },\n {\n  \"status\": \"REJECTED\",\n  \"purchaseOrderId\": \"aliqua voluptate quis id\",\n  \"approverId\": \"id sint adipisicing\",\n  \"approvalDateTime\": \"1944-06-28T09:09:01.407Z\",\n  \"rejectionDateTime\": \"1994-10-27T14:36:30.857Z\",\n  \"createDateTime\": \"1993-09-10T17:42:22.483Z\"\n }\n]"
+						}
+					]
+				},
+				{
+					"name": "Create a PurchaseTransaction",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"status\": \"REJECTED\",\n    \"purchaseOrderId\": \"et do quis\",\n    \"approverId\": \"dolore Duis ut\",\n    \"approvalDateTime\": \"1962-02-14T04:47:25.846Z\",\n    \"rejectionDateTime\": \"2000-07-22T14:46:21.059Z\",\n    \"createDateTime\": \"1982-12-21T15:06:11.408Z\"\n}",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/purchaseTransactions",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"purchaseTransactions"
+							]
+						},
+						"description": "Creates a new instance of a `PurchaseTransaction`."
+					},
+					"response": [
+						{
+							"name": "Successful response.",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"status\": \"REJECTED\",\n    \"purchaseOrderId\": \"et do quis\",\n    \"approverId\": \"dolore Duis ut\",\n    \"approvalDateTime\": \"1962-02-14T04:47:25.846Z\",\n    \"rejectionDateTime\": \"2000-07-22T14:46:21.059Z\",\n    \"createDateTime\": \"1982-12-21T15:06:11.408Z\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/purchaseTransactions",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"purchaseTransactions"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "bb37b7ab-831f-4c1a-b93c-1a08a5ebe08b",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "9ad106ea-422d-49ea-adef-0607cc7a085a",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "95097eba-cedd-4573-8122-b55534dcd836",
+			"key": "baseUrl",
+			"value": "http://localhost:8080/payments"
+		}
+	],
+	"protocolProfileBehavior": {}
+}

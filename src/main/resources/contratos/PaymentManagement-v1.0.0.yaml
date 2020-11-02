@@ -1,0 +1,546 @@
+openapi: 3.0.2
+info:
+    title: PaymentManagement
+    version: 1.0.0
+    description: |-
+        API que expone y permite gestionar recursos asociados al proceso de venta y pago de productos.
+        Permite realizar las siguientes funciones:
+            - ABM de productos.
+            - ABM de clientes.
+            - ABM de vendedores.
+            - Consulta de transacciones de compra.
+            - Aprobación de compras.
+paths:
+    /vendors:
+        summary: Path used to manage the list of vendors.
+        description: >-
+            The REST endpoint/path used to list and create zero or more `Vendor` entities.  This path contains
+            a `GET` and `POST` operation to perform the list and create tasks, respectively.
+        get:
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/Vendor'
+                    description: Successful response - returns an array of `Vendor` entities.
+            operationId: getVendors
+            summary: List All vendors
+            description: Gets a list of all `Vendor` entities.
+        post:
+            requestBody:
+                description: A new `Vendor` to be created.
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Vendor'
+                required: true
+            responses:
+                '201':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Vendor'
+                    description: Successful response.
+            operationId: createVendor
+            summary: Create a Vendor
+            description: Creates a new instance of a `Vendor`.
+    '/vendors/{vendorId}':
+        summary: Path used to manage a single Vendor.
+        description: >-
+            The REST endpoint/path used to get, update, and delete single instances of an `Vendor`.  This path
+            contains `GET`, `PUT`, and `DELETE` operations used to perform the get, update, and delete tasks,
+            respectively.
+        get:
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Vendor'
+                    description: Successful response - returns a single `Vendor`.
+            operationId: getVendor
+            summary: Get a Vendor
+            description: Gets the details of a single instance of a `Vendor`.
+        put:
+            requestBody:
+                description: Updated `Vendor` information.
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Vendor'
+                required: true
+            responses:
+                '202':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Vendor'
+                    description: Successful response.
+            operationId: updateVendor
+            summary: Update a Vendor
+            description: Updates an existing `Vendor`.
+        delete:
+            responses:
+                '204':
+                    description: Successful response.
+            operationId: deleteVendor
+            summary: Delete a Vendor
+            description: Deletes an existing `Vendor`.
+        parameters:
+            -
+                name: vendorId
+                description: A unique identifier for a `Vendor`.
+                schema:
+                    type: integer
+                in: path
+                required: true
+    /customers:
+        summary: Path used to manage the list of customers.
+        description: >-
+            The REST endpoint/path used to list and create zero or more `Customer` entities.  This path
+            contains a `GET` and `POST` operation to perform the list and create tasks, respectively.
+        get:
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/Customer'
+                            examples:
+                                clientes:
+                                    value:
+                                        -
+                                            id: 63
+                                            firstName: some text
+                                            middletName: some text
+                                            lastName: some text
+                                            salutation: some text
+                                            cuit: some text
+                                            address_l1: some text
+                                            address_l2: some text
+                                            address_l3: some text
+                                        -
+                                            id: 55
+                                            firstName: some text
+                                            middletName: some text
+                                            lastName: some text
+                                            salutation: some text
+                                            cuit: some text
+                                            address_l1: some text
+                                            address_l2: some text
+                                            address_l3: some text
+                    description: Successful response - returns an array of `Customer` entities.
+            operationId: getCustomers
+            summary: List All customers
+            description: Gets a list of all `Customer` entities.
+        post:
+            requestBody:
+                description: A new `Customer` to be created.
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Customer'
+                required: true
+            responses:
+                '201':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Customer'
+                    description: Successful response.
+            operationId: createCustomer
+            summary: Create a Customer
+            description: Creates a new instance of a `Customer`.
+    '/customers/{customerId}':
+        summary: Path used to manage a single Customer.
+        description: >-
+            The REST endpoint/path used to get, update, and delete single instances of an `Customer`.  This
+            path contains `GET`, `PUT`, and `DELETE` operations used to perform the get, update, and delete
+            tasks, respectively.
+        get:
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Customer'
+                            examples:
+                                cliente:
+                                    value:
+                                        id: 46
+                                        firstName: some text
+                                        middletName: some text
+                                        lastName: some text
+                                        salutation: some text
+                                        cuit: some text
+                                        address_l1: some text
+                                        address_l2: some text
+                                        address_l3: some text
+                    description: Successful response - returns a single `Customer`.
+            operationId: getCustomer
+            summary: Get a Customer
+            description: Gets the details of a single instance of a `Customer`.
+        put:
+            requestBody:
+                description: Updated `Customer` information.
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Customer'
+                required: true
+            responses:
+                '202':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Customer'
+                    description: Successful response.
+            operationId: updateCustomer
+            summary: Update a Customer
+            description: Updates an existing `Customer`.
+        delete:
+            responses:
+                '204':
+                    description: Successful response.
+            operationId: deleteCustomer
+            summary: Delete a Customer
+            description: Deletes an existing `Customer`.
+        parameters:
+            -
+                name: customerId
+                description: A unique identifier for a `Customer`.
+                schema:
+                    type: integer
+                in: path
+                required: true
+    /products:
+        summary: Path used to manage the list of products.
+        description: >-
+            The REST endpoint/path used to list and create zero or more `Product` entities.  This path
+            contains a `GET` and `POST` operation to perform the list and create tasks, respectively.
+        get:
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/Product'
+                    description: Successful response - returns an array of `Product` entities.
+            operationId: getproducts
+            summary: List All products
+            description: Gets a list of all `Product` entities.
+        post:
+            requestBody:
+                description: A new `Product` to be created.
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Product'
+                required: true
+            responses:
+                '201':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Product'
+                    description: Successful response.
+            operationId: createProduct
+            summary: Create a Product
+            description: Creates a new instance of a `Product`.
+    '/products/{productId}':
+        summary: Path used to manage a single Product.
+        description: >-
+            The REST endpoint/path used to get, update, and delete single instances of an `Product`.  This
+            path contains `GET`, `PUT`, and `DELETE` operations used to perform the get, update, and delete
+            tasks, respectively.
+        get:
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Product'
+                    description: Successful response - returns a single `Product`.
+            operationId: getProduct
+            summary: Get a Product
+            description: Gets the details of a single instance of a `Product`.
+        put:
+            requestBody:
+                description: Updated `Product` information.
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Product'
+                required: true
+            responses:
+                '202':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Product'
+                            examples:
+                                bolsa:
+                                    value:
+                                        id: 57
+                                        name: bolsa
+                                        color: verde
+                                        thumbnail: 'https://..'
+                    description: Successful response.
+            operationId: updateProduct
+            summary: Update a Product
+            description: Updates an existing `Product`.
+        delete:
+            responses:
+                '204':
+                    description: Successful response.
+            operationId: deleteProduct
+            summary: Delete a Product
+            description: Deletes an existing `Product`.
+        parameters:
+            -
+                name: productId
+                description: A unique identifier for a `Product`.
+                schema:
+                    type: integer
+                in: path
+                required: true
+    /purchaseTransactions:
+        summary: Path used to manage the list of PurchaseTransactions.
+        description: >-
+            The REST endpoint/path used to list and create zero or more `PurchaseTransaction` entities.  This
+            path contains a `GET` and `POST` operation to perform the list and create tasks, respectively.
+        get:
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/PurchaseTransaction'
+                    description: Successful response - returns an array of `PurchaseTransaction` entities.
+            operationId: getPurchaseTransactions
+            summary: List All PurchaseTransactions
+            description: Gets a list of all `PurchaseTransaction` entities.
+        post:
+            requestBody:
+                description: A new `PurchaseTransaction` to be created.
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/PurchaseTransaction'
+                required: true
+            responses:
+                '201':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/PurchaseTransaction'
+                            examples:
+                                PENDING:
+                                    value: |-
+                                        {
+                                            "id": "23123123123"
+                                            "approverId": "some text",
+                                            "approvalDateTime": "2018-02-10T09:30Z",
+                                            "rejectionDateTime": "2018-02-10T09:30Z",
+                                            "createDateTime": "2018-02-10T09:30Z",
+                                            "status": "PENDING",
+                                            "purchaseOrderId": "some text"
+                                        }
+                    description: Successful response.
+            operationId: createPurchaseTransaction
+            summary: Create a PurchaseTransaction
+            description: Creates a new instance of a `PurchaseTransaction`.
+    '/purchaseTransactions/{purchaseTransactionId}':
+        summary: Path used to manage a single PurchaseTransaction.
+        description: >-
+            The REST endpoint/path used to get, update, and delete single instances of an
+            `PurchaseTransaction`.  This path contains `GET`, `PUT`, and `DELETE` operations used to perform
+            the get, update, and delete tasks, respectively.
+        get:
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/PurchaseTransaction'
+                    description: Successful response - returns a single `PurchaseTransaction`.
+            operationId: getPurchaseTransaction
+            summary: Get a PurchaseTransaction
+            description: Gets the details of a single instance of a `PurchaseTransaction`.
+        put:
+            requestBody:
+                description: Updated `PurchaseTransaction` information.
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/PurchaseTransaction'
+                required: true
+            responses:
+                '202':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/PurchaseTransaction'
+                    description: Successful response.
+            operationId: updatePurchaseTransaction
+            summary: Update a PurchaseTransaction
+            description: Updates an existing `PurchaseTransaction`.
+        delete:
+            responses:
+                '204':
+                    description: Successful response.
+            operationId: deletePurchaseTransaction
+            summary: Delete a PurchaseTransaction
+            description: Deletes an existing `PurchaseTransaction`.
+        parameters:
+            -
+                name: purchaseTransactionId
+                description: A unique identifier for a `PurchaseTransaction`.
+                schema:
+                    type: integer
+                in: path
+                required: true
+components:
+    schemas:
+        Error:
+            required:
+                - code
+                - message
+            properties:
+                code:
+                    format: int32
+                    type: integer
+                message:
+                    type: string
+            example:
+                code: 49
+                message: some text
+        Product:
+            title: Root Type for Product
+            description: >
+                Un producto es una cosa o servicio ofrecido por nosotros y que es adquirido por una persona
+                física o jurídica.
+
+                El proceso de compra se perfecciona al momento que el vendedor aprueba la transacción
+            type: object
+            properties:
+                id:
+                    type: integer
+                name:
+                    type: string
+                color:
+                    type: string
+                thumbnail:
+                    type: string
+            example:
+                id: 12223
+                name: Teléfono a disco
+                color: Verde agua
+                thumbnail: 'https://via.placeholder.com/468x60?text=Tel%C3%A9fono+a+Disco'
+        Vendor:
+            title: Root Type for Vendor
+            description: 'Representa a un vendedor en el sistema, o al mejor de todos en caso de Stan'
+            required:
+                - firstName
+                - lastName
+                - username
+            type: object
+            properties:
+                id:
+                    type: integer
+                firstName:
+                    type: string
+                middleName:
+                    type: string
+                lastName:
+                    type: string
+                username:
+                    type: string
+            example:
+                id: 70
+                firstName: Stan
+                middleName: S.
+                lastName: Stanman
+                username: thebest
+        Customer:
+            title: Root Type for Customer
+            description: |
+                Este recurso representa a un cliente
+            required:
+                - address_l1
+                - cuit
+                - firstName
+                - lastName
+            type: object
+            properties:
+                id:
+                    type: integer
+                firstName:
+                    type: string
+                middletName:
+                    type: string
+                lastName:
+                    type: string
+                salutation:
+                    type: string
+                cuit:
+                    type: string
+                address_l1:
+                    type: string
+                address_l2:
+                    type: string
+                address_l3:
+                    type: string
+            example:
+                id: 12
+                firstName: Bartolomeo
+                middleName: J.
+                lastName: Simpson
+                salutation: Mr.
+                cuit: '20191919197'
+                address_l1: Fake Street 123
+                address_l2: Springfield
+                address_l3: Chafachussetts
+        PurchaseTransaction:
+            title: Root Type for PurchaseTransaction
+            description: Representa a una transacción de compra
+            required:
+                - status
+                - purchaseOrderId
+            type: object
+            properties:
+                id:
+                    type: integer
+                approverId:
+                    type: string
+                approvalDateTime:
+                    format: date-time
+                    type: string
+                rejectionDateTime:
+                    format: date-time
+                    type: string
+                createDateTime:
+                    format: date-time
+                    type: string
+                status:
+                    enum:
+                        - PENDING
+                        - APPROVED
+                        - REJECTED
+                    type: string
+                purchaseOrderId:
+                    type: string
+            example:
+                approverId: some text
+                approvalDateTime: '2018-02-10T09:30Z'
+                status: PENDING
+                purchaseOrderId: some text
