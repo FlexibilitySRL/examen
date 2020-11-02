@@ -14,3 +14,4 @@ target
 /.factorypath
 /.settings/
 /.project
+/node_modules/
