@@ -47,6 +47,13 @@ public class PurchaseTransactionsApiController implements PurchaseTransactionsAp
 		return Optional.ofNullable(request);
 	}
 
+	
+	/**
+	 * Método que obtiene una transacción de compra.
+	 *
+	 * @param purchaseTransactionId the purchase transaction id
+	 * @return the purchase transaction
+	 */
 	@Override
 	public ResponseEntity<ar.com.plug.generated.model.PurchaseTransaction> getPurchaseTransaction(
 			Integer purchaseTransactionId) {
@@ -91,6 +98,12 @@ public class PurchaseTransactionsApiController implements PurchaseTransactionsAp
 
 	}
 
+	/**
+	 * Creates the purchase transaction.
+	 *
+	 * @param purchaseTransactionDTO the purchase transaction DTO
+	 * @return the response entity
+	 */
 	@Override
 	public ResponseEntity<ar.com.plug.generated.model.PurchaseTransaction> createPurchaseTransaction(
 			ar.com.plug.generated.model.@Valid PurchaseTransaction purchaseTransactionDTO) {
