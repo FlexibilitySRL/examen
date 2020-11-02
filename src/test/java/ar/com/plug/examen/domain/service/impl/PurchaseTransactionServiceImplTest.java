@@ -28,6 +28,7 @@ class PurchaseTransactionServiceImplTest {
 		PurchaseTransaction oldEntity = new PurchaseTransaction();
 		oldEntity.setCreateDateTime(LocalDateTime.now().minusMinutes(10));
 		oldEntity.setStatus(StatusEnum.PENDING);
+		oldEntity.setPurchaseOrderId("100101");
 		oldEntity = purchaseTransactionService.createPurchaseTransaction(oldEntity);
 
 		PurchaseTransaction updatedEntity = new PurchaseTransaction();
@@ -47,21 +48,29 @@ class PurchaseTransactionServiceImplTest {
 	void given_anExistingREJECTEPurchaseTransaction_when_settingItToApprovedState_then_throwsException()
 			throws Exception {
 
-		// Creando entidad preexistente en estado REJECTED
-		PurchaseTransaction oldEntity = new PurchaseTransaction();
-		oldEntity.setCreateDateTime(LocalDateTime.now().minusMinutes(10));
-		oldEntity.setStatus(StatusEnum.REJECTED);
-		oldEntity.setRejectionDateTime(LocalDateTime.now());
+		// Creando entidad preexistente en estado PENDING
+		PurchaseTransaction entity = new PurchaseTransaction();
+		entity.setCreateDateTime(LocalDateTime.now().minusMinutes(10));
+		entity.setStatus(StatusEnum.PENDING);
+		entity.setPurchaseOrderId("100101");
+		entity = purchaseTransactionService.createPurchaseTransaction(entity);
+		final long entityId = entity.getId();
 
-		PurchaseTransaction savedEntity = purchaseTransactionService.createPurchaseTransaction(oldEntity);
-
+		// marcamos la transacción como aprobada
 		PurchaseTransaction updatedEntity = new PurchaseTransaction();
 		updatedEntity.setStatus(StatusEnum.APPROVED);
 		updatedEntity.setApproverId("1234");
+		updatedEntity = purchaseTransactionService.updatePurchaseTransaction(entityId, updatedEntity);
 
-		Assertions.assertThatExceptionOfType(AlreadyReportedException.class).isThrownBy(() -> {
-			purchaseTransactionService.updatePurchaseTransaction(savedEntity.getId(), updatedEntity);
-		}).as("Una transacción en estado distinto de PENDING no puede ser nuevamente alterada");
+		// y la intentamos marcar de nuevo como rechazada
+
+		PurchaseTransaction updatedEntity2 = new PurchaseTransaction();
+		updatedEntity2.setStatus(StatusEnum.REJECTED);
+		updatedEntity2.setApproverId("7890");
+		Assertions.assertThatExceptionOfType(AlreadyReportedException.class)
+				.as("Una transacción en estado distinto de PENDING no puede ser nuevamente alterada").isThrownBy(() -> {
+					purchaseTransactionService.updatePurchaseTransaction(entityId, updatedEntity2);
+				});
 
 	}
 
