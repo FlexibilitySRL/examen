@@ -80,10 +80,28 @@ public class PurchaseTransactionServiceImpl {
 	 * No fue solicitado, pero se usa en las pruebas de integración para cargar
 	 * datos
 	 * 
+	 * Se crea una orden de compra siempre en estado PENDING, sin aprobador ni
+	 * fechas asociadas. Se establece la fecha de creación a now, y se verifica que
+	 * el campo purchaseOrderId tenga información.
+	 * 
+	 * Si se requiere crear un objeto salteando estas restricciones, se lo puede
+	 * hacer mediante la cláusula new y seteando los atributos en el testcase u otro
+	 * método y persistiendo via interface.
+	 * 
 	 * @param entity
 	 * @return
 	 */
 	public PurchaseTransaction createPurchaseTransaction(PurchaseTransaction entity) {
+
+		if (entity.getPurchaseOrderId()==null || entity.getPurchaseOrderId().isEmpty()) {
+			throw new IllegalArgumentException("Missing purchaseId. PurchaseTransaction must be referred to a Purchase.");
+		}
+		
+		entity.setCreateDateTime(LocalDateTime.now());
+		entity.setStatus(StatusEnum.PENDING);
+		entity.setApprovalDateTime(null);
+		entity.setApproverId(null);
+		entity.setRejectionDateTime(null);
 		return purchaseTransactionRepo.save(entity);
 	}
 
