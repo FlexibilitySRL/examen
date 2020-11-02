@@ -1,6 +1,8 @@
 package ar.com.plug.examen.app.rest;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -27,14 +29,14 @@ public class ProductsApiController implements ProductsApi {
 
 	private final NativeWebRequest request;
 
-	private ProductServiceImpl prodService;
+	private ProductServiceImpl productService;
 
 	private DTOMapper dtoMapper = DTOMapper.INSTANCE;
 
 	@Autowired
-	public ProductsApiController(NativeWebRequest request, ProductServiceImpl prodService) {
+	public ProductsApiController(NativeWebRequest request, ProductServiceImpl productService) {
 		this.request = request;
-		this.prodService = prodService;
+		this.productService = productService;
 	}
 
 	@Override
@@ -42,16 +44,80 @@ public class ProductsApiController implements ProductsApi {
 		return Optional.ofNullable(request);
 	}
 
+	/**
+	 * Creates the product.
+	 *
+	 * @param product the product
+	 * @return the response entity
+	 */
 	@Override
-	public ResponseEntity<Void> createProduct(@Valid ar.com.plug.generated.model.Product productDTO) {
-
-		log.info("Se recibe una solicitud de creación de producto {}", productDTO);
+	public ResponseEntity<ar.com.plug.generated.model.Product> createProduct(
+			@Valid ar.com.plug.generated.model.Product productDTO) {
 
 		Product productEntity = dtoMapper.from(productDTO);
 
-		productEntity = prodService.createProduct(productEntity);
+		productEntity = productService.createProduct(productEntity);
+		productDTO = dtoMapper.from(productEntity);
 
-		return new ResponseEntity<Void>(HttpStatus.CREATED);
+		return ResponseEntity.ok().body(productDTO);
+
+	}
+
+	/**
+	 * Delete product.
+	 *
+	 * @param productId the product id
+	 * @return the response entity
+	 */
+	@Override
+	public ResponseEntity<Void> deleteProduct(Integer productId) {
+		productService.deleteProduct(productId.longValue());
+		return new ResponseEntity<Void>(HttpStatus.OK);
+	}
+
+	/**
+	 * Update product.
+	 *
+	 * @param productId  the product id
+	 * @param productDTO the product DTO
+	 * @return the response entity
+	 */
+	@Override
+	public ResponseEntity<ar.com.plug.generated.model.Product> updateProduct(Integer productId,
+			ar.com.plug.generated.model.@Valid Product productDTO) {
+		log.info("Se recibe una solicitud de creación de product {}", productDTO);
+
+		Product productEntity = dtoMapper.from(productDTO);
+
+		productEntity = productService.updateProduct(productId.longValue(), productEntity);
+		productDTO = dtoMapper.from(productEntity);
+
+		return ResponseEntity.ok().body(productDTO);
+	}
+
+	/**
+	 * Gets the product.
+	 *
+	 * @param customerId the product id
+	 * @return the product
+	 */
+	@Override
+	public ResponseEntity<ar.com.plug.generated.model.Product> getProduct(Integer productId) {
+		return ResponseEntity.ok().body(dtoMapper.from(productService.getProduct(productId.longValue())));
+	}
+
+	/**
+	 * Gets the products.
+	 *
+	 * @return the products
+	 */
+	@Override
+	public ResponseEntity<List<ar.com.plug.generated.model.Product>> getproducts() {
+		List<ar.com.plug.generated.model.Product> productList = productService.getProducts().stream()
+				.map((productEntity) -> dtoMapper.from(productEntity)).collect(Collectors.toList());
+
+		return ResponseEntity.ok(productList);
+
 	}
 
 }
