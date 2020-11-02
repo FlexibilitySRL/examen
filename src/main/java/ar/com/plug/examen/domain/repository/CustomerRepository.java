@@ -8,5 +8,4 @@ import ar.com.plug.examen.domain.model.Customer;
 @Repository
 public interface CustomerRepository extends PagingAndSortingRepository<Customer, Long> {
 
-
 }

@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import ar.com.plug.examen.domain.model.PurchaseTransaction;
 import ar.com.plug.examen.domain.model.PurchaseTransaction.StatusEnum;
@@ -22,10 +23,11 @@ import ar.com.plug.examen.domain.model.PurchaseTransaction.StatusEnum;
  *
  */
 @SpringBootTest
+@ActiveProfiles("test")
 public class PurchaseTransactionRepositoryTest {
 
 	@Autowired
-	private PurchaseTransactionRepository PurchaseTransactionRepo;
+	private PurchaseTransactionRepository purchaseTransactionRepo;
 
 	/**
 	 * Test method for
@@ -42,9 +44,9 @@ public class PurchaseTransactionRepositoryTest {
 		PurchaseTransaction newPurchaseTransaction = new PurchaseTransaction(1L, "approverId", approvalDateTime, null,
 				creationDateTime, statusEnum, "dasdasda");
 
-		PurchaseTransactionRepo.save(newPurchaseTransaction);
+		purchaseTransactionRepo.save(newPurchaseTransaction);
 		
-		PurchaseTransaction pc = PurchaseTransactionRepo.save(newPurchaseTransaction);
+		PurchaseTransaction pc = purchaseTransactionRepo.save(newPurchaseTransaction);
 		assertNotNull(pc, "No se pudo almacenar PurchaseTransaction en la base de datos");
 	}
 
@@ -58,12 +60,12 @@ public class PurchaseTransactionRepositoryTest {
 		LocalDateTime creationDateTime = LocalDateTime.now().minusMinutes(10);
 		StatusEnum statusEnum = StatusEnum.APPROVED;
 
-		PurchaseTransaction newPurchaseTransaction = new PurchaseTransaction(2L, "approverId", approvalDateTime, null,
+		PurchaseTransaction newPurchaseTransaction = new PurchaseTransaction(null, "approverId", approvalDateTime, null,
 				creationDateTime, statusEnum, "dasdasda");
 
-		PurchaseTransactionRepo.save(newPurchaseTransaction);
+		PurchaseTransaction pc = purchaseTransactionRepo.save(newPurchaseTransaction);
 
-		Optional<PurchaseTransaction> pc2 = PurchaseTransactionRepo.findById(2L);
+		Optional<PurchaseTransaction> pc2 = purchaseTransactionRepo.findById(pc.getId());
 
 		Assertions.assertTrue(pc2.isPresent(), "El PurchaseTransaction almacenado en el repo no se pudo recuperar");
 

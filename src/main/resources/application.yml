@@ -1,3 +1,5 @@
+logging.level.web: DEBUG
+
 spring:
   jackson:
     serialization:

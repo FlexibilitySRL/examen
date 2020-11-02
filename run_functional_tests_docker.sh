@@ -9,5 +9,11 @@
 # https://learning.postman.com/docs/running-collections/using-newman-cli/command-line-integration-with-newman/
 #
 
-newman run Payment\ Integration\ Test.postman_collection.json
+# Para correr por primera vez:
+# 	$ npm install newman
+# 	$ docker-compose up -d 
+
+
+newman run 'Functional Tests.postman_collection.json' -e 'Functional Tests - localhost-8087 - docker-compose.postman_environment.json'
+
 

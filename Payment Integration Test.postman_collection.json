@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "a2b6fbda-90d4-448e-86b7-c27c31de6031",
-		"name": "Payment Integration Test",
+		"_postman_id": "c1b1c98e-1173-403b-8767-390b8afe3e03",
+		"name": "PaymentManagement Integration Tests",
 		"description": "API que expone y permite gestionar recursos asociados al proceso de venta y pago de productos.\nPermite realizar las siguientes funciones:\n    - ABM de productos.\n    - ABM de clientes.\n    - ABM de vendedores.\n    - Consulta de transacciones de compra.\n    - Aprobación de compras.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -28,9 +28,9 @@
 									],
 									"variable": [
 										{
-											"id": "2a414758-a119-4dc4-89a7-7fa7cda0b9a1",
+											"id": "a04c4b0f-5305-4e8c-9489-3523afad8456",
 											"key": "vendorId",
-											"value": "Ut labore nostrud do esse",
+											"value": "-45159830",
 											"type": "string",
 											"description": "(Required) A unique identifier for a `Vendor`."
 										}
@@ -102,9 +102,9 @@
 									],
 									"variable": [
 										{
-											"id": "93465094-d50c-4cbf-9393-3444b7465526",
+											"id": "85c0e636-0c65-469a-9942-4267efaa7a3a",
 											"key": "vendorId",
-											"value": "Ut labore nostrud do esse",
+											"value": "-45159830",
 											"type": "string",
 											"description": "(Required) A unique identifier for a `Vendor`."
 										}
@@ -168,9 +168,9 @@
 									],
 									"variable": [
 										{
-											"id": "bd8ebfe2-6b01-4a75-875f-94cffe8afce6",
+											"id": "2e87b8d1-ba99-43cd-bd33-949f2d44edbe",
 											"key": "vendorId",
-											"value": "Ut labore nostrud do esse",
+											"value": "-45159830",
 											"type": "string",
 											"description": "(Required) A unique identifier for a `Vendor`."
 										}
@@ -351,9 +351,9 @@
 									],
 									"variable": [
 										{
-											"id": "34d1c8ab-5a4f-4e70-ac1a-26a1324bfe91",
+											"id": "753fc865-aa42-4c25-b3a7-5eaf0f4cabd3",
 											"key": "customerId",
-											"value": "Ut labore nostrud do esse",
+											"value": "-45159830",
 											"type": "string",
 											"description": "(Required) A unique identifier for a `Customer`."
 										}
@@ -425,9 +425,9 @@
 									],
 									"variable": [
 										{
-											"id": "2e0a5967-037e-412f-a3cd-01a3905fa229",
+											"id": "3a67134a-dc17-441a-8cfc-f2c4c69b425f",
 											"key": "customerId",
-											"value": "Ut labore nostrud do esse",
+											"value": "-45159830",
 											"type": "string",
 											"description": "(Required) A unique identifier for a `Customer`."
 										}
@@ -491,9 +491,9 @@
 									],
 									"variable": [
 										{
-											"id": "3c3b34cf-11f6-4b2d-b2ab-21817330042a",
+											"id": "b2eab9e4-5d5a-4aba-b1fc-c6e2b0817de5",
 											"key": "customerId",
-											"value": "Ut labore nostrud do esse",
+											"value": "-45159830",
 											"type": "string",
 											"description": "(Required) A unique identifier for a `Customer`."
 										}
@@ -674,9 +674,9 @@
 									],
 									"variable": [
 										{
-											"id": "968652f0-63ef-49bc-82bc-e1f64b42453d",
+											"id": "75198d19-6c6f-489f-a5d3-a33a3fb2bc3d",
 											"key": "productId",
-											"value": "Ut labore nostrud do esse",
+											"value": "-45159830",
 											"type": "string",
 											"description": "(Required) A unique identifier for a `Product`."
 										}
@@ -748,9 +748,9 @@
 									],
 									"variable": [
 										{
-											"id": "e86c9a04-d361-40ae-9eff-9f5db9f94c83",
+											"id": "81af3b6e-465f-4fc3-b111-020b00917093",
 											"key": "productId",
-											"value": "Ut labore nostrud do esse",
+											"value": "-45159830",
 											"type": "string",
 											"description": "(Required) A unique identifier for a `Product`."
 										}
@@ -814,9 +814,9 @@
 									],
 									"variable": [
 										{
-											"id": "590764fc-2c13-4c07-9c0f-e5f257d1437d",
+											"id": "4d7a26d4-8ae5-4b04-b4c8-122b5189da4f",
 											"key": "productId",
-											"value": "Ut labore nostrud do esse",
+											"value": "-45159830",
 											"type": "string",
 											"description": "(Required) A unique identifier for a `Product`."
 										}
@@ -976,10 +976,10 @@
 			"protocolProfileBehavior": {}
 		},
 		{
-			"name": "Purchase Transactions",
+			"name": "purchase Transactions",
 			"item": [
 				{
-					"name": "{Purchase Transaction Id}",
+					"name": "{purchase Transaction Id}",
 					"item": [
 						{
 							"name": "Get a PurchaseTransaction",
@@ -987,19 +987,19 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/PurchaseTransactions/:PurchaseTransactionId",
+									"raw": "{{baseUrl}}/purchaseTransactions/:purchaseTransactionId",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
-										"PurchaseTransactions",
-										":PurchaseTransactionId"
+										"purchaseTransactions",
+										":purchaseTransactionId"
 									],
 									"variable": [
 										{
-											"id": "68481a0f-2631-4c5b-8c64-05f4102e5df3",
-											"key": "PurchaseTransactionId",
-											"value": "Ut labore nostrud do esse",
+											"id": "91062b90-9315-41c6-9aff-2616b6f9442c",
+											"key": "purchaseTransactionId",
+											"value": "-45159830",
 											"type": "string",
 											"description": "(Required) A unique identifier for a `PurchaseTransaction`."
 										}
@@ -1014,17 +1014,17 @@
 										"method": "GET",
 										"header": [],
 										"url": {
-											"raw": "{{baseUrl}}/PurchaseTransactions/:PurchaseTransactionId",
+											"raw": "{{baseUrl}}/purchaseTransactions/:purchaseTransactionId",
 											"host": [
 												"{{baseUrl}}"
 											],
 											"path": [
-												"PurchaseTransactions",
-												":PurchaseTransactionId"
+												"purchaseTransactions",
+												":purchaseTransactionId"
 											],
 											"variable": [
 												{
-													"key": "PurchaseTransactionId"
+													"key": "purchaseTransactionId"
 												}
 											]
 										}
@@ -1039,7 +1039,7 @@
 										}
 									],
 									"cookie": [],
-									"body": "{\n \"status\": \"PENDING\",\n \"approverId\": \"ex sit\",\n \"approvalDateTime\": \"1953-01-25T21:56:10.279Z\",\n \"purchaseOrderId\": \"anim\"\n}"
+									"body": "{\n \"status\": \"REJECTED\",\n \"purchaseOrderId\": \"et do quis\",\n \"approverId\": \"dolore Duis ut\",\n \"approvalDateTime\": \"1962-02-14T04:47:25.846Z\",\n \"rejectionDateTime\": \"2000-07-22T14:46:21.059Z\",\n \"createDateTime\": \"1982-12-21T15:06:11.408Z\"\n}"
 								}
 							]
 						},
@@ -1055,25 +1055,25 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"status\": \"PENDING\",\n    \"approverId\": \"ex sit\",\n    \"approvalDateTime\": \"1953-01-25T21:56:10.279Z\",\n    \"purchaseOrderId\": \"anim\"\n}",
+									"raw": "{\n    \"status\": \"REJECTED\",\n    \"purchaseOrderId\": \"et do quis\",\n    \"approverId\": \"dolore Duis ut\",\n    \"approvalDateTime\": \"1962-02-14T04:47:25.846Z\",\n    \"rejectionDateTime\": \"2000-07-22T14:46:21.059Z\",\n    \"createDateTime\": \"1982-12-21T15:06:11.408Z\"\n}",
 									"options": {
 										"raw": {}
 									}
 								},
 								"url": {
-									"raw": "{{baseUrl}}/PurchaseTransactions/:PurchaseTransactionId",
+									"raw": "{{baseUrl}}/purchaseTransactions/:purchaseTransactionId",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
-										"PurchaseTransactions",
-										":PurchaseTransactionId"
+										"purchaseTransactions",
+										":purchaseTransactionId"
 									],
 									"variable": [
 										{
-											"id": "a129b150-8e16-42d6-9b4b-6172789e0ae6",
-											"key": "PurchaseTransactionId",
-											"value": "Ut labore nostrud do esse",
+											"id": "ff19aaf8-5eb2-4333-a144-21763bd3e488",
+											"key": "purchaseTransactionId",
+											"value": "-45159830",
 											"type": "string",
 											"description": "(Required) A unique identifier for a `PurchaseTransaction`."
 										}
@@ -1089,20 +1089,20 @@
 										"header": [],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n    \"status\": \"PENDING\",\n    \"approverId\": \"ex sit\",\n    \"approvalDateTime\": \"1953-01-25T21:56:10.279Z\",\n    \"purchaseOrderId\": \"anim\"\n}"
+											"raw": "{\n    \"status\": \"REJECTED\",\n    \"purchaseOrderId\": \"et do quis\",\n    \"approverId\": \"dolore Duis ut\",\n    \"approvalDateTime\": \"1962-02-14T04:47:25.846Z\",\n    \"rejectionDateTime\": \"2000-07-22T14:46:21.059Z\",\n    \"createDateTime\": \"1982-12-21T15:06:11.408Z\"\n}"
 										},
 										"url": {
-											"raw": "{{baseUrl}}/PurchaseTransactions/:PurchaseTransactionId",
+											"raw": "{{baseUrl}}/purchaseTransactions/:purchaseTransactionId",
 											"host": [
 												"{{baseUrl}}"
 											],
 											"path": [
-												"PurchaseTransactions",
-												":PurchaseTransactionId"
+												"purchaseTransactions",
+												":purchaseTransactionId"
 											],
 											"variable": [
 												{
-													"key": "PurchaseTransactionId"
+													"key": "purchaseTransactionId"
 												}
 											]
 										}
@@ -1127,19 +1127,19 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/PurchaseTransactions/:PurchaseTransactionId",
+									"raw": "{{baseUrl}}/purchaseTransactions/:purchaseTransactionId",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
-										"PurchaseTransactions",
-										":PurchaseTransactionId"
+										"purchaseTransactions",
+										":purchaseTransactionId"
 									],
 									"variable": [
 										{
-											"id": "b28b848c-660c-4253-9a7e-3e73dc224fd8",
-											"key": "PurchaseTransactionId",
-											"value": "Ut labore nostrud do esse",
+											"id": "0d183715-7cd0-4945-a576-84b039dd2720",
+											"key": "purchaseTransactionId",
+											"value": "-45159830",
 											"type": "string",
 											"description": "(Required) A unique identifier for a `PurchaseTransaction`."
 										}
@@ -1154,17 +1154,17 @@
 										"method": "DELETE",
 										"header": [],
 										"url": {
-											"raw": "{{baseUrl}}/PurchaseTransactions/:PurchaseTransactionId",
+											"raw": "{{baseUrl}}/purchaseTransactions/:purchaseTransactionId",
 											"host": [
 												"{{baseUrl}}"
 											],
 											"path": [
-												"PurchaseTransactions",
-												":PurchaseTransactionId"
+												"purchaseTransactions",
+												":purchaseTransactionId"
 											],
 											"variable": [
 												{
-													"key": "PurchaseTransactionId"
+													"key": "purchaseTransactionId"
 												}
 											]
 										}
@@ -1193,12 +1193,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/PurchaseTransactions",
+							"raw": "{{baseUrl}}/purchaseTransactions",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
-								"PurchaseTransactions"
+								"purchaseTransactions"
 							]
 						},
 						"description": "Gets a list of all `PurchaseTransaction` entities."
@@ -1210,12 +1210,12 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/PurchaseTransactions",
+									"raw": "{{baseUrl}}/purchaseTransactions",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
-										"PurchaseTransactions"
+										"purchaseTransactions"
 									]
 								}
 							},
@@ -1229,7 +1229,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "[\n {\n  \"status\": \"PENDING\",\n  \"approverId\": \"consectetur mollit dolo\",\n  \"approvalDateTime\": \"1953-09-16T09:27:58.400Z\",\n  \"purchaseOrderId\": \"\"\n },\n {\n  \"status\": \"APPROVED\",\n  \"approverId\": \"Ut pariatur in sed\",\n  \"approvalDateTime\": \"1956-11-08T16:54:39.857Z\",\n  \"purchaseOrderId\": \"ex eu ut\"\n }\n]"
+							"body": "[\n {\n  \"status\": \"PENDING\",\n  \"purchaseOrderId\": \"qui quis in sit Excepteur\",\n  \"approverId\": \"non ut ut\",\n  \"approvalDateTime\": \"2008-11-01T02:56:58.312Z\",\n  \"rejectionDateTime\": \"2007-07-12T22:34:50.198Z\",\n  \"createDateTime\": \"1953-11-06T22:29:12.784Z\"\n },\n {\n  \"status\": \"REJECTED\",\n  \"purchaseOrderId\": \"aliqua voluptate quis id\",\n  \"approverId\": \"id sint adipisicing\",\n  \"approvalDateTime\": \"1944-06-28T09:09:01.407Z\",\n  \"rejectionDateTime\": \"1994-10-27T14:36:30.857Z\",\n  \"createDateTime\": \"1993-09-10T17:42:22.483Z\"\n }\n]"
 						}
 					]
 				},
@@ -1245,18 +1245,18 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"status\": \"PENDING\",\n    \"approverId\": \"ex sit\",\n    \"approvalDateTime\": \"1953-01-25T21:56:10.279Z\",\n    \"purchaseOrderId\": \"anim\"\n}",
+							"raw": "{\n    \"status\": \"REJECTED\",\n    \"purchaseOrderId\": \"et do quis\",\n    \"approverId\": \"dolore Duis ut\",\n    \"approvalDateTime\": \"1962-02-14T04:47:25.846Z\",\n    \"rejectionDateTime\": \"2000-07-22T14:46:21.059Z\",\n    \"createDateTime\": \"1982-12-21T15:06:11.408Z\"\n}",
 							"options": {
 								"raw": {}
 							}
 						},
 						"url": {
-							"raw": "{{baseUrl}}/PurchaseTransactions",
+							"raw": "{{baseUrl}}/purchaseTransactions",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
-								"PurchaseTransactions"
+								"purchaseTransactions"
 							]
 						},
 						"description": "Creates a new instance of a `PurchaseTransaction`."
@@ -1269,15 +1269,15 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"status\": \"PENDING\",\n    \"approverId\": \"ex sit\",\n    \"approvalDateTime\": \"1953-01-25T21:56:10.279Z\",\n    \"purchaseOrderId\": \"anim\"\n}"
+									"raw": "{\n    \"status\": \"REJECTED\",\n    \"purchaseOrderId\": \"et do quis\",\n    \"approverId\": \"dolore Duis ut\",\n    \"approvalDateTime\": \"1962-02-14T04:47:25.846Z\",\n    \"rejectionDateTime\": \"2000-07-22T14:46:21.059Z\",\n    \"createDateTime\": \"1982-12-21T15:06:11.408Z\"\n}"
 								},
 								"url": {
-									"raw": "{{baseUrl}}/PurchaseTransactions",
+									"raw": "{{baseUrl}}/purchaseTransactions",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
-										"PurchaseTransactions"
+										"purchaseTransactions"
 									]
 								}
 							},
@@ -1303,7 +1303,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "3a03f161-764b-4ac5-901e-18b09a4061e2",
+				"id": "bb37b7ab-831f-4c1a-b93c-1a08a5ebe08b",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -1313,7 +1313,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "0cfe43e4-eb12-43f8-91b1-d1f01c2e4188",
+				"id": "9ad106ea-422d-49ea-adef-0607cc7a085a",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -1323,7 +1323,7 @@
 	],
 	"variable": [
 		{
-			"id": "e9fd57e9-a0eb-4ad9-b302-4a57ca40107f",
+			"id": "95097eba-cedd-4573-8122-b55534dcd836",
 			"key": "baseUrl",
 			"value": "http://localhost:8080/payments"
 		}

@@ -1,8 +1,13 @@
+#######################################################
+# Base de datos H2 inmmem para testcases
+#######################################################
+
 spring:
   datasource:
     driver-class-name: org.h2.Driver
     url: jdbc:h2:mem:payments;DB_CLOSE_ON_EXIT=FALSE
-    
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect 
   h2:
     console:
       enabled: true
