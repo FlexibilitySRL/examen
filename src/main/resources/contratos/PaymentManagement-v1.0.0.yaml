@@ -39,6 +39,10 @@ paths:
                 required: true
             responses:
                 '201':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Vendor'
                     description: Successful response.
             operationId: createVendor
             summary: Create a Vendor
@@ -144,6 +148,10 @@ paths:
                 required: true
             responses:
                 '201':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Customer'
                     description: Successful response.
             operationId: createCustomer
             summary: Create a Customer
@@ -187,6 +195,10 @@ paths:
                 required: true
             responses:
                 '202':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Customer'
                     description: Successful response.
             operationId: updateCustomer
             summary: Update a Customer
@@ -234,6 +246,10 @@ paths:
                 required: true
             responses:
                 '201':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Product'
                     description: Successful response.
             operationId: createProduct
             summary: Create a Product
