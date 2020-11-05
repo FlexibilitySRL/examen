@@ -1,7 +1,6 @@
 package ar.com.plug.examen.service;
 
 import ar.com.plug.examen.dao.ProductDAO;
-import ar.com.plug.examen.model.Clients;
 import ar.com.plug.examen.model.Products;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +16,7 @@ public class ProductService {
     public ProductService(ProductDAO productDao) {
         this.productDao = productDao;
     }
+
     public int insertProduct(Products product) {
         try {
             productDao.save(product);
