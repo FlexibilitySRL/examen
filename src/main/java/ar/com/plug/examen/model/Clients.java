@@ -15,9 +15,9 @@ public class Clients {
     @Column(columnDefinition = "varchar(255)")
     private  String lastName;
     @Column(columnDefinition = "integer")
-    private  Integer document;
-    @Column(columnDefinition = "integer default 25")
-    private  Integer phone;
+    private  Long document;
+    @Column(columnDefinition = "integer")
+    private  Long phone;
     @Column(columnDefinition = "varchar(255)")
     private  String address;
     @Column(columnDefinition = "boolean")
@@ -25,8 +25,8 @@ public class Clients {
 
     public Clients(@JsonProperty("name") String name,
                    @JsonProperty("lastName") String lastName,
-                   @JsonProperty("document") Integer document,
-                   @JsonProperty("phone") Integer phone,
+                   @JsonProperty("document") Long document,
+                   @JsonProperty("phone") Long phone,
                    @JsonProperty("address") String address,
                    @JsonProperty("state") Boolean state) {
         this.name = name;
@@ -53,11 +53,11 @@ public class Clients {
         return lastName;
     }
 
-    public Integer getDocument() {
+    public Long getDocument() {
         return document;
     }
 
-    public Integer getPhone() {
+    public Long getPhone() {
         return phone;
     }
 

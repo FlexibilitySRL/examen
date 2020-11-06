@@ -1,6 +1,5 @@
-package ar.com.plug.examen.resource;
+package ar.com.plug.examen.controller;
 
-import ar.com.plug.examen.model.Sellers;
 import ar.com.plug.examen.model.Transactions;
 import ar.com.plug.examen.service.TransactionsService;
 import ar.com.plug.examen.utils.MessageResponse;
@@ -15,12 +14,12 @@ import java.util.List;
 @RequestMapping(
         path = "/api/v1/transactions"
 )
-public class TransactionsResource {
+public class TransactionsController {
 
     private final TransactionsService transactionsService;
 
     @Autowired
-    public TransactionsResource(TransactionsService transactionsService) {
+    public TransactionsController(TransactionsService transactionsService) {
         this.transactionsService = transactionsService;
     }
 

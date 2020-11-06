@@ -1,7 +1,7 @@
-package ar.com.plug.examen.resource;
+package ar.com.plug.examen.controller;
 
-import ar.com.plug.examen.model.Sellers;
-import ar.com.plug.examen.service.SellersService;
+import ar.com.plug.examen.model.Products;
+import ar.com.plug.examen.service.ProductService;
 import ar.com.plug.examen.utils.MessageResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -12,39 +12,39 @@ import java.util.List;
 
 @RestController
 @RequestMapping(
-        path = "/api/v1/sellers"
+        path = "/api/v1/products"
 )
-public class SellersResource {
+public class ProductController {
 
-    private final SellersService sellerService;
+    private final ProductService productService;
 
     @Autowired
-    public SellersResource(SellersService sellerService) {
-        this.sellerService = sellerService;
+    public ProductController(ProductService productService) {
+        this.productService = productService;
     }
 
     @RequestMapping(
             method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<?> insertNewSeller(@RequestBody Sellers seller){
-        int result = sellerService.insertSeller(seller);
+    public ResponseEntity<?> insertNewProduct(@RequestBody Products product){
+        int result = productService.insertProduct(product);
         return getIntegerResponseEntity(result);
     }
 
     @RequestMapping(
             method = RequestMethod.GET
     )
-    public List<Sellers> fetchSellers(){
-        return sellerService.getAllSellers();
+    public List<Products> fetchProducts(){
+        return productService.getAllProducts();
     }
 
     @RequestMapping(
             method = RequestMethod.PUT,
             consumes = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<?> updateSeller(@RequestBody Sellers seller){
-        int result = sellerService.updateSeller(seller);
+    public ResponseEntity<?> updateProduct(@RequestBody Products product){
+        int result = productService.updateProduc(product);
         return getIntegerResponseEntity(result);
     }
 
@@ -52,8 +52,8 @@ public class SellersResource {
             method = RequestMethod.DELETE,
             path = "{id}"
     )
-    public ResponseEntity<?> deleteSeller(@PathVariable("id") Long id){
-        int result = sellerService.deleteSeller(id);
+    public ResponseEntity<?> deleteProduct(@PathVariable("id") Long id){
+        int result = productService.deleteProduct(id);
         return getIntegerResponseEntity(result);
     }
 

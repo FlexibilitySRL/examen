@@ -1,4 +1,4 @@
-package ar.com.plug.examen.resource;
+package ar.com.plug.examen.controller;
 
 import ar.com.plug.examen.model.Clients;
 import ar.com.plug.examen.service.ClientService;
@@ -14,12 +14,12 @@ import java.util.List;
 @RequestMapping(
         path = "/api/v1/clients"
 )
-public class ClientsResource {
+public class ClientsController {
 
     private final ClientService clientService;
 
     @Autowired
-    public ClientsResource(ClientService clientService) {
+    public ClientsController(ClientService clientService) {
         this.clientService = clientService;
     }
 
