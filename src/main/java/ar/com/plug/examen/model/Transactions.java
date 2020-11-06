@@ -10,7 +10,7 @@ public class Transactions {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private  Integer id;
+    private  Long id;
     @Column(columnDefinition = "varchar(255)")
     private  String state_order;
     @Column(columnDefinition = "varchar(255)")
@@ -39,7 +39,7 @@ public class Transactions {
 
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 

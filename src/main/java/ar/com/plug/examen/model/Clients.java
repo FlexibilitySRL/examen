@@ -9,7 +9,7 @@ public class Clients {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private  Integer id;
+    private  Long id;
     @Column(columnDefinition = "varchar(255)")
     private  String name;
     @Column(columnDefinition = "varchar(255)")
@@ -41,7 +41,7 @@ public class Clients {
 
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 

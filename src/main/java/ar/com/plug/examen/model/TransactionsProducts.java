@@ -9,7 +9,7 @@ public class TransactionsProducts {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private Long id;
     @Column(columnDefinition = "long")
     private  Long value;
     @Column(columnDefinition = "long")
@@ -31,7 +31,7 @@ public class TransactionsProducts {
 
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 

@@ -16,4 +16,6 @@ public interface ProductDAO extends JpaRepository<Products, Long> {
     @Query(value = "UPDATE products p join products tp on p.id = tp.id SET p.quantity= (tp.quantity - :quantity) WHERE p.id = :id", nativeQuery = true)
     int updateQuantity(@Param("id") Long id, @Param("quantity") Long quantity );
 
+    public Products findByName(String name);
+
 }
