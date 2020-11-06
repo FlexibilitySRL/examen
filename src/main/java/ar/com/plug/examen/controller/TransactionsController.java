@@ -10,6 +10,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Contains methods for Transactions.
+ *
+ * @author Camilo Villate
+ */
 @RestController
 @RequestMapping(
         path = "/api/v1/transactions"
@@ -23,15 +28,26 @@ public class TransactionsController {
         this.transactionsService = transactionsService;
     }
 
+    /**
+     * Create a new Transaction in the database
+     *
+     * @param transactions - Json model of the product
+     * @return - response
+     */
     @RequestMapping(
             method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE
     )
     public ResponseEntity<?> insertTransaction(@RequestBody Transactions transactions){
         int result = transactionsService.createTransaction(transactions);
-        return getIntegerResponseEntity(result);
+        return MessageResponse.getIntegerResponseEntity(result);
     }
 
+    /**
+     * Retrieve list of Transactions from database
+     *
+     * @return - response Json Array whit all sellers
+     */
     @RequestMapping(
             method = RequestMethod.GET
     )
@@ -39,19 +55,19 @@ public class TransactionsController {
         return transactionsService.getAllSellers();
     }
 
+    /**
+     * Update Transaction in the database
+     *
+     * @param id - id to be update in database
+     * @return - response a json message
+     */
     @RequestMapping(
             method = RequestMethod.GET,
             path = "{id}"
     )
     public ResponseEntity<?> updateStateTransaction(@PathVariable("id") Long id){
         int result = transactionsService.updateTransactionState(id,"APPROVED");
-        return getIntegerResponseEntity(result);
+        return MessageResponse.getIntegerResponseEntity(result);
     }
 
-    private ResponseEntity<?> getIntegerResponseEntity(int result) {
-        if(result ==1){
-            return  ResponseEntity.ok().body(new MessageResponse("Proceso correcto"));
-        }
-        return ResponseEntity.badRequest().build();
-    }
 }
