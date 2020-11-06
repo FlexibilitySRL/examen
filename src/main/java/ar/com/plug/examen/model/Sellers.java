@@ -8,7 +8,7 @@ import javax.persistence.*;
 public class Sellers {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private  Long id;
+    private  Integer id;
     @Column(columnDefinition = "varchar(255)")
     private  String name;
     @Column(columnDefinition = "varchar(255)")
@@ -37,7 +37,7 @@ public class Sellers {
 
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
