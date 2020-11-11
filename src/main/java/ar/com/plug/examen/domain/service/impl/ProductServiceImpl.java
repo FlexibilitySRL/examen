@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -28,14 +29,23 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
-    public Product findById(Long id) throws ProductDoesNotExistException {
-        return this.productRepository.findById(id).orElseThrow(
-                ()-> new ProductDoesNotExistException("The product does not exist on the database")
-        );
+    public Product findById(Long id) {
+        Optional<Product> anOptionalProduct = this.productRepository.findById(id);
+        if (! anOptionalProduct.isPresent()){
+            //throw new ProductDoesNotExistException("The product does not exist");
+            return null;
+        }
+        return anOptionalProduct.get();
     }
 
     @Override
     public void delete(Product aProduct) {
         this.productRepository.delete(aProduct);
+    }
+
+    @Override
+    public Product updateProduct(Product aProduct) {
+        Product product = this.findById(aProduct.getId());
+        return this.save(product);
     }
 }

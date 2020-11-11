@@ -70,4 +70,6 @@ public class Product implements Serializable {
     public String getBrand() {
         return this.brand;
     }
+
+    public Long getId(){ return this.id;}
 }
