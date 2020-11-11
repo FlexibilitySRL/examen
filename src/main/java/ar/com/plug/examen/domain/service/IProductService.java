@@ -17,25 +17,25 @@ public interface IProductService {
      * @param aProduct
      * @return aProduct
      */
-    Product save(Product aProduct);
+    Product saveProduct(Product aProduct);
 
     /**
      * Find a product by id
      * @param id
      * @return aProduct
      */
-    Product findById(Long id);
+    Product findById(Long id) throws ProductDoesNotExistException;
 
     /**
      * Delete the product
-     * @param aProduct
+     * @param id
      */
-    void delete(Product aProduct);
+    void deleteProduct(Long id) throws ProductDoesNotExistException;
 
     /**
      * Method to update a product
      * @param aProduct
      * @return
      */
-    Product updateProduct(Product aProduct);
+    Product updateProduct(Product aProduct) throws ProductDoesNotExistException;
 }

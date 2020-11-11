@@ -4,6 +4,7 @@ import ar.com.plug.examen.app.repository.ProductRepository;
 import ar.com.plug.examen.domain.exceptions.EmptyBrandException;
 import ar.com.plug.examen.domain.exceptions.EmptyNameException;
 import ar.com.plug.examen.domain.exceptions.InvalidPriceException;
+import ar.com.plug.examen.domain.exceptions.ProductDoesNotExistException;
 import ar.com.plug.examen.domain.model.Product;
 import ar.com.plug.examen.domain.service.impl.ProductServiceImpl;
 import org.junit.jupiter.api.Test;
@@ -39,7 +40,7 @@ public class ProductServiceTest {
         Product aProductSaved;
         when(repository.save(aProductMock)).thenReturn(aProductMock);
 
-        aProductSaved = service.save(aProductMock);
+        aProductSaved = service.saveProduct(aProductMock);
         verify(repository, times(1)).save(aProductMock);
 
         assertEquals(aProductSaved.getBrand(), aProductMock.getBrand());
@@ -48,7 +49,7 @@ public class ProductServiceTest {
     }
 
     @Test
-    public void getProductByIdTest() throws EmptyBrandException, EmptyNameException, InvalidPriceException {
+    public void getProductByIdTest() throws EmptyBrandException, EmptyNameException, InvalidPriceException, ProductDoesNotExistException {
         when(aProductMock.getBrand()).thenReturn("Coca-Cola");
         when(aProductMock.getName()).thenReturn("Coca");
         when(aProductMock.getPrice()).thenReturn(125.5);
@@ -65,7 +66,7 @@ public class ProductServiceTest {
     }
 
 
-    public void updateProductTest() throws EmptyBrandException, EmptyNameException, InvalidPriceException {
+    public void updateProductTest() throws EmptyBrandException, EmptyNameException, InvalidPriceException, ProductDoesNotExistException {
         Product aProductSaved;
 
         /*Save the first product to update later*/
@@ -74,7 +75,7 @@ public class ProductServiceTest {
         when(aProductMock.getPrice()).thenReturn(125.5);
         when(repository.save(aProductMock)).thenReturn(aProductMock);
 
-        aProductSaved = service.save(aProductMock);
+        aProductSaved = service.saveProduct(aProductMock);
 
         /*Create the product to update the first one*/
         Optional<Product> productToUpdatePrice = Optional.of(new Product("Coca", 140.0, "Coca-Cola"));
@@ -93,7 +94,7 @@ public class ProductServiceTest {
     }
 
     
-    public void deleteProductTest() throws EmptyBrandException, EmptyNameException, InvalidPriceException {
+    public void deleteProductTest() throws EmptyBrandException, EmptyNameException, InvalidPriceException, ProductDoesNotExistException {
        /*
         //Product aProductSaved;
 
@@ -122,7 +123,7 @@ public class ProductServiceTest {
         when(aProductMock.getPrice()).thenReturn(125.5);
 
         when(repository.save(aProductMock)).thenReturn(aProductMock);
-        service.save(aProductMock);
+        service.saveProduct(aProductMock);
 
 
     }

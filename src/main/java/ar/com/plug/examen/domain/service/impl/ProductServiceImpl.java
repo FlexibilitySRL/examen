@@ -24,28 +24,26 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
-    public Product save(Product aProduct) {
+    public Product saveProduct(Product aProduct) {
         return this.productRepository.save(aProduct);
     }
 
     @Override
-    public Product findById(Long id) {
-        Optional<Product> anOptionalProduct = this.productRepository.findById(id);
-        if (! anOptionalProduct.isPresent()){
-            //throw new ProductDoesNotExistException("The product does not exist");
-            return null;
-        }
-        return anOptionalProduct.get();
+    public Product findById(Long id) throws ProductDoesNotExistException {
+        Product aProduct = this.productRepository.findById(id)
+                .orElseThrow(()-> new ProductDoesNotExistException("The product with id: " + id.toString() + " does not exist."));
+        return aProduct;
     }
 
     @Override
-    public void delete(Product aProduct) {
+    public void deleteProduct(Long id) throws ProductDoesNotExistException {
+        Product aProduct = this.findById(id);
         this.productRepository.delete(aProduct);
     }
 
     @Override
-    public Product updateProduct(Product aProduct) {
+    public Product updateProduct(Product aProduct) throws ProductDoesNotExistException {
         Product product = this.findById(aProduct.getId());
-        return this.save(product);
+        return this.saveProduct(product);
     }
 }
