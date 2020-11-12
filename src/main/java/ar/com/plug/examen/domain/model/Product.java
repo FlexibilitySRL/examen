@@ -53,7 +53,7 @@ public class Product implements Serializable {
     }
 
     private void validateBrand(String brand) throws EmptyBrandException {
-        if (name.isEmpty()){
+        if (brand.isEmpty()){
             throw new EmptyBrandException("The product name should have a brand.");
         }
         this.brand = brand;
@@ -72,4 +72,24 @@ public class Product implements Serializable {
     }
 
     public Long getId(){ return this.id;}
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Product product = (Product) o;
+
+        if (!name.equals(product.name)) return false;
+        if (!price.equals(product.price)) return false;
+        return brand.equals(product.brand);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name.hashCode();
+        result = 31 * result + price.hashCode();
+        result = 31 * result + brand.hashCode();
+        return result;
+    }
 }
