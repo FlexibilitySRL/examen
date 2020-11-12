@@ -1,4 +1,4 @@
-package ar.com.plug.examen.domain.service;
+package ar.com.plug.examen.domain.integration;
 
 import ar.com.plug.examen.domain.exceptions.*;
 import ar.com.plug.examen.domain.model.Client;

@@ -2,6 +2,7 @@ package ar.com.plug.examen.domain.service.impl;
 
 import ar.com.plug.examen.app.repository.ClientRepository;
 import ar.com.plug.examen.domain.exceptions.ClientDoesNotExistException;
+import ar.com.plug.examen.domain.exceptions.ProductDoesNotExistException;
 import ar.com.plug.examen.domain.model.Client;
 import ar.com.plug.examen.domain.model.Product;
 import ar.com.plug.examen.domain.service.IClientService;
@@ -41,12 +42,20 @@ public class ClientServiceImpl implements IClientService {
     @Override
     public Client updateClient(Client aClient) throws ClientDoesNotExistException {
         Client client =this.findById(aClient.getId());
-        return this.saveClient(client);
+        if(client.getId()== null || client.getId()<0 ){
+            throw new ClientDoesNotExistException("The product with id: " + aClient.getId().toString() + " does not exist.");
+        }
+        return this.saveClient(aClient);
     }
 
     @Override
-    public void deleteClient(Long id) throws ClientDoesNotExistException {
-        Client aClient = this.findById(id);
+    public void deleteClient(Long id) {
+        Client aClient = null;
+        try {
+            aClient = this.findById(id);
+        } catch (ClientDoesNotExistException e) {
+            //e.printStackTrace();
+        }
         this.repository.delete(aClient);
     }
 }
