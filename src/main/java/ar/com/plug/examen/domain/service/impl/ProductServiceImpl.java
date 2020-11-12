@@ -40,8 +40,13 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
-    public void deleteProduct(Long id) throws ProductDoesNotExistException {
-        Product aProduct = this.findById(id);
+    public void deleteProduct(Long id)  {
+        Product aProduct = null;
+        try {
+            aProduct = this.findById(id);
+        } catch (ProductDoesNotExistException e) {
+            //e.printStackTrace();
+        }
         this.productRepository.delete(aProduct);
     }
 
