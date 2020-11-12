@@ -1,5 +1,9 @@
 package ar.com.plug.examen.domain.model;
 
+import ar.com.plug.examen.domain.exceptions.EmptyLastNameException;
+import ar.com.plug.examen.domain.exceptions.EmptyNameException;
+import ar.com.plug.examen.domain.exceptions.InvalidDocumentNumberException;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -28,10 +32,31 @@ public class Client implements Serializable {
     @OneToMany(mappedBy= "client")
     private List<Purchase> purchases = new ArrayList<Purchase>();
 
-    public Client(String name, String lastName, String document){
-        this.name = name;
-        this.lastName = lastName;
+    public Client(String name, String lastName, String document) throws EmptyNameException, EmptyLastNameException, InvalidDocumentNumberException {
+        this.validateName(name);
+        this.validateLastName(lastName);
+        this.validateDocument(document);
+    }
+
+    private void validateDocument(String document) throws InvalidDocumentNumberException {
+        if (document.isEmpty() || ! document.matches("\\d+")){
+            throw new InvalidDocumentNumberException("The client document number is not valid.");
+        }
         this.document = document;
+    }
+
+    private void validateLastName(String lastName) throws EmptyLastNameException {
+        if (lastName.isEmpty()){
+            throw new EmptyLastNameException("The client last name should not be empty.");
+        }
+        this.lastName = lastName;
+    }
+
+    private void validateName(String name) throws EmptyNameException {
+        if (name.isEmpty()){
+            throw new EmptyNameException("The client name should not be empty.");
+        }
+        this.name = name;
     }
 
     public String getName(){
@@ -48,5 +73,20 @@ public class Client implements Serializable {
 
     public Long getId(){
         return this.id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Client client = (Client) o;
+
+        return document.equals(client.document);
+    }
+
+    @Override
+    public int hashCode() {
+        return document.hashCode();
     }
 }

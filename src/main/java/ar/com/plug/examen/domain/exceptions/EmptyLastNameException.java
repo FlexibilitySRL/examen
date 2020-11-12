@@ -1,6 +1,7 @@
 package ar.com.plug.examen.domain.exceptions;
 
-public class EmptyLastNameException extends Throwable {
-    public EmptyLastNameException(String s) {
+public class EmptyLastNameException extends Exception {
+    public EmptyLastNameException(String message) {
+        super(message);
     }
 }
