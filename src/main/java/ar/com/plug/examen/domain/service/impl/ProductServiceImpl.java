@@ -5,6 +5,7 @@ import ar.com.plug.examen.domain.exceptions.ProductDoesNotExistException;
 import ar.com.plug.examen.domain.model.Product;
 import ar.com.plug.examen.domain.service.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,6 +18,9 @@ public class ProductServiceImpl implements IProductService {
 
     @Autowired
     private ProductRepository productRepository;
+    public ProductServiceImpl(ProductRepository repository){
+        productRepository = repository;
+    }
 
     @Override
     public List<Product> findAll() {
@@ -44,6 +48,10 @@ public class ProductServiceImpl implements IProductService {
     @Override
     public Product updateProduct(Product aProduct) throws ProductDoesNotExistException {
         Product product = this.findById(aProduct.getId());
-        return this.saveProduct(product);
+        if(product.getId()== null || product.getId()<0 ){
+            throw new ProductDoesNotExistException("The product with id: " + aProduct.getId().toString() + " does not exist.");
+        }
+
+        return this.saveProduct(aProduct);
     }
 }

@@ -7,126 +7,102 @@ import ar.com.plug.examen.domain.exceptions.InvalidPriceException;
 import ar.com.plug.examen.domain.exceptions.ProductDoesNotExistException;
 import ar.com.plug.examen.domain.model.Product;
 import ar.com.plug.examen.domain.service.impl.ProductServiceImpl;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-
-@ExtendWith(MockitoExtension.class)
+@SpringBootTest
 public class ProductServiceTest {
 
-    @InjectMocks
-    private ProductServiceImpl service;
+    @Autowired
+    private ProductServiceImpl service ;
 
-    @Mock
-    private ProductRepository repository;
+    Product aProductMock;
 
-    @Mock
-    private Product aProductMock;
-
+    @BeforeEach
+    public void setUp() throws EmptyBrandException, EmptyNameException, InvalidPriceException {
+        aProductMock = new Product("Coca", 125.5, "Coca-Cola");
+    }
     @Test
     public void addAProductTest() throws EmptyBrandException, EmptyNameException, InvalidPriceException {
-        when(aProductMock.getBrand()).thenReturn("Coca-Cola");
-        when(aProductMock.getName()).thenReturn("Coca");
-        when(aProductMock.getPrice()).thenReturn(125.5);
-
-        Product aProductSaved;
-        when(repository.save(aProductMock)).thenReturn(aProductMock);
-
-        aProductSaved = service.saveProduct(aProductMock);
-        verify(repository, times(1)).save(aProductMock);
-
-        assertEquals(aProductSaved.getBrand(), aProductMock.getBrand());
-        assertEquals(aProductSaved.getName(), aProductMock.getName());
-        assertEquals(aProductSaved.getPrice(), aProductMock.getPrice());
+        Product aProductSaved = service.saveProduct(aProductMock);
+        assertEquals(aProductSaved.getName(), "Coca" );
     }
 
     @Test
-    public void getProductByIdTest() throws EmptyBrandException, EmptyNameException, InvalidPriceException, ProductDoesNotExistException {
-        when(aProductMock.getBrand()).thenReturn("Coca-Cola");
-        when(aProductMock.getName()).thenReturn("Coca");
-        when(aProductMock.getPrice()).thenReturn(125.5);
-
-        Optional<Product> aProduct = Optional.of(new Product("Coca", 125.5, "Coca-Cola"));
-
-        when(repository.findById(1l)).thenReturn(aProduct);
-
-        Product productById = service.findById(1L);
-
-        assertEquals(productById.getBrand(), aProductMock.getBrand());
-        assertEquals(productById.getName(), aProductMock.getName());
-        assertEquals(productById.getPrice(), aProductMock.getPrice());
-    }
-
-
-    public void updateProductTest() throws EmptyBrandException, EmptyNameException, InvalidPriceException, ProductDoesNotExistException {
-        Product aProductSaved;
-
-        /*Save the first product to update later*/
-        when(aProductMock.getBrand()).thenReturn("Coca-Cola");
-        when(aProductMock.getName()).thenReturn("Coca");
-        when(aProductMock.getPrice()).thenReturn(125.5);
-        when(repository.save(aProductMock)).thenReturn(aProductMock);
-
-        aProductSaved = service.saveProduct(aProductMock);
-
-        /*Create the product to update the first one*/
-        Optional<Product> productToUpdatePrice = Optional.of(new Product("Coca", 140.0, "Coca-Cola"));
-        when(repository.findById(1l)).thenReturn(productToUpdatePrice);
-        when(aProductMock.getId()).thenReturn(1l);
-        when(repository.save(any(Product.class))).thenReturn(productToUpdatePrice.get());
-
-
-        /*Update the product*/
-        aProductSaved = service.updateProduct(productToUpdatePrice.get());
-
-        assertEquals(aProductSaved.getPrice(), 140.0);
-        assertEquals(aProductSaved.getBrand(), aProductMock.getBrand());
-        assertEquals(aProductSaved.getName(), aProductMock.getName());
+    public void getProductByIdThrowProductDoesNotExistExceptionWhenTheIdDoesNotExistTest(){
+        assertThrows(ProductDoesNotExistException.class, ()-> {
+            service.findById(1l);
+        });
 
     }
 
-    
-    public void deleteProductTest() throws EmptyBrandException, EmptyNameException, InvalidPriceException, ProductDoesNotExistException {
-       /*
-        //Product aProductSaved;
+    @Test
+    public void getProductByIdReturnsTheProductWhenAProductExistTest() throws ProductDoesNotExistException {
+        Product productSaved = service.saveProduct(aProductMock);
+        Product productDB = service.findById(productSaved.getId());
 
-        //Save the first product to delete later
-        when(aProductMock.getBrand()).thenReturn("Coca-Cola");
-        when(aProductMock.getName()).thenReturn("Coca");
-        when(aProductMock.getPrice()).thenReturn(125.5);
-        when(repository.save(aProductMock)).thenReturn(aProductMock);
-
-        aProductSaved = service.save(aProductMock);
-
-        service.delete(aProductSaved);
-        verify(repository, times(1)).delete(aProductMock);
-
-        //assertNull(service.findById(1l));
-        //when(repository.findById(1l)).thenReturn(null);
-        */
-
-        //First assert no product with id 1 exists.
-        assertNull(service.findById(1l));
-
-        Product aProductSaved;
-        //Save the first product to delete later
-        when(aProductMock.getBrand()).thenReturn("Coca-Cola");
-        when(aProductMock.getName()).thenReturn("Coca");
-        when(aProductMock.getPrice()).thenReturn(125.5);
-
-        when(repository.save(aProductMock)).thenReturn(aProductMock);
-        service.saveProduct(aProductMock);
-
-
+        assertEquals(aProductMock, productDB);
     }
 
+    @Test
+    public void updateProductByIdThrowInvalidDataAccessApiUsageExceptionWhenTheIdIsNullTest(){
+        assertThrows(InvalidDataAccessApiUsageException.class, ()-> {
+            service.updateProduct(aProductMock);
+        });
+    }
+
+    @Test
+    public void updateProductByIdThrowProductDoesNotExistExceptionWhenTheIdDoesNotExistTest(){
+        Product mockProduct = mock(Product.class);
+        when(mockProduct.getId()).thenReturn(1l);
+
+        assertThrows(ProductDoesNotExistException.class, ()-> {
+            service.updateProduct(mockProduct);
+        });
+    }
+
+    //@Test
+    public void updateProductByIdTTest() throws ProductDoesNotExistException, EmptyBrandException, EmptyNameException, InvalidPriceException {
+        Product productSaved = service.saveProduct(aProductMock);
+        /*Product anotherProduct = mock(Product.class);
+        when(anotherProduct.getId()).thenReturn(1l);
+        when(anotherProduct.getPrice()).thenReturn(150.0);
+        when(anotherProduct.getName()).thenReturn("Coca");
+        when(anotherProduct.getBrand()).thenReturn("Coca-Cola");*/
+        Product anotherProduct = new Product("Coca", 150.0, "Coca-Cola");
+        productSaved = service.updateProduct(anotherProduct);
+
+        assertEquals(productSaved.getPrice(), 150.0);
+        assertEquals(productSaved.getName(), "Coca");
+        assertEquals(productSaved.getBrand(), "Coca-Cola");
+    }
+
+    @Test
+    public void deleteProductByIdTTest() throws ProductDoesNotExistException, EmptyBrandException, EmptyNameException, InvalidPriceException {
+        Product productSaved = service.saveProduct(aProductMock);
+        service.deleteProduct(productSaved.getId());
+
+        assertThrows(ProductDoesNotExistException.class, ()-> {
+            service.findById(productSaved.getId());
+        });
+
+    }
 }
 
