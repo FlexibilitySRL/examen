@@ -1,4 +1,4 @@
-package ar.com.plug.examen.domain.service;
+package ar.com.plug.examen.domain.integration;
 
 import ar.com.plug.examen.domain.exceptions.EmptyBrandException;
 import ar.com.plug.examen.domain.exceptions.EmptyNameException;
@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
-public class ProductServiceTest {
+public class ProductServiceIntegrationTest {
 
     @Autowired
     private ProductServiceImpl service ;

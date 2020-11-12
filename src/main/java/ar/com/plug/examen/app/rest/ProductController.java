@@ -8,6 +8,7 @@ import ar.com.plug.examen.domain.model.Product;
 import ar.com.plug.examen.domain.service.impl.ProductServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,13 +39,15 @@ public class ProductController {
         return ResponseEntity.ok().body(product);
     }
 
-    @PostMapping(value="/product")
+    @PostMapping(path="/product", produces = {MediaType.APPLICATION_JSON_VALUE },
+            consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> createProduct(@RequestBody Product aProduct){
         Product product = this.service.saveProduct(aProduct);
         return ResponseEntity.ok().body(product);
     }
 
-    @PutMapping(value = "/product/{id}")
+    @PutMapping(path = "/product/{id}", produces = {MediaType.APPLICATION_JSON_VALUE },
+            consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> updateProduct(@RequestBody Product aProduct){
         Product product = null;
         try {
@@ -55,7 +58,7 @@ public class ProductController {
         return ResponseEntity.ok().body(product);
     }
 
-    @DeleteMapping(path="/delete/{id}")
+    @DeleteMapping(path="/product/delete/{id}")
     public ResponseEntity<?> deleteProduct(@PathVariable("id") Long id){
         this.service.deleteProduct(id);
         return ResponseEntity.ok().build();
