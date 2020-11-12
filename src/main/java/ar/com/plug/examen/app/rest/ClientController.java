@@ -39,6 +39,7 @@ public class ClientController {
 
     @PostMapping(path="/client", produces = {MediaType.APPLICATION_JSON_VALUE },
             consumes = MediaType.APPLICATION_JSON_VALUE)
+    @LogginAspect
     public ResponseEntity<Client> createClient(@RequestBody Client aClient){
         Client client = this.service.saveClient(aClient);
         return ResponseEntity.ok().body(client);
@@ -46,6 +47,7 @@ public class ClientController {
 
     @PutMapping(path = "/client", produces = {MediaType.APPLICATION_JSON_VALUE },
             consumes = MediaType.APPLICATION_JSON_VALUE)
+    @LogginAspect
     public ResponseEntity<?> updateClient(@RequestBody Client aClient){
         Client client = null;
         try {
@@ -57,6 +59,7 @@ public class ClientController {
     }
 
     @DeleteMapping(path="/client/delete/{id}")
+    @LogginAspect
     public ResponseEntity<?> deleteProduct(@PathVariable("id") Long id){
         this.service.deleteClient(id);
         return ResponseEntity.ok().build();

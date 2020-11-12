@@ -41,6 +41,7 @@ public class ProductController {
 
     @PostMapping(path="/product", produces = {MediaType.APPLICATION_JSON_VALUE },
             consumes = MediaType.APPLICATION_JSON_VALUE)
+    @LogginAspect
     public ResponseEntity<?> createProduct(@RequestBody Product aProduct){
         Product product = this.service.saveProduct(aProduct);
         return ResponseEntity.ok().body(product);
@@ -48,6 +49,7 @@ public class ProductController {
 
     @PutMapping(path = "/product/{id}", produces = {MediaType.APPLICATION_JSON_VALUE },
             consumes = MediaType.APPLICATION_JSON_VALUE)
+    @LogginAspect
     public ResponseEntity<?> updateProduct(@RequestBody Product aProduct){
         Product product = null;
         try {
@@ -58,7 +60,9 @@ public class ProductController {
         return ResponseEntity.ok().body(product);
     }
 
+
     @DeleteMapping(path="/product/delete/{id}")
+    @LogginAspect
     public ResponseEntity<?> deleteProduct(@PathVariable("id") Long id){
         this.service.deleteProduct(id);
         return ResponseEntity.ok().build();
