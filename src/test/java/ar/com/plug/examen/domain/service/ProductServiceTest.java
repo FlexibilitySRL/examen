@@ -1,6 +1,5 @@
 package ar.com.plug.examen.domain.service;
 
-import ar.com.plug.examen.app.repository.ProductRepository;
 import ar.com.plug.examen.domain.exceptions.EmptyBrandException;
 import ar.com.plug.examen.domain.exceptions.EmptyNameException;
 import ar.com.plug.examen.domain.exceptions.InvalidPriceException;
@@ -9,20 +8,9 @@ import ar.com.plug.examen.domain.model.Product;
 import ar.com.plug.examen.domain.service.impl.ProductServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
-import org.springframework.test.context.junit4.SpringRunner;
-
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
