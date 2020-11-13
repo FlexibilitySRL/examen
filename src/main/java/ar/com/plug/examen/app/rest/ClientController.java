@@ -18,14 +18,14 @@ public class ClientController {
     @Autowired
     private ClientServiceImpl service;
 
-    @GetMapping(value = "/getClients")
+    @GetMapping(value = "/clients")
     @LogginAspect
     public ResponseEntity<List<Client> > getClients(){
         List<Client> clients = this.service.findAll();
         return ResponseEntity.ok().body(clients);
     }
 
-    @GetMapping(value = "/getClient/{id}")
+    @GetMapping(value = "/client/{id}")
     @LogginAspect
     public ResponseEntity<Client> getClient(@PathVariable("id") Long id){
         Client client = null;

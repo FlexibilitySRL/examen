@@ -1,9 +1,7 @@
 package ar.com.plug.examen.app.rest;
 
 import ar.com.plug.examen.aspect.LogginAspect;
-import ar.com.plug.examen.domain.exceptions.ClientDoesNotExistException;
 import ar.com.plug.examen.domain.exceptions.ProductDoesNotExistException;
-import ar.com.plug.examen.domain.model.Client;
 import ar.com.plug.examen.domain.model.Product;
 import ar.com.plug.examen.domain.service.impl.ProductServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,14 +18,14 @@ public class ProductController {
     @Autowired
     private ProductServiceImpl service;
 
-    @GetMapping(value = "/getProducts")
+    @GetMapping(value = "/products")
     @LogginAspect
     public ResponseEntity<?> getProducts(){
         List<Product> products = this.service.findAll();
         return ResponseEntity.ok().body(products);
     }
 
-    @GetMapping(value = "/getProduct/{id}")
+    @GetMapping(value = "/product/{id}")
     @LogginAspect
     public ResponseEntity<?> getProduct(@PathVariable("id") Long id){
         Product product = null;
