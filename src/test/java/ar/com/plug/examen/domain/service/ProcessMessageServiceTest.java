@@ -2,14 +2,14 @@ package ar.com.plug.examen.domain.service;
 
 import ar.com.plug.examen.domain.model.Message;
 import ar.com.plug.examen.domain.service.impl.ProcessMessageServiceImpl;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-@RunWith(MockitoJUnitRunner.class)
+
+@SpringBootTest
 public class ProcessMessageServiceTest {
 
     @InjectMocks
