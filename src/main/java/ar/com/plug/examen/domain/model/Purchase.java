@@ -1,7 +1,11 @@
 package ar.com.plug.examen.domain.model;
 
+import ar.com.plug.examen.domain.exceptions.InvalidTotalPurhcaseException;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class to represent the Purchase
@@ -19,20 +23,33 @@ public class Purchase {
     @Column(name = "id")
     private Long id;
 
-    @Column(name ="purchaseDate")
+    @Column(name ="purchase_date")
     private LocalDateTime purchaseDate;
 
     @Column(name="total")
-    private Double total;
+    private Double total= 0d;
 
-    @JoinColumn(name = "id_client")
+    @JoinColumn(name = "client_id")
     @ManyToOne(fetch = FetchType.EAGER)
     private Client client;
 
-    public Purchase(Double total, Client client){
+    @JoinColumn(name="item_id")
+    @OneToMany
+    private List<ItemPurchase> items;
+
+
+    public Purchase(Double total, Client client) throws InvalidTotalPurhcaseException {
         this.purchaseDate = LocalDateTime.now();
-        this.total = total;
+        this.validateTotal(total);
         this.client = client;
+        this.items = new ArrayList<>();
+    }
+
+    private void validateTotal(Double total) throws InvalidTotalPurhcaseException {
+        if (total <= 0.0){
+            throw new InvalidTotalPurhcaseException("The total must be higher than 0.");
+        }
+        this.total = total;
     }
 
     public Long getId() {
@@ -51,6 +68,7 @@ public class Purchase {
         return client;
     }
 
-
-
+    public List<ItemPurchase> getItems() {
+        return items;
+    }
 }

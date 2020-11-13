@@ -1,6 +1,5 @@
 package ar.com.plug.examen.domain.model;
 
-import ar.com.plug.examen.domain.exceptions.EmptyNameException;
 import ar.com.plug.examen.domain.exceptions.InvalidProductIdException;
 import ar.com.plug.examen.domain.exceptions.InvalidQuantityException;
 import org.junit.jupiter.api.Test;
