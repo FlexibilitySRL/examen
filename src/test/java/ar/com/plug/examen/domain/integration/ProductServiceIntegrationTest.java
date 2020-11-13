@@ -28,9 +28,11 @@ public class ProductServiceIntegrationTest {
         aProductMock = new Product("Coca", 125.5, "Coca-Cola");
     }
     @Test
-    public void addAProductTest() throws EmptyBrandException, EmptyNameException, InvalidPriceException {
+    public void addAProductTest() {
         Product aProductSaved = service.saveProduct(aProductMock);
         assertEquals(aProductSaved.getName(), "Coca" );
+        assertEquals(aProductSaved.getBrand(), "Coca-Cola" );
+        assertEquals(aProductSaved.getPrice(), 125.5);
     }
 
     @Test
@@ -68,12 +70,8 @@ public class ProductServiceIntegrationTest {
 
     //@Test
     public void updateProductByIdTTest() throws ProductDoesNotExistException, EmptyBrandException, EmptyNameException, InvalidPriceException {
-        Product productSaved = service.saveProduct(aProductMock);
-        /*Product anotherProduct = mock(Product.class);
-        when(anotherProduct.getId()).thenReturn(1l);
-        when(anotherProduct.getPrice()).thenReturn(150.0);
-        when(anotherProduct.getName()).thenReturn("Coca");
-        when(anotherProduct.getBrand()).thenReturn("Coca-Cola");*/
+        Product productSaved;
+        service.saveProduct(aProductMock);
         Product anotherProduct = new Product("Coca", 150.0, "Coca-Cola");
         productSaved = service.updateProduct(anotherProduct);
 
@@ -83,7 +81,7 @@ public class ProductServiceIntegrationTest {
     }
 
     @Test
-    public void deleteProductByIdTTest() throws ProductDoesNotExistException, EmptyBrandException, EmptyNameException, InvalidPriceException {
+    public void deleteProductByIdTTest() {
         Product productSaved = service.saveProduct(aProductMock);
         service.deleteProduct(productSaved.getId());
 

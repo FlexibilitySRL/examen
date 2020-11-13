@@ -36,3 +36,13 @@ Bonus
 4) Correr pruebas con base de datos en memoria.
 5) Crear Docker Image.
 6) Hostear la app en un cloud computing libre y enviar la URL para consultar.
+
+
+----------
+
+Además del ejercicio se agregaron los siguientes puntos
+
+1) Utilizando ArchUnit, un test de arquitectura sobre la capa de Servicio que chequea que las annotations de Transactional y Service estén sobre las clases de ese paquete
+2) Se agregó un aspecto para el manejo de errores y logueo de servicios.
+3) Se utilizó mockito para usar testing unitarios (uso jacaco para cobertura pero por un tema de dependencias no funcionaba y es por eso que decidí sacarlo.)
+4) Se utilizó Swagger para documentación de servicios.
