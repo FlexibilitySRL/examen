@@ -5,12 +5,10 @@ import ar.com.plug.examen.domain.exceptions.ProductDoesNotExistException;
 import ar.com.plug.examen.domain.model.Product;
 import ar.com.plug.examen.domain.service.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
