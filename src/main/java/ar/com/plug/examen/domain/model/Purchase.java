@@ -1,6 +1,8 @@
 package ar.com.plug.examen.domain.model;
 
 import ar.com.plug.examen.domain.exceptions.InvalidTotalPurhcaseException;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -15,26 +17,32 @@ import java.util.List;
 
 @Entity
 @Table(name = "purchase")
+@ApiModel("Model purchase")
 public class Purchase {
     public Purchase(){}
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
+    @ApiModelProperty(value = "the purchase's id", required = true)
     private Long id;
 
     @Column(name ="purchase_date")
+    @ApiModelProperty(value = "the purchase's date")
     private LocalDateTime purchaseDate;
 
     @Column(name="total")
+    @ApiModelProperty(value = "the purchase's total", required = true)
     private Double total= 0d;
 
     @JoinColumn(name = "client_id")
     @ManyToOne(fetch = FetchType.EAGER)
+    @ApiModelProperty(value = "the purchase's Client", required = true)
     private Client client;
 
     @JoinColumn(name="item_id")
     @OneToMany
+    @ApiModelProperty(value = "the item purchase's list")
     private List<ItemPurchase> items;
 
 

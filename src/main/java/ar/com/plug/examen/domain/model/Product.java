@@ -3,6 +3,8 @@ package ar.com.plug.examen.domain.model;
 import ar.com.plug.examen.domain.exceptions.EmptyBrandException;
 import ar.com.plug.examen.domain.exceptions.EmptyNameException;
 import ar.com.plug.examen.domain.exceptions.InvalidPriceException;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -15,19 +17,24 @@ import java.io.Serializable;
 
 @Entity
 @Table(name="product")
+@ApiModel("Model product")
 public class Product implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
+    @ApiModelProperty(value = "the product's id", required = true)
     private Long id;
 
     @Column(name = "name")
+    @ApiModelProperty(value = "the product's name", required = true)
     private String name;
 
     @Column(name = "price")
+    @ApiModelProperty(value = "the product's price", required = true)
     private Double price;
 
     @Column(name = "brand")
+    @ApiModelProperty(value = "the product's brand", required = true)
     private String brand;
 
     public Product(){}

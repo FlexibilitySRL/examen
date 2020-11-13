@@ -2,6 +2,8 @@ package ar.com.plug.examen.domain.model;
 
 import ar.com.plug.examen.domain.exceptions.InvalidProductIdException;
 import ar.com.plug.examen.domain.exceptions.InvalidQuantityException;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.*;
 
@@ -13,17 +15,21 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "item_purchase")
+@ApiModel("Model item purchase")
 public class ItemPurchase {
     public ItemPurchase(){}
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @ApiModelProperty(value = "the item purchase's id", required = true)
     Long id;
 
     @Column(name = "quantity")
+    @ApiModelProperty(value = "the item purchase's quantity", required = true)
     Long quantity;
 
     @Column(name = "product_id")
+    @ApiModelProperty(value = "the item purchase's productId", required = true)
     Long productId;
 
     public ItemPurchase(Long quantity, Long productId) throws InvalidQuantityException, InvalidProductIdException {

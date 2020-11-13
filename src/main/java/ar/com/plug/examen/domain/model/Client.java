@@ -3,14 +3,23 @@ package ar.com.plug.examen.domain.model;
 import ar.com.plug.examen.domain.exceptions.EmptyLastNameException;
 import ar.com.plug.examen.domain.exceptions.EmptyNameException;
 import ar.com.plug.examen.domain.exceptions.InvalidDocumentNumberException;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class to represent a Client
+ * @author Pablo Marrero
+ *
+ */
+
 @Entity
 @Table(name = "client")
+@ApiModel("Model Client")
 public class Client implements Serializable {
 
     public Client(){}
@@ -18,15 +27,19 @@ public class Client implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
+    @ApiModelProperty(value = "the client's id", required = true)
     private Long id;
 
     @Column(name = "name")
+    @ApiModelProperty(value = "the client's name", required = true)
     private String name;
 
     @Column(name ="lastName")
+    @ApiModelProperty(value = "the client's lastname", required = true)
     private String lastName;
 
     @Column (name = "document")
+    @ApiModelProperty(value = "the client's document", required = true)
     private String document;
 
     @OneToMany(mappedBy= "client")
