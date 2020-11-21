@@ -3,7 +3,9 @@ package ar.com.plug.examen.app.rest;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,32 +29,33 @@ public class ClientController {
     private ClientService clientService;
 
     @GetMapping()
-    public List<ClientApi> listClients() {
-        return clientService.listAll();
+    public ResponseEntity<List<ClientApi>> listClients() {
+        return new ResponseEntity<>(clientService.listAll(), HttpStatus.OK);
     }
 
     @GetMapping(Paths.FIND_BY_ID)
-    public ClientApi findById(@PathVariable Long id) throws NotFoundException {
-    	return clientService.findById(id);
+    public ResponseEntity<ClientApi> findById(@PathVariable long id) throws NotFoundException {
+    	return new ResponseEntity<>(clientService.findById(id), HttpStatus.OK);
     }
 
     @GetMapping(Paths.FIND_BY_NAME)
-    public List<ClientApi> findByName(@PathVariable String name) throws NotFoundException {
-    	return clientService.findByName(name);
+    public ResponseEntity<List<ClientApi>> findByName(@PathVariable String name) {
+    	return new ResponseEntity<>(clientService.findByName(name), HttpStatus.OK);
     }
     
     @PostMapping()
-    public ClientApi save(@RequestBody ClientApi client) throws BadRequestException {
-    	return clientService.save(client);
+    public ResponseEntity<ClientApi> save(@RequestBody ClientApi client) throws BadRequestException {
+    	return new ResponseEntity<>(clientService.save(client), HttpStatus.CREATED);
     }
 
 	@DeleteMapping("/{id}")
-    public void deleteById(@PathVariable Long id) throws NotFoundException {
+    public ResponseEntity deleteById(@PathVariable long id) throws NotFoundException, BadRequestException {
         clientService.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ClientApi update(@RequestBody ClientApi clientApi) throws NotFoundException, BadRequestException {
-    	return clientService.update(clientApi);
+    public ResponseEntity<ClientApi> update(@RequestBody ClientApi clientApi) throws NotFoundException, BadRequestException {
+    	return new ResponseEntity<>(clientService.update(clientApi), HttpStatus.ACCEPTED);
     }
 }

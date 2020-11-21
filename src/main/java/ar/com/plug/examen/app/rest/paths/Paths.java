@@ -16,4 +16,6 @@ public interface Paths {
 	
 	public static final String FIND_BY_FILTERS = "/findByFilters";
 	
+	public static final String TOTAL_AMOUNT_BY_TRANSACTION_ID = "/totalAmountByTransactionId/{id}";
+	
 }

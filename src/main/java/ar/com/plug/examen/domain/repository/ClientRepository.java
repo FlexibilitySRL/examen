@@ -12,6 +12,8 @@ import ar.com.plug.examen.domain.model.Client;
 @Repository
 public interface ClientRepository extends JpaRepository<Client, Long> {
 
+	Client findOneById(Long id);
+	
 	@Query(value = "SELECT p FROM Client p WHERE LOWER(p.name) LIKE LOWER(CONCAT('%', :name, '%'))")
 	List<Client> findByName(@Param("name") String name);
 }

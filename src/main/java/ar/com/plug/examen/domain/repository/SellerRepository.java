@@ -15,4 +15,6 @@ public interface SellerRepository extends JpaRepository<Seller, Long> {
 	@Query(value = "SELECT p FROM Seller p WHERE LOWER(p.name) LIKE LOWER(CONCAT('%', :name, '%'))")
 	List<Seller> findByName(@Param("name") String name);
 
+	Seller findOneById(long id);
+
 }

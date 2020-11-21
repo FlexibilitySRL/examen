@@ -14,7 +14,19 @@ public interface Messages {
 	
 	public static final String MSG_EXCEPTION_UNABLE_TO_FIND = "Unable to find requested %1$s";
 	
+	public static final String MSG_FOUND = "Found!";
+	
+	public static final String MSG_PREPARING_DELETION = "Preparing for deletion of a %1$s ...";
+
+	public static final String MSG_PREPARING_PERSISTENCE = "Preparing for persistence of a %1$s ...";
+
+	public static final String MSG_PREPARING_UPDATE = "Preparing for update of a %1$s ...";
+
+	public static final String MSG_SEARCHING = "Searching %1$s";
+	
 	public static final String MSG_SEARCHING_REQUESTED_DATA = "Searching requested data";
+	
+	public static final String MSG_SUCCESS = "Success!";
 
 	public static final String MSG_SUCCESSFULLY_CREATED = "%1$s successfully created with id: %2$s!";
 
@@ -23,5 +35,7 @@ public interface Messages {
 	public static final String MSG_SUCCESSFULLY_UPDATED = "%1$s with id: %2$s - successfully updated!";
 	
 	public static final String MSG_VALIDATING_PROVIDED_DATA = "Validating provided data ....";
+	
+	public static final String MSG_VALIDATION_SUCCESSFUL = "Successful validation!";
 
 }

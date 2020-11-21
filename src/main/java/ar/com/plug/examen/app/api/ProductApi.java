@@ -8,6 +8,19 @@ public class ProductApi {
 
 	private Double price;
 
+	public ProductApi() { }
+
+	public ProductApi(Long id, String name, Double price) {
+		this.id = id;
+		this.name = name;
+		this.price = price;
+	}
+	
+	public ProductApi(String name, Double price) {
+		this.name = name;
+		this.price = price;
+	}
+	
 	public Long getId() {
 		return id;
 	}

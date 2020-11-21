@@ -8,6 +8,14 @@ public class TransactionDetailApi {
 
 	private int quantity;
 
+	public TransactionDetailApi() { }
+	
+	public TransactionDetailApi(Long id, ProductApi product, int quantity) {
+		this.id = id;
+		this.product = product;
+		this.quantity = quantity;
+	}
+
 	public Long getId() {
 		return id;
 	}

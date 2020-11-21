@@ -17,17 +17,15 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
+import ar.com.plug.examen.domain.enums.StatusEnum;
+
 @Entity
 @Table
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Transaction implements Serializable {
-
-	public static final String STATUS_PENDING = "PENDING";
-
-	public static final String STATUS_APPROVED = "APPROVED";
-
-	public static final String STATUS_REJECTED = "REJECTED";
-
-	public static final List<String> ALL_STATUSES = Arrays.asList(STATUS_APPROVED, STATUS_PENDING, STATUS_REJECTED);
 
 	private static final long serialVersionUID = 1L;
 
@@ -44,7 +42,7 @@ public class Transaction implements Serializable {
 	private Seller seller;
 
 	@Column
-	private String status;
+	private StatusEnum status;
 
 	@Column
 	private Date date;
@@ -55,7 +53,7 @@ public class Transaction implements Serializable {
 	public Transaction() {
 	}
 
-	public Transaction(Long id, Client client, Seller seller, String status, Date date,
+	public Transaction(Long id, Client client, Seller seller, StatusEnum status, Date date,
 			List<TransactionDetail> transactionDetail) {
 		this.id = id;
 		this.client = client;
@@ -89,11 +87,11 @@ public class Transaction implements Serializable {
 		this.seller = seller;
 	}
 
-	public String getStatus() {
+	public StatusEnum getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(StatusEnum status) {
 		this.status = status;
 	}
 
@@ -117,7 +115,7 @@ public class Transaction implements Serializable {
 		private Long id;
 		private Client client;
 		private Seller seller;
-		private String status;
+		private StatusEnum status;
 		private Date date;
 		private List<TransactionDetail> transactionDetail;
 
@@ -136,7 +134,7 @@ public class Transaction implements Serializable {
 			return this;
 		}
 
-		public Builder setStatus(String status) {
+		public Builder setStatus(StatusEnum status) {
 			this.status = status;
 			return this;
 		}
@@ -146,11 +144,16 @@ public class Transaction implements Serializable {
 			return this;
 		}
 
-		public Builder setTransactionDetail(List<TransactionDetail> transactionDetail) {
-			this.transactionDetail = transactionDetail;
+		public Builder setTransactionDetail(List<TransactionDetail> transactionDetailList) {
+			this.transactionDetail = transactionDetailList;
 			return this;
 		}
 
+		public Builder setTransactionDetail(TransactionDetail transactionDetail) {
+			this.transactionDetail = Arrays.asList(transactionDetail);
+			return this;
+		}
+		
 		public Transaction build() {
 			return new Transaction(id, client, seller, status, date, transactionDetail);
 		}

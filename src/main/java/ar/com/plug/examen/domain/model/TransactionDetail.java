@@ -12,8 +12,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 @Entity
 @Table
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class TransactionDetail implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -32,6 +36,14 @@ public class TransactionDetail implements Serializable {
 
 	@Column
 	private int quantity;
+
+	public TransactionDetail() { }
+	
+	public TransactionDetail(Long id, Product product, int quantity) {
+		this.id = id;
+		this.product = product;
+		this.quantity = quantity;
+	}
 
 	public Long getId() {
 		return id;

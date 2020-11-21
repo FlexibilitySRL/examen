@@ -12,6 +12,8 @@ import ar.com.plug.examen.domain.model.Product;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
+	Product findOneById(Long id);
+	
 	@Query(value = "SELECT p FROM Product p WHERE LOWER(p.name) LIKE LOWER(CONCAT('%', :name, '%'))")
 	List<Product> findByName(@Param("name") String name);
 

@@ -10,13 +10,13 @@ public interface SellerService {
 
 	List<SellerApi> listAll();
 
-	SellerApi findById(Long id) throws NotFoundException;
+	SellerApi findById(long id) throws NotFoundException;
 
-	List<SellerApi> findByName(String name) throws NotFoundException;
+	List<SellerApi> findByName(String name);
 
 	SellerApi save(SellerApi seller) throws BadRequestException;
 
-	void deleteById(Long id) throws NotFoundException;
+	void deleteById(long id) throws NotFoundException, BadRequestException;
 
 	SellerApi update(SellerApi sellerApi) throws NotFoundException, BadRequestException;
 

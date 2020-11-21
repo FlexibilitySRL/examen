@@ -8,6 +8,7 @@ import org.springframework.data.jpa.domain.Specification;
 
 import ar.com.plug.examen.app.api.ClientApi;
 import ar.com.plug.examen.app.api.SellerApi;
+import ar.com.plug.examen.domain.enums.StatusEnum;
 import ar.com.plug.examen.domain.model.Transaction;
 
 public final class TransactionSpecification {
@@ -52,9 +53,9 @@ public final class TransactionSpecification {
 		};
 	}
 	
-	public static Specification<Transaction> especificacionStatus(String status) {
+	public static Specification<Transaction> especificacionStatus(StatusEnum status) {
 		return (root, criteriaQuery, criteriaBuilder) -> {
-			if (Strings.isNotEmpty(status)) {
+			if (Objects.nonNull(status)) {
 				return criteriaBuilder.equal(root.get("status"), status);
 			}
 			return null;

@@ -10,13 +10,13 @@ public interface ClientService {
 
 	List<ClientApi> listAll();
 
-	ClientApi findById(Long id) throws NotFoundException;
+	ClientApi findById(long id) throws NotFoundException;
 
-	List<ClientApi> findByName(String name) throws NotFoundException;
+	List<ClientApi> findByName(String name);
 
 	ClientApi save(ClientApi client) throws BadRequestException;
 
-	void deleteById(Long id) throws NotFoundException;
+	void deleteById(long id) throws NotFoundException, BadRequestException;
 
 	ClientApi update(ClientApi clientApi) throws NotFoundException, BadRequestException;
 

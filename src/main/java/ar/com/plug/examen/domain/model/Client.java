@@ -12,8 +12,12 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 @Entity
 @Table
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Client implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -27,7 +31,14 @@ public class Client implements Serializable {
 	
 	@OneToMany(mappedBy="client", cascade=CascadeType.ALL)
 	private List<Transaction> transaction;
+
+	public Client() { }
 	
+	public Client(Long id, String name) {
+		this.id = id;
+		this.name = name;
+	}
+
 	public Long getId() {
 		return id;
 	}

@@ -3,7 +3,9 @@ package ar.com.plug.examen.app.rest;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,32 +29,33 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping()
-    public List<ProductApi> listProducts() {
-        return productService.listAll();
+    public ResponseEntity<List<ProductApi>> listProducts() {
+        return new ResponseEntity<>(productService.listAll(), HttpStatus.OK);
     }
 
     @GetMapping(Paths.FIND_BY_ID)
-    public ProductApi findById(@PathVariable Long id) throws NotFoundException {
-    	return productService.findById(id);
+    public ResponseEntity<ProductApi> findById(@PathVariable long id) throws NotFoundException {
+    	return new ResponseEntity<>(productService.findById(id), HttpStatus.OK);
     }
 
     @GetMapping(Paths.FIND_BY_NAME)
-    public List<ProductApi> findByName(@PathVariable String name) throws NotFoundException {
-    	return productService.findByName(name);
+    public ResponseEntity<List<ProductApi>> findByName(@PathVariable String name) throws NotFoundException {
+    	return new ResponseEntity<>(productService.findByName(name), HttpStatus.OK);
     }
     
     @PostMapping()
-    public ProductApi save(@RequestBody ProductApi product) throws BadRequestException {
-    	return productService.save(product);
+    public ResponseEntity<ProductApi> save(@RequestBody ProductApi product) throws BadRequestException {
+    	return new ResponseEntity<>(productService.save(product), HttpStatus.CREATED);
     }
 
 	@DeleteMapping("/{id}")
-    public void deleteById(@PathVariable Long id) throws NotFoundException {
+    public ResponseEntity deleteById(@PathVariable long id) throws NotFoundException, BadRequestException {
         productService.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ProductApi update( @RequestBody ProductApi productApi) throws NotFoundException, BadRequestException {
-    	return productService.update(productApi);
+    public ResponseEntity<ProductApi> update( @RequestBody ProductApi productApi) throws NotFoundException, BadRequestException {
+    	return new ResponseEntity<>(productService.update(productApi), HttpStatus.ACCEPTED);
     }
 }

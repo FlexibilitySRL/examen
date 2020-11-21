@@ -12,8 +12,12 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 @Entity
 @Table
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Seller implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -27,6 +31,17 @@ public class Seller implements Serializable {
 
 	@OneToMany(mappedBy="seller", cascade=CascadeType.ALL)
 	private List<Transaction> transaction;
+	
+	public Seller() { }
+	
+	public Seller(Long id, String name) {
+		this.id = id;
+		this.name = name;
+	}
+	
+	public Seller(String name) {
+		this.name = name;
+	}
 	
 	public Long getId() {
 		return id;

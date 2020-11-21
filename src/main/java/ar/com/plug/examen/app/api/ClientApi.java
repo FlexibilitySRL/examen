@@ -6,6 +6,17 @@ public class ClientApi {
 	
 	private String name;
 
+	public ClientApi() { }
+	
+	public ClientApi(String name) {
+		this.name = name;
+	}
+
+	public ClientApi(Long id, String name) {
+		this.id = id;
+		this.name = name;
+	}
+	
 	public Long getId() {
 		return id;
 	}

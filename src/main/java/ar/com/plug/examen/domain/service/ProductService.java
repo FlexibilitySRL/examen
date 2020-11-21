@@ -10,13 +10,13 @@ public interface ProductService {
 
 	List<ProductApi> listAll();
 
-	ProductApi findById(Long id) throws NotFoundException;
+	ProductApi findById(long id) throws NotFoundException;
 
-	List<ProductApi> findByName(String name) throws NotFoundException;
+	List<ProductApi> findByName(String name);
 
 	ProductApi save(ProductApi product) throws BadRequestException;
 
-	void deleteById(Long id) throws NotFoundException;
+	void deleteById(long id) throws NotFoundException, BadRequestException;
 
 	ProductApi update(ProductApi product) throws NotFoundException, BadRequestException;
 

@@ -1,7 +1,7 @@
 package ar.com.plug.examen.domain.service.impl;
 
 import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.Objects;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +25,8 @@ public class ProductServiceImpl implements ProductService {
 	
 	private final Logger logger = LoggerFactory.getLogger(ProductServiceImpl.class);
 
+	private final static String ENTITY = "Product";
+
 	@Autowired
 	ProductRepository productRepository;
 
@@ -34,74 +36,95 @@ public class ProductServiceImpl implements ProductService {
 	@Autowired
 	ValidatorsService validators;
 
+	/**
+	 * @return The complete list of existent products
+	 */
 	@Override
 	public List<ProductApi> listAll() {
 		logger.info(Messages.MSG_SEARCHING_REQUESTED_DATA);
-		return converter.convertList(productRepository.findAll(), ProductApi.class);
+		List<ProductApi> result = converter.convertList(productRepository.findAll(), ProductApi.class);
+		logger.info(Messages.MSG_FOUND);
+		return result;
 	}
 
+	/**
+	 * Searches a product by its id
+	 * @return A specific product
+	 */
 	@Override
-	public ProductApi findById(Long id) throws NotFoundException {
-		try {
-			logger.info(Messages.MSG_SEARCHING_REQUESTED_DATA);
-			return converter.convert(productRepository.findById(id).get(), ProductApi.class);
-		} catch (NoSuchElementException | IllegalArgumentException nse) {
-			String errorMsg = String.format(Messages.MSG_EXCEPTION_UNABLE_TO_FIND, "Product");
-			logger.error(errorMsg);
-            throw new NotFoundException(errorMsg);
-		}
-	}
-
-	@Override
-	public List<ProductApi> findByName(String name) throws NotFoundException {
+	public ProductApi findById(long id) throws NotFoundException {
 		logger.info(Messages.MSG_SEARCHING_REQUESTED_DATA);
-		return converter.convertList(productRepository.findByName(name), ProductApi.class);
+		ProductApi result = converter.convert(productRepository.findOneById(id), ProductApi.class);
+		if (Objects.isNull(result))
+			throw NotFoundException.unableToFindException(ENTITY);
+		logger.info(Messages.MSG_FOUND);
+		return result;
+	}
+
+	/**
+	 * Searches a product by its name
+	 * Search is case insensitive and matches partially
+	 * @return The list of product which names matches a given string
+	 */
+	@Override
+	public List<ProductApi> findByName(String name) {
+		logger.info(Messages.MSG_SEARCHING_REQUESTED_DATA);
+		List<ProductApi> result = converter.convertList(productRepository.findByName(name), ProductApi.class);
+		logger.info(Messages.MSG_FOUND);
+		return result;
 	}
 	
+	/**
+	 * Persists a new product
+	 * @return Saved product
+	 */
 	@Override
 	public ProductApi save(ProductApi product) throws BadRequestException {
 		logger.info(Messages.MSG_VALIDATING_PROVIDED_DATA);
-		validators.validateProduct(product, false);
+		validators.checkCompleteObject(product, true);
+		logger.info(Messages.MSG_VALIDATION_SUCCESSFUL);
 
+		logger.info(String.format(Messages.MSG_PREPARING_PERSISTENCE, ENTITY));
 		Product persisted = productRepository.save(converter.convert(product, Product.class));
-		String successMsg = String.format(Messages.MSG_SUCCESSFULLY_CREATED, "Product", persisted.getId()); 
-		logger.info(successMsg);
+		logger.info(String.format(Messages.MSG_SUCCESSFULLY_CREATED, ENTITY, persisted.getId()));
 
 		return converter.convert(persisted, ProductApi.class);
 	}
-
-
+	
+	/**
+	 * Removes an existing product by its id
+	 */
     @Override
-    public void deleteById(Long id) throws NotFoundException {
+    public void deleteById(long id) throws NotFoundException, BadRequestException {
 		logger.info(Messages.MSG_VALIDATING_PROVIDED_DATA);
-    	this.validateExistence(id);
-    	
-        productRepository.deleteById(id);
-		String successMsg = String.format(Messages.MSG_SUCCESSFULLY_DELETED, "Product"); 
-		logger.info(successMsg);
-    }
+		validators.checkCompleteObject(id, false);
+		logger.info(Messages.MSG_VALIDATION_SUCCESSFUL);
 
+    	logger.info(String.format(Messages.MSG_PREPARING_DELETION, ENTITY));
+    	if (!productRepository.existsById(id)) {
+    		NotFoundException.unableToFindException(ENTITY);
+    	}
+    	productRepository.deleteById(id);
+    	logger.info(String.format(Messages.MSG_SUCCESSFULLY_DELETED, ENTITY)); 
+    }
+    
+    /**
+	 * Searches an existing product by its id and updates it
+	 * @return The updated product
+	 */
 	@Override
 	public ProductApi update(ProductApi product) throws NotFoundException, BadRequestException {
 		logger.info(Messages.MSG_VALIDATING_PROVIDED_DATA);
-		validators.validateProduct(product, true);
-		this.validateExistence(product.getId());
+		validators.checkCompleteObject(product, false);
+		logger.info(Messages.MSG_VALIDATION_SUCCESSFUL);
 
+		logger.info(String.format(Messages.MSG_PREPARING_UPDATE, ENTITY));
+		if (!productRepository.existsById(product.getId())) {
+    		NotFoundException.unableToFindException(ENTITY);
+    	}
 		Product updated = productRepository.save(converter.convert(product, Product.class));
-		String successMsg = String.format(Messages.MSG_SUCCESSFULLY_UPDATED, "Product", updated.getId()); 
-		logger.info(successMsg);
-
+		logger.info(String.format(Messages.MSG_SUCCESSFULLY_UPDATED, ENTITY, updated.getId()));
 		return converter.convert(updated, ProductApi.class);
 	}
-    
-	/** VALIDATORS **/
-	private void validateExistence(Long id) throws NotFoundException {
-		/** Validates the existence of the product to be deleted **/
-        if (!productRepository.findById(id).isPresent()) {
-			String errorMsg = String.format(Messages.MSG_EXCEPTION_UNABLE_TO_FIND, "Product");
-			logger.error(errorMsg);
-            throw new NotFoundException(errorMsg);
-        }
-    }
 	
 }
