@@ -56,7 +56,7 @@ public class ClienteController {
 			}
 
 			bean = impl.createCliente(bean);
-			logger.info("Se guarda correctamente el producto con id "+bean.getIdCliente());
+			logger.info("Se actualiza correctamente el cliente con id "+bean.getIdCliente());
 			return new ResponseEntity<ClienteBean>(bean, HttpStatus.OK);
 		} catch (Exception e) {
 			logger.error( "Error en la creación del producto " + e.getMessage());
