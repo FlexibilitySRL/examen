@@ -3,11 +3,13 @@ package ar.com.plug.examen.domain.service.impl;
 import java.time.LocalDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import ar.com.plug.examen.app.api.ProductoBean;
 import ar.com.plug.examen.domain.model.Producto;
 import ar.com.plug.examen.domain.service.ProductoService;
 
+@Service
 public class ProductoServiceImpl {
 
 	@Autowired
@@ -49,10 +51,7 @@ public class ProductoServiceImpl {
 
 	private ProductoBean obtenerProductoBean(Producto producto) {
 		ProductoBean bean = new ProductoBean();
-		if (producto.getCodProducto() != null) {
-			bean.setCodProducto(producto.getCodProducto());
-		}
-		
+		bean.setCodProducto(producto.getCodProducto());
 		bean.setDescripcionProducto(producto.getDescripcionProducto());
 		bean.setFechaCreacion(producto.getFechaCreacion());
 		bean.setIdProducto(producto.getIdProducto());

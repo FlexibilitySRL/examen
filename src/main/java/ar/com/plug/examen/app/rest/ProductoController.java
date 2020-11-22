@@ -34,7 +34,7 @@ public class ProductoController {
 		}
 	}
 	
-	@RequestMapping(value = "/v1/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/v1/producto/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Void> deleteProducto(@PathVariable Long id) {
 		logger.info("Eliminando producto con id: {}", id);
 		ProductoBean productoBean = service.getProductoByID(id);
@@ -47,7 +47,7 @@ public class ProductoController {
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/v1/{id}", method = RequestMethod.PUT)
+	@RequestMapping(value = "/v1/producto/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<ProductoBean> update(@PathVariable Long id, @RequestBody ProductoBean productoBean) {
 		try {
 			productoBean = service.getProductoByID(id);
