@@ -8,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import ar.com.plug.examen.domain.enums.StatusEnum;
 import ar.com.plug.examen.domain.exception.BadRequestException;
@@ -18,11 +17,9 @@ import ar.com.plug.examen.domain.service.Messages;
 import ar.com.plug.examen.domain.service.ValidatorsService;
 
 /**
- * @author agrauberg
  * Groups various validations for provided APIs upon which there will be CRUD operations 
  */
 @Service
-@Transactional
 public class ValidatorsServiceImpl implements ValidatorsService {
 
 	private final Logger logger = LoggerFactory.getLogger(ValidatorsServiceImpl.class);

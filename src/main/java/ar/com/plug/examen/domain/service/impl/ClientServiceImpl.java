@@ -20,7 +20,6 @@ import ar.com.plug.examen.domain.service.Messages;
 import ar.com.plug.examen.domain.service.ValidatorsService;
 
 @Service
-@Transactional
 public class ClientServiceImpl implements ClientService {
 	
 	private final Logger logger = LoggerFactory.getLogger(ClientServiceImpl.class);
@@ -40,6 +39,7 @@ public class ClientServiceImpl implements ClientService {
 	 * @return The complete list of existent clients
 	 */
 	@Override
+	@Transactional
 	public List<ClientApi> listAll() {
 		logger.info(Messages.MSG_SEARCHING_REQUESTED_DATA);
 		List<ClientApi> result = converter.convertList(clientRepository.findAll(), ClientApi.class);
@@ -53,6 +53,7 @@ public class ClientServiceImpl implements ClientService {
 	 * @throws NotFoundException 
 	 */
 	@Override
+	@Transactional
 	public ClientApi findById(long id) throws NotFoundException {
 		logger.info(Messages.MSG_SEARCHING_REQUESTED_DATA);
 		ClientApi result = converter.convert(clientRepository.findOneById(id), ClientApi.class);
@@ -68,6 +69,7 @@ public class ClientServiceImpl implements ClientService {
 	 * @return The list of clients which names matches a given string
 	 */
 	@Override
+	@Transactional
 	public List<ClientApi> findByName(String name) {
 		logger.info(Messages.MSG_SEARCHING_REQUESTED_DATA);
 		List<ClientApi> result = converter.convertList(clientRepository.findByName(name), ClientApi.class);
@@ -80,6 +82,7 @@ public class ClientServiceImpl implements ClientService {
 	 * @return Saved client
 	 */
 	@Override
+	@Transactional
 	public ClientApi save(ClientApi client) throws BadRequestException {
 		logger.info(Messages.MSG_VALIDATING_PROVIDED_DATA);
 		validators.checkCompleteObject(client, true);
@@ -95,6 +98,7 @@ public class ClientServiceImpl implements ClientService {
 	 * Removes an existing client by its id
 	 */
     @Override
+    @Transactional
     public void deleteById(long id) throws NotFoundException, BadRequestException {
 		logger.info(Messages.MSG_VALIDATING_PROVIDED_DATA);
 		validators.checkCompleteObject(id, false);
@@ -113,6 +117,7 @@ public class ClientServiceImpl implements ClientService {
 	 * @return The updated client
 	 */
 	@Override
+	@Transactional
 	public ClientApi update(ClientApi client) throws NotFoundException, BadRequestException {
 		logger.info(Messages.MSG_VALIDATING_PROVIDED_DATA);
 		validators.checkCompleteObject(client, false);

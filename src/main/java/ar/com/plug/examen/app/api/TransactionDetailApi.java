@@ -39,5 +39,10 @@ public class TransactionDetailApi {
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
+	
+	@Override
+	public String toString() {
+		return "TransactionDetail [id=" + id + ", product=" + product.toString() + ", quantity=" + quantity +"]";
+	}
 
 }

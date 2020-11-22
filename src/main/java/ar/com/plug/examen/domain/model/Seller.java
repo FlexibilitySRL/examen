@@ -66,4 +66,9 @@ public class Seller implements Serializable {
 	public void setTransaction(List<Transaction> transaction) {
 		this.transaction = transaction;
 	}
+
+	@Override
+	public String toString() {
+		return "Seller [id=" + id + ", name=" + name + "]";
+	}
 }

@@ -158,5 +158,12 @@ public class Transaction implements Serializable {
 			return new Transaction(id, client, seller, status, date, transactionDetail);
 		}
 	}
+	
+	@Override
+	public String toString() {
+		return "Transaction [id=" + id + ", client=" + client.toString() 
+				+ ", seller=" + seller.toString() + ", transactionDetail=" + transactionDetail.toString() 
+				+ ", status=" + status.toString() + ", date=" + date.toString() + "]";
+	}
 
 }

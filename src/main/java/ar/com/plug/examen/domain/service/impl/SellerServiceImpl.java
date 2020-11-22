@@ -20,7 +20,6 @@ import ar.com.plug.examen.domain.service.SellerService;
 import ar.com.plug.examen.domain.service.ValidatorsService;
 
 @Service
-@Transactional
 public class SellerServiceImpl implements SellerService {
 
 	private final Logger logger = LoggerFactory.getLogger(SellerServiceImpl.class);
@@ -40,6 +39,7 @@ public class SellerServiceImpl implements SellerService {
 	 * @return The complete list of existent sellers
 	 */
 	@Override
+	@Transactional
 	public List<SellerApi> listAll() {
 		logger.info(Messages.MSG_SEARCHING_REQUESTED_DATA);
 		List<SellerApi> result = converter.convertList(sellerRepository.findAll(), SellerApi.class);
@@ -52,6 +52,7 @@ public class SellerServiceImpl implements SellerService {
 	 * @return A specific seller
 	 */
 	@Override
+	@Transactional
 	public SellerApi findById(long id) throws NotFoundException {
 		logger.info(Messages.MSG_SEARCHING_REQUESTED_DATA);
 		SellerApi result = converter.convert(sellerRepository.findOneById(id), SellerApi.class);
@@ -67,6 +68,7 @@ public class SellerServiceImpl implements SellerService {
 	 * @return The list of seller which names matches a given string
 	 */
 	@Override
+	@Transactional
 	public List<SellerApi> findByName(String name) {
 		logger.info(Messages.MSG_SEARCHING_REQUESTED_DATA);
 		List<SellerApi> result = converter.convertList(sellerRepository.findByName(name), SellerApi.class);
@@ -79,6 +81,7 @@ public class SellerServiceImpl implements SellerService {
 	 * @return Saved seller
 	 */
 	@Override
+	@Transactional
 	public SellerApi save(SellerApi seller) throws BadRequestException {
 		logger.info(Messages.MSG_VALIDATING_PROVIDED_DATA);
 		validators.checkCompleteObject(seller, true);
@@ -95,6 +98,7 @@ public class SellerServiceImpl implements SellerService {
 	 * Removes an existing seller by its id
 	 */
 	@Override
+	@Transactional
 	public void deleteById(long id) throws NotFoundException, BadRequestException {
 		logger.info(Messages.MSG_VALIDATING_PROVIDED_DATA);
 		validators.checkCompleteObject(id, false);
@@ -113,6 +117,7 @@ public class SellerServiceImpl implements SellerService {
 	 * @return The updated seller
 	 */
 	@Override
+	@Transactional
 	public SellerApi update(SellerApi seller) throws NotFoundException, BadRequestException {
 		logger.info(Messages.MSG_VALIDATING_PROVIDED_DATA);
 		validators.checkCompleteObject(seller, false);

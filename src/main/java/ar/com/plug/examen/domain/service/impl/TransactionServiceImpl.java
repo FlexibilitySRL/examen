@@ -32,7 +32,6 @@ import ar.com.plug.examen.domain.service.TransactionService;
 import ar.com.plug.examen.domain.service.ValidatorsService;
 
 @Service
-@Transactional
 public class TransactionServiceImpl implements TransactionService {
 
 	private final Logger logger = LoggerFactory.getLogger(TransactionServiceImpl.class);
@@ -61,6 +60,7 @@ public class TransactionServiceImpl implements TransactionService {
 	 * @return The complete list of existent transactions
 	 */
 	@Override
+	@Transactional
 	public List<TransactionApi> listAll() {
 		logger.info(Messages.MSG_SEARCHING_REQUESTED_DATA);
 		List<TransactionApi> result = converter.convertList(transactionRepository.findAll(), TransactionApi.class);
@@ -72,6 +72,7 @@ public class TransactionServiceImpl implements TransactionService {
 	 * @return A filtered list of transactions
 	 */
 	@Override
+	@Transactional
 	public List<TransactionApi> findByFilters(TransactionApi filters) {
 		logger.info(Messages.MSG_VALIDATING_PROVIDED_DATA);
 		Specification<Transaction> specifications = TransactionSpecification.especificacionClientId(filters.getClient())
@@ -94,6 +95,7 @@ public class TransactionServiceImpl implements TransactionService {
 	 * @return Saved transaction with its entire detail
 	 */
 	@Override
+	@Transactional
 	public TransactionApi save(TransactionApi transaction) throws BadRequestException, NotFoundException {
 		logger.info(Messages.MSG_VALIDATING_PROVIDED_DATA);
 		validators.checkCompleteObject(transaction, true);
@@ -136,6 +138,7 @@ public class TransactionServiceImpl implements TransactionService {
 	 * Removes an existing transaction by its id
 	 */
 	@Override
+	@Transactional
 	public void deleteById(Long id) throws NotFoundException, BadRequestException {
 		logger.info(Messages.MSG_VALIDATING_PROVIDED_DATA);
 		validators.checkCompleteObject(id, false);
@@ -156,6 +159,7 @@ public class TransactionServiceImpl implements TransactionService {
 	 * @return The updated transaction
 	 */
 	@Override
+	@Transactional
 	public TransactionApi updateTransactionStatusById(Long id, StatusEnum status) throws NotFoundException, BadRequestException {
 		logger.info(String.format(Messages.MSG_SEARCHING, ENTITY));
 			
@@ -182,6 +186,7 @@ public class TransactionServiceImpl implements TransactionService {
 	 * @return The total amount of the transaction
 	 */
 	@Override
+	@Transactional
 	public Double totalAmountByTransactionId(Long id) throws BadRequestException, NotFoundException {
 		logger.info(Messages.MSG_VALIDATING_PROVIDED_DATA);
 		validators.checkCompleteObject(id, false);

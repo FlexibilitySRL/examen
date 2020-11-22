@@ -20,7 +20,6 @@ import ar.com.plug.examen.domain.service.ProductService;
 import ar.com.plug.examen.domain.service.ValidatorsService;
 
 @Service
-@Transactional
 public class ProductServiceImpl implements ProductService {
 	
 	private final Logger logger = LoggerFactory.getLogger(ProductServiceImpl.class);
@@ -40,6 +39,7 @@ public class ProductServiceImpl implements ProductService {
 	 * @return The complete list of existent products
 	 */
 	@Override
+	@Transactional
 	public List<ProductApi> listAll() {
 		logger.info(Messages.MSG_SEARCHING_REQUESTED_DATA);
 		List<ProductApi> result = converter.convertList(productRepository.findAll(), ProductApi.class);
@@ -52,6 +52,7 @@ public class ProductServiceImpl implements ProductService {
 	 * @return A specific product
 	 */
 	@Override
+	@Transactional
 	public ProductApi findById(long id) throws NotFoundException {
 		logger.info(Messages.MSG_SEARCHING_REQUESTED_DATA);
 		ProductApi result = converter.convert(productRepository.findOneById(id), ProductApi.class);
@@ -67,6 +68,7 @@ public class ProductServiceImpl implements ProductService {
 	 * @return The list of product which names matches a given string
 	 */
 	@Override
+	@Transactional
 	public List<ProductApi> findByName(String name) {
 		logger.info(Messages.MSG_SEARCHING_REQUESTED_DATA);
 		List<ProductApi> result = converter.convertList(productRepository.findByName(name), ProductApi.class);
@@ -79,6 +81,7 @@ public class ProductServiceImpl implements ProductService {
 	 * @return Saved product
 	 */
 	@Override
+	@Transactional
 	public ProductApi save(ProductApi product) throws BadRequestException {
 		logger.info(Messages.MSG_VALIDATING_PROVIDED_DATA);
 		validators.checkCompleteObject(product, true);
@@ -95,6 +98,7 @@ public class ProductServiceImpl implements ProductService {
 	 * Removes an existing product by its id
 	 */
     @Override
+    @Transactional
     public void deleteById(long id) throws NotFoundException, BadRequestException {
 		logger.info(Messages.MSG_VALIDATING_PROVIDED_DATA);
 		validators.checkCompleteObject(id, false);
@@ -113,6 +117,7 @@ public class ProductServiceImpl implements ProductService {
 	 * @return The updated product
 	 */
 	@Override
+	@Transactional
 	public ProductApi update(ProductApi product) throws NotFoundException, BadRequestException {
 		logger.info(Messages.MSG_VALIDATING_PROVIDED_DATA);
 		validators.checkCompleteObject(product, false);
