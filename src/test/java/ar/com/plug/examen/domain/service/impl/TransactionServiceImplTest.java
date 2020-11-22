@@ -11,11 +11,13 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import ar.com.plug.examen.app.api.ClientApi;
 import ar.com.plug.examen.app.api.ProductApi;
@@ -37,6 +39,8 @@ import ar.com.plug.examen.domain.service.ConverterService;
 import ar.com.plug.examen.domain.service.SellerService;
 import ar.com.plug.examen.domain.service.ValidatorsService;
 
+@RunWith(SpringRunner.class)
+@SpringBootTest
 public class TransactionServiceImplTest {
 
 	@InjectMocks
@@ -72,10 +76,8 @@ public class TransactionServiceImplTest {
 	private TransactionDetail transactionDetail;
 	private TransactionDetailApi transactionDetailApi;
 
-	@BeforeEach
-	void setUp() throws Exception {
-		MockitoAnnotations.initMocks(this);
-
+	@Before
+	public void setUp() throws Exception {
 		client = new Client(1L, "John Doe");
 		clientApi = new ClientApi(1L, "John Doe");
 		seller = new Seller(1L, "John Doe");
@@ -94,7 +96,7 @@ public class TransactionServiceImplTest {
 	}
 
 	@Test
-	void testListAll() {
+	public void testListAll() {
 		when(converter.convertList(transactionRepository.findAll(), TransactionApi.class))
 				.thenReturn(Arrays.asList(transactionApi));
 		List<TransactionApi> found = transactionService.listAll();
@@ -102,7 +104,7 @@ public class TransactionServiceImplTest {
 	}
 
 	@Test
-	void testFindByFilters() {
+	public void testFindByFilters() {
 		when(converter.convertList(transactionRepository.findAll(), TransactionApi.class))
 				.thenReturn(Arrays.asList(transactionApi));
 		List<TransactionApi> found = transactionService.findByFilters(transactionApi);
@@ -110,7 +112,7 @@ public class TransactionServiceImplTest {
 	}
 
 	@Test
-	void testSave() throws BadRequestException, NotFoundException {
+	public void testSave() throws BadRequestException, NotFoundException {
 		when(converter.convert(clientService.findById(anyLong()), Client.class)).thenReturn(client);
 		when(converter.convert(sellerService.findById(anyLong()), Seller.class)).thenReturn(seller);
 		when(converter.convertList(transaction.getTransactionDetail(), TransactionDetail.class))
@@ -124,7 +126,7 @@ public class TransactionServiceImplTest {
 	}
 
 	@Test
-	void testSave_BadRequestException() throws BadRequestException {
+	public void testSave_BadRequestException() throws BadRequestException {
 		when(validators.checkCompleteObject(transactionApi, true)).thenThrow(BadRequestException.class);
 		assertThrows(BadRequestException.class, () -> {
 			transactionService.save(transactionApi);
@@ -132,7 +134,7 @@ public class TransactionServiceImplTest {
 	}
 
 	@Test
-	void testSave_ClientNotFoundException() throws NotFoundException {
+	public void testSave_ClientNotFoundException() throws NotFoundException {
 		when(clientService.findById(anyLong())).thenThrow(NotFoundException.class);
 		assertThrows(NotFoundException.class, () -> {
 			transactionService.save(transactionApi);
@@ -140,7 +142,7 @@ public class TransactionServiceImplTest {
 	}
 
 	@Test
-	void testSave_SellerNotFoundException() throws NotFoundException {
+	public void testSave_SellerNotFoundException() throws NotFoundException {
 		when(sellerService.findById(anyLong())).thenThrow(NotFoundException.class);
 		assertThrows(NotFoundException.class, () -> {
 			transactionService.save(transactionApi);
@@ -148,13 +150,13 @@ public class TransactionServiceImplTest {
 	}
 
 	@Test
-	void testDeleteById() throws NotFoundException, BadRequestException {
+	public void testDeleteById() throws NotFoundException, BadRequestException {
 		when(transactionRepository.existsById(anyLong())).thenReturn(true);
 		transactionService.deleteById(1L);
 	}
 
 	@Test
-	void testDeleteById_BadRequestException() throws BadRequestException {
+	public void testDeleteById_BadRequestException() throws BadRequestException {
 		when(validators.checkCompleteObject(transaction.getId(), false)).thenThrow(BadRequestException.class);
 		assertThrows(BadRequestException.class, () -> {
 			transactionService.deleteById(transactionApi.getId());
@@ -162,7 +164,7 @@ public class TransactionServiceImplTest {
 	}
 
 	@Test
-	void testDeleteById_NotFoundException() throws NotFoundException {
+	public void testDeleteById_NotFoundException() throws NotFoundException {
 		when(transactionRepository.existsById(transaction.getId())).thenReturn(false);
 		assertThrows(NotFoundException.class, () -> {
 			transactionService.deleteById(transactionApi.getId());
@@ -170,7 +172,7 @@ public class TransactionServiceImplTest {
 	}
 
 	@Test
-	void updateTransactionStatusById() throws NotFoundException, BadRequestException {
+	public void updateTransactionStatusById() throws NotFoundException, BadRequestException {
 		when(transactionRepository.findOneById(anyLong())).thenReturn(transaction);
 		when(transactionRepository.save(converter.convert(transaction, Transaction.class))).thenReturn(transaction);
 		when(converter.convert(transaction, TransactionApi.class)).thenReturn(transactionApi);
@@ -181,7 +183,7 @@ public class TransactionServiceImplTest {
 	}
 
 	@Test
-	void updateTransactionStatusById_NotFoundException() throws NotFoundException {
+	public void updateTransactionStatusById_NotFoundException() throws NotFoundException {
 		when(transactionRepository.findOneById(anyLong())).thenReturn(null);
 		assertThrows(NotFoundException.class, () -> {
 			transactionService.updateTransactionStatusById(transaction.getId(), StatusEnum.APPROVED);
@@ -197,7 +199,7 @@ public class TransactionServiceImplTest {
 	}
 
 	@Test
-	void testTotalAmountByTransactionId_BadRequestException() throws BadRequestException {
+	public void testTotalAmountByTransactionId_BadRequestException() throws BadRequestException {
 		when(validators.checkCompleteObject(transaction.getId(), false)).thenThrow(BadRequestException.class);
 		assertThrows(BadRequestException.class, () -> {
 			transactionService.deleteById(transactionApi.getId());
@@ -205,7 +207,7 @@ public class TransactionServiceImplTest {
 	}
 
 	@Test
-	void testTotalAmountByTransactionId_NotFoundException() throws NotFoundException {
+	public void testTotalAmountByTransactionId_NotFoundException() throws NotFoundException {
 		when(transactionRepository.findOneById(anyLong())).thenReturn(null);
 		assertThrows(NotFoundException.class, () -> {
 			transactionService.deleteById(transactionApi.getId());

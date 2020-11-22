@@ -14,11 +14,13 @@ import static org.mockito.Mockito.when;
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import ar.com.plug.examen.app.api.SellerApi;
 import ar.com.plug.examen.domain.exception.BadRequestException;
@@ -28,6 +30,8 @@ import ar.com.plug.examen.domain.repository.SellerRepository;
 import ar.com.plug.examen.domain.service.ConverterService;
 import ar.com.plug.examen.domain.service.ValidatorsService;
 
+@RunWith(SpringRunner.class)
+@SpringBootTest
 public class SellerServiceImplTest {
 
 	@InjectMocks
@@ -45,22 +49,21 @@ public class SellerServiceImplTest {
 	private Seller seller;
 	private SellerApi sellerApi;
 	
-	@BeforeEach
-	void setUp() throws Exception {
-		MockitoAnnotations.initMocks(this);
+	@Before
+	public void setUp() throws Exception {
 		seller = new Seller(1L, "John Doe");
 		sellerApi = new SellerApi(1L, "John Doe");
 	}
 	
 	@Test
-	void testListAll() throws NotFoundException {
+	public void testListAll() throws NotFoundException {
 		when(converter.convertList(sellerRepository.findAll(), SellerApi.class)).thenReturn(Arrays.asList(sellerApi));
 		List<SellerApi> found = sellerService.listAll();
 		assertNotNull(found);
 	}
 	
 	@Test
-	void testFindById() throws NotFoundException {
+	public void testFindById() throws NotFoundException {
 		when(converter.convert(sellerRepository.findOneById(anyLong()), SellerApi.class)).thenReturn(sellerApi);
 		SellerApi found = sellerService.findById(1L);
 		assertNotNull(found);
@@ -68,7 +71,7 @@ public class SellerServiceImplTest {
 	}
 
 	@Test
-	void testFindById_NotFoundException() throws NotFoundException {
+	public void testFindById_NotFoundException() throws NotFoundException {
 		when(converter.convert(sellerRepository.findOneById(anyLong()), SellerApi.class)).thenReturn(null);
 		assertThrows(NotFoundException.class, () -> {
 			sellerService.findById(1L);
@@ -76,7 +79,7 @@ public class SellerServiceImplTest {
 	}
 
 	@Test
-	void testFindByName() {
+	public void testFindByName() {
 		when(converter.convertList(sellerRepository.findByName(anyString()), SellerApi.class)).thenReturn(Arrays.asList(sellerApi));
 		List<SellerApi> sellerApiList = sellerService.findByName("mock name");
 		assertNotNull(sellerApiList);
@@ -85,7 +88,7 @@ public class SellerServiceImplTest {
 	}
 
 	@Test
-	void testSave() throws BadRequestException {
+	public void testSave() throws BadRequestException {
 		SellerApi newSeller = new SellerApi("test name");
 		when(sellerRepository.save(converter.convert(newSeller, Seller.class))).thenReturn(seller);
 		when(converter.convert(seller, SellerApi.class)).thenReturn(sellerApi);
@@ -95,7 +98,7 @@ public class SellerServiceImplTest {
 	}
 
 	@Test
-	void testSave_BadRequestException() throws BadRequestException {
+	public void testSave_BadRequestException() throws BadRequestException {
 		SellerApi newSeller = new SellerApi();
 		when(validators.checkCompleteObject(newSeller, true)).thenThrow(BadRequestException.class);
 		assertThrows(BadRequestException.class, () -> {
@@ -104,13 +107,13 @@ public class SellerServiceImplTest {
 	}
 	
 	@Test
-	void testDeleteById() throws NotFoundException, BadRequestException {
+	public void testDeleteById() throws NotFoundException, BadRequestException {
 		when(sellerRepository.existsById(anyLong())).thenReturn(true);
 		sellerService.deleteById(1L);
 	}
 
 	@Test
-	void testDeleteById_BadRequestException() throws BadRequestException {
+	public void testDeleteById_BadRequestException() throws BadRequestException {
 		when(validators.checkCompleteObject(seller.getId(), false)).thenThrow(BadRequestException.class);
 		assertThrows(BadRequestException.class, () -> {
 			sellerService.deleteById(seller.getId());
@@ -118,7 +121,7 @@ public class SellerServiceImplTest {
 	}
 
 	@Test
-	void testDeleteById_NotFoundException() throws NotFoundException {
+	public void testDeleteById_NotFoundException() throws NotFoundException {
 		when(sellerRepository.existsById(seller.getId())).thenReturn(false);
 		assertThrows(NotFoundException.class, () -> {
 			sellerService.deleteById(seller.getId());
@@ -126,7 +129,7 @@ public class SellerServiceImplTest {
 	}
 
 	@Test
-	void testUpdate() throws NotFoundException, BadRequestException {
+	public void testUpdate() throws NotFoundException, BadRequestException {
 		SellerApi newSeller = new SellerApi(1L, "test name");
 		when(sellerRepository.existsById(newSeller.getId())).thenReturn(true);
 		when(sellerRepository.save(converter.convert(newSeller, Seller.class))).thenReturn(seller);
@@ -139,7 +142,7 @@ public class SellerServiceImplTest {
 	}
 
 	@Test
-	void testUpdate_BadRequestException() throws BadRequestException {
+	public void testUpdate_BadRequestException() throws BadRequestException {
 		when(validators.checkCompleteObject(sellerApi, false)).thenThrow(BadRequestException.class);
 		assertThrows(BadRequestException.class, () -> {
 			sellerService.update(sellerApi);
@@ -147,7 +150,7 @@ public class SellerServiceImplTest {
 	}
 
 	@Test
-	void testUpdate_NotFoundException() throws NotFoundException {
+	public void testUpdate_NotFoundException() throws NotFoundException {
 		when(sellerRepository.existsById(seller.getId())).thenReturn(false);
 		assertThrows(NotFoundException.class, () -> {
 			sellerService.update(sellerApi);

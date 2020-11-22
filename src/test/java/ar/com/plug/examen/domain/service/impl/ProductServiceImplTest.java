@@ -14,11 +14,13 @@ import static org.mockito.Mockito.when;
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import ar.com.plug.examen.app.api.ProductApi;
 import ar.com.plug.examen.domain.exception.BadRequestException;
@@ -28,6 +30,8 @@ import ar.com.plug.examen.domain.repository.ProductRepository;
 import ar.com.plug.examen.domain.service.ConverterService;
 import ar.com.plug.examen.domain.service.ValidatorsService;
 
+@RunWith(SpringRunner.class)
+@SpringBootTest
 public class ProductServiceImplTest {
 
 	@InjectMocks
@@ -45,22 +49,21 @@ public class ProductServiceImplTest {
 	private Product product;
 	private ProductApi productApi;
 	
-	@BeforeEach
-	void setUp() throws Exception {
-		MockitoAnnotations.initMocks(this);
+	@Before
+	public void setUp() throws Exception {
 		product = new Product(1L, "Product A", 8.95D);
 		productApi = new ProductApi(1L, "Product A", 8.95D);
 	}
 	
 	@Test
-	void testListAll() throws NotFoundException {
+	public void testListAll() throws NotFoundException {
 		when(converter.convertList(productRepository.findAll(), ProductApi.class)).thenReturn(Arrays.asList(productApi));
 		List<ProductApi> found = productService.listAll();
 		assertNotNull(found);
 	}
 	
 	@Test
-	void testFindById() throws NotFoundException {
+	public void testFindById() throws NotFoundException {
 		when(converter.convert(productRepository.findOneById(anyLong()), ProductApi.class)).thenReturn(productApi);
 		ProductApi found = productService.findById(1L);
 		assertNotNull(found);
@@ -68,7 +71,7 @@ public class ProductServiceImplTest {
 	}
 
 	@Test
-	void testFindById_NotFoundException() throws NotFoundException {
+	public void testFindById_NotFoundException() throws NotFoundException {
 		when(converter.convert(productRepository.findOneById(anyLong()), ProductApi.class)).thenReturn(null);
 		assertThrows(NotFoundException.class, () -> {
 			productService.findById(1L);
@@ -76,7 +79,7 @@ public class ProductServiceImplTest {
 	}
 
 	@Test
-	void testFindByName() {
+	public void testFindByName() {
 		when(converter.convertList(productRepository.findByName(anyString()), ProductApi.class)).thenReturn(Arrays.asList(productApi));
 		List<ProductApi> productApiList = productService.findByName("mock name");
 		assertNotNull(productApiList);
@@ -85,7 +88,7 @@ public class ProductServiceImplTest {
 	}
 
 	@Test
-	void testSave() throws BadRequestException {
+	public void testSave() throws BadRequestException {
 		ProductApi newProduct = new ProductApi("test product", 8.95D);
 		when(productRepository.save(converter.convert(newProduct, Product.class))).thenReturn(product);
 		when(converter.convert(product, ProductApi.class)).thenReturn(productApi);
@@ -95,7 +98,7 @@ public class ProductServiceImplTest {
 	}
 
 	@Test
-	void testSave_BadRequestException() throws BadRequestException {
+	public void testSave_BadRequestException() throws BadRequestException {
 		ProductApi newProduct = new ProductApi();
 		when(validators.checkCompleteObject(newProduct, true)).thenThrow(BadRequestException.class);
 		assertThrows(BadRequestException.class, () -> {
@@ -104,13 +107,13 @@ public class ProductServiceImplTest {
 	}
 	
 	@Test
-	void testDeleteById() throws NotFoundException, BadRequestException {
+	public void testDeleteById() throws NotFoundException, BadRequestException {
 		when(productRepository.existsById(anyLong())).thenReturn(true);
 		productService.deleteById(1L);
 	}
 
 	@Test
-	void testDeleteById_BadRequestException() throws BadRequestException {
+	public void testDeleteById_BadRequestException() throws BadRequestException {
 		when(validators.checkCompleteObject(product.getId(), false)).thenThrow(BadRequestException.class);
 		assertThrows(BadRequestException.class, () -> {
 			productService.deleteById(product.getId());
@@ -118,7 +121,7 @@ public class ProductServiceImplTest {
 	}
 
 	@Test
-	void testDeleteById_NotFoundException() throws NotFoundException {
+	public void testDeleteById_NotFoundException() throws NotFoundException {
 		when(productRepository.existsById(product.getId())).thenReturn(false);
 		assertThrows(NotFoundException.class, () -> {
 			productService.deleteById(product.getId());
@@ -126,7 +129,7 @@ public class ProductServiceImplTest {
 	}
 
 	@Test
-	void testUpdate() throws NotFoundException, BadRequestException {
+	public void testUpdate() throws NotFoundException, BadRequestException {
 		ProductApi newProduct = new ProductApi(1L, "test product", 8.95D);
 		when(productRepository.existsById(newProduct.getId())).thenReturn(true);
 		when(productRepository.save(converter.convert(newProduct, Product.class))).thenReturn(product);
@@ -139,7 +142,7 @@ public class ProductServiceImplTest {
 	}
 
 	@Test
-	void testUpdate_BadRequestException() throws BadRequestException {
+	public void testUpdate_BadRequestException() throws BadRequestException {
 		when(validators.checkCompleteObject(productApi, false)).thenThrow(BadRequestException.class);
 		assertThrows(BadRequestException.class, () -> {
 			productService.update(productApi);
@@ -147,7 +150,7 @@ public class ProductServiceImplTest {
 	}
 
 	@Test
-	void testUpdate_NotFoundException() throws NotFoundException {
+	public void testUpdate_NotFoundException() throws NotFoundException {
 		when(productRepository.existsById(product.getId())).thenReturn(false);
 		assertThrows(NotFoundException.class, () -> {
 			productService.update(productApi);

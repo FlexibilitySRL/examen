@@ -14,11 +14,14 @@ import static org.mockito.Mockito.when;
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import ar.com.plug.examen.app.api.ClientApi;
 import ar.com.plug.examen.domain.exception.BadRequestException;
@@ -28,6 +31,9 @@ import ar.com.plug.examen.domain.repository.ClientRepository;
 import ar.com.plug.examen.domain.service.ConverterService;
 import ar.com.plug.examen.domain.service.ValidatorsService;
 
+@RunWith(SpringRunner.class)
+@SpringBootTest
+@ActiveProfiles ("test")
 public class ClientServiceImplTest {
 
 	@InjectMocks
@@ -45,22 +51,21 @@ public class ClientServiceImplTest {
 	private Client client;
 	private ClientApi clientApi;
 	
-	@BeforeEach
-	void setUp() throws Exception {
-		MockitoAnnotations.initMocks(this);
+	@Before
+	public void setUp() throws Exception {
 		client = new Client(1L, "John Doe");
 		clientApi = new ClientApi(1L, "John Doe");
 	}
 	
 	@Test
-	void testListAll() throws NotFoundException {
+	public void testListAll() throws NotFoundException {
 		when(converter.convertList(clientRepository.findAll(), ClientApi.class)).thenReturn(Arrays.asList(clientApi));
 		List<ClientApi> found = clientService.listAll();
 		assertNotNull(found);
 	}
 	
 	@Test
-	void testFindById() throws NotFoundException {
+	public void testFindById() throws NotFoundException {
 		when(converter.convert(clientRepository.findOneById(anyLong()), ClientApi.class)).thenReturn(clientApi);
 		ClientApi found = clientService.findById(1L);
 		assertNotNull(found);
@@ -68,7 +73,7 @@ public class ClientServiceImplTest {
 	}
 
 	@Test
-	void testFindById_NotFoundException() throws NotFoundException {
+	public void testFindById_NotFoundException() throws NotFoundException {
 		when(converter.convert(clientRepository.findOneById(anyLong()), ClientApi.class)).thenReturn(null);
 		assertThrows(NotFoundException.class, () -> {
 			clientService.findById(1L);
@@ -76,7 +81,7 @@ public class ClientServiceImplTest {
 	}
 
 	@Test
-	void testFindByName() {
+	public void testFindByName() {
 		when(converter.convertList(clientRepository.findByName(anyString()), ClientApi.class)).thenReturn(Arrays.asList(clientApi));
 		List<ClientApi> clientApiList = clientService.findByName("mock name");
 		assertNotNull(clientApiList);
@@ -85,7 +90,7 @@ public class ClientServiceImplTest {
 	}
 
 	@Test
-	void testSave() throws BadRequestException {
+	public void testSave() throws BadRequestException {
 		ClientApi newClient = new ClientApi("test name");
 		when(clientRepository.save(converter.convert(newClient, Client.class))).thenReturn(client);
 		when(converter.convert(client, ClientApi.class)).thenReturn(clientApi);
@@ -95,7 +100,7 @@ public class ClientServiceImplTest {
 	}
 
 	@Test
-	void testSave_BadRequestException() throws BadRequestException {
+	public void testSave_BadRequestException() throws BadRequestException {
 		ClientApi newClient = new ClientApi();
 		when(validators.checkCompleteObject(newClient, true)).thenThrow(BadRequestException.class);
 		assertThrows(BadRequestException.class, () -> {
@@ -104,13 +109,13 @@ public class ClientServiceImplTest {
 	}
 	
 	@Test
-	void testDeleteById() throws NotFoundException, BadRequestException {
+	public void testDeleteById() throws NotFoundException, BadRequestException {
 		when(clientRepository.existsById(anyLong())).thenReturn(true);
 		clientService.deleteById(1L);
 	}
 
 	@Test
-	void testDeleteById_BadRequestException() throws BadRequestException {
+	public void testDeleteById_BadRequestException() throws BadRequestException {
 		when(validators.checkCompleteObject(client.getId(), false)).thenThrow(BadRequestException.class);
 		assertThrows(BadRequestException.class, () -> {
 			clientService.deleteById(client.getId());
@@ -118,7 +123,7 @@ public class ClientServiceImplTest {
 	}
 
 	@Test
-	void testDeleteById_NotFoundException() throws NotFoundException {
+	public void testDeleteById_NotFoundException() throws NotFoundException {
 		when(clientRepository.existsById(client.getId())).thenReturn(false);
 		assertThrows(NotFoundException.class, () -> {
 			clientService.deleteById(client.getId());
@@ -126,7 +131,7 @@ public class ClientServiceImplTest {
 	}
 
 	@Test
-	void testUpdate() throws NotFoundException, BadRequestException {
+	public void testUpdate() throws NotFoundException, BadRequestException {
 		ClientApi newClient = new ClientApi(1L, "test name");
 		when(clientRepository.existsById(newClient.getId())).thenReturn(true);
 		when(clientRepository.save(converter.convert(newClient, Client.class))).thenReturn(client);
@@ -139,7 +144,7 @@ public class ClientServiceImplTest {
 	}
 
 	@Test
-	void testUpdate_BadRequestException() throws BadRequestException {
+	public void testUpdate_BadRequestException() throws BadRequestException {
 		when(validators.checkCompleteObject(clientApi, false)).thenThrow(BadRequestException.class);
 		assertThrows(BadRequestException.class, () -> {
 			clientService.update(clientApi);
@@ -147,7 +152,7 @@ public class ClientServiceImplTest {
 	}
 
 	@Test
-	void testUpdate_NotFoundException() throws NotFoundException {
+	public void testUpdate_NotFoundException() throws NotFoundException {
 		when(clientRepository.existsById(client.getId())).thenReturn(false);
 		assertThrows(NotFoundException.class, () -> {
 			clientService.update(clientApi);
