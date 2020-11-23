@@ -15,10 +15,10 @@ public interface TransactionService {
 
 	TransactionApi save(TransactionApi transaction) throws BadRequestException, NotFoundException;
 
-	void deleteById(Long id) throws NotFoundException, BadRequestException;
+	void deleteById(long id) throws NotFoundException;
 
-	TransactionApi updateTransactionStatusById(Long id, StatusEnum status) throws NotFoundException, BadRequestException;
+	TransactionApi updateTransactionStatusById(long id, StatusEnum status) throws NotFoundException, BadRequestException;
 
-	Double totalAmountByTransactionId(Long id) throws BadRequestException, NotFoundException;
+	Double totalAmountByTransactionId(long id) throws NotFoundException;
 
 }

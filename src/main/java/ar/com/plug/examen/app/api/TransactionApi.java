@@ -20,6 +20,8 @@ public class TransactionApi {
 
 	private List<TransactionDetailApi> transactionDetail;
 
+	public TransactionApi() { }
+	
 	public TransactionApi(Long id, ClientApi client, SellerApi seller, StatusEnum status, Date date,
 			List<TransactionDetailApi> transactionDetail) {
 		this.id = id;
@@ -82,7 +84,7 @@ public class TransactionApi {
 		private Long id;
 		private ClientApi client;
 		private SellerApi seller;
-		private StatusEnum status;
+		private StatusEnum status = StatusEnum.PENDING;
 		private Date date;
 		private List<TransactionDetailApi> transactionDetail;
 

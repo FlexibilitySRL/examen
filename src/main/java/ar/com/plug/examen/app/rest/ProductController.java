@@ -39,7 +39,7 @@ public class ProductController {
     }
 
     @GetMapping(Paths.FIND_BY_NAME)
-    public ResponseEntity<List<ProductApi>> findByName(@PathVariable String name) throws NotFoundException {
+    public ResponseEntity<List<ProductApi>> findByName(@PathVariable String name) {
     	return new ResponseEntity<>(productService.findByName(name), HttpStatus.OK);
     }
     
@@ -49,7 +49,7 @@ public class ProductController {
     }
 
 	@DeleteMapping("/{id}")
-    public ResponseEntity deleteById(@PathVariable long id) throws NotFoundException, BadRequestException {
+    public ResponseEntity deleteById(@PathVariable long id) throws NotFoundException {
         productService.deleteById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

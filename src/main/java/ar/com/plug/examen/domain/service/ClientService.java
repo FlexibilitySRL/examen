@@ -16,7 +16,7 @@ public interface ClientService {
 
 	ClientApi save(ClientApi client) throws BadRequestException;
 
-	void deleteById(long id) throws NotFoundException, BadRequestException;
+	void deleteById(long id) throws NotFoundException;
 
 	ClientApi update(ClientApi clientApi) throws NotFoundException, BadRequestException;
 

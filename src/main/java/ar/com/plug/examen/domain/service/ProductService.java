@@ -16,7 +16,7 @@ public interface ProductService {
 
 	ProductApi save(ProductApi product) throws BadRequestException;
 
-	void deleteById(long id) throws NotFoundException, BadRequestException;
+	void deleteById(long id) throws NotFoundException;
 
 	ProductApi update(ProductApi product) throws NotFoundException, BadRequestException;
 

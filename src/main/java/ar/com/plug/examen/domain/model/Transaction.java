@@ -30,7 +30,7 @@ public class Transaction implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -42,7 +42,7 @@ public class Transaction implements Serializable {
 	private Seller seller;
 
 	@Column
-	private StatusEnum status;
+	private StatusEnum status = StatusEnum.PENDING;
 
 	@Column
 	private Date date;
@@ -163,7 +163,7 @@ public class Transaction implements Serializable {
 	public String toString() {
 		return "Transaction [id=" + id + ", client=" + client.toString() 
 				+ ", seller=" + seller.toString() + ", transactionDetail=" + transactionDetail.toString() 
-				+ ", status=" + status.toString() + ", date=" + date.toString() + "]";
+				+ ", status=" + status + ", date=" + date.toString() + "]";
 	}
 
 }

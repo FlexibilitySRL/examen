@@ -16,7 +16,7 @@ public interface SellerService {
 
 	SellerApi save(SellerApi seller) throws BadRequestException;
 
-	void deleteById(long id) throws NotFoundException, BadRequestException;
+	void deleteById(long id) throws NotFoundException;
 
 	SellerApi update(SellerApi sellerApi) throws NotFoundException, BadRequestException;
 

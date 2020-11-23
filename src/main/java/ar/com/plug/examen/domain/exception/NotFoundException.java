@@ -21,6 +21,6 @@ public class NotFoundException extends Exception {
 	public static NotFoundException unableToFindException(String entity) throws NotFoundException {
 		String errorMsg = String.format(Messages.MSG_EXCEPTION_UNABLE_TO_FIND, entity);
 		logger.error(errorMsg);
-		throw new NotFoundException(errorMsg);
+		return new NotFoundException(errorMsg);
 	}
 }

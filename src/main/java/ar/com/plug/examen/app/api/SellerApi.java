@@ -7,7 +7,11 @@ public class SellerApi {
 	private String name;
 
 	public SellerApi() { }
-	
+
+	public SellerApi(Long id) {
+		this.id = id;
+	}
+
 	public SellerApi(String name) {
 		this.name = name;
 	}

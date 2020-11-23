@@ -39,7 +39,7 @@ public class SellerController {
     }
 
     @GetMapping(Paths.FIND_BY_NAME)
-    public ResponseEntity<List<SellerApi>> findByName(@PathVariable String name) throws NotFoundException {
+    public ResponseEntity<List<SellerApi>> findByName(@PathVariable String name) {
     	return new ResponseEntity<>(sellerService.findByName(name), HttpStatus.OK);
     }
     
@@ -49,7 +49,7 @@ public class SellerController {
     }
 
 	@DeleteMapping("/{id}")
-    public ResponseEntity deleteById(@PathVariable long id) throws NotFoundException, BadRequestException {
+    public ResponseEntity deleteById(@PathVariable long id) throws NotFoundException {
         sellerService.deleteById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

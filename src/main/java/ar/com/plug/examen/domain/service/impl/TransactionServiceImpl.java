@@ -2,6 +2,7 @@ package ar.com.plug.examen.domain.service.impl;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -21,13 +22,14 @@ import ar.com.plug.examen.domain.model.Product;
 import ar.com.plug.examen.domain.model.Seller;
 import ar.com.plug.examen.domain.model.Transaction;
 import ar.com.plug.examen.domain.model.TransactionDetail;
+import ar.com.plug.examen.domain.repository.ClientRepository;
 import ar.com.plug.examen.domain.repository.ProductRepository;
+import ar.com.plug.examen.domain.repository.SellerRepository;
+import ar.com.plug.examen.domain.repository.TransactionDetailRepository;
 import ar.com.plug.examen.domain.repository.TransactionRepository;
 import ar.com.plug.examen.domain.repository.specification.TransactionSpecification;
-import ar.com.plug.examen.domain.service.ClientService;
 import ar.com.plug.examen.domain.service.ConverterService;
 import ar.com.plug.examen.domain.service.Messages;
-import ar.com.plug.examen.domain.service.SellerService;
 import ar.com.plug.examen.domain.service.TransactionService;
 import ar.com.plug.examen.domain.service.ValidatorsService;
 
@@ -42,13 +44,16 @@ public class TransactionServiceImpl implements TransactionService {
 	TransactionRepository transactionRepository;
 	
 	@Autowired
+	TransactionDetailRepository transactionDetailRepository;
+	
+	@Autowired
 	ProductRepository productRepository;
 
 	@Autowired
-	SellerService sellerService;
+	SellerRepository sellerRepository;
 	
 	@Autowired
-	ClientService clientService;
+	ClientRepository clientRepository;
 
 	@Autowired
 	ConverterService converter;
@@ -101,15 +106,22 @@ public class TransactionServiceImpl implements TransactionService {
 		validators.checkCompleteObject(transaction, true);
 		logger.info(Messages.MSG_VALIDATION_SUCCESSFUL);
 
-
 		logger.info(String.format(Messages.MSG_SEARCHING, "Client"));
-		Client client = converter.convert(clientService.findById(transaction.getClient().getId()), Client.class);
+		Client client = clientRepository.findById(transaction.getClient().getId())
+				.orElseThrow(() -> new NotFoundException("Client"));
 		logger.info(Messages.MSG_FOUND);
 		logger.info(String.format(Messages.MSG_SEARCHING, "Seller"));
-		Seller seller = converter.convert(sellerService.findById(transaction.getSeller().getId()), Seller.class);
+		Seller seller = sellerRepository.findById(transaction.getSeller().getId())
+				.orElseThrow(() -> new NotFoundException("Seller"));
 		logger.info(Messages.MSG_FOUND);
 		
+		logger.info(String.format(Messages.MSG_SEARCHING, "Product"));
 		List<TransactionDetail> detail = converter.convertList(transaction.getTransactionDetail(), TransactionDetail.class);
+		List<Long> requestedProducts = detail.parallelStream().map(item -> item.getProduct().getId()).collect(Collectors.toList());
+		List<Product> existingProducts = productRepository.findAllById(requestedProducts);
+		if (requestedProducts.size() != existingProducts.size()) {
+    		throw NotFoundException.unableToFindException("Product");
+		}
 		logger.info(Messages.MSG_VALIDATION_SUCCESSFUL);
 
 		Transaction newToPersist = new Transaction.Builder()
@@ -121,14 +133,8 @@ public class TransactionServiceImpl implements TransactionService {
 				.build();
 
 		newToPersist.getTransactionDetail().stream().forEach(item -> item.setTransaction(newToPersist));
-
 		logger.info(String.format(Messages.MSG_PREPARING_PERSISTENCE, ENTITY));
-		List<Long> requestedProducts = detail.parallelStream().map(item -> item.getProduct().getId()).collect(Collectors.toList());
-		List<Product> existingProducts = productRepository.findAllById(requestedProducts);
-		if (requestedProducts.size() != existingProducts.size()) {
-    		NotFoundException.unableToFindException("Product");
-		}
-		Transaction persisted = transactionRepository.save(converter.convert(newToPersist, Transaction.class));
+		Transaction persisted = transactionRepository.saveAndFlush(converter.convert(newToPersist, Transaction.class));
 		logger.info(String.format(Messages.MSG_SUCCESSFULLY_CREATED, ENTITY, persisted.getId()));
 
 		return converter.convert(persisted, TransactionApi.class);
@@ -139,19 +145,16 @@ public class TransactionServiceImpl implements TransactionService {
 	 */
 	@Override
 	@Transactional
-	public void deleteById(Long id) throws NotFoundException, BadRequestException {
-		logger.info(Messages.MSG_VALIDATING_PROVIDED_DATA);
-		validators.checkCompleteObject(id, false);
-		logger.info(Messages.MSG_VALIDATION_SUCCESSFUL);
-
-    	logger.info(String.format(Messages.MSG_PREPARING_DELETION, ENTITY));
-    	if (!transactionRepository.existsById(id)) {
-    		NotFoundException.unableToFindException(ENTITY);
-    	}
-    	transactionRepository.deleteById(id);
-    	logger.info(String.format(Messages.MSG_SUCCESSFULLY_DELETED, ENTITY)); 
-	}
-
+	public void deleteById(long id) throws NotFoundException {
+    	try {
+			logger.info(String.format(Messages.MSG_PREPARING_DELETION, ENTITY));
+			Transaction persisted = transactionRepository.findById(id).get();
+	    	transactionRepository.delete(persisted);
+	    	logger.info(String.format(Messages.MSG_SUCCESSFULLY_DELETED, ENTITY)); 
+		} catch (NoSuchElementException nse) {
+    		throw NotFoundException.unableToFindException("Transaction");
+		}
+    }
 
 	/**
 	 * Searches an existing transaction by its id and sets a new status
@@ -160,7 +163,7 @@ public class TransactionServiceImpl implements TransactionService {
 	 */
 	@Override
 	@Transactional
-	public TransactionApi updateTransactionStatusById(Long id, StatusEnum status) throws NotFoundException, BadRequestException {
+	public TransactionApi updateTransactionStatusById(long id, StatusEnum status) throws NotFoundException, BadRequestException {
 		logger.info(String.format(Messages.MSG_SEARCHING, ENTITY));
 			
 		Transaction persisted = transactionRepository.findOneById(id);
@@ -187,22 +190,19 @@ public class TransactionServiceImpl implements TransactionService {
 	 */
 	@Override
 	@Transactional
-	public Double totalAmountByTransactionId(Long id) throws BadRequestException, NotFoundException {
-		logger.info(Messages.MSG_VALIDATING_PROVIDED_DATA);
-		validators.checkCompleteObject(id, false);
-		logger.info(Messages.MSG_VALIDATION_SUCCESSFUL);
-		
-		logger.info(Messages.MSG_SEARCHING_REQUESTED_DATA);
-		Transaction result = transactionRepository.findOneById(id);
-		if (Objects.isNull(result)) {
+	public Double totalAmountByTransactionId(long id) throws NotFoundException {
+		try {
+			logger.info(Messages.MSG_SEARCHING_REQUESTED_DATA);
+			Transaction result = transactionRepository.findById(id).get();
+
+			Double total = result.getTransactionDetail().stream()
+					.mapToDouble(detalle -> detalle.getQuantity() * detalle.getProduct().getPrice())
+					.sum(); 
+			logger.info(Messages.MSG_SUCCESS);
+
+			return total;
+		} catch (IllegalArgumentException | NoSuchElementException iae) {
 			throw NotFoundException.unableToFindException(ENTITY);
 		}
-
-		Double total = result.getTransactionDetail().stream()
-				.mapToDouble(detalle -> detalle.getQuantity() * detalle.getProduct().getPrice())
-				.sum(); 
-		logger.info(Messages.MSG_SUCCESS);
-
-		return total;
 	}
 }

@@ -49,7 +49,7 @@ public class ClientController {
     }
 
 	@DeleteMapping("/{id}")
-    public ResponseEntity deleteById(@PathVariable long id) throws NotFoundException, BadRequestException {
+    public ResponseEntity deleteById(@PathVariable long id) throws NotFoundException {
         clientService.deleteById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

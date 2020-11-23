@@ -1,7 +1,7 @@
 package ar.com.plug.examen.domain.service.impl;
 
 import java.util.List;
-import java.util.Objects;
+import java.util.NoSuchElementException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,12 +54,14 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	@Transactional
 	public ProductApi findById(long id) throws NotFoundException {
-		logger.info(Messages.MSG_SEARCHING_REQUESTED_DATA);
-		ProductApi result = converter.convert(productRepository.findOneById(id), ProductApi.class);
-		if (Objects.isNull(result))
+		try {
+			logger.info(Messages.MSG_SEARCHING_REQUESTED_DATA);
+			ProductApi result = converter.convert(productRepository.findById(id).get(), ProductApi.class);
+			logger.info(Messages.MSG_FOUND);
+			return result;
+		} catch (NoSuchElementException iae) {
 			throw NotFoundException.unableToFindException(ENTITY);
-		logger.info(Messages.MSG_FOUND);
-		return result;
+		}
 	}
 
 	/**
@@ -99,11 +101,7 @@ public class ProductServiceImpl implements ProductService {
 	 */
     @Override
     @Transactional
-    public void deleteById(long id) throws NotFoundException, BadRequestException {
-		logger.info(Messages.MSG_VALIDATING_PROVIDED_DATA);
-		validators.checkCompleteObject(id, false);
-		logger.info(Messages.MSG_VALIDATION_SUCCESSFUL);
-
+    public void deleteById(long id) throws NotFoundException {
     	logger.info(String.format(Messages.MSG_PREPARING_DELETION, ENTITY));
     	if (!productRepository.existsById(id)) {
     		NotFoundException.unableToFindException(ENTITY);

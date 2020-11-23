@@ -2,7 +2,6 @@ package ar.com.plug.examen.domain.service.impl;
 
 import java.lang.reflect.Field;
 import java.util.Objects;
-import java.util.stream.Stream;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,13 +35,7 @@ public class ValidatorsServiceImpl implements ValidatorsService {
 			logger.error(errorMsg);
 			throw new BadRequestException(errorMsg);
 		}
-		
-		if (Stream.of(StatusEnum.values()).noneMatch(item -> item == status)) {
-			String errorMsg = String.format(Messages.MSG_EXCEPTION_INVALID_TRANSACTION_STATUS, status);
-			logger.error(errorMsg);
-			throw new BadRequestException(errorMsg);
-		}
-		
+
 		if (transaction.getStatus().equals(status)) {
 			String errorMsg = String.format(Messages.MSG_EXCEPTION_TRANSACTION_STATUS_ALREADY, status);
 			logger.error(errorMsg);

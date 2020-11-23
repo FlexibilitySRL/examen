@@ -1,7 +1,7 @@
 package ar.com.plug.examen.domain.service.impl;
 
 import java.util.List;
-import java.util.Objects;
+import java.util.NoSuchElementException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,12 +55,14 @@ public class ClientServiceImpl implements ClientService {
 	@Override
 	@Transactional
 	public ClientApi findById(long id) throws NotFoundException {
-		logger.info(Messages.MSG_SEARCHING_REQUESTED_DATA);
-		ClientApi result = converter.convert(clientRepository.findOneById(id), ClientApi.class);
-		if (Objects.isNull(result))
+		try {
+			logger.info(Messages.MSG_SEARCHING_REQUESTED_DATA);
+			ClientApi result = converter.convert(clientRepository.findById(id).get(), ClientApi.class);
+			logger.info(Messages.MSG_FOUND);
+			return result;
+		} catch (NoSuchElementException iae) {
 			throw NotFoundException.unableToFindException(ENTITY);
-		logger.info(Messages.MSG_FOUND);
-		return result;
+		}
 	}
 
 	/**
@@ -99,11 +101,7 @@ public class ClientServiceImpl implements ClientService {
 	 */
     @Override
     @Transactional
-    public void deleteById(long id) throws NotFoundException, BadRequestException {
-		logger.info(Messages.MSG_VALIDATING_PROVIDED_DATA);
-		validators.checkCompleteObject(id, false);
-		logger.info(Messages.MSG_VALIDATION_SUCCESSFUL);
-
+    public void deleteById(long id) throws NotFoundException {
     	logger.info(String.format(Messages.MSG_PREPARING_DELETION, ENTITY));
     	if (!clientRepository.existsById(id)) {
     		NotFoundException.unableToFindException(ENTITY);

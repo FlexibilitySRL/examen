@@ -36,7 +36,7 @@ public class TransactionController {
     }
 
     @GetMapping(Paths.FIND_BY_FILTERS)
-    public  ResponseEntity<List<TransactionApi>> findBySellerId(@RequestBody TransactionApi filters) {
+    public  ResponseEntity<List<TransactionApi>> findByFilters(@RequestBody TransactionApi filters) {
         return new ResponseEntity<>(transactionService.findByFilters(filters), HttpStatus.OK);
     }
     
@@ -46,19 +46,19 @@ public class TransactionController {
     }
 
 	@DeleteMapping("/{id}")
-    public ResponseEntity deleteById(@PathVariable Long id) throws NotFoundException, BadRequestException {
+    public ResponseEntity deleteById(@PathVariable long id) throws NotFoundException {
         transactionService.deleteById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<TransactionApi> updateTransactionStatusById(@RequestParam(name = "id") Long id, 
+    public ResponseEntity<TransactionApi> updateTransactionStatusById(@RequestParam(name = "id") long id, 
     		@RequestParam(name = "status") StatusEnum status) throws NotFoundException, BadRequestException {
     	return new ResponseEntity<>(transactionService.updateTransactionStatusById(id, status), HttpStatus.ACCEPTED);
     }
 
     @GetMapping(Paths.TOTAL_AMOUNT_BY_TRANSACTION_ID)
-    public ResponseEntity<Double> totalAmountByTransactionId(@PathVariable Long id) throws NotFoundException, BadRequestException {
+    public ResponseEntity<Double> totalAmountByTransactionId(@PathVariable long id) throws NotFoundException {
     	return new ResponseEntity<>(transactionService.totalAmountByTransactionId(id), HttpStatus.OK);
     }
 }

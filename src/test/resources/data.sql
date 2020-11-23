@@ -17,7 +17,9 @@ insert into product values
 
 /** TRANSACTION **/
 insert into transaction values 
-	(1, curdate(), 1, 1, 1);
+	(1, curdate(), 0, 1, 1),
+	(2, curdate(), 0, 2, 2),
+	(3, curdate(), 0, 2, 2);
 
 /** TRANSACTION DETAIL **/
 insert into transaction_detail values 
