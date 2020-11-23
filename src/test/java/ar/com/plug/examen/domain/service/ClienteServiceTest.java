@@ -6,7 +6,6 @@ import static org.mockito.Mockito.when;
 
 import java.time.LocalDateTime;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -25,11 +24,6 @@ public class ClienteServiceTest {
 	
 	@Mock
 	private ClienteService service;
-	
-	@Before
-	public void init() {
-		
-	}
 	
 	@Test
 	public void getClienteByIDTest() {
