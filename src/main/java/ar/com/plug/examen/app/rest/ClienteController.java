@@ -59,7 +59,7 @@ public class ClienteController {
 			logger.info("Se actualiza correctamente el cliente con id "+bean.getIdCliente());
 			return new ResponseEntity<ClienteBean>(bean, HttpStatus.OK);
 		} catch (Exception e) {
-			logger.error( "Error en la creación del producto " + e.getMessage());
+			logger.error( "Error en la actualización del cliente " + e.getMessage());
 			return new ResponseEntity<ClienteBean>(bean, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}

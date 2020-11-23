@@ -23,7 +23,7 @@ public class TransaccionServiceImpl {
 	@Autowired
 	private ProductoService service3;
 	
-	public TransaccionBean createCliente(TransaccionBean bean) {
+	public TransaccionBean crearTransaccion(TransaccionBean bean) {
 		Transaccion t = new Transaccion();
 		t.setCodigoTrx(bean.getCodigoTrx());
 		t.setEstado(bean.getEstado());
@@ -43,6 +43,27 @@ public class TransaccionServiceImpl {
 		
 		bean.setId(t.getId());
 		bean.setFechaCreacion(t.getFechaCreacion());
+		return bean;
+	}
+	
+	public TransaccionBean getTransaccionById(String codigoTrx) {
+		Transaccion transaccion = null;
+		if(!codigoTrx.isEmpty() ) {
+			transaccion = service.findByCodigoTrx(codigoTrx);
+			if (transaccion != null) {
+				return obtenerTransaccionBean(transaccion);
+			}
+		}
+		return null;
+	}
+	
+	private TransaccionBean obtenerTransaccionBean(Transaccion transaccion) {
+		TransaccionBean bean = new TransaccionBean();
+		bean.setCodigoTrx(transaccion.getCodigoTrx());
+		bean.setEstado(transaccion.getEstado());
+		bean.setFechaCreacion(transaccion.getFechaCreacion());
+		bean.setIdCliente(transaccion.getIdCliente());
+		bean.setIdProducto(transaccion.getIdProducto());
 		return bean;
 	}
 
