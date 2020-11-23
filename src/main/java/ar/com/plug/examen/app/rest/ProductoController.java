@@ -22,6 +22,11 @@ public class ProductoController {
 	@Autowired
 	private ProductoServiceImpl service;
 
+	/**
+	 * Metodo que permite crar un producto
+	 * @param productoBean
+	 * @return
+	 */
 	@RequestMapping(value = "/v1/producto", produces = { "application/json" }, method = RequestMethod.POST)
 	public ResponseEntity<ProductoBean> createProducto(@RequestBody ProductoBean productoBean) {
 		try {
@@ -34,6 +39,11 @@ public class ProductoController {
 		}
 	}
 	
+	/**
+	 * Metodo que permite dar de baja un producto
+	 * @param id
+	 * @return
+	 */
 	@RequestMapping(value = "/v1/producto/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Void> deleteProducto(@PathVariable Long id) {
 		logger.info("Eliminando producto con id: {}", id);
@@ -47,6 +57,12 @@ public class ProductoController {
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 	
+	/**
+	 * Metodo que permite modificar un producto
+	 * @param id
+	 * @param productoBean
+	 * @return
+	 */
 	@RequestMapping(value = "/v1/producto/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<ProductoBean> update(@PathVariable Long id, @RequestBody ProductoBean productoBean) {
 		try {

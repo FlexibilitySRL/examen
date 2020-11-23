@@ -23,6 +23,11 @@ public class TransaccionServiceImpl {
 	@Autowired
 	private ProductoService service3;
 	
+	/**
+	 * Metodo que permite crear una transaccion de compra
+	 * @param bean
+	 * @return
+	 */
 	public TransaccionBean crearTransaccion(TransaccionBean bean) {
 		Transaccion t = new Transaccion();
 		t.setCodigoTrx(bean.getCodigoTrx());
@@ -46,6 +51,11 @@ public class TransaccionServiceImpl {
 		return bean;
 	}
 	
+	/**
+	 * Metodo que permite consultar una transaccion
+	 * @param codigoTrx
+	 * @return
+	 */
 	public TransaccionBean getTransaccionById(String codigoTrx) {
 		Transaccion transaccion = null;
 		if(!codigoTrx.isEmpty() ) {
@@ -57,6 +67,11 @@ public class TransaccionServiceImpl {
 		return null;
 	}
 	
+	/**
+	 * Metodo que permite mapear la entidad al bean de la transaccion
+	 * @param transaccion
+	 * @return
+	 */
 	private TransaccionBean obtenerTransaccionBean(Transaccion transaccion) {
 		TransaccionBean bean = new TransaccionBean();
 		bean.setCodigoTrx(transaccion.getCodigoTrx());

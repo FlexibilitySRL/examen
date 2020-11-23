@@ -22,6 +22,11 @@ public class ClienteController {
 	@Autowired
 	private ClienteServiceImpl impl;
 	
+	/**
+	 * Metodo que permite crear un cliente
+	 * @param bean
+	 * @return
+	 */
 	@RequestMapping(value = "/v1/cliente", produces = { "application/json" }, method = RequestMethod.POST)
 	public ResponseEntity<ClienteBean> crearCliente(@RequestBody ClienteBean bean) {
 		try {
@@ -34,6 +39,11 @@ public class ClienteController {
 		}
 	}
 	
+	/**
+	 * Metodo que permite dar de baja un cliente por medio del id
+	 * @param id
+	 * @return
+	 */
 	@RequestMapping(value = "/v1/cliente/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Void> eliminarCliente(@PathVariable Long id) {
 		logger.info("Eliminando cliente con id: {}", id);
@@ -47,6 +57,12 @@ public class ClienteController {
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 	
+	/**
+	 * Metodo que permite modificar un cliente
+	 * @param id
+	 * @param bean
+	 * @return
+	 */
 	@RequestMapping(value = "/v1/cliente/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<ClienteBean> actualizarCliente(@PathVariable Long id, @RequestBody ClienteBean bean) {
 		try {

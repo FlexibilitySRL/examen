@@ -15,6 +15,11 @@ public class ClienteServiceImpl {
 	@Autowired
 	private ClienteService service;
 	
+	/**
+	 * Metodo que permite crear un cliente
+	 * @param bean
+	 * @return
+	 */
 	public ClienteBean createCliente(ClienteBean bean) {
 		Cliente cliente = new Cliente();
 		cliente.setNombreCliente(bean.getNombreCliente());
@@ -30,6 +35,11 @@ public class ClienteServiceImpl {
 		return bean;
 	}
 	
+	/**
+	 * Metodo que permite consultar cliente por id
+	 * @param id
+	 * @return
+	 */
 	public ClienteBean getClienteByID(Long id) {
 		Cliente cliente = null;
 		if (id != null) {
@@ -45,6 +55,11 @@ public class ClienteServiceImpl {
 		return null;
 	}
 
+	/**
+	 * Metodo que permite mapear la entidad Cliente al bean ClienteBean
+	 * @param cliente
+	 * @return
+	 */
 	private ClienteBean obtenerClienteBean(Cliente cliente) {
 		ClienteBean bean = new ClienteBean();
 		bean.setApellidoCliente(cliente.getApellidoCliente());
@@ -56,6 +71,10 @@ public class ClienteServiceImpl {
 		return bean;
 	}
 	
+	/**
+	 * Metodo que permite eliminar un cliente
+	 * @param bean
+	 */
 	public void eliminarCliente(ClienteBean bean) {
 		Cliente cliente = new Cliente();
 		cliente.setNombreCliente(bean.getNombreCliente());

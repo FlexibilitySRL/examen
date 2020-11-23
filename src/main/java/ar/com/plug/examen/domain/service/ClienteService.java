@@ -7,5 +7,10 @@ import ar.com.plug.examen.domain.model.Cliente;
 
 public interface ClienteService extends JpaRepository<Cliente, Long>, QueryByExampleExecutor<Cliente> {
 
+	/**
+	 * Metodo que permite consultar Cliente por medio de numero documento
+	 * @param numeroDocumento
+	 * @return
+	 */
 	Cliente findByNumeroDocumento(String numeroDocumento);
 }

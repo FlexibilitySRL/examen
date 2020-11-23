@@ -7,5 +7,10 @@ import ar.com.plug.examen.domain.model.Producto;
 
 public interface ProductoService extends JpaRepository<Producto, Long>, QueryByExampleExecutor<Producto> {
 
+	/**
+	 * Metodo que permite consultar un producto por medio del codigo
+	 * @param codProducto
+	 * @return
+	 */
 	Producto findByCodProducto(String codProducto);
 }

@@ -15,6 +15,11 @@ public class ProductoServiceImpl {
 	@Autowired
 	private ProductoService service;
 
+	/**
+	 * Metodo que permite guardar un producto
+	 * @param bean
+	 * @return
+	 */
 	public ProductoBean createProducto(ProductoBean bean) {
 		Producto p = new Producto();
 		p.setNombreProducto(bean.getNombreProducto());
@@ -34,6 +39,11 @@ public class ProductoServiceImpl {
 		return bean;
 	}
 
+	/**
+	 * Metodo que permite consultar un producto por medio de id
+	 * @param idProducto
+	 * @return
+	 */
 	public ProductoBean getProductoByID(Long idProducto) {
 		Producto product = null;
 		if (idProducto != null) {
@@ -49,6 +59,11 @@ public class ProductoServiceImpl {
 		return null;
 	}
 
+	/**
+	 * Metodo que permite mapear la entidad Producto al bean ProductoBean
+	 * @param producto
+	 * @return
+	 */
 	private ProductoBean obtenerProductoBean(Producto producto) {
 		ProductoBean bean = new ProductoBean();
 		bean.setCodProducto(producto.getCodProducto());
@@ -61,6 +76,10 @@ public class ProductoServiceImpl {
 		return bean;
 	}
 
+	/**
+	 * Metodo que permite eliminar un producto
+	 * @param bean
+	 */
 	public void deleteProducto(ProductoBean bean) {
 		Producto p = new Producto();
 		p.setNombreProducto(bean.getNombreProducto());
