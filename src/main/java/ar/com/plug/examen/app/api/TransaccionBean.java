@@ -6,8 +6,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import ar.com.plug.examen.domain.model.Cliente;
-import ar.com.plug.examen.domain.model.Producto;
 import ar.com.plug.examen.util.StateEnum;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -23,11 +21,11 @@ public class TransaccionBean {
 	
 	@JsonProperty
 	@JsonInclude(JsonInclude.Include.NON_NULL)
-	private Cliente idCliente;
+	private ClienteBean idCliente;
 	
 	@JsonProperty
 	@JsonInclude(JsonInclude.Include.NON_NULL)
-	private Producto idProducto;
+	private ProductoBean idProducto;
 	
 	@JsonProperty
 	@JsonInclude(JsonInclude.Include.NON_NULL)
@@ -53,19 +51,19 @@ public class TransaccionBean {
 		this.codigoTrx = codigoTrx;
 	}
 
-	public Cliente getIdCliente() {
+	public ClienteBean getIdCliente() {
 		return idCliente;
 	}
 
-	public void setIdCliente(Cliente idCliente) {
+	public void setIdCliente(ClienteBean idCliente) {
 		this.idCliente = idCliente;
 	}
 
-	public Producto getIdProducto() {
+	public ProductoBean getIdProducto() {
 		return idProducto;
 	}
 
-	public void setIdProducto(Producto idProducto) {
+	public void setIdProducto(ProductoBean idProducto) {
 		this.idProducto = idProducto;
 	}
 

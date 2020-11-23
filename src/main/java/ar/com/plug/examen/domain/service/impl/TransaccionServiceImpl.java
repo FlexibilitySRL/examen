@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ar.com.plug.examen.app.api.ClienteBean;
+import ar.com.plug.examen.app.api.ProductoBean;
 import ar.com.plug.examen.app.api.TransaccionBean;
 import ar.com.plug.examen.domain.model.Cliente;
 import ar.com.plug.examen.domain.model.Producto;
@@ -79,8 +81,30 @@ public class TransaccionServiceImpl {
 		bean.setCodigoTrx(transaccion.getCodigoTrx());
 		bean.setEstado(transaccion.getEstado());
 		bean.setFechaCreacion(transaccion.getFechaCreacion());
-		bean.setIdCliente(transaccion.getIdCliente());
-		bean.setIdProducto(transaccion.getIdProducto());
+		bean.setIdCliente(obtenerClienteBean(transaccion.getIdCliente()));
+		bean.setIdProducto(obtenerProductoBean(transaccion.getIdProducto()));
+		return bean;
+	}
+
+	private ProductoBean obtenerProductoBean(Producto producto) {
+		ProductoBean bean = new ProductoBean();
+		bean.setCodProducto(producto.getCodProducto());
+		bean.setDescripcionProducto(producto.getDescripcionProducto());
+		bean.setFechaCreacion(producto.getFechaCreacion());
+		bean.setIdProducto(producto.getIdProducto());
+		bean.setMontoProducto(producto.getMontoProducto());
+		bean.setNombreProducto(producto.getNombreProducto());
+		return bean;
+	}
+
+	private ClienteBean obtenerClienteBean(Cliente cliente) {
+		ClienteBean bean = new ClienteBean();
+		bean.setApellidoCliente(cliente.getApellidoCliente());
+		bean.setFechaCreacion(cliente.getFechaCreacion());
+		bean.setIdCliente(cliente.getIdCliente());
+		bean.setNombreCliente(cliente.getNombreCliente());
+		bean.setNumeroDocumento(cliente.getNumeroDocumento());
+		bean.setTipoDocumento(cliente.getTipoDocumento());
 		return bean;
 	}
 
