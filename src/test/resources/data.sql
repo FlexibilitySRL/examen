@@ -2,7 +2,7 @@
 insert into client values 
 	(1, 'Customer John Doe'),
 	(2, 'Customer Jane Doe'),
-	(3, 'Customer Jane Doe');
+	(3, 'Customer Jay Doe');
 
 /** SELLER **/
 insert into seller values 
