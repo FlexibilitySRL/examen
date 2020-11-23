@@ -3,6 +3,7 @@ package ar.com.plug.examen.domain.service.impl;
 import java.time.LocalDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import ar.com.plug.examen.app.api.TransaccionBean;
 import ar.com.plug.examen.domain.model.Cliente;
@@ -12,6 +13,7 @@ import ar.com.plug.examen.domain.service.ClienteService;
 import ar.com.plug.examen.domain.service.ProductoService;
 import ar.com.plug.examen.domain.service.TransaccionService;
 
+@Service
 public class TransaccionServiceImpl {
 	
 	@Autowired
