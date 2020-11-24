@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Transaction.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">examen</a> &gt; <a href="index.source.html" class="el_package">ar.com.plug.examen.domain.model</a> &gt; <span class="el_source">Transaction.java</span></div><h1>Transaction.java</h1><pre class="source lang-java linenums">package ar.com.plug.examen.domain.model;
+
+import java.io.Serializable;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
+import ar.com.plug.examen.domain.enums.StatusEnum;
+
+@Entity
+@Table
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = &quot;id&quot;)
+public class Transaction implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private Long id;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = &quot;id_client&quot;, referencedColumnName = &quot;id&quot;)
+	private Client client;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = &quot;id_seller&quot;, referencedColumnName = &quot;id&quot;)
+	private Seller seller;
+
+<span class="fc" id="L44">	@Column</span>
+	private StatusEnum status = StatusEnum.PENDING;
+
+	@Column
+	private Date date;
+
+	@OneToMany(mappedBy = &quot;transaction&quot;, cascade = CascadeType.ALL)
+	private List&lt;TransactionDetail&gt; transactionDetail;
+
+<span class="fc" id="L53">	public Transaction() {</span>
+<span class="fc" id="L54">	}</span>
+
+	public Transaction(Long id, Client client, Seller seller, StatusEnum status, Date date,
+<span class="fc" id="L57">			List&lt;TransactionDetail&gt; transactionDetail) {</span>
+<span class="fc" id="L58">		this.id = id;</span>
+<span class="fc" id="L59">		this.client = client;</span>
+<span class="fc" id="L60">		this.seller = seller;</span>
+<span class="fc" id="L61">		this.status = status;</span>
+<span class="fc" id="L62">		this.date = date;</span>
+<span class="fc" id="L63">		this.transactionDetail = transactionDetail;</span>
+<span class="fc" id="L64">	}</span>
+
+	public Long getId() {
+<span class="fc" id="L67">		return id;</span>
+	}
+
+	public void setId(Long id) {
+<span class="fc" id="L71">		this.id = id;</span>
+<span class="fc" id="L72">	}</span>
+
+	public Client getClient() {
+<span class="fc" id="L75">		return client;</span>
+	}
+
+	public void setClient(Client client) {
+<span class="fc" id="L79">		this.client = client;</span>
+<span class="fc" id="L80">	}</span>
+
+	public Seller getSeller() {
+<span class="fc" id="L83">		return seller;</span>
+	}
+
+	public void setSeller(Seller seller) {
+<span class="fc" id="L87">		this.seller = seller;</span>
+<span class="fc" id="L88">	}</span>
+
+	public StatusEnum getStatus() {
+<span class="fc" id="L91">		return status;</span>
+	}
+
+	public void setStatus(StatusEnum status) {
+<span class="fc" id="L95">		this.status = status;</span>
+<span class="fc" id="L96">	}</span>
+
+	public Date getDate() {
+<span class="fc" id="L99">		return date;</span>
+	}
+
+	public void setDate(Date date) {
+<span class="fc" id="L103">		this.date = date;</span>
+<span class="fc" id="L104">	}</span>
+
+	public List&lt;TransactionDetail&gt; getTransactionDetail() {
+<span class="fc" id="L107">		return transactionDetail;</span>
+	}
+
+	public void setTransactionDetail(List&lt;TransactionDetail&gt; transactionDetail) {
+<span class="fc" id="L111">		this.transactionDetail = transactionDetail;</span>
+<span class="fc" id="L112">	}</span>
+
+<span class="fc" id="L114">	public static class Builder {</span>
+		private Long id;
+		private Client client;
+		private Seller seller;
+		private StatusEnum status;
+		private Date date;
+		private List&lt;TransactionDetail&gt; transactionDetail;
+
+		public Builder setId(Long id) {
+<span class="fc" id="L123">			this.id = id;</span>
+<span class="fc" id="L124">			return this;</span>
+		}
+
+		public Builder setClient(Client client) {
+<span class="fc" id="L128">			this.client = client;</span>
+<span class="fc" id="L129">			return this;</span>
+		}
+
+		public Builder setSeller(Seller seller) {
+<span class="fc" id="L133">			this.seller = seller;</span>
+<span class="fc" id="L134">			return this;</span>
+		}
+
+		public Builder setStatus(StatusEnum status) {
+<span class="fc" id="L138">			this.status = status;</span>
+<span class="fc" id="L139">			return this;</span>
+		}
+
+		public Builder setDate(Date date) {
+<span class="fc" id="L143">			this.date = date;</span>
+<span class="fc" id="L144">			return this;</span>
+		}
+
+		public Builder setTransactionDetail(List&lt;TransactionDetail&gt; transactionDetailList) {
+<span class="fc" id="L148">			this.transactionDetail = transactionDetailList;</span>
+<span class="fc" id="L149">			return this;</span>
+		}
+
+		public Builder setTransactionDetail(TransactionDetail transactionDetail) {
+<span class="fc" id="L153">			this.transactionDetail = Arrays.asList(transactionDetail);</span>
+<span class="fc" id="L154">			return this;</span>
+		}
+		
+		public Transaction build() {
+<span class="fc" id="L158">			return new Transaction(id, client, seller, status, date, transactionDetail);</span>
+		}
+	}
+	
+	@Override
+	public String toString() {
+<span class="fc" id="L164">		return &quot;Transaction [id=&quot; + id + &quot;, client=&quot; + client.toString() </span>
+<span class="fc" id="L165">				+ &quot;, seller=&quot; + seller.toString() + &quot;, transactionDetail=&quot; + transactionDetail.toString() </span>
+<span class="fc" id="L166">				+ &quot;, status=&quot; + status + &quot;, date=&quot; + date.toString() + &quot;]&quot;;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

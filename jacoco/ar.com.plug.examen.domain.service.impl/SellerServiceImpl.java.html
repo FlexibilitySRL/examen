@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SellerServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">examen</a> &gt; <a href="index.source.html" class="el_package">ar.com.plug.examen.domain.service.impl</a> &gt; <span class="el_source">SellerServiceImpl.java</span></div><h1>SellerServiceImpl.java</h1><pre class="source lang-java linenums">package ar.com.plug.examen.domain.service.impl;
+
+import java.util.List;
+import java.util.NoSuchElementException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import ar.com.plug.examen.app.api.SellerApi;
+import ar.com.plug.examen.domain.exception.BadRequestException;
+import ar.com.plug.examen.domain.exception.NotFoundException;
+import ar.com.plug.examen.domain.model.Seller;
+import ar.com.plug.examen.domain.repository.SellerRepository;
+import ar.com.plug.examen.domain.service.ConverterService;
+import ar.com.plug.examen.domain.service.Messages;
+import ar.com.plug.examen.domain.service.SellerService;
+import ar.com.plug.examen.domain.service.ValidatorsService;
+
+@Service
+<span class="fc" id="L23">public class SellerServiceImpl implements SellerService {</span>
+
+<span class="fc" id="L25">	private final Logger logger = LoggerFactory.getLogger(SellerServiceImpl.class);</span>
+
+	private final static String ENTITY = &quot;Seller&quot;;
+
+	@Autowired
+	SellerRepository sellerRepository;
+
+	@Autowired
+	ConverterService converter;
+
+	@Autowired
+	ValidatorsService validators;
+	
+	/**
+	 * @return The complete list of existent sellers
+	 */
+	@Override
+	@Transactional
+	public List&lt;SellerApi&gt; listAll() {
+<span class="fc" id="L44">		logger.info(Messages.MSG_SEARCHING_REQUESTED_DATA);</span>
+<span class="fc" id="L45">		List&lt;SellerApi&gt; result = converter.convertList(sellerRepository.findAll(), SellerApi.class);</span>
+<span class="fc" id="L46">		logger.info(Messages.MSG_FOUND);</span>
+<span class="fc" id="L47">		return result;</span>
+	}
+
+	/**
+	 * Searches a seller by its id
+	 * @return A specific seller
+	 */
+	@Override
+	@Transactional
+	public SellerApi findById(long id) throws NotFoundException {
+		try {
+<span class="fc" id="L58">			logger.info(Messages.MSG_SEARCHING_REQUESTED_DATA);</span>
+<span class="fc" id="L59">			SellerApi result = converter.convert(sellerRepository.findById(id).get(), SellerApi.class);</span>
+<span class="fc" id="L60">			logger.info(Messages.MSG_FOUND);</span>
+<span class="fc" id="L61">			return result;</span>
+<span class="nc" id="L62">		} catch (NoSuchElementException iae) {</span>
+<span class="nc" id="L63">			throw NotFoundException.unableToFindException(ENTITY);</span>
+		}
+	}
+
+	/**
+	 * Searches a seller by its name
+	 * Search is case insensitive and matches partially
+	 * @return The list of seller which names matches a given string
+	 */
+	@Override
+	@Transactional
+	public List&lt;SellerApi&gt; findByName(String name) {
+<span class="fc" id="L75">		logger.info(Messages.MSG_SEARCHING_REQUESTED_DATA);</span>
+<span class="fc" id="L76">		List&lt;SellerApi&gt; result = converter.convertList(sellerRepository.findByName(name), SellerApi.class);</span>
+<span class="fc" id="L77">		logger.info(Messages.MSG_FOUND);</span>
+<span class="fc" id="L78">		return result;</span>
+	}
+
+	/**
+	 * Persists a new seller
+	 * @return Saved seller
+	 */
+	@Override
+	@Transactional
+	public SellerApi save(SellerApi seller) throws BadRequestException {
+<span class="fc" id="L88">		logger.info(Messages.MSG_VALIDATING_PROVIDED_DATA);</span>
+<span class="fc" id="L89">		validators.checkCompleteObject(seller, true);</span>
+<span class="fc" id="L90">		logger.info(Messages.MSG_VALIDATION_SUCCESSFUL);</span>
+		
+<span class="fc" id="L92">		logger.info(String.format(Messages.MSG_PREPARING_PERSISTENCE, ENTITY));</span>
+<span class="fc" id="L93">		Seller persisted = sellerRepository.save(converter.convert(seller, Seller.class));</span>
+<span class="fc" id="L94">		logger.info(String.format(Messages.MSG_SUCCESSFULLY_CREATED, ENTITY, persisted.getId()));</span>
+
+<span class="fc" id="L96">		return converter.convert(persisted, SellerApi.class);</span>
+	}
+	
+	/**
+	 * Removes an existing seller by its id
+	 */
+	@Override
+	@Transactional
+	public void deleteById(long id) throws NotFoundException {
+<span class="fc" id="L105">    	logger.info(String.format(Messages.MSG_PREPARING_DELETION, ENTITY));</span>
+<span class="pc bpc" id="L106" title="1 of 2 branches missed.">    	if (!sellerRepository.existsById(id)) {</span>
+<span class="nc" id="L107">    		NotFoundException.unableToFindException(ENTITY);</span>
+    	}
+<span class="fc" id="L109">    	sellerRepository.deleteById(id);</span>
+<span class="fc" id="L110">    	logger.info(String.format(Messages.MSG_SUCCESSFULLY_DELETED, ENTITY)); </span>
+<span class="fc" id="L111">	}</span>
+    
+    /**
+	 * Searches an existing seller by its id and updates it
+	 * @return The updated seller
+	 */
+	@Override
+	@Transactional
+	public SellerApi update(SellerApi seller) throws NotFoundException, BadRequestException {
+<span class="fc" id="L120">		logger.info(Messages.MSG_VALIDATING_PROVIDED_DATA);</span>
+<span class="fc" id="L121">		validators.checkCompleteObject(seller, false);</span>
+<span class="fc" id="L122">		logger.info(Messages.MSG_VALIDATION_SUCCESSFUL);</span>
+
+<span class="fc" id="L124">		logger.info(String.format(Messages.MSG_PREPARING_UPDATE, ENTITY));</span>
+<span class="pc bpc" id="L125" title="1 of 2 branches missed.">		if (!sellerRepository.existsById(seller.getId())) {</span>
+<span class="nc" id="L126">    		NotFoundException.unableToFindException(ENTITY);</span>
+    	}
+<span class="fc" id="L128">		Seller updated = sellerRepository.save(converter.convert(seller, Seller.class));</span>
+<span class="fc" id="L129">		logger.info(String.format(Messages.MSG_SUCCESSFULLY_UPDATED, ENTITY, updated.getId()));</span>
+<span class="fc" id="L130">		return converter.convert(updated, SellerApi.class);</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TransactionServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">examen</a> &gt; <a href="index.source.html" class="el_package">ar.com.plug.examen.domain.service.impl</a> &gt; <span class="el_source">TransactionServiceImpl.java</span></div><h1>TransactionServiceImpl.java</h1><pre class="source lang-java linenums">package ar.com.plug.examen.domain.service.impl;
+
+import java.util.Calendar;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Objects;
+import java.util.stream.Collectors;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import ar.com.plug.examen.app.api.TransactionApi;
+import ar.com.plug.examen.domain.enums.StatusEnum;
+import ar.com.plug.examen.domain.exception.BadRequestException;
+import ar.com.plug.examen.domain.exception.NotFoundException;
+import ar.com.plug.examen.domain.model.Client;
+import ar.com.plug.examen.domain.model.Product;
+import ar.com.plug.examen.domain.model.Seller;
+import ar.com.plug.examen.domain.model.Transaction;
+import ar.com.plug.examen.domain.model.TransactionDetail;
+import ar.com.plug.examen.domain.repository.ClientRepository;
+import ar.com.plug.examen.domain.repository.ProductRepository;
+import ar.com.plug.examen.domain.repository.SellerRepository;
+import ar.com.plug.examen.domain.repository.TransactionDetailRepository;
+import ar.com.plug.examen.domain.repository.TransactionRepository;
+import ar.com.plug.examen.domain.repository.specification.TransactionSpecification;
+import ar.com.plug.examen.domain.service.ConverterService;
+import ar.com.plug.examen.domain.service.Messages;
+import ar.com.plug.examen.domain.service.TransactionService;
+import ar.com.plug.examen.domain.service.ValidatorsService;
+
+@Service
+<span class="fc" id="L37">public class TransactionServiceImpl implements TransactionService {</span>
+
+<span class="fc" id="L39">	private final Logger logger = LoggerFactory.getLogger(TransactionServiceImpl.class);</span>
+
+	private final static String ENTITY = &quot;Transaction&quot;;
+
+	@Autowired
+	TransactionRepository transactionRepository;
+	
+	@Autowired
+	TransactionDetailRepository transactionDetailRepository;
+	
+	@Autowired
+	ProductRepository productRepository;
+
+	@Autowired
+	SellerRepository sellerRepository;
+	
+	@Autowired
+	ClientRepository clientRepository;
+
+	@Autowired
+	ConverterService converter;
+
+	@Autowired
+	ValidatorsService validators;
+	
+	/**
+	 * @return The complete list of existent transactions
+	 */
+	@Override
+	@Transactional
+	public List&lt;TransactionApi&gt; listAll() {
+<span class="fc" id="L70">		logger.info(Messages.MSG_SEARCHING_REQUESTED_DATA);</span>
+<span class="fc" id="L71">		List&lt;TransactionApi&gt; result = converter.convertList(transactionRepository.findAll(), TransactionApi.class);</span>
+<span class="fc" id="L72">		logger.info(Messages.MSG_SUCCESS);</span>
+<span class="fc" id="L73">		return result;</span>
+	}
+
+	/**
+	 * @return A filtered list of transactions
+	 */
+	@Override
+	@Transactional
+	public List&lt;TransactionApi&gt; findByFilters(TransactionApi filters) {
+<span class="fc" id="L82">		logger.info(Messages.MSG_VALIDATING_PROVIDED_DATA);</span>
+<span class="fc" id="L83">		Specification&lt;Transaction&gt; specifications = TransactionSpecification.especificacionClientId(filters.getClient())</span>
+<span class="fc" id="L84">				.and(TransactionSpecification.especificacionClientName(filters.getClient()))</span>
+<span class="fc" id="L85">				.and(TransactionSpecification.especificacionSellerId(filters.getSeller()))</span>
+<span class="fc" id="L86">				.and(TransactionSpecification.especificacionSellerName(filters.getSeller()))</span>
+<span class="fc" id="L87">				.and(TransactionSpecification.especificacionStatus(filters.getStatus()))</span>
+<span class="fc" id="L88">				.and(TransactionSpecification.especificacionDate(filters.getDate()));</span>
+<span class="fc" id="L89">		logger.info(Messages.MSG_VALIDATION_SUCCESSFUL);</span>
+
+<span class="fc" id="L91">		logger.info(Messages.MSG_SEARCHING_REQUESTED_DATA);</span>
+<span class="fc" id="L92">		List&lt;TransactionApi&gt; result = converter.convertList(transactionRepository.findAll(specifications), TransactionApi.class);</span>
+<span class="fc" id="L93">		logger.info(Messages.MSG_SUCCESS);</span>
+<span class="fc" id="L94">		return result;</span>
+	}
+
+	/**
+	 * Persists a new transaction
+	 * The provided client, seller and products must already exist
+	 * @return Saved transaction with its entire detail
+	 */
+	@Override
+	@Transactional
+	public TransactionApi save(TransactionApi transaction) throws BadRequestException, NotFoundException {
+<span class="fc" id="L105">		logger.info(Messages.MSG_VALIDATING_PROVIDED_DATA);</span>
+<span class="fc" id="L106">		validators.checkCompleteObject(transaction, true);</span>
+<span class="fc" id="L107">		logger.info(Messages.MSG_VALIDATION_SUCCESSFUL);</span>
+
+<span class="fc" id="L109">		logger.info(String.format(Messages.MSG_SEARCHING, &quot;Client&quot;));</span>
+<span class="fc" id="L110">		Client client = clientRepository.findById(transaction.getClient().getId())</span>
+<span class="pc" id="L111">				.orElseThrow(() -&gt; new NotFoundException(&quot;Client&quot;));</span>
+<span class="fc" id="L112">		logger.info(Messages.MSG_FOUND);</span>
+<span class="fc" id="L113">		logger.info(String.format(Messages.MSG_SEARCHING, &quot;Seller&quot;));</span>
+<span class="fc" id="L114">		Seller seller = sellerRepository.findById(transaction.getSeller().getId())</span>
+<span class="pc" id="L115">				.orElseThrow(() -&gt; new NotFoundException(&quot;Seller&quot;));</span>
+<span class="fc" id="L116">		logger.info(Messages.MSG_FOUND);</span>
+		
+<span class="fc" id="L118">		logger.info(String.format(Messages.MSG_SEARCHING, &quot;Product&quot;));</span>
+<span class="fc" id="L119">		List&lt;TransactionDetail&gt; detail = converter.convertList(transaction.getTransactionDetail(), TransactionDetail.class);</span>
+<span class="fc" id="L120">		List&lt;Long&gt; requestedProducts = detail.parallelStream().map(item -&gt; item.getProduct().getId()).collect(Collectors.toList());</span>
+<span class="fc" id="L121">		List&lt;Product&gt; existingProducts = productRepository.findAllById(requestedProducts);</span>
+<span class="pc bpc" id="L122" title="1 of 2 branches missed.">		if (requestedProducts.size() != existingProducts.size()) {</span>
+<span class="nc" id="L123">    		throw NotFoundException.unableToFindException(&quot;Product&quot;);</span>
+		}
+<span class="fc" id="L125">		logger.info(Messages.MSG_VALIDATION_SUCCESSFUL);</span>
+
+<span class="fc" id="L127">		Transaction newToPersist = new Transaction.Builder()</span>
+<span class="fc" id="L128">				.setClient(client)</span>
+<span class="fc" id="L129">				.setSeller(seller)</span>
+<span class="fc" id="L130">				.setDate(Calendar.getInstance().getTime())</span>
+<span class="fc" id="L131">				.setStatus(StatusEnum.PENDING)</span>
+<span class="fc" id="L132">				.setTransactionDetail(detail)</span>
+<span class="fc" id="L133">				.build();</span>
+
+<span class="fc" id="L135">		newToPersist.getTransactionDetail().stream().forEach(item -&gt; item.setTransaction(newToPersist));</span>
+<span class="fc" id="L136">		logger.info(String.format(Messages.MSG_PREPARING_PERSISTENCE, ENTITY));</span>
+<span class="fc" id="L137">		Transaction persisted = transactionRepository.saveAndFlush(converter.convert(newToPersist, Transaction.class));</span>
+<span class="fc" id="L138">		logger.info(String.format(Messages.MSG_SUCCESSFULLY_CREATED, ENTITY, persisted.getId()));</span>
+
+<span class="fc" id="L140">		return converter.convert(persisted, TransactionApi.class);</span>
+	}
+
+	/**
+	 * Removes an existing transaction by its id
+	 */
+	@Override
+	@Transactional
+	public void deleteById(long id) throws NotFoundException {
+    	try {
+<span class="fc" id="L150">			logger.info(String.format(Messages.MSG_PREPARING_DELETION, ENTITY));</span>
+<span class="fc" id="L151">			Transaction persisted = transactionRepository.findById(id).get();</span>
+<span class="fc" id="L152">	    	transactionRepository.delete(persisted);</span>
+<span class="fc" id="L153">	    	logger.info(String.format(Messages.MSG_SUCCESSFULLY_DELETED, ENTITY)); </span>
+<span class="nc" id="L154">		} catch (NoSuchElementException nse) {</span>
+<span class="nc" id="L155">    		throw NotFoundException.unableToFindException(&quot;Transaction&quot;);</span>
+<span class="fc" id="L156">		}</span>
+<span class="fc" id="L157">    }</span>
+
+	/**
+	 * Searches an existing transaction by its id and sets a new status
+	 * The provided status must be different from the current one, and the new status must be a valid one
+	 * @return The updated transaction
+	 */
+	@Override
+	@Transactional
+	public TransactionApi updateTransactionStatusById(long id, StatusEnum status) throws NotFoundException, BadRequestException {
+<span class="fc" id="L167">		logger.info(String.format(Messages.MSG_SEARCHING, ENTITY));</span>
+			
+<span class="fc" id="L169">		Transaction persisted = transactionRepository.findOneById(id);</span>
+<span class="pc bpc" id="L170" title="1 of 2 branches missed.">		if (Objects.isNull(persisted)) {</span>
+<span class="nc" id="L171">			throw NotFoundException.unableToFindException(ENTITY);</span>
+		}
+<span class="fc" id="L173">		logger.info(Messages.MSG_FOUND);</span>
+		
+<span class="fc" id="L175">		logger.info(Messages.MSG_VALIDATING_PROVIDED_DATA);</span>
+<span class="fc" id="L176">		validators.validateTransactionStatus(persisted, status);</span>
+<span class="fc" id="L177">		logger.info(Messages.MSG_VALIDATION_SUCCESSFUL);</span>
+
+<span class="fc" id="L179">		persisted.setStatus(status);</span>
+		
+<span class="fc" id="L181">		logger.info(String.format(Messages.MSG_PREPARING_UPDATE, ENTITY));</span>
+<span class="fc" id="L182">		Transaction updated = transactionRepository.save(converter.convert(persisted, Transaction.class));</span>
+<span class="fc" id="L183">		logger.info(String.format(Messages.MSG_SUCCESSFULLY_UPDATED, ENTITY, updated.getId()));</span>
+<span class="fc" id="L184">		return converter.convert(updated, TransactionApi.class);</span>
+	}
+
+	/**
+	 * Multiplies every product on a transaction detail by the declared quantity
+	 * @return The total amount of the transaction
+	 */
+	@Override
+	@Transactional
+	public Double totalAmountByTransactionId(long id) throws NotFoundException {
+		try {
+<span class="fc" id="L195">			logger.info(Messages.MSG_SEARCHING_REQUESTED_DATA);</span>
+<span class="fc" id="L196">			Transaction result = transactionRepository.findById(id).get();</span>
+
+<span class="fc" id="L198">			Double total = result.getTransactionDetail().stream()</span>
+<span class="fc" id="L199">					.mapToDouble(detalle -&gt; detalle.getQuantity() * detalle.getProduct().getPrice())</span>
+<span class="fc" id="L200">					.sum(); </span>
+<span class="fc" id="L201">			logger.info(Messages.MSG_SUCCESS);</span>
+
+<span class="fc" id="L203">			return total;</span>
+<span class="nc" id="L204">		} catch (IllegalArgumentException | NoSuchElementException iae) {</span>
+<span class="nc" id="L205">			throw NotFoundException.unableToFindException(ENTITY);</span>
+		}
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>
