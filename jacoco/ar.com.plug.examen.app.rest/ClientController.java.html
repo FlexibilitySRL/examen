@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ClientController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">examen</a> &gt; <a href="index.source.html" class="el_package">ar.com.plug.examen.app.rest</a> &gt; <span class="el_source">ClientController.java</span></div><h1>ClientController.java</h1><pre class="source lang-java linenums">package ar.com.plug.examen.app.rest;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import ar.com.plug.examen.app.api.ClientApi;
+import ar.com.plug.examen.app.rest.paths.Paths;
+import ar.com.plug.examen.domain.exception.BadRequestException;
+import ar.com.plug.examen.domain.exception.NotFoundException;
+import ar.com.plug.examen.domain.service.ClientService;
+
+@RestController
+@RequestMapping(path = Paths.CLIENT)
+<span class="fc" id="L26">public class ClientController {</span>
+
+	@Autowired
+    private ClientService clientService;
+
+    @GetMapping()
+    public ResponseEntity&lt;List&lt;ClientApi&gt;&gt; listClients() {
+<span class="fc" id="L33">        return new ResponseEntity&lt;&gt;(clientService.listAll(), HttpStatus.OK);</span>
+    }
+
+    @GetMapping(Paths.FIND_BY_ID)
+    public ResponseEntity&lt;ClientApi&gt; findById(@PathVariable long id) throws NotFoundException {
+<span class="fc" id="L38">    	return new ResponseEntity&lt;&gt;(clientService.findById(id), HttpStatus.OK);</span>
+    }
+
+    @GetMapping(Paths.FIND_BY_NAME)
+    public ResponseEntity&lt;List&lt;ClientApi&gt;&gt; findByName(@PathVariable String name) {
+<span class="fc" id="L43">    	return new ResponseEntity&lt;&gt;(clientService.findByName(name), HttpStatus.OK);</span>
+    }
+    
+    @PostMapping()
+    public ResponseEntity&lt;ClientApi&gt; save(@RequestBody ClientApi client) throws BadRequestException {
+<span class="fc" id="L48">    	return new ResponseEntity&lt;&gt;(clientService.save(client), HttpStatus.CREATED);</span>
+    }
+
+	@DeleteMapping(&quot;/{id}&quot;)
+    public ResponseEntity deleteById(@PathVariable long id) throws NotFoundException {
+<span class="fc" id="L53">        clientService.deleteById(id);</span>
+<span class="fc" id="L54">        return new ResponseEntity&lt;&gt;(HttpStatus.NO_CONTENT);</span>
+    }
+
+    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity&lt;ClientApi&gt; update(@RequestBody ClientApi clientApi) throws NotFoundException, BadRequestException {
+<span class="fc" id="L59">    	return new ResponseEntity&lt;&gt;(clientService.update(clientApi), HttpStatus.ACCEPTED);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

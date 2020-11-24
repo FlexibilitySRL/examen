@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TransactionDetailApi.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">examen</a> &gt; <a href="index.source.html" class="el_package">ar.com.plug.examen.app.api</a> &gt; <span class="el_source">TransactionDetailApi.java</span></div><h1>TransactionDetailApi.java</h1><pre class="source lang-java linenums">package ar.com.plug.examen.app.api;
+
+public class TransactionDetailApi {
+
+	private Long id;
+
+	private ProductApi product;
+
+	private int quantity;
+
+<span class="fc" id="L11">	public TransactionDetailApi() { }</span>
+	
+<span class="fc" id="L13">	public TransactionDetailApi(Long id, ProductApi product, int quantity) {</span>
+<span class="fc" id="L14">		this.id = id;</span>
+<span class="fc" id="L15">		this.product = product;</span>
+<span class="fc" id="L16">		this.quantity = quantity;</span>
+<span class="fc" id="L17">	}</span>
+
+	public Long getId() {
+<span class="fc" id="L20">		return id;</span>
+	}
+
+	public void setId(Long id) {
+<span class="fc" id="L24">		this.id = id;</span>
+<span class="fc" id="L25">	}</span>
+
+	public ProductApi getProduct() {
+<span class="fc" id="L28">		return product;</span>
+	}
+
+	public void setProduct(ProductApi product) {
+<span class="fc" id="L32">		this.product = product;</span>
+<span class="fc" id="L33">	}</span>
+
+	public int getQuantity() {
+<span class="fc" id="L36">		return quantity;</span>
+	}
+
+	public void setQuantity(int quantity) {
+<span class="fc" id="L40">		this.quantity = quantity;</span>
+<span class="fc" id="L41">	}</span>
+	
+	@Override
+	public String toString() {
+<span class="nc" id="L45">		return &quot;TransactionDetail [id=&quot; + id + &quot;, product=&quot; + product.toString() + &quot;, quantity=&quot; + quantity +&quot;]&quot;;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

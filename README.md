@@ -1,38 +1,69 @@
-# REST Test
+# REST Solucion
 
-# Bienvenidos!
+## Descripción del desarrollo
+En el desarrollo se aplicaron soluciones que tal vez quepan destacar:
+- un archivo de constantes, con parametrización de strings, para mensajes
+- un servicio "util" para centralizar validaciones (permite validar todas las entidades)
+- un custom converter para mapear entidades a dto y viceversa (o listas de estos)
+- distintos tipos de parámetros a los Rest Api (PathVariable, RequestBody, RequestParam)
+- creación de custom exceptions
+- specifications de JPA en un servicio
+- querys jpql en algunos repositorios
+- patrón builder
 
-La prueba consiste en agregar nueva funcionalidad a la API REST que corre en este repositorio. Para eso vamos a guiarnos por los siguientes puntos:
+El uso "no óptimo" de alguna de estas soluciones estuvo contemplado y fué intencional. Se aplicaron solamente a fines de proveer distintos tipos de soluciones a un mismo problema.
 
-1) Hacer un fork del repositorio, crear un nuevo branch y realizar las tareas enunciadas a continuación.
 
-2) Proveer servicios para la administración de la compra de productos. Los mismos deberán incluir:
-- ABM de productos.
-- ABM de clientes.
-- Consulta de transacciones de compra.
-- Aprobación de compras.
- 
-3) Los servicios deben contar con logs que indiquen si el servicio respondió y proceso correctamente o no.
-  
-4) Documentar brevemente los servicios implementados.
- 
-5) Todos los servicios deben contar, al menos, con test unitarios.
- 
-6) Enviar un Pull Request con todos los cambios realizados. 
+##### El modelo consiste en la siguiente lógica de negocio:
+- Una transacción consiste en una lista de productos (cada uno con su cantidad vendida), solicitada por un cliente y realizada por un vendedor
+- El cliente, vendedor y productos vinculados a la transacción deben existir con antelación. Se proveen servicios para el alta, baja y modificación de cada uno.
+- Una transacción se crea inicialmente con estado PENDING. Esta puede pasar a los estados APPROVED o REJECTED.
+- Se provee un servicio para calcular el monto total de la transacción
 
-Para correr la aplicación se puede utilizar maven: 
+#### Documentación de servicios
+Se incluye el @javadoc accesible desde [aquí](./documentation/index.html).
+En el mismo se presenta una breve descripción de los servicios implementados.
+##### Responses
+Se describen los responses esperados por cada tipo de servicio:
+- GET ---> HttpStatus.OK
+- POST ---> HttpStatus.CREATED
+- PUT ---> HttpStatus.ACCEPTED
+- DELETE ---> HttpStatus.NO_CONTENT
 
-mvn spring-boot:run -Drun.jvmArguments="-Dspring.profiles.active=local"
 
-Pueden probar el servicio echo con un curl de la siguiente forma:
+#### Pruebas unitarias (base dato en memoria) y cobertura
+Para las pruebas unitarias se utilizó JUnit, y las mismas se ejecutan contra una base en memoria H2.
+El Test Coverage se realizó con Jacoco y el informe detallado del mismo se encuentra es accesible desde [aquí](./jacoco/index.html).
 
-`curl -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' -d '{"message":"mensaje de prueba"}' localhost:8080/payments/echo`
+#### Servicios provistos
+##### Cliente
+    - listClients: Lista la totalidad de los clientes
+    - findById: Retorna un cliente específico a partir de su código de cliente (id)
+    - findByName: Retorna una lista de clientes cuyos nombres cumplan con el filtro provisto. Case insensitive.
+    - save: Persiste un nuevo cliente
+    - deleteById: Elimina un cliente a partir de su código de cliente (id)
+    - update: Actualiza un cliente a partir de su código de cliente (id)
 
-Bonus
+##### Vendedor
+    - listSellers: Lista la totalidad de los vendedores
+    - findById: Retorna un vendedor específico a partir de su código de vendedor (id)
+    - findByName: Retorna una lista de vendedores cuyos nombres cumplan con el filtro provisto. Case insensitive.
+    - save: Persiste un nuevo vendedor
+    - deleteById: Elimina un vendedor a partir de su código de vendedor (id)
+    - update: Actualiza un vendedor a partir de su código de vendedor (id)
 
-1) ABM de vendedores.
-2) Agregar test de integración.
-3) Calcular la cobertura de los tests.
-4) Correr pruebas con base de datos en memoria.
-5) Crear Docker Image.
-6) Hostear la app en un cloud computing libre y enviar la URL para consultar.
+##### Producto
+    - listProducts: Lista la totalidad de los productos disponibles
+    - findById: Retorna un producto específico a partir de su código de producto (id)
+    - findByName: Retorna una lista de productos cuyos nombres cumplan con el filtro provisto. Case insensitive.
+    - save: Persiste un nuevo producto
+    - deleteById: Elimina un producto a partir de su código de producto (id)
+    - update: Actualiza un producto a partir de su código de producto (id)
+
+##### Transacción
+    - listTransactions: Lista la totalidad de las transacciones realizadas
+    - findByFilters: Retorna una lista de transacciones cuyos atributos cumplan con el filtro provisto.
+    - save: Persiste una nueva transacción
+    - deleteById: Elimina una transacción a partir de su código de transacción (id)
+    - updateTransactionStatusById: Actualiza el estado de la transacción. Valores aceptados (PENDING, APPROVED, REJECTED)
+    - totalAmountByTransactionId: Calcula el monto total de la transacción a partir de su código de transacción (id)
