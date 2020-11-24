@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
@@ -20,6 +21,8 @@ import ar.com.plug.examen.app.api.ProductApi;
 import ar.com.plug.examen.app.rest.ProductController;
 import ar.com.plug.examen.domain.exception.BadRequestException;
 import ar.com.plug.examen.domain.exception.NotFoundException;
+import ar.com.plug.examen.domain.model.Product;
+import ar.com.plug.examen.domain.model.TransactionDetail;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -28,6 +31,30 @@ public class ProductControllerTest {
 
 	@Autowired
 	private ProductController productController;
+
+	@Test
+	public void testEntity() {
+		Product entityTest = new Product();
+		entityTest.setId(0L);
+		entityTest.setName("A name");
+		entityTest.setPrice(0D);
+		entityTest.setTransactionDetail(new ArrayList<TransactionDetail>());
+		assertNotNull(entityTest.getId());
+		assertNotNull(entityTest.getName());
+		assertNotNull(entityTest.getTransactionDetail());
+		assertNotNull(entityTest.toString());
+	}
+
+	@Test
+	public void testApi() {
+		ProductApi apiTest = new ProductApi();
+		apiTest.setId(0L);
+		apiTest.setName("A name");
+		apiTest.setPrice(0D);
+		assertNotNull(apiTest.getId());
+		assertNotNull(apiTest.getName());
+		assertNotNull(apiTest.toString());
+	}
 
 	@Test
 	public void testListAll() {

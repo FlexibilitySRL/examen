@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -30,6 +31,10 @@ import ar.com.plug.examen.app.rest.TransactionController;
 import ar.com.plug.examen.domain.enums.StatusEnum;
 import ar.com.plug.examen.domain.exception.BadRequestException;
 import ar.com.plug.examen.domain.exception.NotFoundException;
+import ar.com.plug.examen.domain.model.Client;
+import ar.com.plug.examen.domain.model.Seller;
+import ar.com.plug.examen.domain.model.Transaction;
+import ar.com.plug.examen.domain.model.TransactionDetail;
 import ar.com.plug.examen.domain.repository.TransactionRepository;
 import ar.com.plug.examen.domain.service.impl.TransactionServiceImpl;
 
@@ -72,6 +77,42 @@ public class TransactionControllerTest {
 	}
 
 	@Test
+	public void testEntity() {
+		Transaction entityTest = new Transaction();
+		entityTest.setId(0L);
+		entityTest.setClient(new Client());
+		entityTest.setSeller(new Seller());
+		entityTest.setDate(Calendar.getInstance().getTime());
+		entityTest.setStatus(StatusEnum.APPROVED);
+		entityTest.setTransactionDetail(new ArrayList<TransactionDetail>());
+		assertNotNull(entityTest.getId());
+		assertNotNull(entityTest.getClient());
+		assertNotNull(entityTest.getSeller());
+		assertNotNull(entityTest.getDate());
+		assertNotNull(entityTest.getStatus());
+		assertNotNull(entityTest.getTransactionDetail());
+		assertNotNull(entityTest.toString());
+	}
+
+	@Test
+	public void testApi() {
+		TransactionApi apiTest = new TransactionApi();
+		apiTest.setId(0L);
+		apiTest.setClient(new ClientApi());
+		apiTest.setSeller(new SellerApi());
+		apiTest.setDate(Calendar.getInstance().getTime());
+		apiTest.setStatus(StatusEnum.APPROVED);
+		apiTest.setTransactionDetail(new ArrayList<TransactionDetailApi>());
+		assertNotNull(apiTest.getId());
+		assertNotNull(apiTest.getClient());
+		assertNotNull(apiTest.getSeller());
+		assertNotNull(apiTest.getDate());
+		assertNotNull(apiTest.getStatus());
+		assertNotNull(apiTest.getTransactionDetail());
+		assertNotNull(apiTest.toString());
+	}
+
+	@Test
 	public void testListAll() {
 		List<TransactionApi> all = transactionController.listTransactions().getBody();
 		assertFalse(all.isEmpty());
@@ -99,28 +140,6 @@ public class TransactionControllerTest {
 		TransactionApi saved = transactionController.save(transactionApi).getBody();
 		assertNotNull(saved);
 		assertNotNull(saved.getId());
-	}
-
-	@Test(expected = NotFoundException.class)
-	@Transactional
-	public void testSave_FailClient() throws BadRequestException, NotFoundException {
-		clientApi = new ClientApi(0L);
-		sellerApi = new SellerApi(1L);
-		productApi = new ProductApi(1L, "Product A", 0.75D);
-		transactionDetailApi = new TransactionDetailApi(null, productApi, 4);
-
-		transactionApi = new TransactionApi.Builder()
-				.setClient(clientApi).setSeller(sellerApi)
-				.setDate(Calendar.getInstance().getTime())
-				.setStatus(StatusEnum.PENDING)
-				.setTransactionDetail(transactionDetailApi).build();
-		transactionController.save(transactionApi).getBody();
-	}
-
-	@Test(expected = NotFoundException.class)
-	@Transactional
-	public void testSave_FailSeller() throws BadRequestException, NotFoundException {
-		transactionController.save(transactionApi).getBody();
 	}
 
 	@Test

@@ -50,7 +50,6 @@ public class ClientServiceImpl implements ClientService {
 	/**
 	 * Searches a client by its id
 	 * @return A specific client
-	 * @throws NotFoundException 
 	 */
 	@Override
 	@Transactional
