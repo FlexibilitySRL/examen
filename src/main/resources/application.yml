@@ -7,10 +7,10 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
-  datasource:
-      url: jdbc:mysql://127.0.0.1:3306/payments?zeroDateTimeBehavior=convertToNull
-      username: root
-      password: password
+#  datasource:
+#      url: jdbc:mysql://127.0.0.1:3306/payments?zeroDateTimeBehavior=convertToNull
+#      username: root
+#      password: password
 
 server:
   port: 8080
