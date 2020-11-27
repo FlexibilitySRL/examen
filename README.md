@@ -36,3 +36,23 @@ Bonus
 4) Correr pruebas con base de datos en memoria.
 5) Crear Docker Image.
 6) Hostear la app en un cloud computing libre y enviar la URL para consultar.
+
+------------------------------------------------------------------------------------------------------
+
+Resolución
+
+1) Se realiza un fork del proyecto y se crea el branch prueba
+2) Se crea ABM de productos,clientes,Consulta de transacciones y Aprobación de compras.
+3) Se loguean las respuestas en los servicios.
+4) Se realizan test de la capa de servicios.
+5) Se documentan brevemente los servicios ( Se genera JAVAdoc).
+6) Se envia pull request.
+
+
+Bonus
+
+1) Se crea Abm de vendedores (Seller)
+5) Se crea dockerfile y entorno completo con docker-compose.
+6) Se hostea en heroku usando base de datos POSTGRESQL y se incluye swagger de la api expuesta.
+
+url: https://flex-examen.herokuapp.com/swagger-ui.html
