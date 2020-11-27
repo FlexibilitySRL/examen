@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<configuration>
+
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <!-- encoders are assigned the type
+         ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
+    <encoder>
+      <pattern>%d{dd/MM/yyyy HH:mm:ss} %p %C: %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <root level="info">
+    <appender-ref ref="STDOUT" />
+  </root>
+
+ 
+   <logger name="ar.com.plug.examen" level="debug"/>
+   <logger name="org.apache.ibatis" level="info" />
+   <logger name="javax.activation" level="info" />
+   <logger name="org.springframework" level="info" />
+       
+
+</configuration>
