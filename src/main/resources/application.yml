@@ -2,18 +2,25 @@ spring:
   jackson:
     serialization:
       write-dates-as-timestamps: false
+  datasource:
+    url: 'jdbc:h2:mem:TEST'
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: null
   jpa:
-    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
-    hibernate:
-      ddl-auto: update
     show-sql: true
-#  datasource:
-#      url: jdbc:mysql://127.0.0.1:3306/payments?zeroDateTimeBehavior=convertToNull
-#      username: root
-#      password: password
-
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create-drop
+      naming:
+        strategy: org.hibernate.cfg.ImprovedNamingStrategy
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
 server:
   port: 8080
   servlet:
-    context-path: '/payments'
----
+    context-path: /payments
