@@ -8,6 +8,7 @@ package ar.com.plug.examen.domain.service.impl;
 import ar.com.plug.examen.domain.model.Client;
 import ar.com.plug.examen.domain.repositories.ClientRepository;
 import ar.com.plug.examen.domain.service.ClientService;
+import java.util.HashSet;
 import java.util.Set;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +27,9 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public Set<Client> findAll() {
-        return (Set<Client>) clientRepository.findAll();
+        Set<Client> clients = new HashSet<>();
+        clientRepository.findAll().iterator().forEachRemaining(clients::add);
+        return clients;
     }
 
     @Override
@@ -41,7 +44,13 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public Client update(Client object) {
-        return save(object);
+        Client client = findById(object.getId());
+        
+        if(client == null) {
+            throw new RuntimeException("client does not exist");
+        } else {
+            return save(object);
+        }
     }
 
     @Override

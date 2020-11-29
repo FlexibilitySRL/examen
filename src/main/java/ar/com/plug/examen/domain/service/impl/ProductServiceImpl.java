@@ -8,6 +8,7 @@ package ar.com.plug.examen.domain.service.impl;
 import ar.com.plug.examen.domain.model.Product;
 import ar.com.plug.examen.domain.repositories.ProductRepository;
 import ar.com.plug.examen.domain.service.ProductService;
+import java.util.HashSet;
 import java.util.Set;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +27,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Set<Product> findAll() {
-        return (Set<Product>) productRepository.findAll();
+        Set<Product> products = new HashSet<>();
+        productRepository.findAll().iterator().forEachRemaining(products::add);
+        return products;
     }
 
     @Override

@@ -8,12 +8,15 @@ package ar.com.plug.examen.domain.service.impl;
 import ar.com.plug.examen.domain.model.Transaction;
 import ar.com.plug.examen.domain.repositories.TransactionRepository;
 import ar.com.plug.examen.domain.service.TransactionService;
+import java.util.HashSet;
 import java.util.Set;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author msulbara
  */
+@Service
 public class TransactionServiceImpl implements TransactionService {
 
     private final TransactionRepository transactionRepository;
@@ -24,7 +27,9 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public Set<Transaction> findAll() {
-        return (Set<Transaction>) transactionRepository.findAll();
+        Set<Transaction> transactions = new HashSet<>();
+        transactionRepository.findAll().iterator().forEachRemaining(transactions::add);
+        return transactions;
     }
 
     @Override
