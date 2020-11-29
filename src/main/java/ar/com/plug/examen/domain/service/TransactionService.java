@@ -12,5 +12,7 @@ import ar.com.plug.examen.domain.model.Transaction;
  * @author msulbara
  */
 public interface TransactionService extends AbstractService<Transaction, Long> {
+    
+    boolean approveTransaction(Transaction transaction); 
 
 }

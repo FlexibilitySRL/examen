@@ -10,7 +10,7 @@ package ar.com.plug.examen.domain.model;
  * @author msulbara
  */
 public enum TransactionStatus {
-	PENDIGN, 
+	PENDING, 
 	APPROVED,
 	REJECTED,
 }

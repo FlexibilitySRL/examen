@@ -5,7 +5,9 @@
  */
 package ar.com.plug.examen.domain.service.impl;
 
+import ar.com.plug.examen.domain.model.Product_;
 import ar.com.plug.examen.domain.model.Transaction;
+import ar.com.plug.examen.domain.model.TransactionStatus;
 import ar.com.plug.examen.domain.repositories.TransactionRepository;
 import ar.com.plug.examen.domain.service.TransactionService;
 import java.util.HashSet;
@@ -57,4 +59,19 @@ public class TransactionServiceImpl implements TransactionService {
         transactionRepository.delete(object);
     }
 
+    @Override
+    public boolean approveTransaction(Transaction transaction) {
+        if(transaction == null || findById(transaction.getId()) == null) {
+            throw new RuntimeException("transaction does not exits!");
+        } else {
+            // add approval logic here ....
+            
+                // retrun false if approval could not be done
+            
+            // if everything is ok, going to approve
+            transaction.setStatus(TransactionStatus.APPROVED);
+            update(transaction);
+            return true;
+        }
+    }
 }

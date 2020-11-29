@@ -6,11 +6,8 @@
 package ar.com.plug.examen.domain.model;
 
 import java.math.BigDecimal;
-import java.util.HashSet;
-import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 /**
@@ -33,8 +30,8 @@ public class Product extends BaseEntity {
     @Column(name = "stock")
     private Integer stock;
 
-    @ManyToMany(mappedBy = "products")
-    private Set<Transaction> trasactions = new HashSet<>();
+//    @ManyToMany(mappedBy = "products")
+//    private Set<Transaction> trasactions = new HashSet<>();
 
     public Product() {
     }
@@ -71,12 +68,12 @@ public class Product extends BaseEntity {
         this.stock = stock;
     }
 
-    public Set<Transaction> getTrasactions() {
-        return trasactions;
-    }
-
-    public void setTrasactions(Set<Transaction> trasactions) {
-        this.trasactions = trasactions;
-    }
+//    public Set<Transaction> getTrasactions() {
+//        return trasactions;
+//    }
+//
+//    public void setTrasactions(Set<Transaction> trasactions) {
+//        this.trasactions = trasactions;
+//    }
 
 }

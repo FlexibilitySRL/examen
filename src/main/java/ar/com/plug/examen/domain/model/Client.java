@@ -5,6 +5,7 @@
  */
 package ar.com.plug.examen.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
@@ -34,6 +35,7 @@ public class Client extends BaseEntity {
     @Column(name = "birth_date")
     private LocalDate birthDate;
 
+    @JsonManagedReference
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "client")
     private Set<Transaction> transactions = new HashSet<>();
 
