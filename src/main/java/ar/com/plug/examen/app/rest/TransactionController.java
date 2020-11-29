@@ -67,6 +67,8 @@ public class TransactionController {
             return new ResponseEntity<>(transaction, HttpStatus.NOT_FOUND);
         }
     }
+    
+    // externalize paths later...
 
     @PostMapping(
             path = "/transaction/create",
