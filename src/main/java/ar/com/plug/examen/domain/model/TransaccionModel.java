@@ -15,11 +15,11 @@ public class TransaccionModel {
     private ClienteModel cliente;
     @ManyToOne
     private VendedorModel vendedor;
-    private Integer total;
+    private Double total;
     private Integer estado;
 
     //constructor
-    public TransaccionModel(Long id, String serie, Integer numero, Integer cliente, Integer vendedor, Integer total, Integer estado) {
+    public TransaccionModel(Long id, String serie, Integer numero, Integer cliente, Integer vendedor, Double total, Integer estado) {
         this.id = id;
         this.serie = serie;
         this.numero = numero;
@@ -70,11 +70,11 @@ public class TransaccionModel {
         this.vendedor = vendedor;
     }
     
-    public Integer getTotal(){
-        return vendedor;
+    public Double getTotal(){
+        return total;
     }
 
-    public void setTotal(Integer total){
+    public void setTotal(Double total){
         this.total = total;
     }
 
