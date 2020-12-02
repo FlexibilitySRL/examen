@@ -15,15 +15,17 @@ public class TransaccionModel {
     private ClienteModel cliente;
     @ManyToOne
     private VendedorModel vendedor;
+    private Integer total;
     private Integer estado;
 
     //constructor
-    public TransaccionModel(Long id, String serie, Integer numero, Integer cliente, Integer vendedor, Integer estado) {
+    public TransaccionModel(Long id, String serie, Integer numero, Integer cliente, Integer vendedor, Integer total, Integer estado) {
         this.id = id;
         this.serie = serie;
         this.numero = numero;
         this.cliente = cliente;
         this.vendedor = vendedor;
+        this.total = total;
         this.estado = estado;
     }
     
@@ -52,7 +54,7 @@ public class TransaccionModel {
         this.numero = numero;
     }
 
-    public String getCliente(){
+    public Integer getCliente(){
         return cliente;
     }
 
@@ -60,7 +62,7 @@ public class TransaccionModel {
         this.cliente = cliente;
     }
 
-    public String getVendedor(){
+    public Integer getVendedor(){
         return vendedor;
     }
 
@@ -68,4 +70,19 @@ public class TransaccionModel {
         this.vendedor = vendedor;
     }
     
+    public Integer getTotal(){
+        return vendedor;
+    }
+
+    public void setTotal(Integer total){
+        this.total = total;
+    }
+
+    public Integer getEstado(){
+        return estado;
+    }
+
+    public void setEstado(Integer estado){
+        this.estado = estado;
+    }
 }
