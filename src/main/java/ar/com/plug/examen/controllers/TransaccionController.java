@@ -22,6 +22,11 @@ public class TransaccionController {
         return this.transaccionService.guardarTransaccion(transaccion);
     }
 
+    @PatchMapping(path = "/{id}")
+    public TransaccionModel actualizarEstadoTransaccion(@RequestBody TransaccionModel transaccion) {
+        return this.transaccionService.actualizarEstadoTransaccion(transaccion);
+    }
+
     @GetMapping( path = "/{id}")
     public Optional<TransaccionModel> obtenerTransaccionPorId(@PathVariable("id") Long id) {
         return this.transaccionService.obtenerPorId(id);

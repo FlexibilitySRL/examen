@@ -20,6 +20,10 @@ public class TransaccionService {
         return transaccionRepository.save(transaccion);
     }
 
+    public TransaccionModel actualizarEstadoTransaccion(TransaccionModel transaccion) {
+        return transaccionRepository.save(transaccion);
+    }
+
     public Optional<TransaccionModel> obtenerPorId(Long id) {
         return transaccionRepository.findById(id);
     }
