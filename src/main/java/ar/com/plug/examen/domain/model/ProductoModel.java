@@ -2,6 +2,7 @@ package ar.com.plug.examen.domain.model;
 
 import javax.persistence.*;
 
+
 @Entity
 @Table(name = "productos")
 
@@ -9,14 +10,19 @@ public class ProductoModel {
 
     //atributos
     private Long id;
+
     @ManyToOne
-    private ClienteModel categoria;
+	@JoinColumn (name="id_categoria")
+	private CategoriaModel categoria;
+
     private String nombre;
+
     private Integer stock;
+
     private Double precio;
 
     //constructor
-    public ProductoModel(Long id, Integer categoria, String nombre, Integer stock, Double precio) {
+    public ProductoModel(Long id, CategoriaModel categoria, String nombre, Integer stock, Double precio) {
         this.id = id;
         this.categoria = categoria;
         this.nombre = nombre;
@@ -33,11 +39,11 @@ public class ProductoModel {
         this.id = id;
     }
 
-    public Integer getCategoria() {
+    public CategoriaModel getCategoria() {
         return categoria;
     }
 
-    public void setCategoria(Integer categoria) {
+    public void setCategoria(CategoriaModel categoria) {
         this.categoria = categoria;
     }
 

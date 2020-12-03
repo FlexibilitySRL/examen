@@ -1,5 +1,6 @@
 package ar.com.plug.examen.domain.model;
-
+import java.util.Calendar;
+import java.util.List;
 import javax.persistence.*;
 
 @Entity
@@ -9,22 +10,39 @@ public class TransaccionModel {
 
     //atributos
     private Long id;
+
     private String serie;
+
     private Integer numero;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "REGIST_DATE", nullable = false)
+    private Calendar fecha;
+
     @ManyToOne
-    private ClienteModel cliente;
+	@JoinColumn (name="id_cliente")
+	private ClienteModel cliente;
+
     @ManyToOne
-    private VendedorModel vendedor;
+	@JoinColumn (name="id_vendedor")
+	private VendedorModel vendedor;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "transaccion")
+    private List<ProductoModel> productos;
+
     private Double total;
+
     private Integer estado;
 
     //constructor
-    public TransaccionModel(Long id, String serie, Integer numero, Integer cliente, Integer vendedor, Double total, Integer estado) {
+    public TransaccionModel(Long id, String serie, Integer numero, Calendar fecha, ClienteModel cliente, VendedorModel vendedor, List<ProductoModel> productos, Double total, Integer estado) {
         this.id = id;
         this.serie = serie;
         this.numero = numero;
+        this.fecha = fecha;
         this.cliente = cliente;
         this.vendedor = vendedor;
+        this.productos = productos;
         this.total = total;
         this.estado = estado;
     }
@@ -54,20 +72,28 @@ public class TransaccionModel {
         this.numero = numero;
     }
 
-    public Integer getCliente(){
+    public ClienteModel getCliente(){
         return cliente;
     }
 
-    public void setCliente(Integer cliente){
+    public void setCliente(ClienteModel cliente){
         this.cliente = cliente;
     }
 
-    public Integer getVendedor(){
+    public VendedorModel getVendedor(){
         return vendedor;
     }
 
-    public void setVendedor(Integer vendedor){
+    public void setVendedor(VendedorModel vendedor){
         this.vendedor = vendedor;
+    }
+
+    public List<ProductoModel> getProductos(){
+        return productos;
+    }
+
+    public void setProductos(List<ProductoModel> productos){
+        this.productos = productos;
     }
     
     public Double getTotal(){
