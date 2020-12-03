@@ -31,9 +31,9 @@ public class CategoriaController {
     public String eliminarPorId(@PathVariable("id") Long id){
         boolean ok = this.categoriaService.eliminarCategoria(id);
         if (ok){
-            return "Se eliminó el cliente con id " + id;
+            return "Se eliminó la categoria con id " + id;
         }else{
-            return "No pudo eliminar el cliente con id" + id;
+            return "No se pudo eliminar la categoria con id" + id;
         }
     }
 }

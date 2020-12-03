@@ -18,8 +18,8 @@ public class ProductoController {
     }
 
     @PostMapping()
-    public ProductoModel guardarProducto(@RequestBody ProductoModel cliente) {
-        return this.productoService.guardarProductos(cliente);
+    public ProductoModel guardarProducto(@RequestBody ProductoModel producto) {
+        return this.productoService.guardarProducto(producto);
     }
 
     @GetMapping( path = "/{id}")
@@ -29,11 +29,11 @@ public class ProductoController {
 
     @DeleteMapping( path = "/{id}")
     public String eliminarPorId(@PathVariable("id") Long id){
-        boolean ok = this.productoService.eliminarProductos(id);
+        boolean ok = this.productoService.eliminarProducto(id);
         if (ok){
-            return "Se eliminó el cliente con id " + id;
+            return "Se eliminó el producto con id " + id;
         }else{
-            return "No pudo eliminar el cliente con id" + id;
+            return "No pudo eliminar el producto con id" + id;
         }
     }
 }

@@ -16,15 +16,15 @@ public class ProductoService {
         return (ArrayList<ProductoModel>) productoRepository.findAll();
     }
 
-    public ProductoModel guardarProductos(ProductoModel productos) {
-        return productoRepository.save(productos);
+    public ProductoModel guardarProducto(ProductoModel producto) {
+        return productoRepository.save(producto);
     }
 
     public Optional<ProductoModel> obtenerPorId(Long id) {
         return productoRepository.findById(id);
     }
 
-    public boolean eliminarProductos(Long id) {
+    public boolean eliminarProducto(Long id) {
     try {
         productoRepository.deleteById(id);
         return true;

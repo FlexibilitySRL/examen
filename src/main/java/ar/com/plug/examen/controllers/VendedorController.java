@@ -31,9 +31,9 @@ public class VendedorController {
     public String eliminarPorId(@PathVariable("id") Long id){
         boolean ok = this.vendedorService.eliminarVendedor(id);
         if (ok){
-            return "Se eliminó el cliente con id " + id;
+            return "Se eliminó el vendedor con id " + id;
         }else{
-            return "No pudo eliminar el cliente con id" + id;
+            return "No pudo eliminar el vendedor con id" + id;
         }
     }
 }
