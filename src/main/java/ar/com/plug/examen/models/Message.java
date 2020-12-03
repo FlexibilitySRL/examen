@@ -1,4 +1,4 @@
-package ar.com.plug.examen.model;
+package ar.com.plug.examen.models;
 
 public class Message {
 
