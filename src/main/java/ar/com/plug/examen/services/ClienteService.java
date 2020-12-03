@@ -12,19 +12,19 @@ public class ClienteService {
     @Autowired
     ClienteRepository clienteRepository;
 
-    public ArrayList<ClienteModel> obtenerUsuario() {
+    public ArrayList<ClienteModel> obtenerClientes() {
         return (ArrayList<ClienteModel>) clienteRepository.findAll();
     }
 
-    public ClienteModel guardarUsuario(ClienteModel usuario) {
-        return clienteRepository.save(usuario);
+    public ClienteModel guardarCliente(ClienteModel cliente) {
+        return clienteRepository.save(cliente);
     }
 
     public Optional<ClienteModel> obtenerPorId(Long id) {
         return clienteRepository.findById(id);
     }
 
-    public boolean eliminarUsuario(Long id) {
+    public boolean eliminarCliente(Long id) {
     try {
         clienteRepository.deleteById(id);
         return true;
