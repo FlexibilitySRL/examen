@@ -1,4 +1,4 @@
-package ar.com.plug.examen.domain.model;
+package ar.com.plug.examen.model;
 import java.util.Calendar;
 import java.util.List;
 import javax.persistence.*;
