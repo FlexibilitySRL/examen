@@ -40,7 +40,6 @@
         <commons-codec.version>1.14</commons-codec.version>
         <commons-io.version>2.7</commons-io.version>
         <guava.version>29.0-jre</guava.version>
-        <modelmapper.version>2.3.9</modelmapper.version>
     </properties>
 
     <dependencies>
@@ -66,33 +65,10 @@
             <scope>runtime</scope>
         </dependency>
         <dependency>
-		    <groupId>org.modelmapper</groupId>
-		    <artifactId>modelmapper</artifactId>
-		     <version>${modelmapper.version}</version>
-		</dependency>
-        <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-jpamodelgen</artifactId>
             <optional>true</optional>
         </dependency>
-        <dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-		        <groupId>io.springfox</groupId>
-		        <artifactId>springfox-swagger2</artifactId>
-		        <version>2.9.2</version>
-		</dependency>
-		<dependency>
-		        <groupId>io.springfox</groupId>
-		        <artifactId>springfox-swagger-ui</artifactId>
-		        <version>2.9.2</version>
-		</dependency>
-				
-		
-        
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
@@ -112,24 +88,6 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
-		    <groupId>org.assertj</groupId>
-		    <artifactId>assertj-core</artifactId>
-		    <version>3.16.1</version>
-		    <scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.powermock</groupId>
-			<artifactId>powermock-module-junit4</artifactId>
-			<version>2.0.9</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.powermock</groupId>
-			<artifactId>powermock-api-mockito2</artifactId>
-			<version>2.0.9</version>
-			<scope>test</scope>
-		</dependency>
     </dependencies>
 
     <build>
