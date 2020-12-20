@@ -1,3 +1,9 @@
+#eclipse
+.factorypath
+.project
+.settings/
+
+
 #deploy
 target
 
