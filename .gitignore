@@ -2,6 +2,9 @@
 .factorypath
 .project
 .settings/
+.classpath
+bin/
+
 
 
 #deploy
