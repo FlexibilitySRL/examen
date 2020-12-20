@@ -1,15 +1,12 @@
 package ar.com.plug.examen.app.rest;
 
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+import javax.validation.Valid;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.CollectionModel;
-import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,76 +18,51 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import ar.com.plug.examen.domain.model.Customer;
-import ar.com.plug.examen.domain.repository.CustomerRepository;
-import ar.com.plug.examen.exception.CustomerNotFoundException;
+import ar.com.plug.examen.domain.service.CustomerService;
 
 @RestController
 @RequestMapping(path = "/customer")
 public class CustomerController {
+	Logger logger = LoggerFactory.getLogger(CustomerController.class);
+	
 	@Autowired
-	CustomerRepository repository;
+	CustomerService customerService;
 
-	@GetMapping("/")
-	CollectionModel<EntityModel<Customer>> all() {
-		List<EntityModel<Customer>> customers = repository.findAll().stream()
-				.map(customer -> EntityModel.of(customer,
-						linkTo(methodOn(CustomerController.class).one(customer.getId())).withSelfRel(),
-						linkTo(methodOn(CustomerController.class).all()).withRel("customers")))
-				.collect(Collectors.toList());
+	@GetMapping(path = "", produces = { MediaType.APPLICATION_JSON_VALUE }, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> all() { 
+		logger.info("Get all customers.");
+		return new ResponseEntity<>(customerService.getAll(), HttpStatus.OK);
+	}
 
-		return CollectionModel.of(customers, linkTo(methodOn(CustomerController.class).all()).withSelfRel());
+	@PostMapping(path = "", produces = {
+			MediaType.APPLICATION_JSON_VALUE }, consumes = MediaType.APPLICATION_JSON_VALUE)
+	ResponseEntity<?> newCustomer(@Valid @RequestBody Customer customer) {
+		logger.info("Creating new Customer with the following data: " + customer.toString());
+		return new ResponseEntity<>(customerService.add(customer), HttpStatus.OK);
 
 	}
 
-	@PostMapping("/")
-	EntityModel<Customer> newCustomer(@RequestBody Customer customer) {
-		Customer savedCustomer = repository.save(customer);
-
-		return EntityModel.of(savedCustomer,
-				linkTo(methodOn(CustomerController.class).one(savedCustomer.getId())).withSelfRel());
-
+	@GetMapping(path = "{id}", produces = {
+			MediaType.APPLICATION_JSON_VALUE }, consumes = MediaType.APPLICATION_JSON_VALUE)
+	ResponseEntity<?> one(@PathVariable long id) {
+		logger.info("Quering for the customer with id: " + id);
+		return new ResponseEntity<>(customerService.getOne(id), HttpStatus.OK);
 	}
 
-	@GetMapping("/{id}")
-	EntityModel<Customer> one(@PathVariable long id) {
-		Customer customer = repository.findById(id).orElseThrow(() -> new CustomerNotFoundException(id));
-
-		return EntityModel.of(customer, linkTo(methodOn(CustomerController.class).one(id)).withSelfRel(),
-				linkTo(methodOn(CustomerController.class).all()).withRel("customers"));
-
+	@PutMapping(path = "", produces = {
+			MediaType.APPLICATION_JSON_VALUE }, consumes = MediaType.APPLICATION_JSON_VALUE)
+	ResponseEntity<?> update(@RequestBody Customer customer) {
+		logger.info("Updating Customer with the following data: " + customer.toString());
+		return new ResponseEntity<>(customerService.modify(customer), HttpStatus.OK);
+		
 	}
 
-	@PutMapping("/{id}")
-	EntityModel<Customer> replaceCustomer(@RequestBody Customer newCustomer, @PathVariable long id) {
-		return repository.findById(id).map(customer -> {
-			customer.setCompanyName(newCustomer.getCompanyName());
-			customer.setTaxIdNumber(newCustomer.getTaxIdNumber());
-			customer.setEmail(newCustomer.getEmail());
-			customer.setPhoneNumber(newCustomer.getPhoneNumber());
-
-			Customer savedCustomer = repository.save(customer);
-
-			return EntityModel.of(savedCustomer,
-					linkTo(methodOn(CustomerController.class).one(savedCustomer.getId())).withSelfRel(),
-					linkTo(methodOn(CustomerController.class).all()).withRel("customers"));
-
-		}).orElseGet(() -> {
-			newCustomer.setId(id);
-			Customer savedCustomer = repository.save(newCustomer);
-
-			return EntityModel.of(savedCustomer,
-					linkTo(methodOn(CustomerController.class).one(savedCustomer.getId())).withSelfRel(),
-					linkTo(methodOn(CustomerController.class).all()).withRel("customers"));
-
-		});
-	}
-
-	@DeleteMapping("/{id}")
-	ResponseEntity<String> deleteCustomer(@PathVariable long id) {		
-		repository.findById(id).orElseThrow(() -> new CustomerNotFoundException(id));
-		repository.deleteById(id);
-
-		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+	@DeleteMapping(path = "{id}", produces = {
+			MediaType.APPLICATION_JSON_VALUE }, consumes = MediaType.APPLICATION_JSON_VALUE)
+	ResponseEntity<?> delete(@PathVariable long id) {
+		customerService.delete(id);
+		logger.info("Deleting Customer with id: " + id);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 }

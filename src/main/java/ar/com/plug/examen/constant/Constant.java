@@ -1,4 +1,4 @@
-package ar.com.plug.examen.app.constant;
+package ar.com.plug.examen.constant;
 
 public final class Constant {
 	public static final boolean APPROVED = true;
