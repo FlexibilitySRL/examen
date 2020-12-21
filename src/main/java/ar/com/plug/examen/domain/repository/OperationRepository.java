@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import ar.com.plug.examen.domain.model.Operation;
 
-public interface OrderRepository extends JpaRepository<Operation, Long>{
+public interface OperationRepository extends JpaRepository<Operation, Long>{
 
 }

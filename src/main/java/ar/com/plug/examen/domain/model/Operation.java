@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,18 +26,33 @@ public class Operation {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
-	
+
 	private LocalDateTime date; // LocalDateTime.now()
-	
-    @ManyToOne
+	@ManyToOne
     @JoinColumn(name="customer_id", nullable=false)
+	@JsonIgnoreProperties("operations")
 	private Customer customer;
 	
 	@OneToMany(mappedBy="operation")
-	private List<Item> items;
+	@JsonIgnoreProperties("operation")
+	private List<Product> products;
 	
 	private Float total;
 	
 	private Boolean state;
+	
+	public void setTotal() {
+		this.total = (float) 0;
+		for (Product p : products) {
+			this.total = this.total + p.getPrice();
+		}
+	}	
+	
+//	public void setTotal() {
+//		this.total = (float) 0;
+//		for (Item i : items) {
+//			this.total = this.total + i.getProduct().getPrice();
+//		}
+//	}
 
 }
