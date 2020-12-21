@@ -7,7 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,13 +21,14 @@ public class Customer {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
-	@NotBlank(message = "Company name is mandatory")
+	@NotNull
 	private String companyName; // if is a person, will be the fullname.
+	@NotNull
 	private String taxIdNumber;
+	@NotNull
 	private String email;
 	private String phoneNumber;
 
-	//@OneToMany(mappedBy="customer")
-	@OneToMany(mappedBy="customer")
+	@OneToMany(mappedBy = "customer")
 	private List<Operation> operations;
 }

@@ -2,10 +2,6 @@ package ar.com.plug.examen.domain.service;
 
 import static org.junit.Assert.assertEquals;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -17,36 +13,26 @@ import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import ar.com.plug.examen.app.rest.OperationController;
-import ar.com.plug.examen.domain.model.Customer;
-import ar.com.plug.examen.domain.model.Operation;
-import ar.com.plug.examen.domain.model.Product;
+import ar.com.plug.examen.app.rest.SalespersonController;
 import ar.com.plug.examen.domain.model.Salesperson;
 
 @RunWith(MockitoJUnitRunner.class)
-public class OperationControllerTest {
+public class SalespersonControllerTest {
 	@InjectMocks
-	OperationController operationController;
+	SalespersonController salespersonController;
 
 	@Mock
-	OperationService operationService;
+	SalespersonService salespersonService;
 
 	@Test
-	public void testNewOperation() {
+	public void testNewSalesperson() {
 		MockHttpServletRequest request = new MockHttpServletRequest();
 		RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
-		
-		Customer customer = new Customer(1, "PFIZER S.A:", "222", "vacuna@pfizer.com", "123456789", null);
-		Product product = new Product(44, "Producto 1", "Descripcion producto 1", (float) 1000.1, null);
-		List<Product> products = new ArrayList<>();
-		products.add(product);
-		Salesperson salesperson = new Salesperson(1,"Juan", "Perez", "test@plug.com", null);
-		
-		Operation operation = new Operation(1,LocalDateTime.now(),customer,products,(float) 1000, false, salesperson);
-		ResponseEntity<?> responseEntity = operationController.newOperation(operation);
+
+		Salesperson salesperson = new Salesperson(1, "Pepe", "Pompin", "test@plug.com", null);
+		ResponseEntity<?> responseEntity = salespersonController.newSalesperson(salesperson);
 
 		assertEquals(responseEntity.getStatusCode(), HttpStatus.CREATED);
-		// assertEquals(responseEntity.getHeaders().getLocation().getPath(), "/1");
 	}
 
 	@Test
@@ -55,30 +41,51 @@ public class OperationControllerTest {
 		RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
 
 		long id = 1;
-		ResponseEntity<?> responseEntity = operationController.one(id);
+		ResponseEntity<?> responseEntity = salespersonController.one(id);
 
 		assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
 	}
 
 	@Test
 	public void testAll() {
+		// Salesperson salesperson = new Salesperson(1, "PFIZER S.A:", "222",
+		// "vacuna@pfizer.com", "123456789", null);
+
 		MockHttpServletRequest request = new MockHttpServletRequest();
 		RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
 
-		ResponseEntity<?> responseEntity = operationController.all();
-		
+		ResponseEntity<?> responseEntity = salespersonController.all();
+
+		/*
+		 * assertThat(result.getEmployeeList().size()).isEqualTo(2);
+		 * assertThat(result.getEmployeeList().get(0).getFirstName()).isEqualTo(
+		 * employee1.getFirstName());
+		 */
+
 		assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
 	}
 
 	@Test
-	public void testAprove() {
+	public void testUpdate() {
+		MockHttpServletRequest request = new MockHttpServletRequest();
+		RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
+
+		Salesperson salesperson = new Salesperson(1, "Pepe", "Pompin", "test@plug.com", null);
+		ResponseEntity<?> responseEntity = salespersonController.update(salesperson);
+
+		assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
+		// assertEquals(responseEntity.getHeaders().getLocation().getPath(), "/1");
+	}
+
+	@Test
+	public void testDelete() {
 		MockHttpServletRequest request = new MockHttpServletRequest();
 		RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
 
 		long id = 1;
-		ResponseEntity<?> responseEntity = operationController.aprove(id);
+		ResponseEntity<?> responseEntity = salespersonController.delete(id);
 
-		assertEquals(responseEntity.getStatusCode(), HttpStatus.ACCEPTED);
+		assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
 	}
 
 }

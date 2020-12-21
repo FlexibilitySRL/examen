@@ -15,7 +15,7 @@ import ar.com.plug.examen.domain.service.OperationService;
 import ar.com.plug.examen.domain.service.ProductService;
 import ar.com.plug.examen.exception.OperationNotFoundException;
 
-@Service("OperationServiceImpl")
+@Service
 public class OperationServiceImpl implements OperationService {
 	@Autowired
 	OperationRepository operationRepository;

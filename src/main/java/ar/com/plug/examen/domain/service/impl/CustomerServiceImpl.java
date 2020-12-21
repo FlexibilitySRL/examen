@@ -10,7 +10,7 @@ import ar.com.plug.examen.domain.repository.CustomerRepository;
 import ar.com.plug.examen.domain.service.CustomerService;
 import ar.com.plug.examen.exception.CustomerNotFoundException;
 
-@Service("CustomerServiceImpl")
+@Service
 public class CustomerServiceImpl implements CustomerService {
 	@Autowired
 	private CustomerRepository customerRepository;

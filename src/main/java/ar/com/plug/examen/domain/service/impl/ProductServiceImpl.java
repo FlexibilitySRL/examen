@@ -10,7 +10,7 @@ import ar.com.plug.examen.domain.repository.ProductRepository;
 import ar.com.plug.examen.domain.service.ProductService;
 import ar.com.plug.examen.exception.ProductNotFoundException;
 
-@Service("ProductServiceImpl")
+@Service
 public class ProductServiceImpl implements ProductService {
 	@Autowired
 	private ProductRepository productRepository;
