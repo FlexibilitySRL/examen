@@ -11,7 +11,6 @@ import ar.com.plug.examen.domain.model.Operation;
 import ar.com.plug.examen.domain.model.Product;
 import ar.com.plug.examen.domain.repository.OperationRepository;
 import ar.com.plug.examen.domain.service.CustomerService;
-import ar.com.plug.examen.domain.service.ItemService;
 import ar.com.plug.examen.domain.service.OperationService;
 import ar.com.plug.examen.domain.service.ProductService;
 import ar.com.plug.examen.exception.OperationNotFoundException;
@@ -20,10 +19,7 @@ import ar.com.plug.examen.exception.OperationNotFoundException;
 public class OperationServiceImpl implements OperationService {
 	@Autowired
 	OperationRepository operationRepository;
-	
-	@Autowired
-	ItemService itemService;
-	
+		
 	@Autowired 
 	CustomerService customerService;
 	
@@ -53,22 +49,15 @@ public class OperationServiceImpl implements OperationService {
 			p.setOperation(newOperation);
 			productService.modify(p);
 		}
-		//newOperation.getProducts().forEach(p -> p.setOperation(newOperation));
-		 
+		//newOperation.getProducts().forEach(p -> p.setOperation(newOperation));	 
 		return newOperation;
 	}
 
 	@Override
-	public Operation aprove(long id, boolean state) {
+	public Operation aprove(long id) {
 		Operation operation = operationRepository.findById(id).orElseThrow(() -> new OperationNotFoundException(id));
-		operation.setState(state);
+		operation.setState(Constant.APPROVED);
 		return operationRepository.save(operation);
 	}
-
-//	@Override
-//	public Operation modify(Operation operation) {
-//		operationRepository.findById(operation.getId()).orElseThrow(() -> new OperationNotFoundException(operation.getId()));
-//		return operationRepository.save(operation);
-//	}
 
 }

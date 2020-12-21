@@ -19,7 +19,7 @@ import ar.com.plug.examen.domain.model.Customer;
 import ar.com.plug.examen.domain.service.CustomerService;
 
 @RestController
-@RequestMapping(path = "/customer")
+@RequestMapping(path = "/customers")
 public class CustomerController {
 	@Autowired
 	CustomerService customerService;
@@ -31,27 +31,27 @@ public class CustomerController {
 
 	@PostMapping(path = "", produces = {
 			MediaType.APPLICATION_JSON_VALUE }, consumes = MediaType.APPLICATION_JSON_VALUE)
-	ResponseEntity<?> newCustomer(@Valid @RequestBody Customer customer) {
-		return new ResponseEntity<>(customerService.add(customer), HttpStatus.OK);
+	public ResponseEntity<?> newCustomer(@Valid @RequestBody Customer customer) {
+		return new ResponseEntity<>(customerService.add(customer), HttpStatus.CREATED);
 
 	}
 
 	@GetMapping(path = "{id}", produces = {
 			MediaType.APPLICATION_JSON_VALUE }, consumes = MediaType.APPLICATION_JSON_VALUE)
-	ResponseEntity<?> one(@PathVariable long id) {
+	public ResponseEntity<?> one(@PathVariable long id) {
 		return new ResponseEntity<>(customerService.getOne(id), HttpStatus.OK);
 	}
 
 	@PutMapping(path = "", produces = {
 			MediaType.APPLICATION_JSON_VALUE }, consumes = MediaType.APPLICATION_JSON_VALUE)
-	ResponseEntity<?> update(@RequestBody Customer customer) {
-		return new ResponseEntity<>(customerService.modify(customer), HttpStatus.OK);
+	public ResponseEntity<?> update(@RequestBody Customer customer) {
+		return new ResponseEntity<>(customerService.modify(customer), HttpStatus.ACCEPTED);
 		
 	}
 
 	@DeleteMapping(path = "{id}", produces = {
 			MediaType.APPLICATION_JSON_VALUE }, consumes = MediaType.APPLICATION_JSON_VALUE)
-	ResponseEntity<?> delete(@PathVariable long id) {
+	public ResponseEntity<?> delete(@PathVariable long id) {
 		customerService.delete(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}

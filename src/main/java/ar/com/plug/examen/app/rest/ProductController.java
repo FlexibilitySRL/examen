@@ -19,7 +19,7 @@ import ar.com.plug.examen.domain.model.Product;
 import ar.com.plug.examen.domain.service.ProductService;
 
 @RestController
-@RequestMapping(path = "/product")
+@RequestMapping(path = "/products")
 public class ProductController {
 	@Autowired
 	ProductService productService;

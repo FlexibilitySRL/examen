@@ -15,7 +15,7 @@ public class RestRequestResponseInterceptor implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		logger.info("Interceptor - REQUEST Method: " + request.getMethod() + ", URI: " + request.getRequestURI());
+		logger.info("Interceptor - REQUEST IP: " + request.getRemoteAddr() + ", Method: " + request.getMethod() + ", URI: " + request.getRequestURI());
 		return true;
 	}
 

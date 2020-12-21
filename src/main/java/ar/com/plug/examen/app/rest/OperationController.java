@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,7 +18,7 @@ import ar.com.plug.examen.domain.model.Operation;
 import ar.com.plug.examen.domain.service.OperationService;
 
 @RestController
-@RequestMapping(path = "/operation")
+@RequestMapping(path = "/operations")
 public class OperationController {
 	@Autowired
 	OperationService operationService;
@@ -40,4 +41,9 @@ public class OperationController {
 		return new ResponseEntity<>(operationService.getOne(id), HttpStatus.OK);
 	}
 	
+	@PutMapping(path = "{id}/aprove", produces = {
+			MediaType.APPLICATION_JSON_VALUE }, consumes = MediaType.APPLICATION_JSON_VALUE)
+	ResponseEntity<?> aprove(@PathVariable long id) {
+		return new ResponseEntity<>(operationService.aprove(id), HttpStatus.ACCEPTED);
+	}
 }
