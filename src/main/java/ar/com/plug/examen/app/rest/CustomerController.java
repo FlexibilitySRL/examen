@@ -45,7 +45,7 @@ public class CustomerController {
 	@PutMapping(path = "", produces = {
 			MediaType.APPLICATION_JSON_VALUE }, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> update(@RequestBody Customer customer) {
-		return new ResponseEntity<>(customerService.modify(customer), HttpStatus.ACCEPTED);
+		return new ResponseEntity<>(customerService.modify(customer), HttpStatus.OK);
 		
 	}
 

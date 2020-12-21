@@ -30,20 +30,20 @@ public class OperationController {
 
 	@PostMapping(path = "", produces = {
 			MediaType.APPLICATION_JSON_VALUE }, consumes = MediaType.APPLICATION_JSON_VALUE)
-	ResponseEntity<?> newOperation(@Valid @RequestBody Operation operation) {
-		return new ResponseEntity<>(operationService.add(operation), HttpStatus.OK);
+	public ResponseEntity<?> newOperation(@Valid @RequestBody Operation operation) {
+		return new ResponseEntity<>(operationService.add(operation), HttpStatus.CREATED);
 
 	}
 
 	@GetMapping(path = "{id}", produces = {
 			MediaType.APPLICATION_JSON_VALUE }, consumes = MediaType.APPLICATION_JSON_VALUE)
-	ResponseEntity<?> one(@PathVariable long id) {
+	public ResponseEntity<?> one(@PathVariable long id) {
 		return new ResponseEntity<>(operationService.getOne(id), HttpStatus.OK);
 	}
 	
 	@PutMapping(path = "{id}/aprove", produces = {
 			MediaType.APPLICATION_JSON_VALUE }, consumes = MediaType.APPLICATION_JSON_VALUE)
-	ResponseEntity<?> aprove(@PathVariable long id) {
+	public ResponseEntity<?> aprove(@PathVariable long id) {
 		return new ResponseEntity<>(operationService.aprove(id), HttpStatus.ACCEPTED);
 	}
 }

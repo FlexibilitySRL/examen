@@ -31,27 +31,25 @@ public class ProductController {
 
 	@PostMapping(path = "", produces = {
 			MediaType.APPLICATION_JSON_VALUE }, consumes = MediaType.APPLICATION_JSON_VALUE)
-	ResponseEntity<?> newProduct(@Valid @RequestBody Product product) {
-		return new ResponseEntity<>(productService.add(product), HttpStatus.OK);
-
+	public ResponseEntity<?> newProduct(@Valid @RequestBody Product product) {
+		return new ResponseEntity<>(productService.add(product), HttpStatus.CREATED);
 	}
 
 	@GetMapping(path = "{id}", produces = {
 			MediaType.APPLICATION_JSON_VALUE }, consumes = MediaType.APPLICATION_JSON_VALUE)
-	ResponseEntity<?> one(@PathVariable long id) {
+	public ResponseEntity<?> one(@PathVariable long id) {
 		return new ResponseEntity<>(productService.getOne(id), HttpStatus.OK);
 	}
 
 	@PutMapping(path = "", produces = {
 			MediaType.APPLICATION_JSON_VALUE }, consumes = MediaType.APPLICATION_JSON_VALUE)
-	ResponseEntity<?> update(@RequestBody Product product) {
+	public ResponseEntity<?> update(@RequestBody Product product) {
 		return new ResponseEntity<>(productService.modify(product), HttpStatus.OK);
-		
 	}
 
 	@DeleteMapping(path = "{id}", produces = {
 			MediaType.APPLICATION_JSON_VALUE }, consumes = MediaType.APPLICATION_JSON_VALUE)
-	ResponseEntity<?> delete(@PathVariable long id) {
+	public ResponseEntity<?> delete(@PathVariable long id) {
 		productService.delete(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}

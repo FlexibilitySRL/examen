@@ -13,24 +13,24 @@ import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import ar.com.plug.examen.app.rest.CustomerController;
-import ar.com.plug.examen.domain.model.Customer;
+import ar.com.plug.examen.app.rest.ProductController;
+import ar.com.plug.examen.domain.model.Product;
 
 @RunWith(MockitoJUnitRunner.class)
-public class CustomerControllerTest {
+public class ProductControllerTest {
 	@InjectMocks
-	CustomerController customerController;
+	ProductController productController;
 
 	@Mock
-	CustomerService customerService;
+	ProductService productService;
 
 	@Test
-	public void testNewCustomer() {
+	public void testNewProduct() {
 		MockHttpServletRequest request = new MockHttpServletRequest();
 		RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
-
-		Customer customer = new Customer(1, "PFIZER S.A:", "222", "vacuna@pfizer.com", "123456789", null);
-		ResponseEntity<?> responseEntity = customerController.newCustomer(customer);
+		
+		Product product = new Product(44, "Producto 1", "Descripcion producto 1", (float) 1000.1, null);
+		ResponseEntity<?> responseEntity = productController.newProduct(product);
 
 		assertEquals(responseEntity.getStatusCode(), HttpStatus.CREATED);
 		// assertEquals(responseEntity.getHeaders().getLocation().getPath(), "/1");
@@ -38,14 +38,13 @@ public class CustomerControllerTest {
 
 	@Test
 	public void testOne() {
-		// Customer customer = new Customer(1, "PFIZER S.A:", "222",
-		// "vacuna@pfizer.com", "123456789", null);
+		//Product product = new Product(44, "Producto 1", "Descripcion producto 1", (float) 1000.1, null);
 
 		MockHttpServletRequest request = new MockHttpServletRequest();
 		RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
 
 		long id = 1;
-		ResponseEntity<?> responseEntity = customerController.one(id);
+		ResponseEntity<?> responseEntity = productController.one(id);
 
 		/*
 		 * assertThat(result.getEmployeeList().size()).isEqualTo(2);
@@ -58,13 +57,12 @@ public class CustomerControllerTest {
 
 	@Test
 	public void testAll() {
-		// Customer customer = new Customer(1, "PFIZER S.A:", "222",
-		// "vacuna@pfizer.com", "123456789", null);
+		//Product product = new Product(44, "Producto 1", "Descripcion producto 1", (float) 1000.1, null);
 
 		MockHttpServletRequest request = new MockHttpServletRequest();
 		RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
 
-		ResponseEntity<?> responseEntity = customerController.all();
+		ResponseEntity<?> responseEntity = productController.all();
 
 		/*
 		 * assertThat(result.getEmployeeList().size()).isEqualTo(2);
@@ -80,8 +78,8 @@ public class CustomerControllerTest {
 		MockHttpServletRequest request = new MockHttpServletRequest();
 		RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
 
-		Customer customer = new Customer(1, "PFIZER S.A:", "222", "nuevomail@pfizer.com", "123456789", null);
-		ResponseEntity<?> responseEntity = customerController.update(customer);
+		Product product = new Product(44, "Producto 1", "Descripcion producto 1", (float) 1000.1, null);
+		ResponseEntity<?> responseEntity = productController.update(product);
 
 		assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
 		// assertEquals(responseEntity.getHeaders().getLocation().getPath(), "/1");
@@ -93,7 +91,7 @@ public class CustomerControllerTest {
 		RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
 
 		long id = 1;
-		ResponseEntity<?> responseEntity = customerController.delete(id);
+		ResponseEntity<?> responseEntity = productController.delete(id);
 
 		assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
 	}
