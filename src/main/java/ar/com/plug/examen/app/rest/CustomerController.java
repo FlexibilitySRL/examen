@@ -36,7 +36,7 @@ public class CustomerController {
 	 * HTTP VERB: DELETE
 	 * URI: /payments/customers/{id}
 	 *  
-	 * @param long  
+	 * param long  
 	 * @return ResponseEntity
 	 * HTTP RESPONSE STATUS: 200 ok
 	 */
@@ -51,7 +51,7 @@ public class CustomerController {
 	 * HTTP VERB: POST
 	 * URI: /payments/customers
 	 *  
-	 * @param Customer  
+	 * param Customer  
 	 * @return ResponseEntity
 	 * HTTP RESPONSE STATUS: 201 ok
 	 */
@@ -68,7 +68,7 @@ public class CustomerController {
 	 * HTTP VERB: GET
 	 * URI: /payments/customers/{id}
 	 *  
-	 * @param long  
+	 * param long  
 	 * @return ResponseEntity
 	 * HTTP RESPONSE STATUS: 200 ok
 	 */
@@ -85,7 +85,7 @@ public class CustomerController {
 	 * HTTP VERB: PUT
 	 * URI: /payments/customers
 	 *  
-	 * @param Customer  
+	 * param Customer  
 	 * @return ResponseEntity
 	 * HTTP RESPONSE STATUS: 200 ok
 	 */
@@ -102,7 +102,7 @@ public class CustomerController {
 	 * HTTP VERB: DELETE
 	 * URI: /payments/customers/{id}
 	 *  
-	 * @param long  
+	 * param long  
 	 * @return ResponseEntity
 	 * HTTP RESPONSE STATUS: 200 ok
 	 */

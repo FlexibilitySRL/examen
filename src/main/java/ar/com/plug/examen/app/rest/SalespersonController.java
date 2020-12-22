@@ -35,7 +35,7 @@ public class SalespersonController {
 	 * HTTP VERB: GET
 	 * URI: /payments/salespersons
 	 *  
-	 * @param   
+	 * param   
 	 * @return ResponseEntity
 	 * HTTP RESPONSE STATUS: 200 ok
 	 */
@@ -50,7 +50,7 @@ public class SalespersonController {
 	 * HTTP VERB: POST
 	 * URI: /payments/salespersons
 	 *  
-	 * @param Product  
+	 * param  
 	 * @return ResponseEntity
 	 * HTTP RESPONSE STATUS: 201 ok
 	 */
@@ -67,7 +67,7 @@ public class SalespersonController {
 	 * HTTP VERB: GET
 	 * URI: /payments/salespersons/{id}
 	 *  
-	 * @param long  
+	 * param long  
 	 * @return ResponseEntity
 	 * HTTP RESPONSE STATUS: 200 ok
 	 */	
@@ -83,7 +83,7 @@ public class SalespersonController {
 	 * HTTP VERB: PUT
 	 * URI: /payments/salespersons
 	 *  
-	 * @param Product  
+	 * param   
 	 * @return ResponseEntity
 	 * HTTP RESPONSE STATUS: 200 ok
 	 */	
@@ -100,7 +100,7 @@ public class SalespersonController {
 	 * HTTP VERB: DELETE
 	 * URI: /payments/salespersons/{id}
 	 *  
-	 * @param long  
+	 * param long  
 	 * @return ResponseEntity
 	 * HTTP RESPONSE STATUS: 200 ok
 	 */	

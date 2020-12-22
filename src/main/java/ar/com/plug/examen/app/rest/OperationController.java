@@ -34,7 +34,7 @@ public class OperationController {
 	 * HTTP VERB: GET
 	 * URI: /payments/operations
 	 *  
-	 * @param   
+	 * param   
 	 * @return ResponseEntity
 	 * HTTP RESPONSE STATUS: 200 ok
 	 */	
@@ -49,7 +49,7 @@ public class OperationController {
 	 * HTTP VERB: POST
 	 * URI: /payments/operations
 	 *  
-	 * @param Operation  
+	 * param Operation  
 	 * @return ResponseEntity
 	 * HTTP RESPONSE STATUS: 201 ok
 	 */	
@@ -66,7 +66,7 @@ public class OperationController {
 	 * HTTP VERB: GET
 	 * URI: /payments/operations/{id}
 	 *  
-	 * @param Long  
+	 * param Long  
 	 * @return ResponseEntity
 	 * HTTP RESPONSE STATUS: 200 ok
 	 */
@@ -82,7 +82,7 @@ public class OperationController {
 	 * HTTP VERB: PUT
 	 * URI: /payments/operations/{id}/aprove
 	 *  
-	 * @param Long  
+	 * param Long  
 	 * @return ResponseEntity
 	 * HTTP RESPONSE STATUS: 202 accepted
 	 */	

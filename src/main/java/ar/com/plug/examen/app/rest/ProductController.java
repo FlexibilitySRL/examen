@@ -35,7 +35,7 @@ public class ProductController {
 	 * HTTP VERB: GET
 	 * URI: /payments/products
 	 *  
-	 * @param   
+	 * param   
 	 * @return ResponseEntity
 	 * HTTP RESPONSE STATUS: 200 ok
 	 */
@@ -50,7 +50,7 @@ public class ProductController {
 	 * HTTP VERB: POST
 	 * URI: /payments/customers
 	 *  
-	 * @param Product  
+	 * param Product  
 	 * @return ResponseEntity
 	 * HTTP RESPONSE STATUS: 201 ok
 	 */
@@ -66,7 +66,7 @@ public class ProductController {
 	 * HTTP VERB: GET
 	 * URI: /payments/products/{id}
 	 *  
-	 * @param long  
+	 * param long  
 	 * @return ResponseEntity
 	 * HTTP RESPONSE STATUS: 200 ok
 	 */
@@ -82,7 +82,7 @@ public class ProductController {
 	 * HTTP VERB: PUT
 	 * URI: /payments/products
 	 *  
-	 * @param Product  
+	 * param Product  
 	 * @return ResponseEntity
 	 * HTTP RESPONSE STATUS: 200 ok
 	 */
@@ -98,7 +98,7 @@ public class ProductController {
 	 * HTTP VERB: DELETE
 	 * URI: /payments/products/{id}
 	 *  
-	 * @param long  
+	 * param long  
 	 * @return ResponseEntity
 	 * HTTP RESPONSE STATUS: 200 ok
 	 */
