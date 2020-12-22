@@ -3,12 +3,14 @@ package ar.com.plug.examen.domain.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import ar.com.plug.examen.domain.model.Product;
 import ar.com.plug.examen.domain.repository.ProductRepository;
 import ar.com.plug.examen.domain.service.ProductService;
 import ar.com.plug.examen.exception.ProductNotFoundException;
+import ar.com.plug.examen.exception.WithOperationsException;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -33,13 +35,19 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public Product modify(Product product) {
-		productRepository.findById(product.getId()).orElseThrow(() -> new ProductNotFoundException(product.getId()));
+		Product productFounded = productRepository.findById(product.getId()).orElseThrow(() -> new ProductNotFoundException(product.getId()));
+		if (productFounded.getOperation() != null)
+			throw new WithOperationsException();
+		
 		return productRepository.save(product);
 	}
 
 	@Override
 	public void delete(long id) {
-		productRepository.findById(id).orElseThrow(() -> new ProductNotFoundException(id));
+		Product product = productRepository.findById(id).orElseThrow(() -> new ProductNotFoundException(id));
+		if (product.getOperation() != null)
+			throw new WithOperationsException();
+		
 		productRepository.deleteById(id);
 	}
 

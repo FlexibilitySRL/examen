@@ -5,9 +5,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ar.com.plug.examen.domain.model.Customer;
 import ar.com.plug.examen.domain.model.Salesperson;
 import ar.com.plug.examen.domain.repository.SalespersonRepository;
 import ar.com.plug.examen.domain.service.SalespersonService;
+import ar.com.plug.examen.exception.WithOperationsException;
 import ar.com.plug.examen.exception.SalespersonNotFoundException;
 
 @Service
@@ -33,13 +35,17 @@ public class SalespersonServiceImpl implements SalespersonService {
 
 	@Override
 	public Salesperson modify(Salesperson salesperson) {
-		salespersonRepository.findById(salesperson.getId()).orElseThrow(() -> new SalespersonNotFoundException(salesperson.getId()));
+		Salesperson salespersonFounded = salespersonRepository.findById(salesperson.getId()).orElseThrow(() -> new SalespersonNotFoundException(salesperson.getId()));
+		if (!salespersonFounded.getOperations().isEmpty())
+			throw new WithOperationsException();
 		return salespersonRepository.save(salesperson);
 	}
 
 	@Override
 	public void delete(long id) {
-		salespersonRepository.findById(id).orElseThrow(() -> new SalespersonNotFoundException(id));
+		Salesperson salespersonFounded = salespersonRepository.findById(id).orElseThrow(() -> new SalespersonNotFoundException(id));
+		if (!salespersonFounded.getOperations().isEmpty())
+			throw new WithOperationsException();
 		salespersonRepository.deleteById(id);
 	}
 

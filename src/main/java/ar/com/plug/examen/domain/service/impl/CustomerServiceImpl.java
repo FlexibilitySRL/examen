@@ -9,6 +9,7 @@ import ar.com.plug.examen.domain.model.Customer;
 import ar.com.plug.examen.domain.repository.CustomerRepository;
 import ar.com.plug.examen.domain.service.CustomerService;
 import ar.com.plug.examen.exception.CustomerNotFoundException;
+import ar.com.plug.examen.exception.WithOperationsException;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
@@ -33,13 +34,17 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	public Customer modify(Customer customer) {
-		customerRepository.findById(customer.getId()).orElseThrow(() -> new CustomerNotFoundException(customer.getId()));
+		Customer customerFounded = customerRepository.findById(customer.getId()).orElseThrow(() -> new CustomerNotFoundException(customer.getId()));
+		if (!customerFounded.getOperations().isEmpty())
+			throw new WithOperationsException();
 		return customerRepository.save(customer);
 	}
 
 	@Override
 	public void delete(long id) {
-		customerRepository.findById(id).orElseThrow(() -> new CustomerNotFoundException(id));
+		Customer customerFounded = customerRepository.findById(id).orElseThrow(() -> new CustomerNotFoundException(id));
+		if (!customerFounded.getOperations().isEmpty())
+			throw new WithOperationsException();
 		customerRepository.deleteById(id);
 	}
 

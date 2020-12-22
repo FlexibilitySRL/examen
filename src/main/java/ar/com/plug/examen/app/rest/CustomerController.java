@@ -18,17 +18,43 @@ import org.springframework.web.bind.annotation.RestController;
 import ar.com.plug.examen.domain.model.Customer;
 import ar.com.plug.examen.domain.service.CustomerService;
 
+/**
+ * Controlador de la entidad Customer.
+ * @author epascuzzo
+ *
+ */
+
 @RestController
 @RequestMapping(path = "/customers")
 public class CustomerController {
 	@Autowired
 	CustomerService customerService;
 
+	/**
+	 * Descripción: Método que devuelve todos los customers.
+	 *
+	 * HTTP VERB: GET
+	 * URI: /payments/customers
+	 * 	 * 
+	 * @param 
+	 * @return ResponseEntity
+	 * HTTP RESPONSE STATUS: 201 Created
+	 */
 	@GetMapping(path = "", produces = { MediaType.APPLICATION_JSON_VALUE }, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> all() { 
 		return new ResponseEntity<>(customerService.getAll(), HttpStatus.OK);
 	}
 
+	/**
+	 * Descripción: Método que devuelve todos los customers.
+	 *
+	 * HTTP VERB: POST
+	 * URI: /payments/customers
+	 *  
+	 * @param Customer  
+	 * @return ResponseEntity
+	 * HTTP RESPONSE STATUS: 200 ok
+	 */
 	@PostMapping(path = "", produces = {
 			MediaType.APPLICATION_JSON_VALUE }, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> newCustomer(@Valid @RequestBody Customer customer) {
@@ -36,12 +62,33 @@ public class CustomerController {
 
 	}
 
+	/**
+	 * Descripción: Método que devuelve todos los customers.
+	 *
+	 * HTTP VERB: GET
+	 * URI: /payments/customers/{id}
+	 *  
+	 * @param long  
+	 * @return ResponseEntity
+	 * HTTP RESPONSE STATUS: 200 ok
+	 */
 	@GetMapping(path = "{id}", produces = {
 			MediaType.APPLICATION_JSON_VALUE }, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> one(@PathVariable long id) {
 		return new ResponseEntity<>(customerService.getOne(id), HttpStatus.OK);
 	}
 
+	
+	/**
+	 * Descripción: Método que devuelve todos los customers.
+	 *
+	 * HTTP VERB: PUT
+	 * URI: /payments/customers
+	 *  
+	 * @param Customer  
+	 * @return ResponseEntity
+	 * HTTP RESPONSE STATUS: 200 ok
+	 */
 	@PutMapping(path = "", produces = {
 			MediaType.APPLICATION_JSON_VALUE }, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> update(@RequestBody Customer customer) {
@@ -49,6 +96,16 @@ public class CustomerController {
 		
 	}
 
+	/**
+	 * Descripción: Método que borra un customer.
+	 *
+	 * HTTP VERB: DELETE
+	 * URI: /payments/customers/{id}
+	 *  
+	 * @param long  
+	 * @return ResponseEntity
+	 * HTTP RESPONSE STATUS: 200 ok
+	 */
 	@DeleteMapping(path = "{id}", produces = {
 			MediaType.APPLICATION_JSON_VALUE }, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> delete(@PathVariable long id) {
