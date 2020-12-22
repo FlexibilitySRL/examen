@@ -33,43 +33,25 @@ public class ProductControllerTest {
 		ResponseEntity<?> responseEntity = productController.newProduct(product);
 
 		assertEquals(responseEntity.getStatusCode(), HttpStatus.CREATED);
-		// assertEquals(responseEntity.getHeaders().getLocation().getPath(), "/1");
 	}
 
 	@Test
 	public void testOne() {
-		//Product product = new Product(44, "Producto 1", "Descripcion producto 1", (float) 1000.1, null);
-
 		MockHttpServletRequest request = new MockHttpServletRequest();
 		RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
 
 		long id = 1;
 		ResponseEntity<?> responseEntity = productController.one(id);
 
-		/*
-		 * assertThat(result.getEmployeeList().size()).isEqualTo(2);
-		 * assertThat(result.getEmployeeList().get(0).getFirstName()).isEqualTo(
-		 * employee1.getFirstName());
-		 */
-
 		assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
 	}
 
 	@Test
 	public void testAll() {
-		//Product product = new Product(44, "Producto 1", "Descripcion producto 1", (float) 1000.1, null);
-
 		MockHttpServletRequest request = new MockHttpServletRequest();
 		RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
 
 		ResponseEntity<?> responseEntity = productController.all();
-
-		/*
-		 * assertThat(result.getEmployeeList().size()).isEqualTo(2);
-		 * assertThat(result.getEmployeeList().get(0).getFirstName()).isEqualTo(
-		 * employee1.getFirstName());
-		 */
-
 		assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
 	}
 
@@ -82,7 +64,6 @@ public class ProductControllerTest {
 		ResponseEntity<?> responseEntity = productController.update(product);
 
 		assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
-		// assertEquals(responseEntity.getHeaders().getLocation().getPath(), "/1");
 	}
 
 	@Test
