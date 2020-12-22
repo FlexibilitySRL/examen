@@ -7,13 +7,15 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+    open-in-view: true
+        
   datasource:
       url: jdbc:mysql://127.0.0.1:3306/payments?zeroDateTimeBehavior=convertToNull
-      username: root
-      password: password
+      username: payments
+      password: payments
 
 server:
   port: 8080
   servlet:
     context-path: '/payments'
----
+#---
