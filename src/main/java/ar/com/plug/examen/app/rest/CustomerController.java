@@ -31,14 +31,14 @@ public class CustomerController {
 	CustomerService customerService;
 
 	/**
-	 * Descripción: Método que devuelve todos los customers.
+	 * Descripción: Método que borra un customer.
 	 *
-	 * HTTP VERB: GET
-	 * URI: /payments/customers
-	 * 	 * 
-	 * @param 
+	 * HTTP VERB: DELETE
+	 * URI: /payments/customers/{id}
+	 *  
+	 * @param long  
 	 * @return ResponseEntity
-	 * HTTP RESPONSE STATUS: 201 Created
+	 * HTTP RESPONSE STATUS: 200 ok
 	 */
 	@GetMapping(path = "", produces = { MediaType.APPLICATION_JSON_VALUE }, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> all() { 
@@ -46,14 +46,14 @@ public class CustomerController {
 	}
 
 	/**
-	 * Descripción: Método que devuelve todos los customers.
+	 * Descripción: Método que crea un customer.
 	 *
 	 * HTTP VERB: POST
 	 * URI: /payments/customers
 	 *  
 	 * @param Customer  
 	 * @return ResponseEntity
-	 * HTTP RESPONSE STATUS: 200 ok
+	 * HTTP RESPONSE STATUS: 201 ok
 	 */
 	@PostMapping(path = "", produces = {
 			MediaType.APPLICATION_JSON_VALUE }, consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -63,7 +63,7 @@ public class CustomerController {
 	}
 
 	/**
-	 * Descripción: Método que devuelve todos los customers.
+	 * Descripción: Método que devuelve un customers.
 	 *
 	 * HTTP VERB: GET
 	 * URI: /payments/customers/{id}
@@ -80,7 +80,7 @@ public class CustomerController {
 
 	
 	/**
-	 * Descripción: Método que devuelve todos los customers.
+	 * Descripción: Método que actualiza un customer.
 	 *
 	 * HTTP VERB: PUT
 	 * URI: /payments/customers
