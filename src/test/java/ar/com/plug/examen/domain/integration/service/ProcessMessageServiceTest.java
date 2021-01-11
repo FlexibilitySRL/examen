@@ -1,4 +1,4 @@
-package ar.com.plug.examen.domain.service;
+package ar.com.plug.examen.domain.integration.service;
 
 import ar.com.plug.examen.domain.model.Message;
 import ar.com.plug.examen.domain.service.impl.ProcessMessageServiceImpl;
