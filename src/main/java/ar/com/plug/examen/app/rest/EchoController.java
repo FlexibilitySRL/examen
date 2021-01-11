@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(path = "/echo")
 public class EchoController {
 
+	@Autowired
     private final ProcessMessageService messageService;
 
     @Autowired
