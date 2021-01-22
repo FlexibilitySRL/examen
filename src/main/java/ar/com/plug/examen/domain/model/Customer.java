@@ -1,5 +1,6 @@
 package ar.com.plug.examen.domain.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,12 +18,16 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 	
+	@Column
 	private String email;
 	
+	@Column
 	private String firstname;
 	
+	@Column
 	private String lastname;
-	
+
+	@Column
 	@JsonProperty("mobile_phone")
 	private String mobilePhone;
 	

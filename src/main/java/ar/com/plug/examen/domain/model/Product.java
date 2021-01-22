@@ -13,21 +13,19 @@ import lombok.Data;
 public class Product {
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-	
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+
 	@Column
 	private String name;
-	
+
 	@Column
 	private String description;
-	
-	@Column
+
+	@Column(columnDefinition = "double")
 	private Double price;
-	
-	@Column
-	private long quantity;
-	
-	
-	 
+
+	@Column(columnDefinition = "bigint")
+	private int quantity;
+
 }

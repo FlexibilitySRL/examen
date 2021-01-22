@@ -1,12 +1,10 @@
 package ar.com.plug.examen.domain.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ar.com.plug.examen.domain.model.Customer;
 import ar.com.plug.examen.domain.model.Product;
 import ar.com.plug.examen.domain.service.ProductService;
 import ar.com.plug.examen.exception.NotDataFoundException;
