@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ar.com.plug.examen.domain.model.Customer;
 import ar.com.plug.examen.domain.service.CustomerService;
+import lombok.Data;
 
 @RestController
+@Data
 public class CustomerController {
 
 	@Autowired
@@ -40,14 +42,14 @@ public class CustomerController {
 
 	@PostMapping(path = "/customers", produces = {
 			MediaType.APPLICATION_JSON_VALUE }, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Customer> saveProduct(@RequestBody Customer customer) {
-		return  new ResponseEntity<Customer>(service.saveOrUpdate(customer), HttpStatus.OK);
+	public ResponseEntity<Customer> saveConsumer(@RequestBody Customer customer) {
+		return  new ResponseEntity<Customer>(service.create(customer), HttpStatus.OK);
 	}
 
 	@PutMapping(path = "/customers", produces = {
 			MediaType.APPLICATION_JSON_VALUE }, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Customer> update(@RequestBody Customer customer) {
-		return new ResponseEntity<Customer>(service.saveOrUpdate(customer), HttpStatus.OK);
+		return new ResponseEntity<Customer>(service.update(customer), HttpStatus.OK);
 
 	}
 	

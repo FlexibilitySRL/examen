@@ -17,48 +17,75 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import lombok.Data;
+
 @ControllerAdvice
 public class ControllerAdvisor extends ResponseEntityExceptionHandler {
 
 	@ExceptionHandler(NotDataFoundException.class)
-    public ResponseEntity<Object> handleNodataFoundException(
-        NotDataFoundException ex, WebRequest request) {
+	public ResponseEntity<Object> handleNodataFoundException(NotDataFoundException ex) {
 
-        Map<String, Object> body = new LinkedHashMap<>();
-        body.put("timestamp", LocalDateTime.now());
-        body.put("message", "No data found");
+		Map<String, Object> body = new LinkedHashMap<>();
+		body.put("timestamp", LocalDateTime.now());
+		body.put("message", ex.getMessage());
 
-        return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
-    }
-	
+		return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
+	}
+
 	@ExceptionHandler(EmptyResultDataAccessException.class)
-	public ResponseEntity<Object> handleEmptyResultDataAccessException(
-			EmptyResultDataAccessException ex, WebRequest request) {
+	public ResponseEntity<Object> handleEmptyResultDataAccessException(EmptyResultDataAccessException ex) {
 
-	        Map<String, Object> body = new LinkedHashMap<>();
-	        body.put("timestamp", LocalDateTime.now());
-	        body.put("message", "empty result data");
+		Map<String, Object> body = new LinkedHashMap<>();
+		body.put("timestamp", LocalDateTime.now());
+		body.put("message", "empty result data");
 
-	        return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
-	    }
+		return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
+	}
 
-    @Override
-    protected ResponseEntity<Object> handleMethodArgumentNotValid(
-        MethodArgumentNotValidException ex, HttpHeaders headers, 
-        HttpStatus status, WebRequest request) {
+	@Override
+	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
+			HttpHeaders headers, HttpStatus status, WebRequest request) {
 
-        Map<String, Object> body = new LinkedHashMap<>();
-        body.put("timestamp", LocalDate.now());
-        body.put("status", status.value());
+		Map<String, Object> body = new LinkedHashMap<>();
+		body.put("timestamp", LocalDate.now());
+		body.put("status", status.value());
 
-        List<String> errors = ex.getBindingResult()
-                .getFieldErrors()
-                .stream()
-                .map(x -> x.getDefaultMessage())
-                .collect(Collectors.toList());
+		List<String> errors = ex.getBindingResult().getFieldErrors().stream().map(x -> x.getDefaultMessage())
+				.collect(Collectors.toList());
 
-        body.put("errors", errors);
+		body.put("errors", errors);
 
-        return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
-    }
+		return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
+	}
+
+	@ExceptionHandler(DuplicateCustomerException.class)
+	protected ResponseEntity<Object> handleDuplicateCustomerException(DuplicateCustomerException ex) {
+
+		Map<String, Object> body = new LinkedHashMap<>();
+		body.put("timestamp", LocalDateTime.now());
+		body.put("message", ex.getMessage());
+
+		return new ResponseEntity<>(body, HttpStatus.CONFLICT);
+	}
+
+	@ExceptionHandler(NotOrderFoundException.class)
+	protected ResponseEntity<Object> handleNotOrderFoundException(NotOrderFoundException ex) {
+
+		Map<String, Object> body = new LinkedHashMap<>();
+		body.put("timestamp", LocalDateTime.now());
+		body.put("message", ex.getMessage());
+
+		return new ResponseEntity<>(body, HttpStatus.CONFLICT);
+	}
+
+	@ExceptionHandler(NotSellerFoundException.class)
+	protected ResponseEntity<Object> handleNotSellerFoundException(NotSellerFoundException ex, HttpHeaders headers,
+			HttpStatus status, WebRequest request) {
+
+		Map<String, Object> body = new LinkedHashMap<>();
+		body.put("timestamp", LocalDateTime.now());
+		body.put("message", ex.getMessage());
+
+		return new ResponseEntity<>(body, HttpStatus.CONFLICT);
+	}
 }

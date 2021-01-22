@@ -8,4 +8,5 @@ import ar.com.plug.examen.domain.model.Customer;
 @Repository
 public interface CustomerRepository extends CrudRepository<Customer, Long> {
 
+	Customer findByDocumentId(Long documentId);
 }

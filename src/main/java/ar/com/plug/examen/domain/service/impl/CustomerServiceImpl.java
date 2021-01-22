@@ -7,10 +7,13 @@ import org.springframework.stereotype.Service;
 
 import ar.com.plug.examen.domain.model.Customer;
 import ar.com.plug.examen.domain.service.CustomerService;
+import ar.com.plug.examen.exception.DuplicateCustomerException;
 import ar.com.plug.examen.exception.NotDataFoundException;
 import ar.com.plug.examen.repository.CustomerRepository;
+import lombok.Data;
 
 @Service
+@Data
 public class CustomerServiceImpl implements CustomerService {
 
 	@Autowired
@@ -33,7 +36,15 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public Customer saveOrUpdate(Customer customer) {
+	public Customer create(Customer customer) {
+		Customer customerDb = repository.findByDocumentId(customer.getDocumentId());
+		if (customerDb != null)
+			throw new DuplicateCustomerException(customer.getDocumentId());
+		return repository.save(customer);
+	}
+
+	@Override
+	public Customer update(Customer customer) {
 		return repository.save(customer);
 	}
 

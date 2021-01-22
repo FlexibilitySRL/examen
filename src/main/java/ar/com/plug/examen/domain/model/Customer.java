@@ -28,7 +28,11 @@ public class Customer {
 	@Column
 	@JsonProperty(required=true)
 	private String lastname;
-
+	
+	@Column
+	@JsonProperty(value="document_id",required=true)	
+	private long documentId;
+	
 	@Column
 	@JsonProperty(value="mobile_phone")
 	private String mobilePhone;
