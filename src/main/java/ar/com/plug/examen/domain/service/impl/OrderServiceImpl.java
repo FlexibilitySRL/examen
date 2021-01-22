@@ -15,6 +15,7 @@ import ar.com.plug.examen.exception.NotDataFoundException;
 import ar.com.plug.examen.exception.NotOrderFoundException;
 import ar.com.plug.examen.exception.NotSellerFoundException;
 import ar.com.plug.examen.repository.OrderRepository;
+import ar.com.plug.examen.repository.ProductRepository;
 import ar.com.plug.examen.repository.SellerRepository;
 
 @Service
@@ -25,7 +26,7 @@ public class OrderServiceImpl implements OrderService {
 
 	@Autowired
 	private SellerRepository sellerRepository;
-
+	
 	@Override
 	public List<Order> getAllOrders() {
 		return (List<Order>) repository.findAll();
@@ -62,8 +63,9 @@ public class OrderServiceImpl implements OrderService {
 		order.setModificationDate(new Date());
 		order.setStatus(OrderStatus.APPROVED.name());
 		order.setSeller(seller);
-		order.setTransactionId(UUID.randomUUID().toString());
+		order.setOperationId(UUID.randomUUID().toString());
 		return repository.save(order);
 	}
+	
 
 }

@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.Data;
 
 @Data
@@ -37,15 +39,19 @@ public class Order {
 	private String status;
 
 	@Column
+	@JsonProperty(value="creation_date")
 	private Date creationDate;
 
 	@Column
+	@JsonProperty(required=true)
 	private Double amount;
 
 	@Column
-	private String transactionId;
+	@JsonProperty(value="operation_id")
+	private String operationId;
 
 	@Column
+	@JsonProperty(value="modification_date")
 	private Date modificationDate;
 
 }

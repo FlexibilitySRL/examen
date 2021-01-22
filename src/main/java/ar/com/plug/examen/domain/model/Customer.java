@@ -22,13 +22,15 @@ public class Customer {
 	private String email;
 	
 	@Column
+	@JsonProperty(required=true)
 	private String firstname;
 	
 	@Column
+	@JsonProperty(required=true)
 	private String lastname;
 
 	@Column
-	@JsonProperty("mobile_phone")
+	@JsonProperty(value="mobile_phone")
 	private String mobilePhone;
 	
     
