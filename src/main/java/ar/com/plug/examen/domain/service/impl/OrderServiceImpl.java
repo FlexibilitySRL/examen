@@ -7,16 +7,16 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ar.com.plug.examen.domain.model.Customer;
 import ar.com.plug.examen.domain.model.Order;
 import ar.com.plug.examen.domain.model.Seller;
+import ar.com.plug.examen.domain.service.CustomerService;
 import ar.com.plug.examen.domain.service.OrderService;
+import ar.com.plug.examen.domain.service.SellerService;
 import ar.com.plug.examen.enums.OrderStatus;
 import ar.com.plug.examen.exception.NotDataFoundException;
 import ar.com.plug.examen.exception.NotOrderFoundException;
-import ar.com.plug.examen.exception.NotSellerFoundException;
 import ar.com.plug.examen.repository.OrderRepository;
-import ar.com.plug.examen.repository.ProductRepository;
-import ar.com.plug.examen.repository.SellerRepository;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -25,7 +25,10 @@ public class OrderServiceImpl implements OrderService {
 	private OrderRepository repository;
 
 	@Autowired
-	private SellerRepository sellerRepository;
+	private SellerService sellerService;
+	
+	@Autowired
+	private CustomerService customerService;
 	
 	@Override
 	public List<Order> getAllOrders() {
@@ -52,6 +55,8 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public Order create(Order order) {
+		Customer customer = customerService.getCustomerById(order.getCustomer().getId());
+		order.setCustomer(customer);
 		order.setStatus(OrderStatus.PENDING.name());
 		return repository.save(order);
 	}
@@ -59,7 +64,7 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public Order approve(Long orderId, Long sellerId) {
 		Order order = repository.findById(orderId).orElseThrow(() -> new NotOrderFoundException(orderId));
-		Seller seller = sellerRepository.findById(sellerId).orElseThrow(() -> new NotSellerFoundException(sellerId));
+		Seller seller = sellerService.getSellerById(sellerId);
 		order.setModificationDate(new Date());
 		order.setStatus(OrderStatus.APPROVED.name());
 		order.setSeller(seller);

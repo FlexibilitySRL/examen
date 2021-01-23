@@ -41,7 +41,7 @@ public class SellerController {
 	@PostMapping(path = "/sellers", produces = {
 			MediaType.APPLICATION_JSON_VALUE }, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Seller> saveProduct(@RequestBody Seller seller) {
-		return  new ResponseEntity<Seller>(service.saveOrUpdate(seller), HttpStatus.OK);
+		return  new ResponseEntity<Seller>(service.saveOrUpdate(seller), HttpStatus.CREATED);
 	}
 
 	@PutMapping(path = "/sellers", produces = {

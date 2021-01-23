@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import ar.com.plug.examen.domain.model.Customer;
 import ar.com.plug.examen.domain.service.CustomerService;
 import ar.com.plug.examen.exception.DuplicateCustomerException;
-import ar.com.plug.examen.exception.NotDataFoundException;
+import ar.com.plug.examen.exception.NotCustomerFoundException;
 import ar.com.plug.examen.repository.CustomerRepository;
 import lombok.Data;
 
@@ -27,7 +27,7 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	public Customer getCustomerById(Long id) {
-		return repository.findById(id).orElseThrow(() -> new NotDataFoundException(id));
+		return repository.findById(id).orElseThrow(() -> new NotCustomerFoundException(id));
 	}
 
 	@Override

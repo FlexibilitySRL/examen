@@ -24,7 +24,7 @@ public class CustomerController {
 	private CustomerService service;
 
 	@GetMapping(path="/customers",produces = {MediaType.APPLICATION_JSON_VALUE })
-	public ResponseEntity<?> getAllProduct() {
+	public ResponseEntity<?> getAllCustomers() {
 		return new ResponseEntity<>(service.getAllCustomer(), HttpStatus.OK);
 	}
 
@@ -35,15 +35,15 @@ public class CustomerController {
 	}
 
 	@GetMapping(path = "/customers/{customerid}", produces = { MediaType.APPLICATION_JSON_VALUE })
-	public ResponseEntity<Customer> update(@PathVariable Long customerid) {
+	public ResponseEntity<Customer> getCustomerById(@PathVariable Long customerid) {
 		return  new ResponseEntity<Customer>(service.getCustomerById(customerid), HttpStatus.OK);
 
 	}
 
 	@PostMapping(path = "/customers", produces = {
 			MediaType.APPLICATION_JSON_VALUE }, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Customer> saveConsumer(@RequestBody Customer customer) {
-		return  new ResponseEntity<Customer>(service.create(customer), HttpStatus.OK);
+	public ResponseEntity<Customer> create(@RequestBody Customer customer) {
+		return  new ResponseEntity<Customer>(service.create(customer), HttpStatus.CREATED);
 	}
 
 	@PutMapping(path = "/customers", produces = {

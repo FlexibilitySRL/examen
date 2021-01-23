@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import ar.com.plug.examen.domain.model.Seller;
 import ar.com.plug.examen.domain.service.SellerService;
-import ar.com.plug.examen.exception.NotDataFoundException;
+import ar.com.plug.examen.exception.NotSellerFoundException;
 import ar.com.plug.examen.repository.SellerRepository;
 
 @Service
@@ -24,7 +24,7 @@ public class SellerServiceImpl implements SellerService {
 
 	@Override
 	public Seller getSellerById(Long id) {
-		return repository.findById(id).orElseThrow(() -> new NotDataFoundException(id));
+		return repository.findById(id).orElseThrow(() -> new NotSellerFoundException(id));
 	}
 
 	@Override

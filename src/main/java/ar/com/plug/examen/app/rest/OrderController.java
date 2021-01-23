@@ -48,7 +48,7 @@ public class OrderController {
 	@PostMapping(path = "/orders", produces = {
 			MediaType.APPLICATION_JSON_VALUE }, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> create(@RequestBody Order order) {
-		return new ResponseEntity<>(service.create(order), HttpStatus.OK);
+		return new ResponseEntity<>(service.create(order), HttpStatus.CREATED);
 	}
 
 	@PutMapping(path = "/orders/{orderid}/seller/{sellerid}", produces = {

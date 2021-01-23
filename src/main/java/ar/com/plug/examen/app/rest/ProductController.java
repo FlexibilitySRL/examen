@@ -41,7 +41,7 @@ public class ProductController {
 	@PostMapping(path = "/products", produces = {
 			MediaType.APPLICATION_JSON_VALUE }, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> saveProduct(@RequestBody Product product) {
-		return new ResponseEntity<>(service.saveOrUpdate(product), HttpStatus.OK);
+		return new ResponseEntity<>(service.saveOrUpdate(product), HttpStatus.CREATED);
 	}
 
 	@PutMapping(path = "/products", produces = {
