@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import ar.com.plug.examen.domain.model.Product;
 import ar.com.plug.examen.domain.service.ProductService;
+import ar.com.plug.examen.exception.DuplicateProductException;
 import ar.com.plug.examen.exception.NotDataFoundException;
 import ar.com.plug.examen.repository.ProductRepository;
 
@@ -28,7 +29,15 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public Product saveOrUpdate(Product product) {
+	public Product createProduct(Product product) {
+		Product productCreated = repository.findById(product.getId()).orElse(null);
+		if (productCreated != null)
+			throw new DuplicateProductException(product.getId());
+		return repository.save(product);
+	}
+
+	@Override
+	public Product updateProduct(Product product) {
 		return repository.save(product);
 	}
 
@@ -36,8 +45,5 @@ public class ProductServiceImpl implements ProductService {
 	public Product getProductById(Long id) {
 		return repository.findById(id).orElseThrow(() -> new NotDataFoundException(id));
 	}
-	
-	
-	
 
 }

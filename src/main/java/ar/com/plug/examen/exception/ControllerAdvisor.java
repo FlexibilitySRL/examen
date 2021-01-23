@@ -77,13 +77,22 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
 	}
 
 	@ExceptionHandler(NotSellerFoundException.class)
-	protected ResponseEntity<Object> handleNotSellerFoundException(NotSellerFoundException ex, HttpHeaders headers,
-			HttpStatus status, WebRequest request) {
+	protected ResponseEntity<Object> handleNotSellerFoundException(NotSellerFoundException ex) {
 
 		Map<String, Object> body = new LinkedHashMap<>();
 		body.put("timestamp", LocalDateTime.now());
 		body.put("message", ex.getMessage());
 
 		return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
+	}
+
+	@ExceptionHandler(DuplicateProductException.class)
+	protected ResponseEntity<Object> handleNotSellerFoundException(DuplicateProductException ex) {
+
+		Map<String, Object> body = new LinkedHashMap<>();
+		body.put("timestamp", LocalDateTime.now());
+		body.put("message", ex.getMessage());
+
+		return new ResponseEntity<>(body, HttpStatus.CONFLICT);
 	}
 }
