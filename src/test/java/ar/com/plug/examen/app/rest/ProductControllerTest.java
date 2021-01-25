@@ -3,32 +3,21 @@ package ar.com.plug.examen.app.rest;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import ar.com.plug.examen.Application;
 import ar.com.plug.examen.app.config.ConfigTest;
 import ar.com.plug.examen.domain.model.Product;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT, classes = { Application.class })
-@AutoConfigureMockMvc
-@ActiveProfiles("test")
 public class ProductControllerTest extends ConfigTest {
 
 	@Test
 	public void getAll() throws Exception {
 		createProduct(121213);
 
-		// GetALLCustomers array
+		// GetALL array
 		mockMvc.perform(MockMvcRequestBuilders.get(server + port + "/products").contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
 				.andExpect(MockMvcResultMatchers.jsonPath("[0].id").exists());
@@ -48,7 +37,7 @@ public class ProductControllerTest extends ConfigTest {
 	@Test
 	public void getById() throws Exception {
 
-		// Create customer
+		// Create
 		Product product = createProduct(76576845);
 
 		// Get By id
@@ -69,7 +58,7 @@ public class ProductControllerTest extends ConfigTest {
 	@Test
 	public void update() throws Exception {
 
-		// Create customer
+		// Create
 		Product product = createProduct(66778899);
 
 		product.setName("socks");

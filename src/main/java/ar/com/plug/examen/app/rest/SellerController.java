@@ -26,28 +26,28 @@ public class SellerController {
 		return new ResponseEntity<>(service.getAllSeller(), HttpStatus.OK);
 	}
 
-	@DeleteMapping(path = "/sellers/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })
-	public ResponseEntity<?> deleteProduct(@PathVariable Long id) {
-		service.deleteSeller(id);
+	@DeleteMapping(path = "/sellers/{sellerid}", produces = { MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<?> deleteProduct(@PathVariable Long sellerid) {
+		service.deleteSeller(sellerid);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 
 	@GetMapping(path = "/sellers/{sellerid}", produces = { MediaType.APPLICATION_JSON_VALUE })
-	public ResponseEntity<Seller> update(@PathVariable Long sellerid) {
+	public ResponseEntity<Seller> getSellerById(@PathVariable Long sellerid) {
 		return  new ResponseEntity<Seller>(service.getSellerById(sellerid), HttpStatus.OK);
 
 	}
 
 	@PostMapping(path = "/sellers", produces = {
 			MediaType.APPLICATION_JSON_VALUE }, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Seller> saveProduct(@RequestBody Seller seller) {
-		return  new ResponseEntity<Seller>(service.saveOrUpdate(seller), HttpStatus.CREATED);
+	public ResponseEntity<Seller> createProduct(@RequestBody Seller seller) {
+		return  new ResponseEntity<Seller>(service.create(seller), HttpStatus.CREATED);
 	}
 
 	@PutMapping(path = "/sellers", produces = {
 			MediaType.APPLICATION_JSON_VALUE }, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Seller> update(@RequestBody Seller seller) {
-		return new ResponseEntity<Seller>(service.saveOrUpdate(seller), HttpStatus.OK);
+	public ResponseEntity<Seller> updateProduct(@RequestBody Seller seller) {
+		return new ResponseEntity<Seller>(service.update(seller), HttpStatus.OK);
 	}
 	
 }

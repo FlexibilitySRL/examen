@@ -15,5 +15,11 @@ public interface ProductService {
 	public Product createProduct(Product product);
 	
 	public Product updateProduct(Product product);
-
+	
+	public void validateProducts(List<Product> products);
+	
+	public void updateQuantityDecrement(List<Product> products);
+	
+	public void updateQuantityIncrement(List<Product> products);
+	
 }

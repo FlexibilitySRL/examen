@@ -8,4 +8,5 @@ import ar.com.plug.examen.domain.model.Seller;
 @Repository
 public interface SellerRepository extends CrudRepository<Seller,Long> {
 
+	Seller findByDocumentId(Long documentId);
 }

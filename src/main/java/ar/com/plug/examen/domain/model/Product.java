@@ -15,7 +15,7 @@ import lombok.Data;
 public class Product {
 
 	@Id
-	private Long id;
+	private long id;
 
 	@Column
 	@JsonProperty(required=true)

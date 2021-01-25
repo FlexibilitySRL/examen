@@ -12,6 +12,8 @@ public interface SellerService {
 
 	public void deleteSeller(Long id);
 
-	public Seller saveOrUpdate(Seller seller);
+	public Seller create(Seller seller);
+	
+	public Seller update(Seller seller);
 	
 }

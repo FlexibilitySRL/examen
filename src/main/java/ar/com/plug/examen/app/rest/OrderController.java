@@ -2,6 +2,8 @@ package ar.com.plug.examen.app.rest;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -35,23 +37,23 @@ public class OrderController {
 		return new ResponseEntity<>(orders, HttpStatus.OK);
 	}
 
-	@GetMapping(path = "/orders/{ordersid}", produces = { MediaType.APPLICATION_JSON_VALUE })
-	public ResponseEntity<?> getOrderById(@PathVariable Long orderId) {
-		return new ResponseEntity<>(service.getOrderById(orderId), HttpStatus.OK);
+	@GetMapping(path = "/orders/{orderid}", produces = { MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<?> getOrderById(@PathVariable Long orderid) {
+		return new ResponseEntity<>(service.getOrderById(orderid), HttpStatus.OK);
 	}
 
 	@DeleteMapping(path = "/orders/{orderid}", produces = { MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<?> cancelOrder(@PathVariable Long orderid) {
-		return new ResponseEntity<>(service.cancelOrder(orderid), HttpStatus.OK);
+		return new ResponseEntity<>(service.cancelOrder(orderid), HttpStatus.NO_CONTENT);
 	}
 
 	@PostMapping(path = "/orders", produces = {
 			MediaType.APPLICATION_JSON_VALUE }, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> create(@RequestBody Order order) {
+	public ResponseEntity<?> create(@Valid @RequestBody Order order) {
 		return new ResponseEntity<>(service.create(order), HttpStatus.CREATED);
 	}
 
-	@PutMapping(path = "/orders/{orderid}/seller/{sellerid}", produces = {
+	@PutMapping(path = "/orders/{orderid}/sellers/{sellerid}", produces = {
 			MediaType.APPLICATION_JSON_VALUE }, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> approve(@PathVariable Long orderid, @PathVariable Long sellerid) {
 		return new ResponseEntity<>(service.approve(orderid, sellerid), HttpStatus.OK);

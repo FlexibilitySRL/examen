@@ -1,4 +1,4 @@
-package ar.com.plug.examen.exception;
+package ar.com.plug.examen.exception.controller;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import ar.com.plug.examen.exception.NotDataFoundException;
+
 @ControllerAdvice
-public class ControllerAdvisor extends ResponseEntityExceptionHandler {
+public class GenericControllerAdvice extends ResponseEntityExceptionHandler {
 
 	@ExceptionHandler(NotDataFoundException.class)
 	public ResponseEntity<Object> handleNodataFoundException(NotDataFoundException ex) {
@@ -56,43 +58,4 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
 		return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
 	}
 
-	@ExceptionHandler(DuplicateCustomerException.class)
-	protected ResponseEntity<Object> handleDuplicateCustomerException(DuplicateCustomerException ex) {
-
-		Map<String, Object> body = new LinkedHashMap<>();
-		body.put("timestamp", LocalDateTime.now());
-		body.put("message", ex.getMessage());
-
-		return new ResponseEntity<>(body, HttpStatus.CONFLICT);
-	}
-
-	@ExceptionHandler(NotOrderFoundException.class)
-	protected ResponseEntity<Object> handleNotOrderFoundException(NotOrderFoundException ex) {
-
-		Map<String, Object> body = new LinkedHashMap<>();
-		body.put("timestamp", LocalDateTime.now());
-		body.put("message", ex.getMessage());
-
-		return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
-	}
-
-	@ExceptionHandler(NotSellerFoundException.class)
-	protected ResponseEntity<Object> handleNotSellerFoundException(NotSellerFoundException ex) {
-
-		Map<String, Object> body = new LinkedHashMap<>();
-		body.put("timestamp", LocalDateTime.now());
-		body.put("message", ex.getMessage());
-
-		return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
-	}
-
-	@ExceptionHandler(DuplicateProductException.class)
-	protected ResponseEntity<Object> handleNotSellerFoundException(DuplicateProductException ex) {
-
-		Map<String, Object> body = new LinkedHashMap<>();
-		body.put("timestamp", LocalDateTime.now());
-		body.put("message", ex.getMessage());
-
-		return new ResponseEntity<>(body, HttpStatus.CONFLICT);
-	}
 }

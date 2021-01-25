@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import ar.com.plug.examen.domain.model.Seller;
 import ar.com.plug.examen.domain.service.SellerService;
+import ar.com.plug.examen.exception.DuplicateSellerException;
 import ar.com.plug.examen.exception.NotSellerFoundException;
 import ar.com.plug.examen.repository.SellerRepository;
 
@@ -33,7 +34,15 @@ public class SellerServiceImpl implements SellerService {
 	}
 
 	@Override
-	public Seller saveOrUpdate(Seller seller) {
+	public Seller create(Seller seller) {
+		Seller sellerCreated = repository.findByDocumentId(seller.getDocumentId());
+		if(sellerCreated!=null)
+			throw new DuplicateSellerException(seller.getDocumentId());
+		return repository.save(seller);
+	}
+	
+	@Override
+	public Seller update(Seller seller) {
 		return repository.save(seller);
 	}
 	
