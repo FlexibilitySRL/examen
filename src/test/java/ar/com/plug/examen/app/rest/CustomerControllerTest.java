@@ -63,7 +63,6 @@ public class CustomerControllerTest extends ConfigTest {
 		// Create customer
 		Customer customer = createCustomer(66778899);
 		
-		customer.setDocumentId(34455667);
 		customer.setEmail("correoModificado@gmail.com");
 		customer.setMobilePhone("1145675445");
 
@@ -71,7 +70,7 @@ public class CustomerControllerTest extends ConfigTest {
 		mockMvc.perform(MockMvcRequestBuilders.put(server + port + "/customers/")
 				.content(objectMapper.writeValueAsString(customer)).contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
-				.andExpect(MockMvcResultMatchers.jsonPath("$.document_id").value("34455667"))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.document_id").value("66778899"))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.id").value(customer.getId()))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.email").value("correoModificado@gmail.com"))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.firstname").value("andres"))

@@ -61,7 +61,6 @@ public class SellerControllerTest extends ConfigTest {
 		// Create seller
 		Seller seller = createSeller(66778899);
 
-		seller.setDocumentId(34455667);
 		seller.setEmail("correoModificado@gmail.com");
 		seller.setName("jorge");
 		seller.setCompanyName("Company Home");
@@ -70,7 +69,7 @@ public class SellerControllerTest extends ConfigTest {
 		mockMvc.perform(MockMvcRequestBuilders.put(server + port + "/sellers/")
 				.content(objectMapper.writeValueAsString(seller)).contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
-				.andExpect(MockMvcResultMatchers.jsonPath("$.document_id").value("34455667"))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.document_id").value("66778899"))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.id").value(seller.getId()))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.email").value("correoModificado@gmail.com"))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.name").value("jorge"))
