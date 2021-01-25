@@ -9,4 +9,6 @@ import ar.com.plug.examen.domain.model.Seller;
 public interface SellerRepository extends CrudRepository<Seller,Long> {
 
 	Seller findByDocumentId(Long documentId);
+	
+	Seller findByIdAndDocumentId(Long id,Long documentId);
 }

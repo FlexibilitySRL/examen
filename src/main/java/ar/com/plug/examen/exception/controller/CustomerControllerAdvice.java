@@ -11,12 +11,23 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import ar.com.plug.examen.exception.DuplicateCustomerException;
+import ar.com.plug.examen.exception.NotCustomerFoundException;
 
 @ControllerAdvice
 public class CustomerControllerAdvice extends ResponseEntityExceptionHandler {
 
 	@ExceptionHandler(DuplicateCustomerException.class)
 	protected ResponseEntity<Object> handleDuplicateCustomerException(DuplicateCustomerException ex) {
+
+		Map<String, Object> body = new LinkedHashMap<>();
+		body.put("timestamp", LocalDateTime.now());
+		body.put("message", ex.getMessage());
+
+		return new ResponseEntity<>(body, HttpStatus.CONFLICT);
+	}
+	
+	@ExceptionHandler(NotCustomerFoundException.class)
+	protected ResponseEntity<Object> handleNotCustomerFoundException(NotCustomerFoundException ex) {
 
 		Map<String, Object> body = new LinkedHashMap<>();
 		body.put("timestamp", LocalDateTime.now());

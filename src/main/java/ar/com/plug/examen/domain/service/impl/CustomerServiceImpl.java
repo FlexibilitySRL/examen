@@ -45,6 +45,9 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	public Customer update(Customer customer) {
+		Customer customerDb = repository.findByIdAndDocumentId(customer.getId(),customer.getDocumentId());
+		if (customerDb == null)
+			throw new NotCustomerFoundException(customer.getId(),customer.getDocumentId());
 		return repository.save(customer);
 	}
 

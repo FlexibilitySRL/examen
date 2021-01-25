@@ -9,4 +9,6 @@ import ar.com.plug.examen.domain.model.Customer;
 public interface CustomerRepository extends CrudRepository<Customer, Long> {
 
 	Customer findByDocumentId(Long documentId);
+	
+	Customer findByIdAndDocumentId(long id,Long documentId);
 }

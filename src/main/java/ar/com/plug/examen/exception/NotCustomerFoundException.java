@@ -7,4 +7,9 @@ public class NotCustomerFoundException extends RuntimeException {
         super("No customer found for id " + id);
     }
 	
+	public NotCustomerFoundException(Long id,long documentId) {
+
+        super("No customer found for id " + id + " document_id "+documentId) ;
+    }
+	
 }

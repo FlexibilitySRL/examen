@@ -43,6 +43,10 @@ public class SellerServiceImpl implements SellerService {
 	
 	@Override
 	public Seller update(Seller seller) {
+		Seller sellerDb = repository.findByIdAndDocumentId(seller.getId(),seller.getDocumentId());
+		if (sellerDb == null)
+			throw new NotSellerFoundException(seller.getId(),seller.getDocumentId());
+		
 		return repository.save(seller);
 	}
 	

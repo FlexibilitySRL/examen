@@ -5,6 +5,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -19,18 +23,25 @@ public class Customer {
     private Long id;
 	
 	@Column
+	@Email
 	private String email;
 	
 	@Column
 	@JsonProperty(required=true)
+	@NotEmpty
+	@NotNull
 	private String firstname;
 	
 	@Column
 	@JsonProperty(required=true)
+	@NotEmpty
+	@NotNull
 	private String lastname;
 	
 	@Column
 	@JsonProperty(value="document_id",required=true)	
+	@Positive
+	@NotNull
 	private long documentId;
 	
 	@Column
