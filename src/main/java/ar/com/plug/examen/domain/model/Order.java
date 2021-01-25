@@ -11,8 +11,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.Positive;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.sun.istack.NotNull;
 
 import lombok.Data;
 
@@ -39,19 +41,22 @@ public class Order {
 	private String status;
 
 	@Column
-	@JsonProperty(value="creation_date")
+	@JsonProperty(value = "creation_date")
+	@NotNull
 	private Date creationDate;
 
 	@Column
-	@JsonProperty(required=true)
+	@JsonProperty(required = true)
+	@NotNull
+	@Positive
 	private Double amount;
 
 	@Column
-	@JsonProperty(value="operation_id")
+	@JsonProperty(value = "operation_id")
 	private String operationId;
 
 	@Column
-	@JsonProperty(value="modification_date")
+	@JsonProperty(value = "modification_date")
 	private Date modificationDate;
 
 }

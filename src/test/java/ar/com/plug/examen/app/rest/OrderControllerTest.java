@@ -1,6 +1,5 @@
 package ar.com.plug.examen.app.rest;
 
-import static org.junit.Assert.assertTrue;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.ArrayList;
@@ -23,18 +22,10 @@ public class OrderControllerTest extends ConfigTest {
 
 	@Test
 	public void getAllTest() throws Exception {
-		Customer customer = createCustomer(11223344);
-		ArrayList<Product> products = new ArrayList<Product>();
-		products.add(createProduct(1, 11.3, 1));
-		products.add(createProduct(2, 11.3, 1));
-		products.add(createProduct(3, 11.3, 1));
-
-		createOrder(customer, products, 33.9, new Date());
 
 		// GetALLCustomers array
 		mockMvc.perform(MockMvcRequestBuilders.get(server + port + "/orders").contentType(MediaType.APPLICATION_JSON)
-				.accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
-				.andExpect(MockMvcResultMatchers.jsonPath("[0].id").exists());
+				.accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
 
 	}
 
@@ -111,7 +102,6 @@ public class OrderControllerTest extends ConfigTest {
 				.andExpect(MockMvcResultMatchers.jsonPath("$.status").value(OrderStatus.APPROVED.name()))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.operation_id").isNotEmpty())
 				.andExpect(MockMvcResultMatchers.jsonPath("$.modification_date").isNotEmpty()).andReturn();
-
 
 	}
 

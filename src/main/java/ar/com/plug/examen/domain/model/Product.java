@@ -32,10 +32,12 @@ public class Product {
 	@Column(columnDefinition = "double")
 	@JsonProperty(required = true)
 	@Positive
+	@NotNull
 	private Double price;
 
 	@Column(columnDefinition = "bigint")
 	@Positive
+	@NotNull
 	@JsonProperty(required = true)
 	private int quantity;
 

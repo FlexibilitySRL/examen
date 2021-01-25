@@ -14,7 +14,7 @@ import org.springframework.util.StopWatch;
 @EnableAspectJAutoProxy
 public class LoggerApi {
 
-	private final Log log = LogFactory.getLog(this.getClass());
+	private final Log log = LogFactory.getLog(LoggerApi.class);
 
 	@Around("execution(* ar.com.plug..*.*(..))")
 	public Object logTimeMethod(ProceedingJoinPoint joinPoint) throws Throwable {
