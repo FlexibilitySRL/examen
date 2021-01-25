@@ -12,10 +12,8 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.RequestBodyAdviceAdapter;
 
 import ar.com.plug.examen.log.LoggingService;
-import lombok.Data;
 
 @ControllerAdvice
-@Data
 public class CustomRequestBodyAdviceAdapter extends RequestBodyAdviceAdapter {
 
 	@Autowired
