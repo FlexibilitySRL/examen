@@ -64,16 +64,6 @@ public class ProductServiceImpl implements ProductService {
 			if (!product.getPrice().equals(productCreated.getPrice()))
 				throw new ProductPriceException(product.getName());
 		}
-	}
-
-	@Override
-	public void updateQuantityDecrement(List<Product> products) {
-		for (Product product : products) {
-			Product productCreated = getProductById(product.getId());
-			int quantityNew = productCreated.getQuantity() - product.getQuantity();
-			productCreated.setQuantity(quantityNew);
-			updateProduct(productCreated);
-		}
-	}
+	}	
 
 }

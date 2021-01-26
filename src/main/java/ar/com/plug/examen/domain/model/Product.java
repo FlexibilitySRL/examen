@@ -39,8 +39,8 @@ public class Product {
 	@Column(columnDefinition = "bigint")
 	@Positive
 	@NotNull
-	@JsonProperty(value="stock",required = true)
-	@JsonAlias(value="quantity")
+	@JsonProperty(value="quantity",required = true)
+	@JsonAlias(value="stock")
 	private int quantity;
 
 }

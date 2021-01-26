@@ -18,6 +18,4 @@ public interface ProductService {
 	
 	public void validateProducts(List<Product> products);
 	
-	public void updateQuantityDecrement(List<Product> products);
-		
 }

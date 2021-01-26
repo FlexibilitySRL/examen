@@ -83,7 +83,6 @@ public class OrderServiceImpl implements OrderService {
 		order.setModificationDate(new Date());
 		order.setStatus(OrderStatus.APPROVED.name());
 		order.setSeller(seller);
-		updateQuantityDecrement(order.getProducts());
 		order.setOperationId(UUID.randomUUID().toString());
 		return repository.save(order);
 	}
@@ -96,7 +95,6 @@ public class OrderServiceImpl implements OrderService {
 		BigDecimal subTotal = new BigDecimal(0);
 		BigDecimal partialSum;
 		for (Product product : products) {
-			// subTotal = subTotal + product.getPrice() * product.getQuantity();
 			BigDecimal price = new BigDecimal(product.getPrice()).setScale(2, RoundingMode.HALF_UP);
 			BigDecimal quantity = new BigDecimal(product.getQuantity());
 			partialSum = price.multiply(quantity);
@@ -105,10 +103,6 @@ public class OrderServiceImpl implements OrderService {
 
 		if (!subTotal.equals(new BigDecimal(amount).setScale(2, RoundingMode.HALF_UP)))
 			throw new OrderAmountException();
-	}
-
-	private void updateQuantityDecrement(List<Product> products) {
-		productService.updateQuantityDecrement(products);
 	}
 
 	@Override
