@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import ar.com.plug.examen.exception.DeleteCustomerException;
 import ar.com.plug.examen.exception.DuplicateCustomerException;
 import ar.com.plug.examen.exception.NotCustomerFoundException;
 
@@ -25,9 +26,19 @@ public class CustomerControllerAdvice extends ResponseEntityExceptionHandler {
 
 		return new ResponseEntity<>(body, HttpStatus.CONFLICT);
 	}
-	
+
 	@ExceptionHandler(NotCustomerFoundException.class)
 	protected ResponseEntity<Object> handleNotCustomerFoundException(NotCustomerFoundException ex) {
+
+		Map<String, Object> body = new LinkedHashMap<>();
+		body.put("timestamp", LocalDateTime.now());
+		body.put("message", ex.getMessage());
+
+		return new ResponseEntity<>(body, HttpStatus.CONFLICT);
+	}
+
+	@ExceptionHandler(DeleteCustomerException.class)
+	protected ResponseEntity<Object> handleDeleteCustomerException(DeleteCustomerException ex) {
 
 		Map<String, Object> body = new LinkedHashMap<>();
 		body.put("timestamp", LocalDateTime.now());

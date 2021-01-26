@@ -39,7 +39,7 @@ public class CustomerController {
 	}
 
 	@DeleteMapping(path = "/customers/{customerid}", produces = { MediaType.APPLICATION_JSON_VALUE })
-	public ResponseEntity<?> deleteProduct(@PathVariable Long customerid) {
+	public ResponseEntity<?> deleteCustomer(@PathVariable Long customerid) {
 		service.deleteCustomer(customerid);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}

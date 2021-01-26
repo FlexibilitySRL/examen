@@ -3,10 +3,12 @@ package ar.com.plug.examen.domain.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import ar.com.plug.examen.domain.model.Seller;
 import ar.com.plug.examen.domain.service.SellerService;
+import ar.com.plug.examen.exception.DeleteProductException;
 import ar.com.plug.examen.exception.DuplicateSellerException;
 import ar.com.plug.examen.exception.NotSellerFoundException;
 import ar.com.plug.examen.repository.SellerRepository;
@@ -30,7 +32,11 @@ public class SellerServiceImpl implements SellerService {
 
 	@Override
 	public void deleteSeller(Long id) {
+		try {
 		repository.deleteById(id);
+	} catch (DataIntegrityViolationException ex) {
+		throw new DeleteProductException(id);
+	}
 	}
 
 	@Override

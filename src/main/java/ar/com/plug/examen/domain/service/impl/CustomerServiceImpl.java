@@ -3,10 +3,12 @@ package ar.com.plug.examen.domain.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import ar.com.plug.examen.domain.model.Customer;
 import ar.com.plug.examen.domain.service.CustomerService;
+import ar.com.plug.examen.exception.DeleteCustomerException;
 import ar.com.plug.examen.exception.DuplicateCustomerException;
 import ar.com.plug.examen.exception.NotCustomerFoundException;
 import ar.com.plug.examen.repository.CustomerRepository;
@@ -32,7 +34,11 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	public void deleteCustomer(Long id) {
-		repository.deleteById(id);
+		try {
+			repository.deleteById(id);
+		} catch (DataIntegrityViolationException ex) {
+			throw new DeleteCustomerException(id);
+		}
 	}
 
 	@Override
@@ -45,9 +51,9 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	public Customer update(Customer customer) {
-		Customer customerDb = repository.findByIdAndDocumentId(customer.getId(),customer.getDocumentId());
+		Customer customerDb = repository.findByIdAndDocumentId(customer.getId(), customer.getDocumentId());
 		if (customerDb == null)
-			throw new NotCustomerFoundException(customer.getId(),customer.getDocumentId());
+			throw new NotCustomerFoundException(customer.getId(), customer.getDocumentId());
 		return repository.save(customer);
 	}
 
