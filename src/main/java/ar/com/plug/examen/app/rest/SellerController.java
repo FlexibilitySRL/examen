@@ -37,7 +37,7 @@ public class SellerController {
 	}
 
 	@DeleteMapping(path = "/sellers/{sellerid}", produces = { MediaType.APPLICATION_JSON_VALUE })
-	public ResponseEntity<?> deleteProduct(@PathVariable Long sellerid) {
+	public ResponseEntity<?> deleteSeller(@PathVariable Long sellerid) {
 		service.deleteSeller(sellerid);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
@@ -50,13 +50,13 @@ public class SellerController {
 
 	@PostMapping(path = "/sellers", produces = {
 			MediaType.APPLICATION_JSON_VALUE }, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Seller> createProduct(@Valid @RequestBody Seller seller) {
+	public ResponseEntity<Seller> createSeller(@Valid @RequestBody Seller seller) {
 		return  new ResponseEntity<Seller>(service.create(seller), HttpStatus.CREATED);
 	}
 
 	@PutMapping(path = "/sellers", produces = {
 			MediaType.APPLICATION_JSON_VALUE }, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Seller> updateProduct(@Valid @RequestBody Seller seller) {
+	public ResponseEntity<Seller> updateSeller(@Valid @RequestBody Seller seller) {
 		return new ResponseEntity<Seller>(service.update(seller), HttpStatus.OK);
 	}
 	

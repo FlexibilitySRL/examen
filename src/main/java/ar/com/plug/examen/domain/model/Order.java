@@ -10,7 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.Positive;
 
@@ -27,7 +27,7 @@ public class Order {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@OneToMany(targetEntity = Product.class,fetch = FetchType.EAGER)
+	@ManyToMany(targetEntity = Product.class, fetch = FetchType.EAGER)
 	private List<Product> products;
 
 	@OneToOne
