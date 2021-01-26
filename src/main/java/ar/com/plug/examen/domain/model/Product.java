@@ -7,6 +7,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.Data;
@@ -39,6 +40,7 @@ public class Product {
 	@Positive
 	@NotNull
 	@JsonProperty(value="stock",required = true)
+	@JsonAlias(value="quantity")
 	private int quantity;
 
 }
