@@ -12,4 +12,8 @@ public interface OrderRepository extends CrudRepository<Order,Long> {
 
 	public List<Order> findByStatus(String status);
 	
+	public List<Order> findByProductsIdIn(List<Long> productId);
+	
+	public List<Order> findByStatusAndProductsIdIn(String status, List<Long> productId);
+	
 }

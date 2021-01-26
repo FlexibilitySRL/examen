@@ -3,10 +3,12 @@ package ar.com.plug.examen.domain.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import ar.com.plug.examen.domain.model.Product;
 import ar.com.plug.examen.domain.service.ProductService;
+import ar.com.plug.examen.exception.DeleteProductException;
 import ar.com.plug.examen.exception.DuplicateProductException;
 import ar.com.plug.examen.exception.NotProductFoundException;
 import ar.com.plug.examen.exception.ProductPriceException;
@@ -27,7 +29,11 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public void deleteProduct(Long id) {
-		repository.deleteById(id);
+		try {
+			repository.deleteById(id);
+		} catch (DataIntegrityViolationException ex) {
+			throw new DeleteProductException(id);
+		}
 	}
 
 	@Override
@@ -61,20 +67,10 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public void updateQuantityIncrement(List<Product> products) {
-		for (Product product : products) {
-			Product productCreated = getProductById(product.getId());
-			int quantityNew = product.getQuantity() + productCreated.getQuantity();
-			productCreated.setQuantity(quantityNew);
-			updateProduct(productCreated);
-		}
-	}
-	
-	@Override
 	public void updateQuantityDecrement(List<Product> products) {
 		for (Product product : products) {
 			Product productCreated = getProductById(product.getId());
-			int quantityNew =   productCreated.getQuantity() - product.getQuantity();
+			int quantityNew = productCreated.getQuantity() - product.getQuantity();
 			productCreated.setQuantity(quantityNew);
 			updateProduct(productCreated);
 		}

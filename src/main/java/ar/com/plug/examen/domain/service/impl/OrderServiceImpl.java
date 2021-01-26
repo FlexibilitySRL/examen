@@ -8,6 +8,7 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import ar.com.plug.examen.domain.model.Customer;
 import ar.com.plug.examen.domain.model.Order;
@@ -57,15 +58,7 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public Order cancelOrder(Long id) {
 		Order order = repository.findById(id).orElseThrow(() -> new NotDataFoundException(id));
-
-		if (!OrderStatus.PENDING.name().equals(order.getStatus()))
-			throw new OrderStatusException();
-
-		order.setStatus(OrderStatus.CANCELED.name());
-		order.setModificationDate(new Date());
-		updateQuantityIncrement(order.getProducts());
-
-		repository.save(order);
+		repository.delete(order);
 		return order;
 	}
 
@@ -75,7 +68,6 @@ public class OrderServiceImpl implements OrderService {
 		order.setCustomer(customer);
 		validateAmount(order.getAmount(), order.getProducts());
 		validateProducts(order.getProducts());
-		updateQuantityDecrement(order.getProducts());
 		order.setStatus(OrderStatus.PENDING.name());
 		return repository.save(order);
 	}
@@ -83,14 +75,15 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public Order approve(Long orderId, Long sellerId) {
 		Order order = repository.findById(orderId).orElseThrow(() -> new NotOrderFoundException(orderId));
-		
+
 		if (!OrderStatus.PENDING.name().equals(order.getStatus()))
 			throw new OrderStatusException();
-		
+
 		Seller seller = sellerService.getSellerById(sellerId);
 		order.setModificationDate(new Date());
 		order.setStatus(OrderStatus.APPROVED.name());
 		order.setSeller(seller);
+		updateQuantityDecrement(order.getProducts());
 		order.setOperationId(UUID.randomUUID().toString());
 		return repository.save(order);
 	}
@@ -103,7 +96,7 @@ public class OrderServiceImpl implements OrderService {
 		BigDecimal subTotal = new BigDecimal(0);
 		BigDecimal partialSum;
 		for (Product product : products) {
-			//subTotal = subTotal + product.getPrice() * product.getQuantity();
+			// subTotal = subTotal + product.getPrice() * product.getQuantity();
 			BigDecimal price = new BigDecimal(product.getPrice()).setScale(2, RoundingMode.HALF_UP);
 			BigDecimal quantity = new BigDecimal(product.getQuantity());
 			partialSum = price.multiply(quantity);
@@ -118,8 +111,26 @@ public class OrderServiceImpl implements OrderService {
 		productService.updateQuantityDecrement(products);
 	}
 
-	private void updateQuantityIncrement(List<Product> products) {
-		productService.updateQuantityIncrement(products);
+	@Override
+	public List<Order> getOrderFiltering(String status, List<Long> productId) {
+		if (StringUtils.hasText(status) && productId == null)
+			return getAllOrdersByStatus(status);
+		if (productId != null && !StringUtils.hasText(status))
+			return getAllOrdersByProductIds(productId);
+		if (productId != null && StringUtils.hasText(status))
+			return getAllOrdersByStatusAndProducsIds(status, productId);
+		if (productId == null && !StringUtils.hasText(status))
+			return getAllOrders();
+		return null;
+	}
+
+	@Override
+	public List<Order> getAllOrdersByProductIds(List<Long> productId) {
+		return (List<Order>) repository.findByProductsIdIn(productId);
+	}
+
+	public List<Order> getAllOrdersByStatusAndProducsIds(String status, List<Long> productId) {
+		return (List<Order>) repository.findByStatusAndProductsIdIn(status, productId);
 	}
 
 }

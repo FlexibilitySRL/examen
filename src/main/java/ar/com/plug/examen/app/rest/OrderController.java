@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -34,12 +33,9 @@ public class OrderController {
 	private OrderService service;
 
 	@GetMapping(path = "/orders", produces = { MediaType.APPLICATION_JSON_VALUE })
-	public ResponseEntity<?> getAllOrdersByStatus(@RequestParam(value = "status", required = false) String status) {
-		List<Order> orders;
-		if (StringUtils.hasText(status))
-			orders = service.getAllOrdersByStatus(status);
-		else
-			orders = service.getAllOrders();
+	public ResponseEntity<?> getAllOrdersByStatus(@RequestParam(value = "status", required = false) String status,
+			@RequestParam(value = "productid", required = false) List <Long> productid) {
+		List<Order> orders = service.getOrderFiltering(status, productid);
 		return new ResponseEntity<>(orders, HttpStatus.OK);
 	}
 
