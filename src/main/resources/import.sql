@@ -1,0 +1,32 @@
+INSERT INTO clientes (nombre,apellido,direccion,telefono,documento,num_cliente) values('Jacinto','Garcia','Siempre viva 123','12345678','11111111',72);
+INSERT INTO clientes (nombre,apellido,direccion,telefono,documento,num_cliente) values('Julia','Gonzales','Congreso 1234','15263487','11111112',100);
+INSERT INTO clientes (nombre,apellido,direccion,telefono,documento,num_cliente) values('Felipe','Perez','Lavalle 1542','15362654','11111113',22);
+INSERT INTO clientes (nombre,apellido,direccion,telefono,documento,num_cliente) values('Alberto','Rodriguez','Av. 9 de julio 124','13261548','11111114',39);
+INSERT INTO clientes (nombre,apellido,direccion,telefono,documento,num_cliente) values('Sergio','Laconte','Mitre 1245','16121514','11111115',45);
+INSERT INTO clientes (nombre,apellido,direccion,telefono,documento,num_cliente) values('Mauricio','Lele','Venezuela 123','35659584','11111116',01);
+INSERT INTO clientes (nombre,apellido,direccion,telefono,documento,num_cliente) values('Patricia','Posima','Rivadavia 1283','95628451','11111117',192);
+INSERT INTO clientes (nombre,apellido,direccion,telefono,documento,num_cliente) values('Ruben','Lopez','Esquel 785','15264875','11111118',302);
+INSERT INTO clientes (nombre,apellido,direccion,telefono,documento,num_cliente) values('Cecilia','Canilla','Caseros 195','65987545','11111119',137);
+INSERT INTO clientes (nombre,apellido,direccion,telefono,documento,num_cliente) values('Marina','Felide','Balcarce 45','51575953','11111120',95);
+INSERT INTO productos (nombre,marca,tamanio,precio,stock) values('jabon','Skip','900 ml',272.00,10);
+INSERT INTO productos (nombre,marca,tamanio,precio,stock) values('jabon','Skip','900 ml',82.00,10);
+INSERT INTO productos (nombre,marca,tamanio,precio,stock) values('jabon','Skip','900 ml',479.00,10);
+INSERT INTO productos (nombre,marca,tamanio,precio,stock) values('jabon','Skip','900 ml',795.00,10);
+INSERT INTO productos (nombre,marca,tamanio,precio,stock) values('jabon','Skip','900 ml',280.00,10);
+INSERT INTO productos (nombre,marca,tamanio,precio,stock) values('jabon','Skip','900 ml',69.00,10);
+INSERT INTO productos (nombre,marca,tamanio,precio,stock) values('jabon','Skip','900 ml',115.00,10);
+INSERT INTO productos (nombre,marca,tamanio,precio,stock) values('jabon','Skip','900 ml',290.00,10);
+INSERT INTO productos (nombre,marca,tamanio,precio,stock) values('jabon','Skip','900 ml',355.00,10);
+INSERT INTO productos (nombre,marca,tamanio,precio,stock) values('jabon','Skip','900 ml',349.00,10);
+INSERT INTO vendedores (nombre,apellido,documento,num_legajo) values('Ricardo','Bitcoin','22222222',875);
+INSERT INTO vendedores (nombre,apellido,documento,num_legajo) values('Felipe','Eternum','22222223',902);
+INSERT INTO vendedores (nombre,apellido,documento,num_legajo) values('Julian','Perez','22222224',842);
+INSERT INTO vendedores (nombre,apellido,documento,num_legajo) values('Juan','Gonzalez','22222225',922);
+INSERT INTO vendedores (nombre,apellido,documento,num_legajo) values('Pepito','Garcia','22222226',602);
+INSERT INTO vendedores (nombre,apellido,documento,num_legajo) values('Maria','Lupita','22222227',130);
+INSERT INTO vendedores (nombre,apellido,documento,num_legajo) values('Julieta','Asisco','22222228',183);
+INSERT INTO vendedores (nombre,apellido,documento,num_legajo) values('Rosario','Leguia','22222229',450);
+INSERT INTO vendedores (nombre,apellido,documento,num_legajo) values('Esteban','Legado','22222230',003);
+INSERT INTO vendedores (nombre,apellido,documento,num_legajo) values('Camila','Quito','22222221',457);
+
+
