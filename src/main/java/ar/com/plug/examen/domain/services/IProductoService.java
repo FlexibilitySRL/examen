@@ -1,6 +1,5 @@
 package ar.com.plug.examen.domain.services;
 
-import ar.com.plug.examen.domain.dtos.ClienteDTO;
 import ar.com.plug.examen.domain.dtos.ProductoDTO;
 
 import java.util.List;

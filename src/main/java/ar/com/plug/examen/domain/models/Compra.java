@@ -15,7 +15,7 @@ public class Compra implements Serializable, Comparable{
     @ManyToOne(cascade = CascadeType.MERGE,fetch = FetchType.LAZY)
     private Cliente clienteId;
     @JoinColumn(name="vendedores", referencedColumnName = "id")
-    @ManyToOne (cascade = CascadeType.MERGE,fetch = FetchType.LAZY)
+    @OneToOne (cascade = CascadeType.MERGE,fetch = FetchType.LAZY)
     private Vendedor vendedorId;
 
     @JoinColumn(name="productos", referencedColumnName = "id")

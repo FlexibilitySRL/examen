@@ -1,8 +1,6 @@
 package ar.com.plug.examen.domain.serviceimpl;
 
-import ar.com.plug.examen.domain.dtos.ClienteDTO;
 import ar.com.plug.examen.domain.dtos.CompraDTO;
-import ar.com.plug.examen.domain.dtos.VendedorDTO;
 import ar.com.plug.examen.domain.mappers.ClienteMapper;
 import ar.com.plug.examen.domain.mappers.CompraMapper;
 import ar.com.plug.examen.domain.mappers.ProductoMapper;
@@ -19,7 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -29,46 +26,23 @@ public class CompraServiceImpl implements ICompraService{
     private final static Logger LOGGER = Logger.getLogger("domain.serviceimpl.CompraServiceImpl");
 
     @Autowired
-    private CompraMapper compraMapper;
-    @Autowired
-    private ClienteMapper clienteMapper;
-    @Autowired
-    private ProductoMapper productoMapper;
-    @Autowired
-    private VendedorMapper vendedorMapper;
-    @Autowired
     private CompraRepository compraRepository;
     @Autowired
     private ProductoRepository productoRepository;
     @Autowired
-    ClienteRepository clienteRepository;
-    @Autowired
-    private VendedorRepository vendedorRepository;
+    private CompraMapper compraMapper;
 
     @Override
     public List<CompraDTO> getAll() {
-
-        List<CompraDTO> listDto = new ArrayList<>();
-
+        List<CompraDTO> list = null;
         try {
-            List<Compra> list= compraRepository.findAll();
-            for (Compra c: list
-                 ) {
-                CompraDTO compradto = new CompraDTO();
-                compradto.setCliente(clienteMapper.toDto(clienteRepository.getOne(c.getCliente().getId())));
-                compradto.setVendedor(vendedorMapper.toDto(vendedorRepository.getOne(c.getVendedor().getId())));
-                compradto.setProductos(c.getProductos().stream().map(productoDTO -> productoMapper.toDto(productoRepository.getOne(productoDTO.getId()))).collect(Collectors.toList()));
-                compradto.setImpuestos(c.getImpuestos());
-                compradto.setMedioDePago(c.getMedioDePago());
-                compradto.setPrecioSinIva(c.getPrecioSinIva());
-                listDto.add(compradto);
+            list= compraRepository.findAll().stream().map(compra -> compraMapper.toDto(compra)).collect(Collectors.toList());
 
-            }
         } catch (Exception e) {
             LOGGER.info(e.getMessage());
 
         }
-        return listDto;
+        return list;
     }
 
     @Override
@@ -85,17 +59,10 @@ public class CompraServiceImpl implements ICompraService{
                 TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
             }
         });
-        Compra compra1 = new Compra();
+        LOGGER.info("El cliente"+compra.getCliente().getNombre()+" gasto:"+compra.getPrecioSinIva());
+        return compraMapper.toDto(compraRepository.save(compraMapper.toModel(compra)));
 
-        compra1.setCliente(clienteRepository.findById(compra.getCliente().getId()).get());
-        compra1.setVendedor(vendedorRepository.findById(compra.getVendedor().getId()).get());
-        compra1.setProductos(compra.getProductos().stream().map(productoDTO -> productoRepository.findById(productoDTO.getId()).get()).collect(Collectors.toList()));
-        compra1.setImpuestos(compra.getImpuestos());
-        compra1.setMedioDePago(compra.getMedioDePago());
-        compra1.setPrecioSinIva(compra.getPrecioSinIva());
-        Compra compra2 = compraRepository.save(compra1);
-        LOGGER.info("El cliente"+compra2.getCliente().getNombre()+" gasto:"+compra2.getPrecioSinIva());
-        return new CompraDTO();
+
     }
 
     @Override

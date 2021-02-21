@@ -48,26 +48,4 @@ public class VendedorServiceImpl implements IVendedorService {
             LOGGER.info(e.getMessage());
         }
     }
-
-    //Getters and Setters
-
-    public static Logger getLOGGER() {
-        return LOGGER;
-    }
-
-    public VendedorRepository getVendedorRepository() {
-        return vendedorRepository;
-    }
-
-    public void setVendedorRepository(VendedorRepository vendedorRepository) {
-        this.vendedorRepository = vendedorRepository;
-    }
-
-    public VendedorMapper getVendedorMapper() {
-        return vendedorMapper;
-    }
-
-    public void setVendedorMapper(VendedorMapper vendedorMapper) {
-        this.vendedorMapper = vendedorMapper;
-    }
 }

@@ -23,20 +23,5 @@ public class VendedorServiceTest {
     @Test
     public void testGetVendedores() {
 
-        VendedorServiceImpl vendedorService = new VendedorServiceImpl();
-        vendedorService.setVendedorRepository(Mockito.mock(VendedorRepository.class));
-        vendedorService.setVendedorMapper(Mockito.mock(VendedorMapper.class));
-
-        VendedorDTO v = new VendedorDTO();
-        v.setApellido("olala");
-        v.setDocumento("12333333");
-        v.setNombre("hernan");
-        v.setNumLegajo(12345);
-        VendedorDTO ultimo =vendedorService.save(v);
-
-        //int total =vendedorService.getAll().size();
-        Mockito.when(vendedorService.getAll());
-
-        Assert.assertEquals(12345,ultimo.getNumLegajo() );
     }
 }
