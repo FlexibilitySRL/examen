@@ -10,7 +10,7 @@ spring:
   datasource:
       url: jdbc:mysql://127.0.0.1:3306/payments?zeroDateTimeBehavior=convertToNull
       username: root
-      password: password
+      password: 1234
 
 server:
   port: 8080
