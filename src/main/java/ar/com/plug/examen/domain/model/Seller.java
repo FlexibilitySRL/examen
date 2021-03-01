@@ -1,5 +1,4 @@
 package ar.com.plug.examen.domain.model;
-import javax.persistence.OneToMany;
 
 import java.io.Serializable;
 import java.util.List;
@@ -7,13 +6,16 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Table;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
 @Table
-public class Client implements Serializable{
-	
+public class Seller implements Serializable{
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -25,9 +27,9 @@ public class Client implements Serializable{
 	@OneToMany(mappedBy="client", cascade= CascadeType.ALL)
 	private List<Transaction> transactions;
 	
-	public Client () {}
+	public Seller () {}
 	
-	public Client (Long id, String name) {
+	public Seller(Long id, String name) {
 		this.id = id;
 		this.name = name;
 	}
