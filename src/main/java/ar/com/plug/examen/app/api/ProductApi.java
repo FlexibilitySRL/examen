@@ -1,27 +1,21 @@
-package ar.com.plug.examen.domain.model;
+package ar.com.plug.examen.app.api;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-@Entity
-@Table
-public class Product {
-	
-	@Id
+public class ProductApi {
 	private Long id;
-	
-	@Column
+
 	private String name;
-	
-	@Column
+
 	private Double price;
-	
-	public Product() {}
-	
-	public Product(Long id, String name, Double price) {
-		this.id=  id;
+
+	public ProductApi() { }
+
+	public ProductApi(Long id, String name, Double price) {
+		this.id = id;
+		this.name = name;
+		this.price = price;
+	}
+
+	public ProductApi(String name, Double price) {
 		this.name = name;
 		this.price = price;
 	}
@@ -49,5 +43,6 @@ public class Product {
 	public void setPrice(Double price) {
 		this.price = price;
 	}
+	
 	
 }

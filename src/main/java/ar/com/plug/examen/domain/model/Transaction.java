@@ -2,13 +2,16 @@ package ar.com.plug.examen.domain.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import ar.com.plug.examen.domain.Enums.TransactionStatusEnum;
@@ -25,17 +28,12 @@ public class Transaction implements Serializable{
 	@Column
 	private TransactionStatusEnum status;
 	
-	@Column
-	private String details; //TransactionDetails should be another entity, but I leave it this way to keep it simple on the exam
-	
-	@Column
-	private Long number;
+	@OneToMany(mappedBy = "transaction", cascade = CascadeType.ALL)
+	private List<TransactionDetail> details;
 	
 	@Column
 	private Date date;
 
-	@Column
-	private Long amount;
 	
 	@Column
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -49,7 +47,7 @@ public class Transaction implements Serializable{
 	
 	public Transaction () {}
 	
-	public Transaction (Long id, TransactionStatusEnum status, String details, Long number, Date date, Client client, Seller seller) {
+	public Transaction (Long id, TransactionStatusEnum status, List<TransactionDetail> details, Long number, Date date, Client client, Seller seller) {
 		this.id = id;
 		this.status = status;
 		this.details = details;
@@ -74,36 +72,12 @@ public class Transaction implements Serializable{
 		this.status = status;
 	}
 
-	public String getDetails() {
-		return details;
-	}
-
-	public void setDetails(String details) {
-		this.details = details;
-	}
-
-	public Long getNumber() {
-		return number;
-	}
-
-	public void setNumber(Long number) {
-		this.number = number;
-	}
-
 	public Date getDate() {
 		return date;
 	}
 
 	public void setDate(Date date) {
 		this.date = date;
-	}
-
-	public Long getAmount() {
-		return amount;
-	}
-
-	public void setAmount(Long amount) {
-		this.amount = amount;
 	}
 
 	public Client getClient() {
