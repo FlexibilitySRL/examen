@@ -1,0 +1,8 @@
+ar.com.plug.examen
+ar.com.plug.examen.app.api
+ar.com.plug.examen.app.rest
+ar.com.plug.examen.domain.exception
+ar.com.plug.examen.domain.model
+ar.com.plug.examen.domain.repository
+ar.com.plug.examen.domain.service
+ar.com.plug.examen.domain.service.impl
