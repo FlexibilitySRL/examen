@@ -29,7 +29,7 @@ public class Transaction implements Serializable{
 	private TransactionStatusEnum status;
 	
 	@OneToMany(mappedBy = "transaction", cascade = CascadeType.ALL)
-	private List<TransactionDetail> details;
+	private List<TransactionDetail> detail;
 	
 	@Column
 	private Date date;
@@ -47,10 +47,18 @@ public class Transaction implements Serializable{
 	
 	public Transaction () {}
 	
-	public Transaction (Long id, TransactionStatusEnum status, List<TransactionDetail> details, Long number, Date date, Client client, Seller seller) {
+	public Transaction (Long id, Client client, Seller seller, List<TransactionDetail> detail, TransactionStatusEnum status, Date date) {
 		this.id = id;
 		this.status = status;
-		this.details = details;
+		this.detail = detail;
+		this.date = date;
+		this.client = client;
+		this.seller = seller;
+	}
+	
+	public Transaction (Client client, Seller seller, List<TransactionDetail> detail, TransactionStatusEnum status, Date date ) {
+		this.status = status;
+		this.detail = detail;
 		this.date = date;
 		this.client = client;
 		this.seller = seller;
@@ -95,4 +103,13 @@ public class Transaction implements Serializable{
 	public void setSeller(Seller seller) {
 		this.seller = seller;
 	}
+
+	public List<TransactionDetail> getDetail() {
+		return detail;
+	}
+
+	public void setDetail(List<TransactionDetail> detail) {
+		this.detail = detail;
+	}
+	
 }

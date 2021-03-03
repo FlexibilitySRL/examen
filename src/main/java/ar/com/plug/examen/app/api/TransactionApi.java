@@ -1,6 +1,7 @@
 package ar.com.plug.examen.app.api;
 
 import java.util.Date;
+import java.util.List;
 
 import ar.com.plug.examen.domain.Enums.TransactionStatusEnum;
 
@@ -10,11 +11,9 @@ public class TransactionApi {
 
 	private TransactionStatusEnum status;
 	
-	private String transactionDetail;
+	private List<TransactionDetailApi> detail;
 	
 	private Date date;
-
-	private Long amount;
 	
 	private ClientApi client;
 	
@@ -23,13 +22,13 @@ public class TransactionApi {
 	public TransactionApi() { }
 
 	public TransactionApi(Long id, ClientApi client, SellerApi seller, TransactionStatusEnum status, Date date,
-			String transactionDetail) {
+			List<TransactionDetailApi> detail) {
 		this.id = id;
 		this.client = client;
 		this.seller = seller;
 		this.status = status;
 		this.date = date;
-		this.transactionDetail = transactionDetail;
+		this.detail = detail;
 	}
 
 	public Long getId() {
@@ -48,12 +47,12 @@ public class TransactionApi {
 		this.status = status;
 	}
 
-	public String getTransactionDetail() {
-		return transactionDetail;
+	public List<TransactionDetailApi> getDetail() {
+		return detail;
 	}
 
-	public void setTransactionDetail(String transactionDetail) {
-		this.transactionDetail = transactionDetail;
+	public void setDetail(List<TransactionDetailApi> detail) {
+		this.detail = detail;
 	}
 
 	public Date getDate() {
@@ -62,14 +61,6 @@ public class TransactionApi {
 
 	public void setDate(Date date) {
 		this.date = date;
-	}
-
-	public Long getAmount() {
-		return amount;
-	}
-
-	public void setAmount(Long amount) {
-		this.amount = amount;
 	}
 
 	public ClientApi getClient() {
