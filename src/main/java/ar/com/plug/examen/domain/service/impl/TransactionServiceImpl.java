@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ar.com.plug.examen.app.api.TransactionApi;
 import ar.com.plug.examen.domain.Enums.TransactionStatusEnum;
 import ar.com.plug.examen.domain.Exeptions.BadRequestException;
+import ar.com.plug.examen.domain.Exeptions.NotFoundException;
 import ar.com.plug.examen.domain.Repository.ClientRepository;
 import ar.com.plug.examen.domain.Repository.ProductRepository;
 import ar.com.plug.examen.domain.Repository.SellerRepository;
@@ -28,7 +29,6 @@ import ar.com.plug.examen.domain.model.TransactionDetail;
 import ar.com.plug.examen.domain.service.ConverterService;
 import ar.com.plug.examen.domain.service.TransactionService;
 import ar.com.plug.examen.domain.service.ValidatorService;
-import javassist.NotFoundException;
 
 @Service
 public class TransactionServiceImpl implements TransactionService {
@@ -59,7 +59,9 @@ public class TransactionServiceImpl implements TransactionService {
 	ValidatorService validators;
 
 	/**
-	 * @return The complete list of existent transactions
+	 * The complete list of existent transactions
+	 * @param void
+	 * @return List<TransactionApi>
 	 */
 	@Override
 	@Transactional
@@ -73,7 +75,9 @@ public class TransactionServiceImpl implements TransactionService {
 	/**
 	 * Persists a new transaction
 	 * The provided client, seller and products must already exist
-	 * @return Saved transaction with its entire detail
+	 * Receives the new transaction Returns the saved transaction with its entire detail
+	 * @param TransactionApi transaction
+	 * @return TransactionApi
 	 */
 	@Override
 	@Transactional
@@ -96,7 +100,7 @@ public class TransactionServiceImpl implements TransactionService {
 		List<Long> requestedProducts = detail.parallelStream().map(item -> item.getProduct().getId()).collect(Collectors.toList());
 		List<Product> existingProducts = productRepository.findAllById(requestedProducts);
 		if (requestedProducts.size() != existingProducts.size()) {
-    		throw new NotFoundException("Product");
+    		throw NotFoundException.unableToFindException("Product");
 		}
 		logger.info("Validation Successful!");
 
@@ -112,6 +116,9 @@ public class TransactionServiceImpl implements TransactionService {
 
 	/**
 	 * Removes an existing transaction by its id
+	 * @param long transactionId
+	 * @return void
+	 * @throw NotFoundException
 	 */
 	@Override
 	@Transactional
@@ -122,14 +129,18 @@ public class TransactionServiceImpl implements TransactionService {
 	    	transactionRepository.delete(persisted);
 	    	logger.info(String.format("%1$s successfully deleted!", ENTITY)); 
 		} catch (NoSuchElementException nse) {
-    		throw new NotFoundException("Transaction not found");
+    		throw NotFoundException.unableToFindException("Transaction");
 		}
     }
 
 	/**
 	 * Searches an existing transaction by its id and sets a new status
-	 * The provided status must be different from the current one, and the new status must be a valid one
-	 * @return The updated transaction
+	 * The provided status must be different from the current one, and the new status must be a valid one.
+	 * Receives the transaction id and the new status, returns the updated transaction
+	 * 
+	 * @param long id
+	 * @param TransactionStatusEnum status
+	 * @return TransactionApi transaction
 	 */
 	@Override
 	@Transactional
@@ -156,7 +167,10 @@ public class TransactionServiceImpl implements TransactionService {
 
 	/**
 	 * Multiplies every product on a transaction detail by the declared quantity
-	 * @return The total amount of the transaction
+	 * Receives the transaction id and returns the total amount of the transaction
+	 * @param long transactionId
+	 * @return Double totalAmount
+	 * @throw NotFoundException
 	 */
 	@Override
 	@Transactional

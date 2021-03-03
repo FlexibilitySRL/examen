@@ -28,19 +28,16 @@ public class Transaction implements Serializable{
 	@Column
 	private TransactionStatusEnum status;
 	
-	@OneToMany(mappedBy = "transaction", cascade = CascadeType.ALL)
-	private List<TransactionDetail> detail;
-	
 	@Column
 	private Date date;
-
 	
-	@Column
+	@OneToMany(mappedBy = "transaction", cascade = CascadeType.ALL)
+	private List<TransactionDetail> detail;
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_client", referencedColumnName = "id")
 	private Client client;
 	
-	@Column
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_seller", referencedColumnName = "id")
 	private Seller seller;

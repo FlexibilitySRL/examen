@@ -12,7 +12,7 @@ import ar.com.plug.examen.domain.model.Seller;
 @Repository
 public interface SellerRepository extends JpaRepository<Seller, Long> {
 
-	@Query(value = "SELECT p FROM Seller p WHERE LOWER(p.name) LIKE LOWER(CONCAT('%', :name, '%'))")
+	@Query(value = "SELECT s FROM Seller s WHERE LOWER(s.name) LIKE LOWER(CONCAT('%', :name, '%'))")
 	List<Seller> findByName(@Param("name") String name);
 
 }
