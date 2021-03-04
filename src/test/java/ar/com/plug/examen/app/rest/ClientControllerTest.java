@@ -61,7 +61,7 @@ public class ClientControllerTest {
 
 	@Test
 	public void testFindByName() {
-		List<ClientApi> all = clientController.findByName("Randy").getBody();
+		List<ClientApi> all = clientController.findByName("john").getBody();
 		assertFalse(all.isEmpty());
 		assertEquals(1, all.size());
 	}
