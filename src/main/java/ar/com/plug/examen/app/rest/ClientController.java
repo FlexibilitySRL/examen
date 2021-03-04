@@ -15,46 +15,47 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import ar.com.plug.examen.app.api.SellerApi;
+import ar.com.plug.examen.app.api.ClientApi;
 import ar.com.plug.examen.app.rest.paths.Paths;
 import ar.com.plug.examen.domain.Exeptions.BadRequestException;
 import ar.com.plug.examen.domain.Exeptions.NotFoundException;
-import ar.com.plug.examen.domain.service.SellerService;
+import ar.com.plug.examen.domain.service.ClientService;
 
 @RestController
-@RequestMapping(path= Paths.SELLER)
-public class SellerControler {
+@RequestMapping(path= Paths.CLIENT)
+public class ClientController {
 	@Autowired
-    private SellerService sellerService;
+    private ClientService clientService;
 
     @GetMapping()
-    public ResponseEntity<List<SellerApi>> listSellers() {
-        return new ResponseEntity<>(sellerService.listAll(), HttpStatus.OK);
+    public ResponseEntity<List<ClientApi>> listClients() {
+        return new ResponseEntity<>(clientService.listAll(), HttpStatus.OK);
     }
 
     @GetMapping(Paths.FIND_BY_ID)
-    public ResponseEntity<SellerApi> findById(@PathVariable long id) throws NotFoundException {
-    	return new ResponseEntity<>(sellerService.findById(id), HttpStatus.OK);
+    public ResponseEntity<ClientApi> findById(@PathVariable long id) throws NotFoundException {
+    	return new ResponseEntity<>(clientService.findById(id), HttpStatus.OK);
     }
 
     @GetMapping(Paths.FIND_BY_NAME)
-    public ResponseEntity<List<SellerApi>> findByName(@PathVariable String name) {
-    	return new ResponseEntity<>(sellerService.findByName(name), HttpStatus.OK);
+    public ResponseEntity<List<ClientApi>> findByName(@PathVariable String name) {
+    	return new ResponseEntity<>(clientService.findByName(name), HttpStatus.OK);
     }
 
     @PostMapping()
-    public ResponseEntity<SellerApi> save(@RequestBody SellerApi seller) throws BadRequestException {
-    	return new ResponseEntity<>(sellerService.save(seller), HttpStatus.CREATED);
+    public ResponseEntity<ClientApi> save(@RequestBody ClientApi client) throws BadRequestException {
+    	return new ResponseEntity<>(clientService.save(client), HttpStatus.CREATED);
     }
 
 	@DeleteMapping("/{id}")
     public ResponseEntity deleteById(@PathVariable long id) throws NotFoundException {
-        sellerService.deleteById(id);
+        clientService.deleteById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<SellerApi> update(@RequestBody SellerApi sellerApi) throws NotFoundException, BadRequestException {
-    	return new ResponseEntity<>(sellerService.update(sellerApi), HttpStatus.ACCEPTED);
+    public ResponseEntity<ClientApi> update(@RequestBody ClientApi clientApi) throws NotFoundException, BadRequestException {
+    	return new ResponseEntity<>(clientService.update(clientApi), HttpStatus.ACCEPTED);
     }
+
 }

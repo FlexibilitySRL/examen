@@ -66,7 +66,7 @@ public class TransactionServiceImpl implements TransactionService {
 	@Override
 	@Transactional
 	public List<TransactionApi> listAll() {
-		logger.info("Serching requested data"); //a better aproach coud be getting all the messages form a MESSAGES file
+		logger.info("Serching requested data"); //a better approach coud be getting all the messages form a MESSAGES file
 		List<TransactionApi> result = converter.convertList(transactionRepository.findAll(), TransactionApi.class);
 		logger.info("Success!");
 		return result;
