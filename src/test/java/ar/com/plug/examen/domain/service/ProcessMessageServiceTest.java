@@ -7,7 +7,8 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ProcessMessageServiceTest {
@@ -16,8 +17,7 @@ public class ProcessMessageServiceTest {
     private ProcessMessageServiceImpl messageService;
 
     @Test
-    public void testProcessMessage()
-    {
+    public void testProcessMessage() {
         String messageTest = "TEST";
         Message message = messageService.processMessage(messageTest);
 
