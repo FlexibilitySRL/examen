@@ -19,5 +19,5 @@ public class IdNameActiveModel extends IdModel {
     String name;
 
     @Column(nullable = false)
-    Boolean active = false;
+    Boolean active;
 }
