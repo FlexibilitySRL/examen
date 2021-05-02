@@ -22,7 +22,7 @@ public class CustomerController {
         this.processCustomerService = processCustomerService;
     }
 
-    @PostMapping(path = "create", produces = {MediaType.APPLICATION_JSON_VALUE},
+    @PostMapping(path = "save", produces = {MediaType.APPLICATION_JSON_VALUE},
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Customer> echo(@RequestBody Customer customer) {
         return new ResponseEntity<>(processCustomerService.save(customer), HttpStatus.OK);
