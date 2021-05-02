@@ -17,13 +17,26 @@ public class ProcessCustomerServiceImpl implements ProcessCustomerService {
     }
 
     @Override
-    public Customer save(Customer customer) {
-        return customerRepo.save(customer);
+    public Customer save(Long id, String name, Boolean active) {
+        final Customer customer;
+        final Customer newCustomer = Customer.builder().build();
+        if (null == id) {
+            customer = newCustomer;
+        } else {
+            customer = customerRepo.findById(id).orElse(newCustomer);
+        }
+        if (null != name) {
+            customer.setName(name);
+        }
+        if (null != active) {
+            customer.setActive(active);
+        }
+        return customerRepo.save(Customer.builder().id(id).name(name).active(active).build());
     }
 
     @Override
-    public void updateActive(Long id, Boolean active) {
-        customerRepo.findById(id).ifPresent(customer -> customer.setActive(active));
+    public Customer findById(Long id) {
+        return customerRepo.findById(id).orElse(null);
     }
 
 }

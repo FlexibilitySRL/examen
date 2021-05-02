@@ -4,7 +4,7 @@ import ar.com.plug.examen.datasource.model.Customer;
 
 public interface ProcessCustomerService {
 
-    Customer save(Customer customer);
+    Customer save(Long id, String name, Boolean active);
 
-    void updateActive(Long id, Boolean active) ;
+    Customer findById(Long id);
 }
