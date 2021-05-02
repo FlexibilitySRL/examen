@@ -1,6 +1,7 @@
 package ar.com.plug.examen;
 
 import ar.com.plug.examen.app.rest.CustomerController;
+import ar.com.plug.examen.app.rest.ProductController;
 import ar.com.plug.examen.datasource.model.Customer;
 import ar.com.plug.examen.datasource.model.Product;
 import ar.com.plug.examen.datasource.model.Purchase;
@@ -320,6 +321,23 @@ public class IntegrationTest {
                 .content(requestJson))
                 .andExpect(status().isUnprocessableEntity())
                 .andExpect(result -> assertEquals(CustomerController.ID_REQUIRED_MESSAGE, result.getResponse().getErrorMessage()));
+
+    }
+
+    @Test
+    public void createProduct() throws Exception {
+        //setup
+        String url = buildUrl(ProductController.ROOT_PATH, CustomerController.CREATE_PATH);
+        final Product testProduct = Product.builder().name("Test Name" + Math.random()).active(true).build();
+        String requestJson = OBJECT_WRITER.writeValueAsString(testProduct);
+
+        //execution and validation
+        mockMvc.perform(post(url).contentType(APPLICATION_JSON_UTF8)
+                .content(requestJson))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").exists())
+                .andExpect(jsonPath("$.name", is(testProduct.getName())))
+                .andExpect(jsonPath("$.active", is(testProduct.getActive())));
 
     }
 

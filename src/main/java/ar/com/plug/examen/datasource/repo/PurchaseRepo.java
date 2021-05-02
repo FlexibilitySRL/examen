@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface PurchaseRepo extends JpaRepository<Purchase, Long> {
 
-    public List<Purchase> findAllByCreationDateTimeBetween(
+    List<Purchase> findAllByCreationDateTimeBetween(
             Date creationTimeStart,
             Date creationTimeEnd);
 }

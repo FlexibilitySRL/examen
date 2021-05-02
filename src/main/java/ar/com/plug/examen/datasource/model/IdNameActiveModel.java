@@ -13,7 +13,7 @@ import javax.persistence.MappedSuperclass;
 @SuperBuilder
 @ToString(callSuper = true, onlyExplicitlyIncluded = true)
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
-class IdNameActiveModel extends IdModel {
+public class IdNameActiveModel extends IdModel {
 
     @Column(nullable = false)
     String name;
