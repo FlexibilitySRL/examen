@@ -17,9 +17,10 @@ import java.util.List;
 public class Purchase {
 
     @Id
+    @GeneratedValue
     @ToString.Include
     @EqualsAndHashCode.Include
-    long id;
+    Long id;
 
     @Column(nullable = false)
     boolean approved;
