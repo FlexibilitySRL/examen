@@ -48,6 +48,7 @@ public class IntegrationTest {
     private static final long DEFAULT_PURCHASE_ID = 301L;
 
     private static final MediaType APPLICATION_JSON_UTF8 = new MediaType(MediaType.APPLICATION_JSON.getType(), MediaType.APPLICATION_JSON.getSubtype(), Charset.forName("utf8"));
+    public static final ObjectWriter OBJECT_WRITER = new ObjectMapper().configure(SerializationFeature.WRAP_ROOT_VALUE, false).writer().withDefaultPrettyPrinter();
 
     private Customer defaultCustomer;
     private Product defaultProduct;
@@ -68,7 +69,7 @@ public class IntegrationTest {
 
     @Before
     public void before() {
-        defaultCustomer = Customer.builder().id(DEFAULT_CUSTOMER_ID).name(DEFAULT_CUSTOMER_NAME).build();
+        defaultCustomer = Customer.builder().id(DEFAULT_CUSTOMER_ID).name(DEFAULT_CUSTOMER_NAME).active(true).build();
         defaultProduct = Product.builder().id(DEFAULT_PRODUCT_ID).name(DEFAULT_PRODUCT_NAME).build();
         defaultPurchase = Purchase.builder().id(DEFAULT_PURCHASE_ID).customer(defaultCustomer).build();
         mockMvc = MockMvcBuilders.webAppContextSetup(this.webApplicationContext).build();
@@ -149,13 +150,12 @@ public class IntegrationTest {
 
     @Test
     public void createCustomer() throws Exception {
+        //setup
         String url = "/customer/save";
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
-        ObjectWriter ow = mapper.writer().withDefaultPrettyPrinter();
         String testCustomer = "testCustomer";
-        String requestJson = ow.writeValueAsString(Customer.builder().name(testCustomer).build());
+        String requestJson = OBJECT_WRITER.writeValueAsString(Customer.builder().name(testCustomer).active(false).build());
 
+        //execution and validation
         mockMvc.perform(post(url).contentType(APPLICATION_JSON_UTF8)
                 .content(requestJson))
                 .andExpect(status().isOk())
@@ -166,14 +166,13 @@ public class IntegrationTest {
 
     @Test
     public void updateCustomer() throws Exception {
+        //setup
         String url = "/customer/save";
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
-        ObjectWriter ow = mapper.writer().withDefaultPrettyPrinter();
         String updatedCustomerName = "updatedCustomerName";
         defaultCustomer.setName(updatedCustomerName);
-        String requestJson = ow.writeValueAsString(defaultCustomer);
+        String requestJson = OBJECT_WRITER.writeValueAsString(defaultCustomer);
 
+        //execution and validation
         mockMvc.perform(post(url).contentType(APPLICATION_JSON_UTF8)
                 .content(requestJson))
                 .andExpect(status().isOk())

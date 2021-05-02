@@ -23,6 +23,9 @@ public class Customer {
     @Column(nullable = false)
     String name;
 
+    @Column(nullable = false)
+    Boolean active = false;
+
     @OneToMany(mappedBy = "customer")
     List<Purchase> purchases;
 }
