@@ -1,6 +1,7 @@
 package ar.com.plug.examen.datasource.model;
 
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -8,19 +9,12 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-@ToString(onlyExplicitlyIncluded = true)
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Purchase {
-
-    @Id
-    @GeneratedValue
-    @ToString.Include
-    @EqualsAndHashCode.Include
-    Long id;
+@SuperBuilder
+@ToString(callSuper = true, onlyExplicitlyIncluded = true)
+@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
+public class Purchase extends IdModel {
 
     @Column(nullable = false)
     boolean approved;

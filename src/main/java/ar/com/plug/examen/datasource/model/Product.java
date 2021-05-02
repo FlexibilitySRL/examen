@@ -1,27 +1,22 @@
 package ar.com.plug.examen.datasource.model;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import java.util.List;
 
 @Entity
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-@ToString(onlyExplicitlyIncluded = true)
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Product {
-
-    @Id
-    @GeneratedValue
-    @ToString.Include
-    @EqualsAndHashCode.Include
-    Long id;
-
-    @Column(nullable = false)
-    String name;
+@SuperBuilder
+@ToString(callSuper = true, onlyExplicitlyIncluded = true)
+@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
+public class Product extends IdNameActiveModel {
 
     @OneToMany(mappedBy = "product")
     List<ProductPurchase> productPurchases;

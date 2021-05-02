@@ -53,7 +53,7 @@ public class IntegrationTest {
     private static final long DEFAULT_PURCHASE_ID = 301L;
 
     private static final MediaType APPLICATION_JSON_UTF8 = new MediaType(MediaType.APPLICATION_JSON.getType(), MediaType.APPLICATION_JSON.getSubtype(), Charset.forName("utf8"));
-    public static final ObjectWriter OBJECT_WRITER = new ObjectMapper()
+    private static final ObjectWriter OBJECT_WRITER = new ObjectMapper()
             .setSerializationInclusion(JsonInclude.Include.NON_NULL)
             .configure(SerializationFeature.WRAP_ROOT_VALUE, false)
             .writer().withDefaultPrettyPrinter();
