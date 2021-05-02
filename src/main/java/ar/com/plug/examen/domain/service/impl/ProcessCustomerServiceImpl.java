@@ -21,4 +21,9 @@ public class ProcessCustomerServiceImpl implements ProcessCustomerService {
         return customerRepo.save(customer);
     }
 
+    @Override
+    public void updateActive(Long id, Boolean active) {
+        customerRepo.findById(id).ifPresent(customer -> customer.setActive(active));
+    }
+
 }

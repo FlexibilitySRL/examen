@@ -1,5 +1,6 @@
 package ar.com.plug.examen;
 
+import ar.com.plug.examen.app.rest.CustomerController;
 import ar.com.plug.examen.datasource.model.Customer;
 import ar.com.plug.examen.datasource.model.Product;
 import ar.com.plug.examen.datasource.model.Purchase;
@@ -27,10 +28,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -151,7 +153,7 @@ public class IntegrationTest {
     @Test
     public void createCustomer() throws Exception {
         //setup
-        String url = "/customer/save";
+        String url = buildUrl(CustomerController.ROOT_PATH, CustomerController.SAVE_PATH);
         String testCustomer = "testCustomer";
         String requestJson = OBJECT_WRITER.writeValueAsString(Customer.builder().name(testCustomer).active(false).build());
 
@@ -167,7 +169,7 @@ public class IntegrationTest {
     @Test
     public void updateCustomer() throws Exception {
         //setup
-        String url = "/customer/save";
+        String url = buildUrl(CustomerController.ROOT_PATH, CustomerController.SAVE_PATH);
         String updatedCustomerName = "updatedCustomerName";
         defaultCustomer.setName(updatedCustomerName);
         String requestJson = OBJECT_WRITER.writeValueAsString(defaultCustomer);
@@ -179,5 +181,33 @@ public class IntegrationTest {
                 .andExpect(jsonPath("$.id", is(101)))
                 .andExpect(jsonPath("$.name", is(updatedCustomerName)));
 
+    }
+
+    @Test
+    public void updateCustomerActive() throws Exception {
+        //setup
+        String url = buildUrl(CustomerController.ROOT_PATH, CustomerController.UPDATE_ACTIVE_PATH);
+        Optional<Customer> byId = customerRepo.findById(101L);
+        assertTrue(byId.isPresent());
+        assertTrue(byId.get().getActive());
+
+        String requestJson = "{\"id\": 101, \"active\": false}";
+
+        //execution and validation
+        mockMvc.perform(post(url).contentType(APPLICATION_JSON_UTF8)
+                .content(requestJson))
+                .andExpect(status().isOk());
+
+        Optional<Customer> byIdAfter = customerRepo.findById(101L);
+        assertTrue(byIdAfter.isPresent());
+        assertFalse(byIdAfter.get().getActive());
+
+    }
+
+    private static String buildUrl(String... paths) {
+        String pathSeparator = "/";
+        StringBuilder stringBuilder = new StringBuilder();
+        Stream.of(paths).forEach(s -> stringBuilder.append(pathSeparator).append(s));
+        return stringBuilder.toString();
     }
 }

@@ -6,4 +6,5 @@ public interface ProcessCustomerService {
 
     Customer save(Customer customer);
 
+    void updateActive(Long id, Boolean active) ;
 }
