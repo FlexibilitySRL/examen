@@ -7,12 +7,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 
 @Slf4j
-public abstract class AbstractIdNameActiveModelService<T extends IdNameActiveModel> implements ProcessIdNameActiveModelService<T> {
-
-    private JpaRepository<T, Long> repo;
+public abstract class AbstractIdNameActiveModelService<T extends IdNameActiveModel> extends AbstractIdModelService<T> implements ProcessIdNameActiveModelService<T> {
 
     AbstractIdNameActiveModelService(JpaRepository<T, Long> repo) {
-        this.repo = repo;
+        super(repo);
     }
 
     @Override
@@ -39,11 +37,5 @@ public abstract class AbstractIdNameActiveModelService<T extends IdNameActiveMod
         }
     }
 
-    @Override
-    public T findById(Long id) {
-        return repo.findById(id).orElse(null);
-    }
-
-    abstract Class<T> getDomainClass();
 
 }

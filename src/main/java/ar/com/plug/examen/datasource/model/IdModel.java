@@ -13,7 +13,7 @@ import javax.persistence.MappedSuperclass;
 @SuperBuilder
 @ToString(onlyExplicitlyIncluded = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-class IdModel {
+public class IdModel {
 
     @javax.persistence.Id
     @GeneratedValue

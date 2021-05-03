@@ -2,6 +2,7 @@ package ar.com.plug.examen;
 
 import ar.com.plug.examen.app.rest.CustomerController;
 import ar.com.plug.examen.app.rest.ProductController;
+import ar.com.plug.examen.app.rest.PurchaseController;
 import ar.com.plug.examen.datasource.model.Customer;
 import ar.com.plug.examen.datasource.model.Product;
 import ar.com.plug.examen.datasource.model.Purchase;
@@ -338,6 +339,24 @@ public class IntegrationTest {
                 .andExpect(jsonPath("$.id").exists())
                 .andExpect(jsonPath("$.name", is(testProduct.getName())))
                 .andExpect(jsonPath("$.active", is(testProduct.getActive())));
+
+    }
+
+    @Test
+    public void readPurchase() throws Exception {
+        //setup
+        String url = buildUrl(PurchaseController.ROOT_PATH, PurchaseController.READ_PATH);
+        final Customer testCustomer = customerRepo.save(Customer.builder().name("Test Name").active(true).build());
+        final Purchase saved = purchaseRepo.save(Purchase.builder().customer(testCustomer).build());
+        final Long id = saved.getId();
+        String requestJson = "{\"id\": " + id + "}";
+
+        //execution and validation
+        mockMvc.perform(post(url).contentType(APPLICATION_JSON_UTF8)
+                .content(requestJson))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id", is(saved.getId().intValue())))
+                .andExpect(jsonPath("$.approved", is(saved.isApproved())));
 
     }
 

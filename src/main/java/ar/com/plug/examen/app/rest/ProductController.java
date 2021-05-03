@@ -8,7 +8,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(path = ProductController.ROOT_PATH)
-public class ProductController extends AbstractIdNameActiveModelController<Product> {
+public class ProductController
+        extends AbstractIdNameActiveModelController<ProcessIdNameActiveModelService<Product>, Product> {
 
     //paths
     public static final String ROOT_PATH = "product";
