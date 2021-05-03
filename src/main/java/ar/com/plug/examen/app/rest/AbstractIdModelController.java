@@ -21,17 +21,17 @@ public abstract class AbstractIdModelController<U extends ProcessIdModelService<
     public static final String ID_REQUIRED_MESSAGE = "id is required";
     public static final String ACTIVE_REQUIRED_MESSAGE = "active is required";
 
-    final U processCustomerService;
+    final U service;
 
-    AbstractIdModelController(U processCustomerService) {
-        this.processCustomerService = processCustomerService;
+    AbstractIdModelController(U service) {
+        this.service = service;
     }
 
     @PostMapping(path = READ_PATH, produces = {MediaType.APPLICATION_JSON_VALUE},
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<T> read(@RequestBody ObjectNode objectNode) {
         Long idRequired = getIdRequired(objectNode);
-        return new ResponseEntity<>(processCustomerService.findById(idRequired), HttpStatus.OK);
+        return new ResponseEntity<>(service.findById(idRequired), HttpStatus.OK);
     }
 
     static Long getId(@RequestBody ObjectNode objectNode) {
@@ -51,8 +51,8 @@ public abstract class AbstractIdModelController<U extends ProcessIdModelService<
         return id;
     }
 
-    static String getName(@RequestBody ObjectNode objectNode) {
-        JsonNode nameNode = objectNode.get("name");
+    static String getString(@RequestBody ObjectNode objectNode, String key) {
+        JsonNode nameNode = objectNode.get(key);
         if (null == nameNode) {
             return null;
         } else {
@@ -60,16 +60,16 @@ public abstract class AbstractIdModelController<U extends ProcessIdModelService<
         }
     }
 
-    static String getNameRequired(ObjectNode nameNode) {
-        String name = getName(nameNode);
+    static String getNameRequired(ObjectNode nameNode, String key) {
+        String name = getString(nameNode, key);
         if (null == name) {
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, NAME_REQUIRED_MESSAGE);
         }
         return name;
     }
 
-    static Boolean getActive(@RequestBody ObjectNode objectNode) {
-        JsonNode activeNode = objectNode.get("active");
+    static Boolean getBoolean(@RequestBody ObjectNode objectNode, String key) {
+        JsonNode activeNode = objectNode.get(key);
         if (null == activeNode) {
             return null;
         } else {
@@ -77,8 +77,8 @@ public abstract class AbstractIdModelController<U extends ProcessIdModelService<
         }
     }
 
-    static Boolean getActiveRequired(@RequestBody ObjectNode objectNode) {
-        Boolean aBoolean = getActive(objectNode);
+    static Boolean getActiveRequired(@RequestBody ObjectNode objectNode, String key) {
+        Boolean aBoolean = getBoolean(objectNode, key);
         if (null == aBoolean) {
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, AbstractIdModelController.ACTIVE_REQUIRED_MESSAGE);
         }

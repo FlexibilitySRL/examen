@@ -1,5 +1,6 @@
 package ar.com.plug.examen.datasource.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -14,6 +15,7 @@ import java.util.List;
 @SuperBuilder
 @ToString(callSuper = true, onlyExplicitlyIncluded = true)
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
+@JsonIgnoreProperties("purchases")
 public class Customer extends IdNameActiveModel {
 
     @OneToMany(mappedBy = "customer")

@@ -9,6 +9,7 @@ import ar.com.plug.examen.datasource.model.Purchase;
 import ar.com.plug.examen.datasource.repo.CustomerRepo;
 import ar.com.plug.examen.datasource.repo.ProductRepo;
 import ar.com.plug.examen.datasource.repo.PurchaseRepo;
+import ar.com.plug.examen.domain.service.impl.ProcessPurchaseServiceImpl;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
@@ -29,8 +30,8 @@ import org.springframework.web.context.WebApplicationContext;
 import javax.transaction.Transactional;
 import java.nio.charset.Charset;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -150,9 +151,9 @@ public class IntegrationTest {
         List<Purchase> expectedPurchase = Collections.singletonList(defaultPurchase);
 
         //execution
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        List<Purchase> all = purchaseRepo.findAllByCreationDateTimeBetween(simpleDateFormat.parse("2021-04-01"),
-                simpleDateFormat.parse("2021-04-02"));
+        List<Purchase> all = purchaseRepo.findAllByCreationDateTimeBetween(
+                ProcessPurchaseServiceImpl.simpleDateFormat.parse("2021-04-01"),
+                ProcessPurchaseServiceImpl.simpleDateFormat.parse("2021-04-02"));
 
         //validation
         assertEquals(expectedPurchase, all);
@@ -358,6 +359,51 @@ public class IntegrationTest {
                 .andExpect(jsonPath("$.id", is(saved.getId().intValue())))
                 .andExpect(jsonPath("$.approved", is(saved.isApproved())));
 
+    }
+
+    @Test
+    public void approvePurchase() throws Exception {
+        //setup
+        String url = buildUrl(PurchaseController.ROOT_PATH, PurchaseController.APPROVE_PATH);
+        final Customer testCustomer = customerRepo.save(Customer.builder().name("Test Name").active(true).build());
+        final Purchase saved = purchaseRepo.save(Purchase.builder().approved(false).customer(testCustomer).build());
+        final Long id = saved.getId();
+        String requestJson = "{\"id\": " + id + ", \"approve\": true}";
+
+        //execution and validation
+        mockMvc.perform(post(url).contentType(APPLICATION_JSON_UTF8)
+                .content(requestJson))
+                .andExpect(status().isOk());
+
+        Optional<Purchase> byIdAfter = purchaseRepo.findById(id);
+        assertTrue(byIdAfter.isPresent());
+        assertTrue(byIdAfter.get().isApproved());
+    }
+
+    @Test
+    public void historyPurchase() throws Exception {
+        //setup
+        String url = buildUrl(PurchaseController.ROOT_PATH, PurchaseController.HISTORY_PATH);
+        final Customer testCustomer = customerRepo.save(Customer.builder().name("Test Name").active(true).build());
+        final String dateStart = "2022-04-01";
+        final String dateEnd = "2022-04-02";
+        final Date creationTimeStart = ProcessPurchaseServiceImpl.simpleDateFormat.parse(dateStart);
+        final Date creationTimeEnd = ProcessPurchaseServiceImpl.simpleDateFormat.parse(dateEnd);
+        final Purchase saved = purchaseRepo.save(Purchase.builder().approved(false).creationDateTime(creationTimeStart).customer(testCustomer).build());
+        final Long id = saved.getId();
+
+
+
+        String requestJson = "{\"creationTimeStart\": " + dateStart + ", \"creationTimeEnd\": " + dateEnd + "}";
+
+        //execution and validation
+        mockMvc.perform(post(url).contentType(APPLICATION_JSON_UTF8)
+                .content(requestJson))
+                .andExpect(status().isOk());
+
+        Optional<Purchase> byIdAfter = purchaseRepo.findById(id);
+        assertTrue(byIdAfter.isPresent());
+        assertTrue(byIdAfter.get().isApproved());
     }
 
     private static String buildUrl(String... paths) {

@@ -17,32 +17,32 @@ public abstract class AbstractIdNameActiveModelController<U extends ProcessIdNam
     public static final String UPDATE_PATH = "update";
     public static final String DELETE_PATH = "delete";
 
-    AbstractIdNameActiveModelController(U processCustomerService) {
-        super(processCustomerService);
+    AbstractIdNameActiveModelController(U service) {
+        super(service);
     }
 
     @PostMapping(path = CREATE_PATH, produces = {MediaType.APPLICATION_JSON_VALUE},
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<T> create(@RequestBody ObjectNode objectNode) {
-        String name = getNameRequired(objectNode);
-        Boolean active = getActiveRequired(objectNode);
-        return new ResponseEntity<>(processCustomerService.save(null, name, active), HttpStatus.OK);
+        String name = getNameRequired(objectNode, "name");
+        Boolean active = getActiveRequired(objectNode, "active");
+        return new ResponseEntity<>(service.save(null, name, active), HttpStatus.OK);
     }
 
     @PostMapping(path = UPDATE_PATH, produces = {MediaType.APPLICATION_JSON_VALUE},
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<T> update(@RequestBody ObjectNode objectNode) {
         Long id = getIdRequired(objectNode);
-        String name = getName(objectNode);
-        Boolean active = getActive(objectNode);
-        return new ResponseEntity<>(processCustomerService.save(id, name, active), HttpStatus.OK);
+        String name = getString(objectNode, "name");
+        Boolean active = getBoolean(objectNode, "active");
+        return new ResponseEntity<>(service.save(id, name, active), HttpStatus.OK);
     }
 
     @PostMapping(path = DELETE_PATH, produces = {MediaType.APPLICATION_JSON_VALUE},
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<T> delete(@RequestBody ObjectNode objectNode) {
         Long id = getIdRequired(objectNode);
-        return new ResponseEntity<>(processCustomerService.save(id, null, false), HttpStatus.OK);
+        return new ResponseEntity<>(service.save(id, null, false), HttpStatus.OK);
     }
 
 }

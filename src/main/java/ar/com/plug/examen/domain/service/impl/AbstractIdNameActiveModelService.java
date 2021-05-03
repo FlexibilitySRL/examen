@@ -7,9 +7,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 
 @Slf4j
-public abstract class AbstractIdNameActiveModelService<T extends IdNameActiveModel> extends AbstractIdModelService<T> implements ProcessIdNameActiveModelService<T> {
+public abstract class AbstractIdNameActiveModelService<U extends JpaRepository<T, Long>, T extends IdNameActiveModel>
+        extends AbstractIdModelService<U, T>
+        implements ProcessIdNameActiveModelService<T> {
 
-    AbstractIdNameActiveModelService(JpaRepository<T, Long> repo) {
+    AbstractIdNameActiveModelService(U repo) {
         super(repo);
     }
 

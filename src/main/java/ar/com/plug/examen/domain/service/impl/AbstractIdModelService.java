@@ -7,14 +7,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 
 @Slf4j
-public abstract class AbstractIdModelService<T extends IdModel> implements ProcessIdModelService<T> {
+public abstract class AbstractIdModelService<U extends JpaRepository<T, Long>, T extends IdModel> implements ProcessIdModelService<T> {
 
-    JpaRepository<T, Long> repo;
+    U repo;
 
-    AbstractIdModelService(JpaRepository<T, Long> repo) {
+    AbstractIdModelService(U repo) {
         this.repo = repo;
     }
-
 
     @Override
     public T findById(Long id) {

@@ -1,13 +1,13 @@
 package ar.com.plug.examen.domain.service.impl;
 
 import ar.com.plug.examen.datasource.model.Customer;
-import org.springframework.data.jpa.repository.JpaRepository;
+import ar.com.plug.examen.datasource.repo.CustomerRepo;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ProcessCustomerServiceImpl extends AbstractIdNameActiveModelService<Customer> {
+public class ProcessCustomerServiceImpl extends AbstractIdNameActiveModelService<CustomerRepo, Customer> {
 
-    public ProcessCustomerServiceImpl(JpaRepository<Customer, Long> repo) {
+    public ProcessCustomerServiceImpl(CustomerRepo repo) {
         super(repo);
     }
 
