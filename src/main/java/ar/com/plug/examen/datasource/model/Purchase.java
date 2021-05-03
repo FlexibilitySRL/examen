@@ -32,7 +32,11 @@ public class Purchase extends IdModel {
     @JoinColumn(name = "customer_id", nullable = false)
     Customer customer;
 
-    @OneToMany(mappedBy = "purchase")
-    List<ProductPurchase> productPurchases;
+    @ManyToMany
+    @JoinTable(
+            name = "product_purchase",
+            joinColumns = @JoinColumn(name = "purchase_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id"))
+    List<Product> products;
 
 }

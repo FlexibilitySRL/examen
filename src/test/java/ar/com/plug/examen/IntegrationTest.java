@@ -30,10 +30,7 @@ import org.springframework.web.context.WebApplicationContext;
 import javax.transaction.Transactional;
 import java.nio.charset.Charset;
 import java.text.ParseException;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Stream;
 
 import static org.hamcrest.Matchers.is;
@@ -384,26 +381,37 @@ public class IntegrationTest {
     public void historyPurchase() throws Exception {
         //setup
         String url = buildUrl(PurchaseController.ROOT_PATH, PurchaseController.HISTORY_PATH);
-        final Customer testCustomer = customerRepo.save(Customer.builder().name("Test Name").active(true).build());
-        final String dateStart = "2022-04-01";
-        final String dateEnd = "2022-04-02";
-        final Date creationTimeStart = ProcessPurchaseServiceImpl.simpleDateFormat.parse(dateStart);
-        final Date creationTimeEnd = ProcessPurchaseServiceImpl.simpleDateFormat.parse(dateEnd);
-        final Purchase saved = purchaseRepo.save(Purchase.builder().approved(false).creationDateTime(creationTimeStart).customer(testCustomer).build());
-        final Long id = saved.getId();
+        final Product testProduct = productRepo.save(Product.builder().name("Test Product").active(true).build());
+        final Customer testCustomer = customerRepo.save(Customer.builder().name("Test Customer").active(true).build());
 
+        final Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DAY_OF_MONTH, -1);
+        final Date creationTimeStart = calendar.getTime();
+        calendar.add(Calendar.DAY_OF_MONTH, +2);
+        final Date creationTimeEnd = calendar.getTime();
+        final String dateStart = ProcessPurchaseServiceImpl.simpleDateFormat.format(creationTimeStart);
+        final String dateEnd = ProcessPurchaseServiceImpl.simpleDateFormat.format(creationTimeEnd);
 
+        final Purchase saved = purchaseRepo.save(
+                Purchase.builder()
+                        .approved(false)
+                        .creationDateTime(creationTimeStart)
+                        .customer(testCustomer)
+                        .products(Collections.singletonList(testProduct))
+                        .build());
 
-        String requestJson = "{\"creationTimeStart\": " + dateStart + ", \"creationTimeEnd\": " + dateEnd + "}";
+        String requestJson = String.format("{\"creationTimeStart\": \"%s\", \"creationTimeEnd\": \"%s\"}", dateStart, dateEnd);
 
         //execution and validation
         mockMvc.perform(post(url).contentType(APPLICATION_JSON_UTF8)
                 .content(requestJson))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].id", is(saved.getId().intValue())))
+                .andExpect(jsonPath("$[0].approved", is(saved.isApproved())))
+                .andExpect(jsonPath("$[0].id", is(saved.getId().intValue())))
+                .andExpect(jsonPath("$[0].customer.id", is(saved.getCustomer().getId().intValue())))
+                .andExpect(jsonPath("$[0].products[0].id", is(saved.getProducts().get(0).getId().intValue())));
 
-        Optional<Purchase> byIdAfter = purchaseRepo.findById(id);
-        assertTrue(byIdAfter.isPresent());
-        assertTrue(byIdAfter.get().isApproved());
     }
 
     private static String buildUrl(String... paths) {

@@ -5,7 +5,9 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import java.util.List;
 
 @Entity
@@ -15,9 +17,13 @@ import java.util.List;
 @SuperBuilder
 @ToString(callSuper = true, onlyExplicitlyIncluded = true)
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
-@JsonIgnoreProperties("productPurchases")
+@JsonIgnoreProperties("purchases")
 public class Product extends IdNameActiveModel {
 
-    @OneToMany(mappedBy = "product")
-    List<ProductPurchase> productPurchases;
+    @ManyToMany
+    @JoinTable(
+            name = "product_purchase",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "purchase_id"))
+    List<Purchase> purchases;
 }
