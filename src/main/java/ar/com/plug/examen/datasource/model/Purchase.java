@@ -32,6 +32,10 @@ public class Purchase extends BaseModel {
     @JoinColumn(name = "customer_id", nullable = false)
     Customer customer;
 
+    @ManyToOne
+    @JoinColumn(name = "vendor_id", nullable = false)
+    Vendor vendor;
+
     @ManyToMany
     @JoinTable(
             name = "product_purchase",

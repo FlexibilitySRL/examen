@@ -22,7 +22,7 @@ import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
-class ProcessPurchaseServiceImplTest {
+public class ProcessPurchaseServiceImplTest {
 
     public static final ObjectMapper MAPPER = new ObjectMapper();
     ProcessPurchaseServiceImpl purchaseService;

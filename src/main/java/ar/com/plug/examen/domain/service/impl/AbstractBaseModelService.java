@@ -15,6 +15,7 @@ import java.util.Date;
 @Slf4j
 public abstract class AbstractBaseModelService<U extends JpaRepository<T, Long>, T extends BaseModel> implements ProcessBaseModelService<T> {
 
+    public static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
     U repo;
 
     AbstractBaseModelService(U repo) {
@@ -40,7 +41,7 @@ public abstract class AbstractBaseModelService<U extends JpaRepository<T, Long>,
             } else {
                 entity = getDomainClass().newInstance();
             }
-            final T p = new ObjectMapper().readerForUpdating(entity).readValue(objectNode, getDomainClass());
+            final T p = OBJECT_MAPPER.readerForUpdating(entity).readValue(objectNode, getDomainClass());
             final T save = repo.save(p);
             log.info(getDomainClass().getSimpleName() + " created or updated with id: " + save.getId());
             return save;

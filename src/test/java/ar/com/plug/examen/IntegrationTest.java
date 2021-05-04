@@ -1,19 +1,22 @@
 package ar.com.plug.examen;
 
-import ar.com.plug.examen.app.rest.CustomerController;
-import ar.com.plug.examen.app.rest.ProductController;
-import ar.com.plug.examen.app.rest.PurchaseController;
+import ar.com.plug.examen.app.rest.*;
 import ar.com.plug.examen.datasource.model.Customer;
 import ar.com.plug.examen.datasource.model.Product;
 import ar.com.plug.examen.datasource.model.Purchase;
+import ar.com.plug.examen.datasource.model.Vendor;
 import ar.com.plug.examen.datasource.repo.CustomerRepo;
 import ar.com.plug.examen.datasource.repo.ProductRepo;
 import ar.com.plug.examen.datasource.repo.PurchaseRepo;
+import ar.com.plug.examen.datasource.repo.VendorRepo;
+import ar.com.plug.examen.domain.service.impl.AbstractBaseModelService;
 import ar.com.plug.examen.domain.service.impl.ProcessPurchaseServiceImpl;
+import ar.com.plug.examen.domain.service.impl.ProcessPurchaseServiceImplTest;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,6 +27,7 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
@@ -79,6 +83,9 @@ public class IntegrationTest {
 
     @Autowired
     private PurchaseRepo purchaseRepo;
+
+    @Autowired
+    private VendorRepo vendorRepo;
 
     @Autowired
     private WebApplicationContext webApplicationContext;
@@ -315,11 +322,41 @@ public class IntegrationTest {
     }
 
     @Test
+    public void createPurchase() throws Exception {
+        //setup
+        String url = buildUrl(PurchaseController.ROOT_PATH, AbstractBaseModelController.CREATE_OR_UPDATE_PATH);
+        final Customer testCustomer = customerRepo.save(Customer.builder().name("Test Name").build());
+        final Vendor testVendor = vendorRepo.save(Vendor.builder().name("Test Vendor").build());
+        final Product testProduct = productRepo.save(Product.builder().name("Test Product").build());
+
+        final ObjectNode productNode = ProcessPurchaseServiceImplTest.MAPPER.createObjectNode();
+        productNode.put("id", testProduct.getId());
+        final ObjectNode objectNode = ProcessPurchaseServiceImplTest.MAPPER.createObjectNode();
+        objectNode.with("customer").put("id", testCustomer.getId());
+        objectNode.with("vendor").put("id", testVendor.getId());
+        objectNode.withArray("products").add(productNode);
+
+
+        //execution and validation
+        final MvcResult mvcResult = mockMvc.perform(post(url).contentType(APPLICATION_JSON_UTF8)
+                .content(objectNode.toString()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").exists())
+                .andReturn();
+
+        final Purchase purchase = AbstractBaseModelService.OBJECT_MAPPER.readValue(mvcResult.getResponse().getContentAsString(), Purchase.class);
+        assertEquals(testCustomer, purchase.getCustomer());
+        assertEquals(testVendor, purchase.getVendor());
+        assertEquals(Collections.singletonList(testProduct), purchase.getProducts());
+    }
+
+    @Test
     public void readPurchase() throws Exception {
         //setup
         String url = buildUrl(PurchaseController.ROOT_PATH, PurchaseController.READ_PATH);
         final Customer testCustomer = customerRepo.save(Customer.builder().name("Test Name").build());
-        final Purchase saved = purchaseRepo.save(Purchase.builder().customer(testCustomer).build());
+        final Vendor testVendor = vendorRepo.save(Vendor.builder().name("Test Vendor").build());
+        final Purchase saved = purchaseRepo.save(Purchase.builder().customer(testCustomer).vendor(testVendor).build());
         final Long id = saved.getId();
 
         //execution and validation
@@ -336,7 +373,8 @@ public class IntegrationTest {
         //setup
         String url = buildUrl(PurchaseController.ROOT_PATH, PurchaseController.APPROVE_PATH);
         final Customer testCustomer = customerRepo.save(Customer.builder().name("Test Name").build());
-        final Purchase saved = purchaseRepo.save(Purchase.builder().approved(false).customer(testCustomer).build());
+        final Vendor testVendor = vendorRepo.save(Vendor.builder().name("Test Vendor").build());
+        final Purchase saved = purchaseRepo.save(Purchase.builder().approved(false).customer(testCustomer).vendor(testVendor).build());
         final Long id = saved.getId();
 
         //execution and validation
@@ -355,6 +393,7 @@ public class IntegrationTest {
         String url = buildUrl(PurchaseController.ROOT_PATH, PurchaseController.HISTORY_PATH);
         final Product testProduct = productRepo.save(Product.builder().name("Test Product").build());
         final Customer testCustomer = customerRepo.save(Customer.builder().name("Test Customer").build());
+        final Vendor testVendor = vendorRepo.save(Vendor.builder().name("Test Vendor").build());
 
         final Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DAY_OF_MONTH, -1);
@@ -369,6 +408,7 @@ public class IntegrationTest {
                         .approved(false)
                         .creationDateTime(creationTimeStart)
                         .customer(testCustomer)
+                        .vendor(testVendor)
                         .products(Collections.singletonList(testProduct))
                         .build());
 
@@ -382,7 +422,25 @@ public class IntegrationTest {
                 .andExpect(jsonPath("$[0].approved", is(saved.isApproved())))
                 .andExpect(jsonPath("$[0].id", is(saved.getId().intValue())))
                 .andExpect(jsonPath("$[0].customer.id", is(saved.getCustomer().getId().intValue())))
+                .andExpect(jsonPath("$[0].vendor.id", is(saved.getVendor().getId().intValue())))
                 .andExpect(jsonPath("$[0].products[0].id", is(saved.getProducts().get(0).getId().intValue())));
+
+    }
+
+    @Test
+    public void createVendor() throws Exception {
+        //setup
+        String url = buildUrl(VendorController.ROOT_PATH, VendorController.CREATE_OR_UPDATE_PATH);
+        final Vendor vendor = Vendor.builder().name("Test Name" + Math.random()).build();
+        String requestJson = OBJECT_WRITER.writeValueAsString(vendor);
+
+        //execution and validation
+        mockMvc.perform(post(url).contentType(APPLICATION_JSON_UTF8)
+                .content(requestJson))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").exists())
+                .andExpect(jsonPath("$.name", is(vendor.getName())))
+                .andExpect(jsonPath("$.deleted", is(vendor.getDeleted())));
 
     }
 
