@@ -167,7 +167,7 @@ public class IntegrationTest {
     @Test
     public void createCustomer() throws Exception {
         //setup
-        String url = buildUrl(CustomerController.ROOT_PATH, CustomerController.CREATE_PATH);
+        String url = buildUrl(CustomerController.ROOT_PATH, CustomerController.CREATE_OR_UPDATE_PATH);
         final Customer testCustomer = Customer.builder().name("Test Name" + Math.random()).build();
         String requestJson = OBJECT_WRITER.writeValueAsString(testCustomer);
 
@@ -184,7 +184,7 @@ public class IntegrationTest {
     @Test
     public void createCustomerNameRequired() throws Exception {
         //setup
-        String url = buildUrl(CustomerController.ROOT_PATH, CustomerController.CREATE_PATH);
+        String url = buildUrl(CustomerController.ROOT_PATH, CustomerController.CREATE_OR_UPDATE_PATH);
         final Customer testCustomer = Customer.builder().build();
         String requestJson = OBJECT_WRITER.writeValueAsString(testCustomer);
 
@@ -192,7 +192,7 @@ public class IntegrationTest {
         mockMvc.perform(post(url).contentType(APPLICATION_JSON_UTF8)
                 .content(requestJson))
                 .andExpect(status().isUnprocessableEntity())
-                .andExpect(result -> assertEquals(CustomerController.NAME_REQUIRED_MESSAGE, result.getResponse().getErrorMessage()));
+                .andExpect(result -> assertEquals("Could not create object: {} with service ar.com.plug.examen.domain.service.impl.ProcessCustomerModelServiceImpl", result.getResponse().getErrorMessage()));
 
     }
 
@@ -231,7 +231,7 @@ public class IntegrationTest {
     @Test
     public void updateCustomer() throws Exception {
         //setup
-        String url = buildUrl(CustomerController.ROOT_PATH, CustomerController.UPDATE_PATH);
+        String url = buildUrl(CustomerController.ROOT_PATH, CustomerController.CREATE_OR_UPDATE_PATH);
         final Customer testCustomer = customerRepo.save(Customer.builder().name("Test Name").build());
         final Customer updatedCustomer = Customer.builder().id(testCustomer.getId()).name("differentName").build();
         String requestJson = OBJECT_WRITER.writeValueAsString(updatedCustomer);
@@ -249,7 +249,7 @@ public class IntegrationTest {
     @Test
     public void updateCustomerOneValue() throws Exception {
         //setup
-        String url = buildUrl(CustomerController.ROOT_PATH, CustomerController.UPDATE_PATH);
+        String url = buildUrl(CustomerController.ROOT_PATH, CustomerController.CREATE_OR_UPDATE_PATH);
         final Customer testCustomer = customerRepo.save(Customer.builder().name("Test Name").build());
         final Customer updatedCustomer = Customer.builder().id(testCustomer.getId()).deleted(new Date()).build();
         String requestJson = OBJECT_WRITER.writeValueAsString(updatedCustomer);
@@ -300,7 +300,7 @@ public class IntegrationTest {
     @Test
     public void createProduct() throws Exception {
         //setup
-        String url = buildUrl(ProductController.ROOT_PATH, CustomerController.CREATE_PATH);
+        String url = buildUrl(ProductController.ROOT_PATH, CustomerController.CREATE_OR_UPDATE_PATH);
         final Product testProduct = Product.builder().name("Test Name" + Math.random()).build();
         String requestJson = OBJECT_WRITER.writeValueAsString(testProduct);
 

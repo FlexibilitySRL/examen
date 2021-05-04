@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataAccessException;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.io.IOException;
@@ -24,8 +25,7 @@ public abstract class AbstractBaseModelService<U extends JpaRepository<T, Long>,
     abstract Class<T> getDomainClass();
 
     @Override
-    public T createOrUpdate(ObjectNode objectNode) {
-
+    public T createOrUpdate(ObjectNode objectNode) throws IOException {
         final T entity;
         try {
             final JsonNode idNode = objectNode.get("id");
@@ -35,22 +35,38 @@ public abstract class AbstractBaseModelService<U extends JpaRepository<T, Long>,
                 entity = getDomainClass().newInstance();
             }
             final T p = new ObjectMapper().readerForUpdating(entity).readValue(objectNode, getDomainClass());
-            return repo.save(p);
-        } catch (IOException | InstantiationException | IllegalAccessException e) {
-            throw new IllegalArgumentException("Could not createOrUpdate entity with json: " + objectNode.toString());
+            final T save = repo.save(p);
+            log.info(getDomainClass().getSimpleName() + " created or Updated with id: " + save.getId());
+            return save;
+        } catch (InstantiationException | IllegalAccessException e) {
+            //should never happen, catching error here to avoid calling classes from having to catch
+            throw new IllegalArgumentException(getDomainClass().getSimpleName() + " could not createOrUpdate entity with json: " + objectNode.toString(), e);
         }
     }
 
     @Override
     public T read(Long id) {
-        return repo.findById(id).orElse(null);
+        try {
+            final T t = repo.findById(id).orElse(null);
+            log.info(getDomainClass().getSimpleName() + " read id: " + id);
+            return t;
+        } catch (DataAccessException e) {
+            throw new IllegalArgumentException(getDomainClass().getSimpleName() + " could not read entity with id: " + id, e);
+        }
+
     }
 
     @Override
     public T delete(Long id) {
-        final T entity = findByIdMustExist(id);
-        entity.setDeleted(new Date());
-        return repo.save(entity);
+        try {
+            final T entity = findByIdMustExist(id);
+            entity.setDeleted(new Date());
+            final T save = repo.save(entity);
+            log.info(getDomainClass().getSimpleName() + " deleted id: " + save.getId());
+            return save;
+        } catch (DataAccessException e) {
+            throw new IllegalArgumentException(getDomainClass().getSimpleName() + " could not deleted entity with id: " + id, e);
+        }
     }
 
     private T findByIdMustExist(Long id) {
