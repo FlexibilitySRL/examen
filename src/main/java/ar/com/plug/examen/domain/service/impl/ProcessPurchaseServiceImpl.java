@@ -36,7 +36,7 @@ public class ProcessPurchaseServiceImpl extends AbstractBaseModelService<Purchas
             log.info(getDomainClass().getSimpleName() + " found with ids: " + allByCreationDateTimeBetween.stream().map(BaseModel::getId).collect(Collectors.toList()));
             return allByCreationDateTimeBetween;
         } catch (ParseException e) {
-            throw new IllegalArgumentException("Invalid date", e);
+            throw new IllegalArgumentException(String.format("Invalid dates, start: %s, end: %s", startDate, endDate), e);
         }
     }
 

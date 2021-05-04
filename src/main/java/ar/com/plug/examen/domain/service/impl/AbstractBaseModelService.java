@@ -36,7 +36,7 @@ public abstract class AbstractBaseModelService<U extends JpaRepository<T, Long>,
             }
             final T p = new ObjectMapper().readerForUpdating(entity).readValue(objectNode, getDomainClass());
             final T save = repo.save(p);
-            log.info(getDomainClass().getSimpleName() + " created or Updated with id: " + save.getId());
+            log.info(getDomainClass().getSimpleName() + " created or updated with id: " + save.getId());
             return save;
         } catch (InstantiationException | IllegalAccessException e) {
             //should never happen, catching error here to avoid calling classes from having to catch
@@ -46,14 +46,9 @@ public abstract class AbstractBaseModelService<U extends JpaRepository<T, Long>,
 
     @Override
     public T read(Long id) {
-        try {
-            final T t = repo.findById(id).orElse(null);
-            log.info(getDomainClass().getSimpleName() + " read id: " + id);
-            return t;
-        } catch (DataAccessException e) {
-            throw new IllegalArgumentException(getDomainClass().getSimpleName() + " could not read entity with id: " + id, e);
-        }
-
+        final T t = repo.findById(id).orElse(null);
+        log.info(getDomainClass().getSimpleName() + " read id: " + id);
+        return t;
     }
 
     @Override
@@ -70,6 +65,6 @@ public abstract class AbstractBaseModelService<U extends JpaRepository<T, Long>,
     }
 
     private T findByIdMustExist(Long id) {
-        return repo.findById(id).orElseThrow(() -> new IllegalArgumentException("entity doesn't exist for id: " + id));
+        return repo.findById(id).orElseThrow(() -> new IllegalArgumentException(getDomainClass().getSimpleName() + " entity doesn't exist with id: " + id));
     }
 }
