@@ -24,6 +24,13 @@ public abstract class AbstractBaseModelService<U extends JpaRepository<T, Long>,
 
     abstract Class<T> getDomainClass();
 
+    /**
+     * Create or Update entity with json. If json has id, it will update, otherwise create
+     *
+     * @param objectNode json of the entity to createOrUpdate
+     * @return entity createdOrUpdated
+     * @throws IOException if json cannot be mapped to entity
+     */
     @Override
     public T createOrUpdate(ObjectNode objectNode) throws IOException {
         final T entity;
@@ -44,6 +51,12 @@ public abstract class AbstractBaseModelService<U extends JpaRepository<T, Long>,
         }
     }
 
+    /**
+     * Return the value of entity with that id
+     *
+     * @param id of entity to return from database
+     * @return json representing entity
+     */
     @Override
     public T read(Long id) {
         final T t = repo.findById(id).orElse(null);
@@ -51,6 +64,12 @@ public abstract class AbstractBaseModelService<U extends JpaRepository<T, Long>,
         return t;
     }
 
+    /**
+     * Marks the entity
+     *
+     * @param id of entity to soft delete
+     * @return the object soft deleted
+     */
     @Override
     public T delete(Long id) {
         try {

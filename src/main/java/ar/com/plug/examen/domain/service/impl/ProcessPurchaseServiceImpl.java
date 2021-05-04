@@ -23,6 +23,11 @@ public class ProcessPurchaseServiceImpl extends AbstractBaseModelService<Purchas
         super(repo);
     }
 
+    /**
+     * Utility service to approve purchases
+     *
+     * @param id of purchase to approve
+     */
     public void approve(Long id) {
         Purchase purchase = repo.findById(id).orElseThrow(() -> new IllegalArgumentException(String.format("Purchase with Id: %s not found", id)));
         purchase.setApproved(true);
@@ -30,6 +35,13 @@ public class ProcessPurchaseServiceImpl extends AbstractBaseModelService<Purchas
         log.info(getDomainClass().getSimpleName() + " approved with id: " + save.getId());
     }
 
+    /**
+     * To consult purchases
+     *
+     * @param startDate beginning date rate to search for purchase
+     * @param endDate   end date rate to search for purchase
+     * @return
+     */
     public List<Purchase> findAllByCreationDateTimeBetween(String startDate, String endDate) {
         try {
             final List<Purchase> allByCreationDateTimeBetween = repo.findAllByCreationDateTimeBetween(simpleDateFormat.parse(startDate), simpleDateFormat.parse(endDate));
