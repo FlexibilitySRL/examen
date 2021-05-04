@@ -1,7 +1,7 @@
 package ar.com.plug.examen.app.rest;
 
 import ar.com.plug.examen.datasource.model.Product;
-import ar.com.plug.examen.domain.service.ProcessIdNameActiveModelService;
+import ar.com.plug.examen.domain.service.ProcessBaseModelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -9,13 +9,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(path = ProductController.ROOT_PATH)
 public class ProductController
-        extends AbstractIdNameActiveModelController<ProcessIdNameActiveModelService<Product>, Product> {
+        extends AbstractBaseModelController<ProcessBaseModelService<Product>, Product> {
 
     //paths
     public static final String ROOT_PATH = "product";
 
     @Autowired
-    public ProductController(ProcessIdNameActiveModelService<Product> processProductService) {
+    public ProductController(ProcessBaseModelService<Product> processProductService) {
         super(processProductService);
     }
 

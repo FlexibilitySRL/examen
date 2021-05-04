@@ -13,11 +13,9 @@ import javax.persistence.MappedSuperclass;
 @SuperBuilder
 @ToString(callSuper = true, onlyExplicitlyIncluded = true)
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
-public class IdNameActiveModel extends IdModel {
+public class NameModel extends BaseModel {
 
     @Column(nullable = false)
     String name;
 
-    @Column(nullable = false)
-    Boolean active;
 }

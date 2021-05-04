@@ -5,9 +5,9 @@ import ar.com.plug.examen.datasource.repo.CustomerRepo;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ProcessCustomerServiceImpl extends AbstractIdNameActiveModelService<CustomerRepo, Customer> {
+public class ProcessCustomerModelServiceImpl extends AbstractBaseModelService<CustomerRepo, Customer> {
 
-    public ProcessCustomerServiceImpl(CustomerRepo repo) {
+    public ProcessCustomerModelServiceImpl(CustomerRepo repo) {
         super(repo);
     }
 

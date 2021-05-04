@@ -15,7 +15,7 @@ import java.util.List;
 @SuperBuilder
 @ToString(callSuper = true, onlyExplicitlyIncluded = true)
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
-public class Purchase extends IdModel {
+public class Purchase extends BaseModel {
 
     @Column(nullable = false)
     boolean approved;

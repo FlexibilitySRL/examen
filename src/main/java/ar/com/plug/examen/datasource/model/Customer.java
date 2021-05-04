@@ -16,7 +16,7 @@ import java.util.List;
 @ToString(callSuper = true, onlyExplicitlyIncluded = true)
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 @JsonIgnoreProperties("purchases")
-public class Customer extends IdNameActiveModel {
+public class Customer extends NameModel {
 
     @OneToMany(mappedBy = "customer")
     List<Purchase> purchases;

@@ -2,6 +2,7 @@ package ar.com.plug.examen.domain.service.impl;
 
 import ar.com.plug.examen.datasource.model.Purchase;
 import ar.com.plug.examen.datasource.repo.PurchaseRepo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
@@ -9,18 +10,18 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Service
-public class ProcessPurchaseServiceImpl extends AbstractIdModelService<PurchaseRepo, Purchase> {
+public class ProcessPurchaseServiceImpl extends AbstractBaseModelService<PurchaseRepo, Purchase> {
 
     public static final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-
+    @Autowired
     public ProcessPurchaseServiceImpl(PurchaseRepo repo) {
         super(repo);
     }
 
-    public void approve(Long id, Boolean approve) {
+    public void approve(Long id) {
         Purchase purchase = repo.findById(id).orElseThrow(() -> new IllegalArgumentException(String.format("Purchase with Id: %s not found", id)));
-        purchase.setApproved(approve);
+        purchase.setApproved(true);
         repo.save(purchase);
     }
 

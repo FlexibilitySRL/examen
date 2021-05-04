@@ -18,7 +18,7 @@ import java.util.List;
 @RestController
 @RequestMapping(path = PurchaseController.ROOT_PATH)
 public class PurchaseController
-        extends AbstractIdModelController<ProcessPurchaseServiceImpl, Purchase> {
+        extends AbstractBaseModelController<ProcessPurchaseServiceImpl, Purchase> {
 
     //paths
     public static final String ROOT_PATH = "purchase";
@@ -32,18 +32,16 @@ public class PurchaseController
 
     @PostMapping(path = APPROVE_PATH, produces = {MediaType.APPLICATION_JSON_VALUE},
             consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ObjectUtils.Null> approve(@RequestBody ObjectNode objectNode) {
-        Long id = getIdRequired(objectNode);
-        Boolean approve = getBoolean(objectNode, "approve");
-        service.approve(id, approve);
+    public ResponseEntity<ObjectUtils.Null> approve(@RequestBody Long id) {
+        service.approve(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping(path = HISTORY_PATH, produces = {MediaType.APPLICATION_JSON_VALUE},
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Purchase>> history(@RequestBody ObjectNode objectNode) {
-        String startDate = getString(objectNode, "creationTimeStart");
-        String endDate = getString(objectNode, "creationTimeEnd");
+        String startDate = objectNode.get("creationTimeStart").asText();
+        String endDate = objectNode.get("creationTimeEnd").asText();
         return new ResponseEntity<>(service.findAllByCreationDateTimeBetween(startDate, endDate), HttpStatus.OK);
     }
 

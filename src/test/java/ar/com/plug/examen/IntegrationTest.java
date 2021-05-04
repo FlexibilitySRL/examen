@@ -29,7 +29,9 @@ import org.springframework.web.context.WebApplicationContext;
 
 import javax.transaction.Transactional;
 import java.nio.charset.Charset;
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Stream;
 
@@ -45,6 +47,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Transactional
 @ActiveProfiles(profiles = "local")
 public class IntegrationTest {
+
+    private static final DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+
+    static {
+        df.setTimeZone(TimeZone.getTimeZone("GMT"));
+    }
 
     private static final String DEFAULT_CUSTOMER_NAME = "Customer 101";
     private static final long DEFAULT_CUSTOMER_ID = 101L;
@@ -77,7 +85,7 @@ public class IntegrationTest {
 
     @Before
     public void before() {
-        defaultCustomer = Customer.builder().id(DEFAULT_CUSTOMER_ID).name(DEFAULT_CUSTOMER_NAME).active(true).build();
+        defaultCustomer = Customer.builder().id(DEFAULT_CUSTOMER_ID).name(DEFAULT_CUSTOMER_NAME).build();
         defaultProduct = Product.builder().id(DEFAULT_PRODUCT_ID).name(DEFAULT_PRODUCT_NAME).build();
         defaultPurchase = Purchase.builder().id(DEFAULT_PURCHASE_ID).customer(defaultCustomer).build();
         mockMvc = MockMvcBuilders.webAppContextSetup(this.webApplicationContext).build();
@@ -160,7 +168,7 @@ public class IntegrationTest {
     public void createCustomer() throws Exception {
         //setup
         String url = buildUrl(CustomerController.ROOT_PATH, CustomerController.CREATE_PATH);
-        final Customer testCustomer = Customer.builder().name("Test Name" + Math.random()).active(true).build();
+        final Customer testCustomer = Customer.builder().name("Test Name" + Math.random()).build();
         String requestJson = OBJECT_WRITER.writeValueAsString(testCustomer);
 
         //execution and validation
@@ -169,7 +177,7 @@ public class IntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").exists())
                 .andExpect(jsonPath("$.name", is(testCustomer.getName())))
-                .andExpect(jsonPath("$.active", is(testCustomer.getActive())));
+                .andExpect(jsonPath("$.deleted", is(testCustomer.getDeleted())));
 
     }
 
@@ -177,7 +185,7 @@ public class IntegrationTest {
     public void createCustomerNameRequired() throws Exception {
         //setup
         String url = buildUrl(CustomerController.ROOT_PATH, CustomerController.CREATE_PATH);
-        final Customer testCustomer = Customer.builder().active(true).build();
+        final Customer testCustomer = Customer.builder().build();
         String requestJson = OBJECT_WRITER.writeValueAsString(testCustomer);
 
         //execution and validation
@@ -189,36 +197,20 @@ public class IntegrationTest {
     }
 
     @Test
-    public void createCustomerActiveRequired() throws Exception {
-        //setup
-        String url = buildUrl(CustomerController.ROOT_PATH, CustomerController.CREATE_PATH);
-        final Customer testCustomer = Customer.builder().name("abc").build();
-        String requestJson = OBJECT_WRITER.writeValueAsString(testCustomer);
-
-        //execution and validation
-        mockMvc.perform(post(url).contentType(APPLICATION_JSON_UTF8)
-                .content(requestJson))
-                .andExpect(status().isUnprocessableEntity())
-                .andExpect(result -> assertEquals(CustomerController.ACTIVE_REQUIRED_MESSAGE, result.getResponse().getErrorMessage()));
-
-    }
-
-    @Test
     public void readCustomer() throws Exception {
         //setup
         String url = buildUrl(CustomerController.ROOT_PATH, CustomerController.READ_PATH);
-        final Customer testCustomer = customerRepo.save(Customer.builder().name("Test Name").active(true).build());
+        final Customer testCustomer = customerRepo.save(Customer.builder().name("Test Name").build());
 
         final Long id = testCustomer.getId();
-        String requestJson = "{\"id\": " + id + "}";
 
         //execution and validation
         mockMvc.perform(post(url).contentType(APPLICATION_JSON_UTF8)
-                .content(requestJson))
+                .content(id.toString()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is(testCustomer.getId().intValue())))
                 .andExpect(jsonPath("$.name", is(testCustomer.getName())))
-                .andExpect(jsonPath("$.active", is(testCustomer.getActive())));
+                .andExpect(jsonPath("$.deleted", is(testCustomer.getDeleted())));
 
     }
 
@@ -227,13 +219,12 @@ public class IntegrationTest {
         //setup
         String url = buildUrl(CustomerController.ROOT_PATH, CustomerController.READ_PATH);
 
-        String requestJson = "{}";
+        String requestJson = "";
 
         //execution and validation
         mockMvc.perform(post(url).contentType(APPLICATION_JSON_UTF8)
                 .content(requestJson))
-                .andExpect(status().isUnprocessableEntity())
-                .andExpect(result -> assertEquals(CustomerController.ID_REQUIRED_MESSAGE, result.getResponse().getErrorMessage()));
+                .andExpect(status().isBadRequest());
 
     }
 
@@ -241,8 +232,8 @@ public class IntegrationTest {
     public void updateCustomer() throws Exception {
         //setup
         String url = buildUrl(CustomerController.ROOT_PATH, CustomerController.UPDATE_PATH);
-        final Customer testCustomer = customerRepo.save(Customer.builder().name("Test Name").active(true).build());
-        final Customer updatedCustomer = Customer.builder().id(testCustomer.getId()).name("differentName").active(false).build();
+        final Customer testCustomer = customerRepo.save(Customer.builder().name("Test Name").build());
+        final Customer updatedCustomer = Customer.builder().id(testCustomer.getId()).name("differentName").build();
         String requestJson = OBJECT_WRITER.writeValueAsString(updatedCustomer);
 
         //execution and validation
@@ -251,22 +242,7 @@ public class IntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is(updatedCustomer.getId().intValue())))
                 .andExpect(jsonPath("$.name", is(updatedCustomer.getName())))
-                .andExpect(jsonPath("$.active", is(updatedCustomer.getActive())));
-
-    }
-
-    @Test
-    public void updateCustomerIdRequired() throws Exception {
-        //setup
-        String url = buildUrl(CustomerController.ROOT_PATH, CustomerController.UPDATE_PATH);
-
-        String requestJson = "{}";
-
-        //execution and validation
-        mockMvc.perform(post(url).contentType(APPLICATION_JSON_UTF8)
-                .content(requestJson))
-                .andExpect(status().isUnprocessableEntity())
-                .andExpect(result -> assertEquals(CustomerController.ID_REQUIRED_MESSAGE, result.getResponse().getErrorMessage()));
+                .andExpect(jsonPath("$.deleted", is(updatedCustomer.getDeleted())));
 
     }
 
@@ -274,8 +250,8 @@ public class IntegrationTest {
     public void updateCustomerOneValue() throws Exception {
         //setup
         String url = buildUrl(CustomerController.ROOT_PATH, CustomerController.UPDATE_PATH);
-        final Customer testCustomer = customerRepo.save(Customer.builder().name("Test Name").active(true).build());
-        final Customer updatedCustomer = Customer.builder().id(testCustomer.getId()).active(false).build();
+        final Customer testCustomer = customerRepo.save(Customer.builder().name("Test Name").build());
+        final Customer updatedCustomer = Customer.builder().id(testCustomer.getId()).deleted(new Date()).build();
         String requestJson = OBJECT_WRITER.writeValueAsString(updatedCustomer);
 
         //execution and validation
@@ -284,7 +260,7 @@ public class IntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is(updatedCustomer.getId().intValue())))
                 .andExpect(jsonPath("$.name", is(testCustomer.getName())))
-                .andExpect(jsonPath("$.active", is(updatedCustomer.getActive())));
+                .andExpect(jsonPath("$.deleted", is(df.format(updatedCustomer.getDeleted()))));
 
     }
 
@@ -292,19 +268,18 @@ public class IntegrationTest {
     public void deleteCustomer() throws Exception {
         //setup
         String url = buildUrl(CustomerController.ROOT_PATH, CustomerController.DELETE_PATH);
-        final Customer testCustomer = customerRepo.save(Customer.builder().name("Test Name").active(true).build());
+        final Customer testCustomer = customerRepo.save(Customer.builder().name("Test Name").build());
 
         final Long id = testCustomer.getId();
-        String requestJson = "{\"id\": " + id + ", \"active\": false}";
 
         //execution and validation
         mockMvc.perform(post(url).contentType(APPLICATION_JSON_UTF8)
-                .content(requestJson))
+                .content(id.toString()))
                 .andExpect(status().isOk());
 
         Optional<Customer> byIdAfter = customerRepo.findById(id);
         assertTrue(byIdAfter.isPresent());
-        assertFalse(byIdAfter.get().getActive());
+        assertNotNull(byIdAfter.get().getDeleted());
 
     }
 
@@ -318,8 +293,7 @@ public class IntegrationTest {
         //execution and validation
         mockMvc.perform(post(url).contentType(APPLICATION_JSON_UTF8)
                 .content(requestJson))
-                .andExpect(status().isUnprocessableEntity())
-                .andExpect(result -> assertEquals(CustomerController.ID_REQUIRED_MESSAGE, result.getResponse().getErrorMessage()));
+                .andExpect(status().isBadRequest());
 
     }
 
@@ -327,7 +301,7 @@ public class IntegrationTest {
     public void createProduct() throws Exception {
         //setup
         String url = buildUrl(ProductController.ROOT_PATH, CustomerController.CREATE_PATH);
-        final Product testProduct = Product.builder().name("Test Name" + Math.random()).active(true).build();
+        final Product testProduct = Product.builder().name("Test Name" + Math.random()).build();
         String requestJson = OBJECT_WRITER.writeValueAsString(testProduct);
 
         //execution and validation
@@ -336,7 +310,7 @@ public class IntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").exists())
                 .andExpect(jsonPath("$.name", is(testProduct.getName())))
-                .andExpect(jsonPath("$.active", is(testProduct.getActive())));
+                .andExpect(jsonPath("$.deleted", is(testProduct.getDeleted())));
 
     }
 
@@ -344,14 +318,13 @@ public class IntegrationTest {
     public void readPurchase() throws Exception {
         //setup
         String url = buildUrl(PurchaseController.ROOT_PATH, PurchaseController.READ_PATH);
-        final Customer testCustomer = customerRepo.save(Customer.builder().name("Test Name").active(true).build());
+        final Customer testCustomer = customerRepo.save(Customer.builder().name("Test Name").build());
         final Purchase saved = purchaseRepo.save(Purchase.builder().customer(testCustomer).build());
         final Long id = saved.getId();
-        String requestJson = "{\"id\": " + id + "}";
 
         //execution and validation
         mockMvc.perform(post(url).contentType(APPLICATION_JSON_UTF8)
-                .content(requestJson))
+                .content(id.toString()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is(saved.getId().intValue())))
                 .andExpect(jsonPath("$.approved", is(saved.isApproved())));
@@ -362,14 +335,13 @@ public class IntegrationTest {
     public void approvePurchase() throws Exception {
         //setup
         String url = buildUrl(PurchaseController.ROOT_PATH, PurchaseController.APPROVE_PATH);
-        final Customer testCustomer = customerRepo.save(Customer.builder().name("Test Name").active(true).build());
+        final Customer testCustomer = customerRepo.save(Customer.builder().name("Test Name").build());
         final Purchase saved = purchaseRepo.save(Purchase.builder().approved(false).customer(testCustomer).build());
         final Long id = saved.getId();
-        String requestJson = "{\"id\": " + id + ", \"approve\": true}";
 
         //execution and validation
         mockMvc.perform(post(url).contentType(APPLICATION_JSON_UTF8)
-                .content(requestJson))
+                .content(id.toString()))
                 .andExpect(status().isOk());
 
         Optional<Purchase> byIdAfter = purchaseRepo.findById(id);
@@ -381,8 +353,8 @@ public class IntegrationTest {
     public void historyPurchase() throws Exception {
         //setup
         String url = buildUrl(PurchaseController.ROOT_PATH, PurchaseController.HISTORY_PATH);
-        final Product testProduct = productRepo.save(Product.builder().name("Test Product").active(true).build());
-        final Customer testCustomer = customerRepo.save(Customer.builder().name("Test Customer").active(true).build());
+        final Product testProduct = productRepo.save(Product.builder().name("Test Product").build());
+        final Customer testCustomer = customerRepo.save(Customer.builder().name("Test Customer").build());
 
         final Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DAY_OF_MONTH, -1);

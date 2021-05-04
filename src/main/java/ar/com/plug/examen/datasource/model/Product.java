@@ -18,7 +18,7 @@ import java.util.List;
 @ToString(callSuper = true, onlyExplicitlyIncluded = true)
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 @JsonIgnoreProperties("purchases")
-public class Product extends IdNameActiveModel {
+public class Product extends NameModel {
 
     @ManyToMany
     @JoinTable(
