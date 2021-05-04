@@ -16,7 +16,8 @@ import java.util.stream.Collectors;
 @Slf4j
 public class ProcessPurchaseServiceImpl extends AbstractBaseModelService<PurchaseRepo, Purchase> {
 
-    public static final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    public static final String YYYY_MM_DD = "yyyy-MM-dd";
+    public static final SimpleDateFormat simpleDateFormat = new SimpleDateFormat(YYYY_MM_DD);
 
     @Autowired
     public ProcessPurchaseServiceImpl(PurchaseRepo repo) {
@@ -48,7 +49,7 @@ public class ProcessPurchaseServiceImpl extends AbstractBaseModelService<Purchas
             log.info(getDomainClass().getSimpleName() + " found with ids: " + allByCreationDateTimeBetween.stream().map(BaseModel::getId).collect(Collectors.toList()));
             return allByCreationDateTimeBetween;
         } catch (ParseException e) {
-            throw new IllegalArgumentException(String.format("Invalid dates, start: %s, end: %s", startDate, endDate), e);
+            throw new IllegalArgumentException(String.format("Invalid dates format must be %s but was start: %s, end: %s", YYYY_MM_DD, startDate, endDate), e);
         }
     }
 

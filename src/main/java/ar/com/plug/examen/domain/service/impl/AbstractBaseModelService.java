@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.dao.DataAccessException;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.io.IOException;
@@ -65,22 +64,20 @@ public abstract class AbstractBaseModelService<U extends JpaRepository<T, Long>,
     }
 
     /**
-     * Marks the entity
+     * Marks the entity deleted
      *
      * @param id of entity to soft delete
      * @return the object soft deleted
      */
     @Override
     public T delete(Long id) {
-        try {
-            final T entity = findByIdMustExist(id);
-            entity.setDeleted(new Date());
-            final T save = repo.save(entity);
-            log.info(getDomainClass().getSimpleName() + " deleted id: " + save.getId());
-            return save;
-        } catch (DataAccessException e) {
-            throw new IllegalArgumentException(getDomainClass().getSimpleName() + " could not deleted entity with id: " + id, e);
-        }
+
+        final T entity = findByIdMustExist(id);
+        entity.setDeleted(new Date());
+        final T save = repo.save(entity);
+        log.info(getDomainClass().getSimpleName() + " deleted id: " + save.getId());
+        return save;
+
     }
 
     private T findByIdMustExist(Long id) {
