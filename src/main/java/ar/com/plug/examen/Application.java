@@ -10,8 +10,7 @@ import org.springframework.context.annotation.Configuration;
 @ComponentScan("ar.com.plug")
 public class Application {
 
-    public static void main(final String[] args)
-    {
+    public static void main(final String[] args) {
         SpringApplication.run(Application.class, args);
     }
 }

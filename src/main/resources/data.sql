@@ -1,0 +1,5 @@
+INSERT INTO customer (ID, NAME ) VALUES (101, 'Customer 101' );
+INSERT INTO product (ID, NAME ) VALUES (201, 'Product 201');
+INSERT INTO vendor (ID, NAME ) VALUES (401, 'Vendor 201');
+INSERT INTO purchase (ID, CUSTOMER_ID, VENDOR_ID, approved, CREATION_DATE_TIME ) VALUES (301, 101, 401, FALSE, {ts '2021-04-01 15:45:12.69'});
+INSERT INTO product_purchase VALUES( 301, 201)

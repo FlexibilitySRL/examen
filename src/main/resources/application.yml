@@ -2,18 +2,20 @@ spring:
   jackson:
     serialization:
       write-dates-as-timestamps: false
+    date-format: yyyy-MM-dd'T'HH:mm:ssZ
   jpa:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
-    hibernate:
-      ddl-auto: update
+    hibernate.ddl-auto: update
     show-sql: true
   datasource:
-      url: jdbc:mysql://127.0.0.1:3306/payments?zeroDateTimeBehavior=convertToNull
-      username: root
-      password: password
+    url: jdbc:mysql://127.0.0.1:3306/payments?zeroDateTimeBehavior=convertToNull
+    username: root
+    password: password
 
 server:
   port: 8080
   servlet:
     context-path: '/payments'
+  error:
+    include-message: always
 ---
