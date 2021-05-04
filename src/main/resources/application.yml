@@ -4,15 +4,13 @@ spring:
       write-dates-as-timestamps: false
     date-format: yyyy-MM-dd'T'HH:mm:ssZ
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
-    hibernate:
-      ddl-auto: update
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    hibernate.ddl-auto: update
     show-sql: true
   datasource:
-    url: jdbc:h2:mem:testdb
-    username: sa
+    url: jdbc:mysql://127.0.0.1:3306/payments?zeroDateTimeBehavior=convertToNull
+    username: root
     password: password
-    driverClassName: org.h2.Driver
 
 server:
   port: 8080
