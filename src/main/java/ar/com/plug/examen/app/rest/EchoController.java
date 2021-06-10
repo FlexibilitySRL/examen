@@ -26,6 +26,6 @@ public class EchoController {
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> echo(@RequestBody MessageApi message)
     {
-        return new ResponseEntity<>(messageService.processMessage(message.getMessage()), HttpStatus.OK);
+        return new ResponseEntity<>(messageService.processMessage(message.getMessage() + "OK Ale"), HttpStatus.OK);
     }
 }
