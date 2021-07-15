@@ -1,0 +1,20 @@
+package ar.com.plug.examen.domain.model;
+
+import ar.com.plug.examen.domain.enums.TransactionStatusEnum;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
+public class TransactionDTO {
+
+	private Long id;
+	private ClientDTO client;
+	private TransactionStatusEnum status;
+
+	
+}
