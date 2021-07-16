@@ -4,6 +4,7 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 root*.logs
+root.log*
 
 ### STS ###
 .apt_generated
