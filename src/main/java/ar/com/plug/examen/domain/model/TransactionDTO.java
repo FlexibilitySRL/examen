@@ -19,6 +19,7 @@ public class TransactionDTO {
 	private ClientDTO client;
 	private List<TransactionDetailDTO> transactionDetails;
 	private Integer status;
+	private SellerDTO seller;
 	private Date transactionDate;
 
 	

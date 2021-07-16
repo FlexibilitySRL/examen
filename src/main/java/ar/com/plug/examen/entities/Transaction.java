@@ -39,10 +39,10 @@ public class Transaction implements Serializable {
 
 	private Date date;
 	
-//	@ManyToOne(fetch = FetchType.LAZY)
-//	@JoinColumn(name = "seller_id", referencedColumnName = "id")
-//	private Seller seller;
-//	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "seller_id", referencedColumnName = "id")
+	private Seller seller;
+
 	private Integer status;
 
 	@OneToMany(mappedBy = "transaction", cascade = CascadeType.ALL)

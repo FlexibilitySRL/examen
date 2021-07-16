@@ -23,7 +23,7 @@ public class TransactionMapper {
 	private ClientMapper clientMapper;
 	
 	@Autowired
-	private ProductMapper productMapper;
+	private SellerMapper sellerMapper;
 	
 	@Autowired
 	private TransactionDetailMapper transactionDetailMapper;
@@ -33,6 +33,7 @@ public class TransactionMapper {
 		transactionDTO.setId(transaction.getId());
 		transactionDTO.setStatus(transaction.getStatus());
 		transactionDTO.setClient(this.clientMapper.clientEntityToClientDTO(transaction.getClient()));
+		transactionDTO.setSeller(this.sellerMapper.sellerToSellerDTO(transaction.getSeller()	));
 		transactionDTO.setTransactionDetails(this.transactionDetailMapper.transactionDetailToListTransactionDetailsDTO(transaction.getTransactionDetails()));
 		transactionDTO.setTransactionDate(transaction.getDate());
 	    return transactionDTO;
@@ -45,6 +46,7 @@ public class TransactionMapper {
 	    transaction.setDate(transactionDTO.getTransactionDate());
 	    transaction.setTransactionDetails(this.transactionDetailMapper.transactionDetailsDTOToListTransactionDetails(transactionDTO.getTransactionDetails()));
 	    transaction.setStatus(transactionDTO.getStatus());
+	    transaction.setSeller(this.sellerMapper.sellerDTOtoSeller(transactionDTO.getSeller()));
 	    return transaction;
 	  }
 

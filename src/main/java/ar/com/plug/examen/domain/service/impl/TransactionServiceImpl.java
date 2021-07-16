@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import antlr.debug.NewLineEvent;
 import ar.com.plug.examen.domain.enums.TransactionStatusEnum;
 import ar.com.plug.examen.domain.exceptions.BadRequestError;
 import ar.com.plug.examen.domain.exceptions.ResourceNotFoundError;
@@ -19,11 +20,13 @@ import ar.com.plug.examen.domain.mappers.TransactionMapper;
 import ar.com.plug.examen.domain.model.ClientDTO;
 import ar.com.plug.examen.domain.model.ProductDTO;
 import ar.com.plug.examen.domain.model.ProductQuantityDTO;
+import ar.com.plug.examen.domain.model.SellerDTO;
 import ar.com.plug.examen.domain.model.TransactionDTO;
 import ar.com.plug.examen.domain.model.TransactionDTORequest;
 import ar.com.plug.examen.domain.repositories.TransactionRepository;
 import ar.com.plug.examen.domain.service.IClientRepo;
 import ar.com.plug.examen.domain.service.IProductRepo;
+import ar.com.plug.examen.domain.service.ISellerRepo;
 import ar.com.plug.examen.domain.service.ITransactionRepo;
 import ar.com.plug.examen.domain.validators.Validator;
 import ar.com.plug.examen.entities.Transaction;
@@ -53,6 +56,9 @@ public class TransactionServiceImpl implements ITransactionRepo {
 	@Autowired
 	private TransactionDetailMapper transactionDetailMapper;
 	
+	@Autowired
+	private ISellerRepo sellerService;
+	
 	private final Logger logger = LoggerFactory.getLogger(TransactionServiceImpl.class);
 
 
@@ -68,6 +74,7 @@ public class TransactionServiceImpl implements ITransactionRepo {
 	
 	private Transaction buildTransaction(TransactionDTORequest request) throws ResourceNotFoundError, BadRequestError {
 		ClientDTO client = this.clientService.findClientById(request.getClientId());
+		SellerDTO seller = this.sellerService.findSellerByID(request.getSellerId());
 	    List<TransactionDetail> transactionDetails = new ArrayList<>();
 		for (ProductQuantityDTO productQuantity : request.getLsProductsQuantities()) {
 			ProductDTO productDTO = this.productService.findProductById(productQuantity.getId());
@@ -81,7 +88,7 @@ public class TransactionServiceImpl implements ITransactionRepo {
 			item.setProduct(this.productMapper.productDTOtoProduct(productDTO));
 			transactionDetails.add(item);
 		}
-		TransactionDTO transactionDTO = new TransactionDTO(null, client, this.transactionDetailMapper.transactionDetailToListTransactionDetailsDTO(transactionDetails), TransactionStatusEnum.PENDIENTE.getId(), new Date());
+		TransactionDTO transactionDTO = new TransactionDTO(null, client, this.transactionDetailMapper.transactionDetailToListTransactionDetailsDTO(transactionDetails), TransactionStatusEnum.PENDIENTE.getId(), seller, new Date());
 		Transaction t = this.transactionMapper.transactionDTOtoTransaction(transactionDTO);
 		for (TransactionDetail transactionDetail : t.getTransactionDetails()) {
 			transactionDetail.setTransaction(t);

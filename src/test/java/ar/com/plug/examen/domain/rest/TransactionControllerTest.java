@@ -32,6 +32,7 @@ import ar.com.plug.examen.Application;
 import ar.com.plug.examen.domain.exceptions.ResourceNotFoundError;
 import ar.com.plug.examen.domain.model.ClientDTO;
 import ar.com.plug.examen.domain.model.ProductDTO;
+import ar.com.plug.examen.domain.model.SellerDTO;
 import ar.com.plug.examen.domain.model.TransactionDTO;
 import ar.com.plug.examen.domain.model.TransactionDetailDTO;
 import ar.com.plug.examen.domain.service.IClientRepo;
@@ -56,11 +57,12 @@ public class TransactionControllerTest {
 	@BeforeAll
 	public void settingTransaction() {
 		ClientDTO c = new ClientDTO(1L, "lea", "ferreyra", "lean224");
+		SellerDTO s = new SellerDTO(1L, "usuario 1");
 		ProductDTO p = new ProductDTO(2L, "Product 1", 10D, 100);
 		TransactionDetailDTO detail = new TransactionDetailDTO(p,10,null);
 		List<TransactionDetailDTO> listDetail = new ArrayList<TransactionDetailDTO>();
 		listDetail.add(detail);
-		transaction = new TransactionDTO(3L, c, listDetail, 1, new Date()); 
+		transaction = new TransactionDTO(3L, c, listDetail, 1, s, new Date()); 
 	}
 
 	@Test

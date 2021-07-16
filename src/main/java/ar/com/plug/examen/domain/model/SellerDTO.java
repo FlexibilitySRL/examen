@@ -1,7 +1,5 @@
 package ar.com.plug.examen.domain.model;
 
-import java.util.List;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,12 +9,9 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class TransactionDTORequest {
+public class SellerDTO {
 	
-	private Long clientId;
-	private Long sellerId;
-	private List<ProductQuantityDTO> lsProductsQuantities;
-
-
+	private Long id;
+	private String user;
 
 }

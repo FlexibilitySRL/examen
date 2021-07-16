@@ -16,27 +16,21 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-//@Entity
-//@Table(name = "sellers")
-//@Data
-//@NoArgsConstructor
-//@AllArgsConstructor
+@Entity
+@Table(name = "sellers")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Seller {
 
-//	@Id
-//	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-//	private long id;
-//
-//	@NotNull
-//	private String firstname;
-//
-//	@NotNull
-//	private String lastname;
-//	
-//	@NotNull	
-//	private String user;
-//	
-//	@OneToMany(mappedBy="seller", cascade= CascadeType.ALL)
-//	private List<Transaction> transaction;
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	private long id;
+
+	@NotNull	
+	private String user;
+	
+	@OneToMany(mappedBy="seller", cascade= CascadeType.ALL)
+	private List<Transaction> transaction;
 
 }

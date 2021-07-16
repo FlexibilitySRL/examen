@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import ar.com.plug.examen.domain.exceptions.BadRequestError;
 import ar.com.plug.examen.domain.model.ClientDTO;
 import ar.com.plug.examen.domain.model.ProductDTO;
+import ar.com.plug.examen.domain.model.SellerDTO;
 import ar.com.plug.examen.domain.model.TransactionDTO;
 import ar.com.plug.examen.domain.model.TransactionDTORequest;
 
@@ -43,6 +44,12 @@ public class Validator {
 		}
 		if(StringUtils.isBlank(String.valueOf(product.getStock())) || product.getStock() == 0) {
 			throw new BadRequestError("Product stock is required");
+		}
+	}
+	
+	public void validateSeller(SellerDTO seller) throws BadRequestError {
+		if (StringUtils.isBlank(seller.getUser())) {
+			throw new BadRequestError("User is required");
 		}
 	}
 	
