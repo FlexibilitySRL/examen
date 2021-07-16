@@ -1,5 +1,8 @@
 package ar.com.plug.examen.domain.model;
 
+import java.util.Date;
+import java.util.List;
+
 import ar.com.plug.examen.domain.enums.TransactionStatusEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,7 +17,9 @@ public class TransactionDTO {
 
 	private Long id;
 	private ClientDTO client;
-	private TransactionStatusEnum status;
+	private List<TransactionDetailDTO> transactionDetails;
+	private Integer status;
+	private Date transactionDate;
 
 	
 }

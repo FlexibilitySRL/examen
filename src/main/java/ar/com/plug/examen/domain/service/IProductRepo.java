@@ -8,13 +8,13 @@ import ar.com.plug.examen.domain.model.ProductDTO;
 
 public interface IProductRepo {
 
-	public ProductDTO findClientById(long id) throws ResourceNotFoundError;
+	public ProductDTO findProductById(long id) throws ResourceNotFoundError;
 	
 	public List<ProductDTO> findAll();
 
-	public ProductDTO save(ProductDTO client) throws BadRequestError;
+	public ProductDTO save(ProductDTO product) throws BadRequestError;
 	
-	public ProductDTO update(ProductDTO client) throws ResourceNotFoundError, BadRequestError;
+	public ProductDTO update(ProductDTO product) throws ResourceNotFoundError, BadRequestError;
 
 	public void delete(long id) throws ResourceNotFoundError;
 	

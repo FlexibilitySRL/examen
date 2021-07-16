@@ -16,24 +16,26 @@ public class ProductMapper {
 	public ProductDTO productToProductDTO(Product product) {
 		ProductDTO productDTO = new ProductDTO();
 		productDTO.setId(product.getId());
-		productDTO.setDescription(product.getDescription());
 		productDTO.setName(product.getName());
 		productDTO.setPrice(product.getPrice());
 		productDTO.setStock(product.getStock());
-	    return productDTO;
-	  }
+		return productDTO;
+	}
 
-	  public Product productDTOtoProduct(ProductDTO productDTO) {
+	public Product productDTOtoProduct(ProductDTO productDTO) {
 		Product product = new Product();
 		product.setId(productDTO.getId());
-		product.setDescription(productDTO.getDescription());
 		product.setName(productDTO.getName());
 		product.setPrice(productDTO.getPrice());
 		product.setStock(productDTO.getStock());
-	    return product;
-	  }
+		return product;
+	}
 
-	  public List<ProductDTO> productToListProductDTO(List<Product> products) {
-	    return products.stream().map(this::productToProductDTO).collect(Collectors.toList());
-	  }
+	public List<ProductDTO> productToListProductDTO(List<Product> products) {
+		return products.stream().map(this::productToProductDTO).collect(Collectors.toList());
+	}
+
+	public List<Product> productDTOToListProduct(List<ProductDTO> productsDTO) {
+		return productsDTO.stream().map(this::productDTOtoProduct).collect(Collectors.toList());
+	}
 }

@@ -38,14 +38,14 @@ public class Transaction implements Serializable {
 	private Client client;
 
 	private Date date;
-//
+	
 //	@ManyToOne(fetch = FetchType.LAZY)
 //	@JoinColumn(name = "seller_id", referencedColumnName = "id")
 //	private Seller seller;
 //	
-	private TransactionStatusEnum status;
+	private Integer status;
 
-	@OneToMany(mappedBy="transaction", cascade= CascadeType.ALL)
-	private List<Product> products;
+	@OneToMany(mappedBy = "transaction", cascade = CascadeType.ALL)
+	private List<TransactionDetail> transactionDetails;
 
 }

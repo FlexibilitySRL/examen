@@ -40,7 +40,7 @@ public class SwaggerConfig {
 
 	@SuppressWarnings("unchecked")
 	private Predicate<String> getPaths() {
-		return or(PathSelectors.regex("/"), PathSelectors.regex("/client.*"), PathSelectors.regex("/transaction.*"), PathSelectors.regex("/product.*"));
+		return or(PathSelectors.regex("/client.*"), PathSelectors.regex("/transaction.*"), PathSelectors.regex("/product.*"));
 	}
 
 	private ApiInfo metaData() {

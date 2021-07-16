@@ -33,7 +33,7 @@ public class ProductController {
 	 * @return List<ProductDTO>
 	 */
 	@GetMapping("/")
-	public ResponseEntity<List<ProductDTO>> findAll() {
+	public ResponseEntity<List<ProductDTO>> getAllProducts() {
 		return new ResponseEntity<List<ProductDTO>>(this.productService.findAll(), HttpStatus.OK);
 	}
 	
@@ -45,7 +45,7 @@ public class ProductController {
 	 */
 	@GetMapping("/{id}")
 	public ResponseEntity<ProductDTO> findProductByID(@PathVariable Long id) throws ResourceNotFoundError {
-		return new ResponseEntity<ProductDTO>(this.productService.findClientById(id),HttpStatus.OK);
+		return new ResponseEntity<ProductDTO>(this.productService.findProductById(id),HttpStatus.OK);
 	}
 	
 	/**
@@ -71,8 +71,15 @@ public class ProductController {
 		return new ResponseEntity<ProductDTO>(this.productService.update(request), HttpStatus.OK);
 	}
 	
-	@DeleteMapping("/")
-	public ResponseEntity<?> delete(long id) throws ResourceNotFoundError {
+	
+	/**
+	 * Delete a product by id
+	 * @param id
+	 * @return
+	 * @throws ResourceNotFoundError
+	 */
+	@DeleteMapping("/{id}")
+	public ResponseEntity<?> delete(@PathVariable long id) throws ResourceNotFoundError {
 		this.productService.delete(id);
 	    return new ResponseEntity<>(HttpStatus.OK);
 	}

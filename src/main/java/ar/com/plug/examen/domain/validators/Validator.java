@@ -29,16 +29,19 @@ public class Validator {
 		if (StringUtils.isBlank(transaction.getClientId().toString())) {
 			throw new BadRequestError("Client ID is required");
 		}
+		if (transaction.getLsProductsQuantities().size() == 0) {
+			throw new BadRequestError("Products are required");
+		}
 	}
 	
 	public void validateProduct(ProductDTO product) throws BadRequestError {
 		if (StringUtils.isBlank(product.getName())) {
 			throw new BadRequestError("Product name is required");
 		}
-		if (StringUtils.isBlank(product.getPrice().toString())) {
+		if (StringUtils.isBlank(product.getPrice().toString()) || product.getPrice() == 0) {
 			throw new BadRequestError("Product price is required");
 		}
-		if(StringUtils.isBlank(product.getStock().toString())) {
+		if(StringUtils.isBlank(String.valueOf(product.getStock())) || product.getStock() == 0) {
 			throw new BadRequestError("Product stock is required");
 		}
 	}
