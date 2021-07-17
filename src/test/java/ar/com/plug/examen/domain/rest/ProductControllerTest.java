@@ -33,6 +33,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import ar.com.plug.examen.Application;
+import ar.com.plug.examen.domain.builderPattern.ProductBuilder;
+import ar.com.plug.examen.domain.builderPattern.ProductDTOBuilder;
 import ar.com.plug.examen.domain.exceptions.BadRequestError;
 import ar.com.plug.examen.domain.exceptions.ResourceNotFoundError;
 import ar.com.plug.examen.domain.model.ClientDTO;
@@ -59,7 +61,7 @@ public class ProductControllerTest {
 
 	@Test
 	public void saveProductTest() throws Exception {
-		Product p = new Product(2L,"Product 1", 10D,100, null);
+		Product p = new ProductBuilder().withID(2L).withName("Product 1").withPrice(10D).withStock(100).build();
 		HttpHeaders headers = new HttpHeaders();
 		HttpEntity<Product> request = new HttpEntity<>(p, headers);
 		ResponseEntity<ProductDTO> response = restTemplate.postForEntity(URL, request, ProductDTO.class);
@@ -68,8 +70,9 @@ public class ProductControllerTest {
 
 	@Test
 	public void findAllProductsTest() {
-		List<ProductDTO> products = Stream.of(new ProductDTO(2L,"Product 1", 10D,100), 
-				new ProductDTO(3L,"Product 2", 10D,100)).collect(Collectors.toList());
+		ProductDTO p1 = new ProductDTOBuilder().withID(2L).withName("Product 1").withPrice(10D).withStock(100).build();
+		ProductDTO p2 = new ProductDTOBuilder().withID(3L).withName("Product 2").withPrice(10D).withStock(100).build();
+		List<ProductDTO> products = Stream.of(p1,p2).collect(Collectors.toList());
 		when(this.productService.findAll()).thenReturn(products);
 		ResponseEntity<List> responseEntity = restTemplate.getForEntity(URL, List.class);
 		assertTrue(responseEntity.getStatusCode() == HttpStatus.OK);
@@ -84,7 +87,7 @@ public class ProductControllerTest {
 
 	@Test
 	public void findProductByIDTestReturnsProductDTO() throws ResourceNotFoundError {
-		ProductDTO p = new ProductDTO(2L,"Product 1", 10D,100);
+		ProductDTO p = new ProductDTOBuilder().withID(2L).withName("Product 1").withPrice(10D).withStock(100).build();
 		when(this.productService.findProductById(2L)).thenReturn(p);
 		ResponseEntity<ProductDTO> responseEntity = restTemplate.getForEntity(URL + "/2", ProductDTO.class);
 		assertEquals(p, responseEntity.getBody());
@@ -93,7 +96,7 @@ public class ProductControllerTest {
 
 	@Test
 	public void findProductByIDTestReturnsOK() throws ResourceNotFoundError {
-		ProductDTO p = new ProductDTO(2L,"Product 1", 10D,100);
+		ProductDTO p = new ProductDTOBuilder().withID(2L).withName("Product 1").withPrice(10D).withStock(100).build();
 		when(this.productService.findProductById(2L)).thenReturn(p);
 		ResponseEntity<ProductDTO> responseEntity = restTemplate.getForEntity(URL + "/2", ProductDTO.class);
 		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
@@ -101,7 +104,7 @@ public class ProductControllerTest {
 
 	@Test
 	public void updateProductDTOReturnsOK() throws ResourceNotFoundError, BadRequestError {
-		ProductDTO p = new ProductDTO(2L,"Product 1", 10D,100);
+		ProductDTO p = new ProductDTOBuilder().withID(2L).withName("Product 1").withPrice(10D).withStock(100).build();
 		when(this.productService.update(any())).thenReturn(p);
 		HttpHeaders headers = new HttpHeaders();
 		HttpEntity<ProductDTO> request = new HttpEntity<>(p, headers);
