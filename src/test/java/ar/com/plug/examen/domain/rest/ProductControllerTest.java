@@ -70,8 +70,8 @@ public class ProductControllerTest {
 
 	@Test
 	public void findAllProductsTest() {
-		ProductDTO p1 = new ProductDTOBuilder().withID(2L).withName("Product 1").withPrice(10D).withStock(100).build();
-		ProductDTO p2 = new ProductDTOBuilder().withID(3L).withName("Product 2").withPrice(10D).withStock(100).build();
+		ProductDTO p1 = new ProductDTOBuilder().build();
+		ProductDTO p2 = new ProductDTOBuilder().build();
 		List<ProductDTO> products = Stream.of(p1,p2).collect(Collectors.toList());
 		when(this.productService.findAll()).thenReturn(products);
 		ResponseEntity<List> responseEntity = restTemplate.getForEntity(URL, List.class);

@@ -51,7 +51,6 @@ public class ClientControllerTest {
 
 	@Test
 	public void saveClientTest() throws Exception {
-//		Client c = new Client(1L, "lea", "ferreyra", "lean224", null);
 		Client c = new ClientBuilder().withID(1L).withFirstname("Lea").withLastname("Ferreyra").withEmail("lean224").build();
 		HttpHeaders headers = new HttpHeaders();
 		HttpEntity<Client> request = new HttpEntity<>(c, headers);
@@ -61,7 +60,7 @@ public class ClientControllerTest {
 
 	@Test
 	public void findAllClientTest() {
-		ClientDTO c = new ClientDTOBuilder().withID(1L).withFirstname("Leandro").withLastname("Ferreyra").withEmail("lean224").build();
+		ClientDTO c = new ClientDTOBuilder().build();
 		List<ClientDTO> clients = Stream.of(c).collect(Collectors.toList());
 		when(this.clientService.findAll()).thenReturn(clients);
 		ResponseEntity<List> responseEntity = restTemplate.getForEntity(URL, List.class);
