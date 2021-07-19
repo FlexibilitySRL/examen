@@ -1,10 +1,11 @@
-package ar.com.plug.examen.app.rest;
+package ar.com.plug.examen.domain.rest;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,73 +17,73 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ar.com.plug.examen.domain.exceptions.BadRequestError;
 import ar.com.plug.examen.domain.exceptions.ResourceNotFoundError;
-import ar.com.plug.examen.domain.model.SellerDTO;
-import ar.com.plug.examen.domain.service.ISellerRepo;
+import ar.com.plug.examen.domain.model.ClientDTO;
+import ar.com.plug.examen.domain.service.IClientRepo;
+import ar.com.plug.examen.entities.Client;
 
 @RestController
-@RequestMapping("/sellers")
-public class SellerController {
-	
+@RequestMapping("/client")
+public class ClientController {
 	
 	@Autowired
-	private ISellerRepo sellerService;
-	
+	private IClientRepo clientService;
 	
 	/**
-	 * Return all sellers
-	 * @return List<SellerDTO>
+	 * Return all clients
+	 * @return List<ClientDTO>
 	 */
 	@GetMapping("/")
-	public ResponseEntity<List<SellerDTO>> getSellers() {
-		return new ResponseEntity<>(this.sellerService.findAll(), HttpStatus.OK);
+	public ResponseEntity<List<ClientDTO>> getClients() {
+		return new ResponseEntity<>(this.clientService.findAll(), HttpStatus.OK);
 	}
 	
 	
 	/**
-	 * Find one seller by id
+	 * Find one client by id
 	 * @param id -> long
-	 * @return SellerDTO
+	 * @return ClientDTO
 	 * @throws ResourceNotFoundError
 	 */
 	@GetMapping("/{id}")
-	public ResponseEntity<SellerDTO> getSellerByID(@PathVariable long id) throws ResourceNotFoundError {
-	    return new ResponseEntity<SellerDTO>(this.sellerService.findSellerByID(id), HttpStatus.OK);
+	public ResponseEntity<ClientDTO> getClientById(@PathVariable long id) throws ResourceNotFoundError {
+	    return new ResponseEntity<ClientDTO>(this.clientService.findClientById(id), HttpStatus.OK);
 	}
 	
 	/**
-	 * Save one seller.
-	 * @param request -> SellerDTO
-	 * @return SellerDTO
+	 * Save one client.
+	 * @param request -> ClientDTO
+	 * @return ClientDTO
 	 * @throws BadRequestError 
 	 */
 	@PostMapping("/")
-	public ResponseEntity<SellerDTO> save(@RequestBody SellerDTO request) throws BadRequestError {
-		return new ResponseEntity<SellerDTO>(this.sellerService.save(request), HttpStatus.CREATED);
+	public ResponseEntity<ClientDTO> save(@RequestBody ClientDTO request) throws BadRequestError {
+		return new ResponseEntity<ClientDTO>(this.clientService.save(request), HttpStatus.CREATED);
 	}
 	     
 	/**
-	 * Delete a seller by id
+	 * Delete a client by id
 	 * @param id -> long
 	 * @return void
 	 * @throws ResourceNotFoundError
 	 */
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> delete(@PathVariable long id) throws ResourceNotFoundError {
-		this.sellerService.delete(id);
+		this.clientService.delete(id);
 	    return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	
 	/**
-	 * Update a seller
-	 * @param request -> SellerDTO
-	 * @return SellerDTO
+	 * Update a client
+	 * @param request -> ClientDTO
+	 * @return ClientDTO
 	 * @throws ResourceNotFoundError
 	 * @throws BadRequestError 
 	 */
 	@PutMapping("/")
-	public ResponseEntity<SellerDTO> update(@RequestBody SellerDTO request) throws ResourceNotFoundError, BadRequestError {
-		return new ResponseEntity<SellerDTO>(this.sellerService.update(request), HttpStatus.OK);
+	public ResponseEntity<ClientDTO> update(@RequestBody ClientDTO request) throws ResourceNotFoundError, BadRequestError {
+		return new ResponseEntity<ClientDTO>(this.clientService.update(request), HttpStatus.OK);
 	}
+	
 
 }

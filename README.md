@@ -37,3 +37,4 @@ la creación de los Clientes y Productos.
 
     Despues de hacer mvn install, abrir en un navegador el siguiente archivo: target/site/jacoco/index.html# REST Test
 
+-Test de arquitectura utilizando **Archunit**

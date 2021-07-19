@@ -1,4 +1,4 @@
-package ar.com.plug.examen.app.rest;
+package ar.com.plug.examen.domain.rest;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

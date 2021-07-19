@@ -1,4 +1,4 @@
-package ar.com.plug.examen.app.rest;
+package ar.com.plug.examen.domain.rest;
 
 import java.util.List;
 
@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import ar.com.plug.examen.domain.exceptions.BadRequestError;
 import ar.com.plug.examen.domain.exceptions.ResourceNotFoundError;
@@ -23,7 +24,7 @@ import ar.com.plug.examen.domain.service.ITransactionRepo;
 import ar.com.plug.examen.entities.Client;
 import ar.com.plug.examen.entities.Transaction;
 
-@Controller
+@RestController
 @RequestMapping("/transaction")
 public class TransactionController {
 	

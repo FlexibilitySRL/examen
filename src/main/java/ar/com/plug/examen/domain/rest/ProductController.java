@@ -1,4 +1,4 @@
-package ar.com.plug.examen.app.rest;
+package ar.com.plug.examen.domain.rest;
 
 import java.util.List;
 
