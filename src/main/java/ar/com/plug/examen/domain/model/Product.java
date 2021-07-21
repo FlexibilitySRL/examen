@@ -1,7 +1,8 @@
 package ar.com.plug.examen.domain.model;
+
 import javax.persistence.*;
-import java.math.BigDecimal;
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "products")
@@ -31,6 +32,13 @@ public class Product {
     private Boolean active = true;
 
     public Product() {
+    }
+
+    public Product(String name, String brand, String description, BigDecimal price) {
+        this.name = name;
+        this.brand = brand;
+        this.description = description;
+        this.price = price;
     }
 
     public Product(Long id, String name, String brand, String description, BigDecimal price, Boolean active) {
@@ -89,4 +97,5 @@ public class Product {
     public void setActive(Boolean active) {
         this.active = active;
     }
+
 }

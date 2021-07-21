@@ -25,11 +25,16 @@ public class Seller {
     public Seller() {
     }
 
-    public Seller(Long id, @NotNull(message = "FirstName may not be null") String firstName, @NotNull(message = "LastName may not be null") String lastName, Boolean active) {
+    public Seller(Long id, String firstName, String lastName, Boolean active) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.active = active;
+    }
+
+    public Seller(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 
     public Long getId() {
