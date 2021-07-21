@@ -1,0 +1,546 @@
+{
+	"info": {
+		"_postman_id": "a970d4e7-4fcf-4725-a081-12ba681033ee",
+		"name": "FlexibilitySRL",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "Add",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"name\":\"Remera Negra\",\n\"brand\":\"Nike\",\n\"description\":\"Remera Nike Negra\",\n\"price\": 1000\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/payments/api/v1/products",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"payments",
+								"api",
+								"v1",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add with missing parameter",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"name\":\"Pantalon Negro\",\n\"brand\":\"KVN\",\n\"description\":\"Pantalon KVN Negro\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/payments/api/v1/products",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"payments",
+								"api",
+								"v1",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/payments/api/v1/products/2",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"payments",
+								"api",
+								"v1",
+								"products",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/payments/api/v1/products?sort=brand,asc",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"payments",
+								"api",
+								"v1",
+								"products"
+							],
+							"query": [
+								{
+									"key": "sort",
+									"value": "brand,asc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 2,\n    \"name\": \"Pantalon Negro Edit\",\n    \"brand\": \"KVN\",\n    \"description\": \"Pantalon KVN Negro\",\n    \"price\": 2000.00,\n    \"active\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/payments/api/v1/products",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"payments",
+								"api",
+								"v1",
+								"products"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Customers",
+			"item": [
+				{
+					"name": "Add",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"firstName\":\"Pepe\",\n\"lastName\":\"Gonzalez\",\n\"email\":\"pepe@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/payments/api/v1/customers",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"payments",
+								"api",
+								"v1",
+								"customers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add with missing parameter",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"firstName\":\"Pepe\",\n\"lastName\":\"Gonzalez\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/payments/api/v1/customers",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"payments",
+								"api",
+								"v1",
+								"customers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/payments/api/v1/customers/5",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"payments",
+								"api",
+								"v1",
+								"customers",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/payments/api/v1/customers?sort=lastName,desc",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"payments",
+								"api",
+								"v1",
+								"customers"
+							],
+							"query": [
+								{
+									"key": "sort",
+									"value": "lastName,desc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 2,\n    \"firstName\": \"Nahuel Edit\",\n    \"lastName\": \"Moreyra\",\n    \"email\": \"nahuel@gmail.com\",\n    \"active\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/payments/api/v1/customers",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"payments",
+								"api",
+								"v1",
+								"customers"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Sellers",
+			"item": [
+				{
+					"name": "Add",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"firstName\":\"Pepe\",\n\"lastName\":\"Perez\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/payments/api/v1/sellers",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"payments",
+								"api",
+								"v1",
+								"sellers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add with missing parameter",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"firstName\":\"Pepe\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/payments/api/v1/sellers",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"payments",
+								"api",
+								"v1",
+								"sellers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/payments/api/v1/sellers/3",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"payments",
+								"api",
+								"v1",
+								"sellers",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/payments/api/v1/sellers?sort=lastName,desc",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"payments",
+								"api",
+								"v1",
+								"sellers"
+							],
+							"query": [
+								{
+									"key": "sort",
+									"value": "lastName,desc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 2,\n    \"firstName\": \"Pepe Edit\",\n    \"lastName\": \"Perez\",\n    \"active\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/payments/api/v1/sellers",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"payments",
+								"api",
+								"v1",
+								"sellers"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Transac",
+			"item": [
+				{
+					"name": "Get all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/payments/api/v1/transacs?sort=id,asc",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"payments",
+								"api",
+								"v1",
+								"transacs"
+							],
+							"query": [
+								{
+									"key": "sort",
+									"value": "id,asc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/payments/api/v1/transacs/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"payments",
+								"api",
+								"v1",
+								"transacs",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Transac Approve",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/payments/api/v1/transacs/1/approve",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"payments",
+								"api",
+								"v1",
+								"transacs",
+								"1",
+								"approve"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "echo",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"message\":\"mensaje de prueba\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/payments/echo",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"payments",
+						"echo"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

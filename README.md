@@ -1,7 +1,25 @@
 # REST Test
 
-# Bienvenidos!
+# NOTAS
 
+1) La documentación se encuentra en :
+http://localhost:8080/payments/swagger-ui.html
+
+2) Para ejecutar code coverage :
+mvn jacoco:report -->
+los resultados se encontrarán en target/site/jacoco/ar.com.plug.examen.domain.model/index.html
+
+3) Para buildear imagen de docker :
+docker build . -t examen:examen
+
+4) Para ejecutar imagen de docker :
+docker run examen:examen
+
+5) Todos los request será logueados en modo debug
+
+6) Se agregó collection de postman en Flexibility.postman_collection.json
+
+# Bienvenidos!
 La prueba consiste en agregar nueva funcionalidad a la API REST que corre en este repositorio. Para eso vamos a guiarnos por los siguientes puntos:
 
 1) Hacer un fork del repositorio, crear un nuevo branch y realizar las tareas enunciadas a continuación.
