@@ -29,18 +29,18 @@ public class ProductoServiceImpl implements ProductoService {
 	}
 
 	@Override
-	public Producto createProduct(ProductoAltaDto d) {
-		Producto p = new Producto();
-		p.setNombre(d.getNombre());
-		return dao.save(p);
+	public Producto createProduct(ProductoAltaDto source) {
+		Producto entity = new Producto();
+		entity.setNombre(source.getNombre());
+		return dao.save(entity);
 	}
 
 	@Override
-	public Producto updateProduct(ProductoUpdateDto dto) {
-		Producto productToUpdate = dao.findById(dto.getId()).get();
-		if(Optional.ofNullable(dto.getNombre()).isPresent())
-			productToUpdate.setNombre(dto.getNombre());
-		return dao.save(productToUpdate);
+	public Producto updateProduct(ProductoUpdateDto source) {
+		Producto entity = dao.findById(source.getId()).get();
+		if(Optional.ofNullable(source.getNombre()).isPresent())
+			entity.setNombre(source.getNombre());
+		return dao.save(entity);
 	}
 
 	@Override

@@ -18,6 +18,7 @@ public class FacturaToFacturaResponseDtoConverter implements Converter<Factura, 
 	public FacturaResponseDto convert(Factura source) {
 		FacturaResponseDto result = new FacturaResponseDto();
 		result.setCliente(source.getCliente().getApellido() + ", " + source.getCliente().getNombre());
+		result.setVendedor(source.getVendedor().getApellido() + ", " + source.getVendedor().getNombre());
 		result.setEstado(source.getEstado());
 		result.setFecha(source.getFecha());
 		result.setId(source.getId());

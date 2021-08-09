@@ -31,24 +31,24 @@ public class DetalleFacturaServiceImpl implements DetalleFacturaService {
 	}
 
 	@Override
-	public DetalleFactura createInvoiceDetail(DetalleFacturaAltaDto dto) {
-		DetalleFactura detalleFactura = new DetalleFactura();
-		detalleFactura.setFactura(facturaDao.findById(dto.getIdFactura()).get());
-		detalleFactura.setProducto(productoDao.findById(dto.getIdProducto()).get());
-		detalleFactura.setCantidad(dto.getCantidad());
-		return dao.save(detalleFactura);
+	public DetalleFactura createInvoiceDetail(DetalleFacturaAltaDto source) {
+		DetalleFactura entity = new DetalleFactura();
+		entity.setFactura(facturaDao.findById(source.getIdFactura()).get());
+		entity.setProducto(productoDao.findById(source.getIdProducto()).get());
+		entity.setCantidad(source.getCantidad());
+		return dao.save(entity);
 	}
 
 	@Override
-	public DetalleFactura updateInvoiceDetail(DetalleFacturaUpdateDto dto) {
-		DetalleFactura detalleFactura = dao.findById(dto.getId()).get();
-		if(Optional.ofNullable(dto.getCantidad()).isPresent())
-			detalleFactura.setCantidad(dto.getCantidad());
-		if(Optional.ofNullable(dto.getIdFactura()).isPresent())
-			detalleFactura.setFactura(facturaDao.findById(dto.getIdFactura()).get());
-		if(Optional.ofNullable(dto.getIdProducto()).isPresent())
-			detalleFactura.setProducto(productoDao.findById(dto.getIdProducto()).get());
-		return dao.save(detalleFactura);
+	public DetalleFactura updateInvoiceDetail(DetalleFacturaUpdateDto source) {
+		DetalleFactura entity = dao.findById(source.getId()).get();
+		if(Optional.ofNullable(source.getCantidad()).isPresent())
+			entity.setCantidad(source.getCantidad());
+		if(Optional.ofNullable(source.getIdFactura()).isPresent())
+			entity.setFactura(facturaDao.findById(source.getIdFactura()).get());
+		if(Optional.ofNullable(source.getIdProducto()).isPresent())
+			entity.setProducto(productoDao.findById(source.getIdProducto()).get());
+		return dao.save(entity);
 	}
 
 	@Override

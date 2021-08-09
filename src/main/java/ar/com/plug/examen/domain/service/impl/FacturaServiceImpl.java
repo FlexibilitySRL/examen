@@ -36,23 +36,23 @@ public class FacturaServiceImpl implements FacturaService {
 	}
 
 	@Override
-	public Factura createInvoice(FacturaAltaDto r) {
-		Factura factura = new Factura();
-		factura.setEstado(EstadoFactura.EN_ESPERA.getDescription());
-		factura.setCliente(clienteDao.findById(r.getIdCliente()).get());
-		factura.setFecha(new Date());
-		return dao.save(factura);
+	public Factura createInvoice(FacturaAltaDto source) {
+		Factura entity = new Factura();
+		entity.setEstado(EstadoFactura.EN_ESPERA.getDescription());
+		entity.setCliente(clienteDao.findById(source.getIdCliente()).get());
+		entity.setFecha(new Date());
+		return dao.save(entity);
 	}
 
 	@Override
-	public Factura updateInvoice(FacturaUpdateDto r) {
-		Factura factura = findById(r.getId()).get();
-		if(Optional.ofNullable(r.getIdCliente()).isPresent()) 
-			factura.setCliente(clienteDao.findById(r.getIdCliente()).get());
-		if(Optional.ofNullable(r.getEstado()).isPresent())
-			factura.setEstado(r.getEstado());
+	public Factura updateInvoice(FacturaUpdateDto source) {
+		Factura entity = findById(source.getId()).get();
+		if(Optional.ofNullable(source.getIdCliente()).isPresent()) 
+			entity.setCliente(clienteDao.findById(source.getIdCliente()).get());
+		if(Optional.ofNullable(source.getEstado()).isPresent())
+			entity.setEstado(source.getEstado());
 		
-		return dao.save(factura);
+		return dao.save(entity);
 	}
 
 	@Override

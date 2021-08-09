@@ -1,6 +1,6 @@
 package ar.com.plug.examen.domain.dto;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 public class ProductoUpdateDto {
@@ -8,8 +8,10 @@ public class ProductoUpdateDto {
 	@NotNull
 	private Integer id;
 	
-	@NotBlank(message = "toy probandodddddddddddddddd")
 	private String nombre;
+	
+	@Min(value = 0)
+	private Integer precioUnitario;
 
 	public Integer getId() {
 		return id;
@@ -25,6 +27,14 @@ public class ProductoUpdateDto {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}
+
+	public Integer getPrecioUnitario() {
+		return precioUnitario;
+	}
+
+	public void setPrecioUnitario(Integer precioUnitario) {
+		this.precioUnitario = precioUnitario;
 	}
 	
 }

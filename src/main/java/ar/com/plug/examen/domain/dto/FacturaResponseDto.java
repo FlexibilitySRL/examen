@@ -15,6 +15,8 @@ public class FacturaResponseDto  {
 	
 	private String cliente;
 	
+	private String vendedor;
+	
 	private Integer total = 0;
 	
 	private Set<DetalleFacturaResponseDto> detalle = Sets.newHashSet();
@@ -67,6 +69,12 @@ public class FacturaResponseDto  {
 		this.total = total;
 	}
 
-	
-	
+	public String getVendedor() {
+		return vendedor;
+	}
+
+	public void setVendedor(String vendedor) {
+		this.vendedor = vendedor;
+	}
+
 }

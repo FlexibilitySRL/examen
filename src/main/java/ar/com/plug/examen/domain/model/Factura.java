@@ -29,6 +29,10 @@ public class Factura {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "cliente", nullable = false)
 	private Cliente cliente;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "vendedor", nullable = false)
+	private Vendedor vendedor;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "fecha")
@@ -81,5 +85,14 @@ public class Factura {
 	public void setDetalles(Set<DetalleFactura> detalles) {
 		this.detalles = detalles;
 	}
+
+	public Vendedor getVendedor() {
+		return vendedor;
+	}
+
+	public void setVendedor(Vendedor vendedor) {
+		this.vendedor = vendedor;
+	}
+
 	
 }

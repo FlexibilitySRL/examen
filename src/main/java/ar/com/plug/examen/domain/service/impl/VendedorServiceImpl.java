@@ -6,31 +6,31 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ar.com.plug.examen.domain.dao.ClienteDao;
-import ar.com.plug.examen.domain.dto.ClienteAltaDto;
-import ar.com.plug.examen.domain.dto.ClienteUpdateDto;
-import ar.com.plug.examen.domain.model.Cliente;
-import ar.com.plug.examen.domain.service.ClienteService;
+import ar.com.plug.examen.domain.dao.VendedorDao;
+import ar.com.plug.examen.domain.dto.VendedorAltaDto;
+import ar.com.plug.examen.domain.dto.VendedorUpdateDto;
+import ar.com.plug.examen.domain.model.Vendedor;
+import ar.com.plug.examen.domain.service.VendedorService;
 
 @Service
-public class ClienteServiceImpl implements ClienteService {
+public class VendedorServiceImpl implements VendedorService {
 	
 	@Autowired
-	private ClienteDao dao;
+	private VendedorDao dao;
 
 	@Override
-	public List<Cliente> getClients() {
+	public List<Vendedor> getSellers() {
 		return dao.findAll();
 	}
 
 	@Override
-	public Optional<Cliente> findById(Integer id) {
+	public Optional<Vendedor> findById(Integer id) {
 		return dao.findById(id);
 	}
 
 	@Override
-	public Cliente createClient(ClienteAltaDto source) {
-		Cliente entity = new Cliente();
+	public Vendedor createSeller(VendedorAltaDto source) {
+		Vendedor entity = new Vendedor();
 		entity.setApellido(source.getApellido());
 		entity.setDireccion(source.getDireccion());
 		entity.setDocumento(source.getDocumento());
@@ -41,8 +41,8 @@ public class ClienteServiceImpl implements ClienteService {
 	}
 
 	@Override
-	public Cliente updateClient(ClienteUpdateDto source) {
-		Cliente entity = findById(source.getId()).get();
+	public Vendedor updateSeller(VendedorUpdateDto source) {
+		Vendedor entity = findById(source.getId()).get();
 		if (Optional.ofNullable(source.getApellido()).isPresent())
 			entity.setApellido(source.getApellido());
 		if (Optional.ofNullable(source.getDireccion()).isPresent())
@@ -59,7 +59,7 @@ public class ClienteServiceImpl implements ClienteService {
 	}
 
 	@Override
-	public void deleteClient(Integer id) {
+	public void deleteSeller(Integer id) {
 		dao.deleteById(id);
 	}
 
