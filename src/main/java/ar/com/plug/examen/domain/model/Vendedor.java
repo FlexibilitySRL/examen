@@ -26,6 +26,21 @@ public class Vendedor {
 	private Date fechaNacimiento;
 		
 	private String telefono;
+	
+	public Vendedor() {
+		super();
+	}
+
+	public Vendedor(Integer documento, String apellido, String nombre, String direccion, Date fechaNacimiento,
+			String telefono) {
+		super();
+		this.documento = documento;
+		this.apellido = apellido;
+		this.nombre = nombre;
+		this.direccion = direccion;
+		this.fechaNacimiento = fechaNacimiento;
+		this.telefono = telefono;
+	}
 
 	@Column(name = "apellido", nullable = false)
 	public String getApellido() {

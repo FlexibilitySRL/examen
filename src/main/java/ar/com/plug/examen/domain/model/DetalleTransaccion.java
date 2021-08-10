@@ -11,15 +11,15 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 
 @Entity
-public class DetalleFactura {
+public class DetalleTransaccion {
 
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "factura", nullable = false)
-	private Factura factura;
+	@JoinColumn(name = "transaccion", nullable = false)
+	private Transaccion transaccion;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "producto", nullable = false)
@@ -27,6 +27,17 @@ public class DetalleFactura {
 	
 	@Column(name = "cantidad", nullable = false)
 	private Integer cantidad;
+	
+	public DetalleTransaccion() {
+		super();
+	}
+
+	public DetalleTransaccion(Transaccion transaccion, Producto producto, Integer cantidad) {
+		super();
+		this.transaccion = transaccion;
+		this.producto = producto;
+		this.cantidad = cantidad;
+	}
 
 	public Integer getId() {
 		return id;
@@ -36,12 +47,12 @@ public class DetalleFactura {
 		this.id = id;
 	}
 
-	public Factura getFactura() {
-		return factura;
+	public Transaccion getTransaccion() {
+		return transaccion;
 	}
 
-	public void setFactura(Factura factura) {
-		this.factura = factura;
+	public void setTransaccion(Transaccion transaccion) {
+		this.transaccion = transaccion;
 	}
 
 	public Producto getProducto() {

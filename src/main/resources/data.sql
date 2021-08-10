@@ -13,8 +13,8 @@ insert into PRODUCTO (ID, NOMBRE, PRECIO_UNITARIO) values (2, 'Azúcar LEDESMA C
 insert into PRODUCTO (ID, NOMBRE, PRECIO_UNITARIO) values (3, 'Leche Parcialmente Descremada Liviana LA SERENISIMA Botella Larga Vida 1l', 150);
 insert into PRODUCTO (ID, NOMBRE, PRECIO_UNITARIO) values (4, 'Café Instantáneo ARLISTAN Frasco 170 Gr', 189);
 
-insert into FACTURA (ID, ESTADO, FECHA, CLIENTE, VENDEDOR) values (1, 'En espera de aprobación', '2020-03-25', 1, 1);
+insert into TRANSACCION (ID, ESTADO, FECHA, CLIENTE, VENDEDOR) values (1, 'En espera de aprobación', '2020-03-25', 1, 1);
 
-insert into DETALLE_FACTURA (ID, CANTIDAD, FACTURA, PRODUCTO) values (1, 3, 1, 1);
-insert into DETALLE_FACTURA (ID, CANTIDAD, FACTURA, PRODUCTO) values (2, 5, 1, 2);
-insert into DETALLE_FACTURA (ID, CANTIDAD, FACTURA, PRODUCTO) values (3, 10, 1, 3);
+insert into DETALLE_TRANSACCION (ID, CANTIDAD, TRANSACCION, PRODUCTO) values (1, 3, 1, 1);
+insert into DETALLE_TRANSACCION (ID, CANTIDAD, TRANSACCION, PRODUCTO) values (2, 5, 1, 2);
+insert into DETALLE_TRANSACCION (ID, CANTIDAD, TRANSACCION, PRODUCTO) values (3, 10, 1, 3);

@@ -5,7 +5,7 @@ import java.util.Set;
 
 import com.google.common.collect.Sets;
 
-public class FacturaResponseDto  {
+public class TransaccionResponseDto  {
 	
 	private Integer id;
 	
@@ -19,7 +19,7 @@ public class FacturaResponseDto  {
 	
 	private Integer total = 0;
 	
-	private Set<DetalleFacturaResponseDto> detalle = Sets.newHashSet();
+	private Set<DetalleTransaccionResponseDto> detalle = Sets.newHashSet();
 
 	public String getCliente() {
 		return cliente;
@@ -29,11 +29,11 @@ public class FacturaResponseDto  {
 		this.cliente = cliente;
 	}
 
-	public Set<DetalleFacturaResponseDto> getDetalle() {
+	public Set<DetalleTransaccionResponseDto> getDetalle() {
 		return detalle;
 	}
 
-	public void setDetalle(Set<DetalleFacturaResponseDto> detalle) {
+	public void setDetalle(Set<DetalleTransaccionResponseDto> detalle) {
 		this.detalle = detalle;
 	}
 

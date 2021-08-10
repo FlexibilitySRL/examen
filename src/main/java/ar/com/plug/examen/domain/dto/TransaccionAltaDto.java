@@ -2,7 +2,7 @@ package ar.com.plug.examen.domain.dto;
 
 import javax.validation.constraints.NotNull;
 
-public class FacturaAltaDto {
+public class TransaccionAltaDto {
 
 	@NotNull
 	private Integer idCliente;

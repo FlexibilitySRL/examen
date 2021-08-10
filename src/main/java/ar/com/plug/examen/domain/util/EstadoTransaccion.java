@@ -1,12 +1,12 @@
 package ar.com.plug.examen.domain.util;
 
-public enum EstadoFactura {
+public enum EstadoTransaccion {
 	
 	EN_ESPERA("En espera de aprobación"),
 	APROBADA("Aprobada"),
 	CANCELADA("Cancelada");
 	
-	EstadoFactura(String d) {
+	EstadoTransaccion(String d) {
 		this.description = d; 
 	}
 

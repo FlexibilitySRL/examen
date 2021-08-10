@@ -26,6 +26,23 @@ public class Cliente {
 	private Date fechaNacimiento;
 		
 	private String telefono;
+	
+	
+
+	public Cliente() {
+		super();
+	}
+
+	public Cliente(Integer documento, String apellido, String nombre, String direccion, Date fechaNacimiento,
+			String telefono) {
+		super();
+		this.documento = documento;
+		this.apellido = apellido;
+		this.nombre = nombre;
+		this.direccion = direccion;
+		this.fechaNacimiento = fechaNacimiento;
+		this.telefono = telefono;
+	}
 
 	@Column(name = "apellido", nullable = false)
 	public String getApellido() {

@@ -19,7 +19,7 @@ import javax.persistence.TemporalType;
 import com.google.common.collect.Sets;
 
 @Entity
-public class Factura {
+public class Transaccion {
 
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,9 +42,21 @@ public class Factura {
 	@Column(name = "estado")
 	private String estado;
 	
-	@OneToMany(mappedBy = "factura", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-	private Set<DetalleFactura> detalles = Sets.newHashSet();
+	@OneToMany(mappedBy = "transaccion", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+	private Set<DetalleTransaccion> detalles = Sets.newHashSet();
 	
+	
+	public Transaccion() {
+		super();
+	}
+
+	public Transaccion(Cliente cliente, Vendedor vendedor, Date fecha, String estado) {
+		super();
+		this.cliente = cliente;
+		this.vendedor = vendedor;
+		this.fecha = fecha;
+		this.estado = estado;
+	}
 
 	public Integer getId() {
 		return id;
@@ -78,11 +90,11 @@ public class Factura {
 		this.estado = estado;
 	}
 
-	public Set<DetalleFactura> getDetalles() {
+	public Set<DetalleTransaccion> getDetalles() {
 		return detalles;
 	}
 
-	public void setDetalles(Set<DetalleFactura> detalles) {
+	public void setDetalles(Set<DetalleTransaccion> detalles) {
 		this.detalles = detalles;
 	}
 

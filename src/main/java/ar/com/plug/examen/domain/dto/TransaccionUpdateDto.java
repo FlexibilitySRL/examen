@@ -1,6 +1,6 @@
 package ar.com.plug.examen.domain.dto;
 
-public class FacturaUpdateDto {
+public class TransaccionUpdateDto {
 
 	private Integer id;
 	

@@ -2,10 +2,10 @@ package ar.com.plug.examen.domain.dto;
 
 import javax.validation.constraints.NotNull;
 
-public class DetalleFacturaAltaDto {
+public class DetalleTransaccionAltaDto {
 
 	@NotNull
-	private Integer idFactura;
+	private Integer idTransaccion;
 
 	@NotNull
 	private Integer idProducto;
@@ -13,12 +13,12 @@ public class DetalleFacturaAltaDto {
 	@NotNull
 	private Integer cantidad;
 
-	public Integer getIdFactura() {
-		return idFactura;
+	public Integer getIdTransaccion() {
+		return idTransaccion;
 	}
 
-	public void setIdFactura(Integer idFactura) {
-		this.idFactura = idFactura;
+	public void setIdTransaccion(Integer idTransaccion) {
+		this.idTransaccion = idTransaccion;
 	}
 
 	public Integer getIdProducto() {

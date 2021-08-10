@@ -1,6 +1,6 @@
 package ar.com.plug.examen.domain.dto;
 
-public class DetalleFacturaResponseDto {
+public class DetalleTransaccionResponseDto {
 	
 	private String producto;
 	
