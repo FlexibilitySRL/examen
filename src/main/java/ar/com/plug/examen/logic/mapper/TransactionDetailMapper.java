@@ -2,6 +2,7 @@ package ar.com.plug.examen.logic.mapper;
 
 import ar.com.plug.examen.domain.dto.DTOFactory;
 import ar.com.plug.examen.domain.dto.TransactionDetailDTO;
+import ar.com.plug.examen.domain.entity.EntityFactory;
 import ar.com.plug.examen.domain.entity.TransactionDetail;
 
 import java.util.ArrayList;
@@ -36,8 +37,39 @@ public class TransactionDetailMapper extends BaseMapper
         final TransactionDetailDTO answer = DTOFactory.createTransactionDetailDTO( entity.getId() );
 
         answer.setQuantity( entity.getQuantity() );
-        answer.setProduct( ProductMapper.mapSimpleEntityToDto( entity.getProduct() ) );
+        answer.setProduct( ProductMapper.mapEntityToDto( entity.getProduct() ) );
 
         return answer;
+    }
+
+    public static List<TransactionDetail> mapRegisterList( List<TransactionDetailDTO> dtoList )
+    {
+        return new ArrayList<TransactionDetail>() {{
+            if ( !dtoList.isEmpty() )
+            {
+                for( TransactionDetailDTO entity : dtoList )
+                {
+                    add( mapRegisterDtoToEntity( entity ) );
+                }
+            }
+        }};
+    }
+
+    public static TransactionDetail mapRegisterDtoToEntity( TransactionDetailDTO dto )
+    {
+        final TransactionDetail answer = EntityFactory.createTransactionDetail();
+
+        validateRegister( dto );
+
+        answer.setQuantity( dto.getQuantity() );
+        answer.setProduct( ProductMapper.mapIdToEntity( dto.getProduct().getId() ) );
+
+        return answer;
+    }
+
+    private static void validateRegister( TransactionDetailDTO dto )
+    {
+        BaseMapper.validate( dto.getQuantity(), "quantity" );
+        BaseMapper.validate( dto.getProduct().getId(), "productId" );
     }
 }

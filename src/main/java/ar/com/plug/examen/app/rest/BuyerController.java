@@ -1,8 +1,8 @@
 package ar.com.plug.examen.app.rest;
 
-import ar.com.plug.examen.domain.dto.ProductDTO;
-import ar.com.plug.examen.domain.service.ProductService;
-import ar.com.plug.examen.logic.mapper.ProductMapper;
+import ar.com.plug.examen.domain.dto.BuyerDTO;
+import ar.com.plug.examen.domain.service.BuyerService;
+import ar.com.plug.examen.logic.mapper.BuyerMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,37 +21,37 @@ import java.util.List;
 
 /**
  * System:                 FlexiTest
- * Name:                   ProductController
- * Description:            Class that serves as proxy for all services available for the Product entity
+ * Name:                   BuyerController
+ * Description:            Class that serves as proxy for all services available for the Buyer entity
  *
  * @author teixbr
  * @version 1.0
  * @since 14/08/21
  */
 @RestController
-@RequestMapping("/product")
-public class ProductController extends BaseController
+@RequestMapping("/buyer")
+public class BuyerController extends BaseController
 {
-    private static final Logger logger = LoggerFactory.getLogger( ProductController.class );
+    private static final Logger logger = LoggerFactory.getLogger( BuyerController.class );
 
     @Autowired
-    private ProductService service;
+    private BuyerService service;
 
     /**
-     * Find all products
+     * Find all buyers
      *
-     * @return List<ProductDTO>
+     * @return List<BuyerDTO>
      */
     @GetMapping( "/all" )
-    public ResponseEntity<List<ProductDTO>> getAllProduct()
+    public ResponseEntity<List<BuyerDTO>> getAllBuyer()
     {
-        logger.debug( "getAllProduct :: IN" );
+        logger.debug( "getAllBuyer :: IN" );
 
         try
         {
-            final List<ProductDTO> answer = service.findAll();
+            final List<BuyerDTO> answer = service.findAll();
 
-            logger.debug( "getAllProduct :: OUT" );
+            logger.debug( "getAllBuyer :: OUT" );
 
             return new ResponseEntity<>( answer, HttpStatus.OK );
         }
@@ -63,22 +63,22 @@ public class ProductController extends BaseController
     }
 
     /**
-     * Find a Product by id
+     * Find a Buyer by id
      *
      * @param id -> long
-     * @return ProductDTO
+     * @return BuyerDTO
      * @throws ar.com.plug.examen.logic.exception.FlexiNotFoundException
      */
     @GetMapping("/profile/{id}")
-    public ResponseEntity<ProductDTO> getProductProfile( @PathVariable long id )
+    public ResponseEntity<BuyerDTO> getBuyerProfile( @PathVariable long id )
     {
-        logger.debug( "getProductProfile :: IN" );
+        logger.debug( "getBuyerProfile :: IN" );
 
         try
         {
-            final ProductDTO answer = service.findById( ProductMapper.mapIdToEntity( id ) );
+            final BuyerDTO answer = service.findById( BuyerMapper.mapIdToEntity( id ) );
 
-            logger.debug( "getProductProfile :: OUT" );
+            logger.debug( "getBuyerProfile :: OUT" );
 
             return new ResponseEntity<>( answer, HttpStatus.OK );
         }
@@ -90,21 +90,21 @@ public class ProductController extends BaseController
     }
 
     /**
-     * Register a new Product
+     * Register a new Buyer
      *
-     * @param dto -> ProductDTO
-     * @return ProductDTO
+     * @param dto -> BuyerDTO
+     * @return BuyerDTO
      */
     @PostMapping("/register")
-    public ResponseEntity<ProductDTO> postRegisterProduct( @RequestBody ProductDTO dto )
+    public ResponseEntity<BuyerDTO> postRegisterBuyer( @RequestBody BuyerDTO dto )
     {
-        logger.debug( "postRegisterProduct :: IN" );
+        logger.debug( "postRegisterBuyer :: IN" );
 
         try
         {
-            final ProductDTO answer = service.register( ProductMapper.mapRegisterDtoToEntity( dto ) );
+            logger.debug( "postRegisterBuyer :: OUT" );
 
-            logger.debug( "postRegisterProduct :: OUT" );
+            final BuyerDTO answer = service.register( BuyerMapper.mapRegisterDtoToEntity( dto ) );
 
             return new ResponseEntity<>( answer, HttpStatus.OK );
         }
@@ -116,24 +116,24 @@ public class ProductController extends BaseController
     }
 
     /**
-     * Updates a previously registered Product
+     * Updates a previously registered Buyer
      *
-     * @param dto -> ProductDTO
-     * @return ProductDTO
+     * @param dto -> BuyerDTO
+     * @return BuyerDTO
      * @throws ar.com.plug.examen.logic.exception.FlexiNotFoundException
      */
     @PutMapping("/update")
-    public ResponseEntity<ProductDTO> putUpdateProduct( @RequestBody ProductDTO dto )
+    public ResponseEntity<BuyerDTO> putUpdateBuyer( @RequestBody BuyerDTO dto )
     {
-        logger.debug( "putUpdateProduct :: IN" );
+        logger.debug( "putUpdateBuyer :: IN" );
 
         try
         {
-            final ProductDTO answer = service.update( ProductMapper.mapUpdateDtoToEntity( dto ) );
+            final BuyerDTO answer = service.update( BuyerMapper.mapUpdateDtoToEntity( dto ) );
 
-            logger.debug( "putUpdateProduct :: OUT" );
+            logger.debug( "putUpdateBuyer :: OUT" );
 
-            return new ResponseEntity<>( answer, HttpStatus.OK );
+            return new ResponseEntity<>(  answer, HttpStatus.OK );
         }
         catch ( Exception e )
         {
@@ -143,21 +143,21 @@ public class ProductController extends BaseController
     }
 
     /**
-     * Deletes a previously registered Product
+     * Deletes a previously registered Buyer
      *
      * @param id -> long
      * @throws ar.com.plug.examen.logic.exception.FlexiNotFoundException
      */
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteProduct( @PathVariable long id )
+    public ResponseEntity<?> deleteBuyer( @PathVariable long id )
     {
-        logger.debug( "deleteProduct :: IN" );
+        logger.debug( "deleteBuyer :: IN" );
 
         try
         {
-            service.delete( ProductMapper.mapIdToEntity( id ) );
+            service.delete( BuyerMapper.mapIdToEntity( id ) );
 
-            logger.debug( "deleteProduct :: OUT" );
+            logger.debug( "deleteBuyer :: OUT" );
 
             return new ResponseEntity<>( HttpStatus.OK );
         }

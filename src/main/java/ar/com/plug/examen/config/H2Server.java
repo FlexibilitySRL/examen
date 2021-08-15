@@ -22,7 +22,7 @@ public class H2Server
 
     @EventListener( ContextRefreshedEvent.class)
     public void start() throws java.sql.SQLException {
-        log.info("starting h2 console at port "+ h2ConsolePort);
+        log.debug("starting h2 console at port "+ h2ConsolePort);
         this.webServer = createWebServer("-webPort", h2ConsolePort.toString(),
                                          "-tcpAllowOthers").start();
         System.out.println(webServer.getURL());
@@ -30,7 +30,7 @@ public class H2Server
 
     @EventListener( ContextClosedEvent.class)
     public void stop() {
-        log.info("stopping h2 console at port "+h2ConsolePort);
+        log.debug("stopping h2 console at port "+h2ConsolePort);
         this.webServer.stop();
     }
 }

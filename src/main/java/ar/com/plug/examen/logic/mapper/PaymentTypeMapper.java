@@ -43,7 +43,7 @@ public class PaymentTypeMapper extends BaseMapper
 
     public static PaymentType mapIdToEntity( long id )
     {
-        BaseMapper.validate( id );
+        BaseMapper.validate( id, "paymentTypeId" );
 
         return EntityFactory.createPaymentType( id );
     }

@@ -13,11 +13,12 @@ public class ProductDTO extends BaseDTO
 {
     //region Attributes
 
-    private long ownerId;
+    private long sellerId;
     private int stock;
+    private double price;
     private String name;
     private String description;
-    private String ownerFullName;
+    private String sellerName;
 
     //endregion
 
@@ -25,7 +26,7 @@ public class ProductDTO extends BaseDTO
 
     public ProductDTO( long id )
     {
-        setId( id );
+        super( id );
     }
 
     public ProductDTO()
@@ -36,14 +37,14 @@ public class ProductDTO extends BaseDTO
 
     //region Getters & Setters
 
-    public long getOwnerId()
+    public long getSellerId()
     {
-        return ownerId;
+        return sellerId;
     }
 
-    public void setOwnerId( long ownerId )
+    public void setSellerId( long sellerId )
     {
-        this.ownerId = ownerId;
+        this.sellerId = sellerId;
     }
 
     public int getStock()
@@ -76,14 +77,24 @@ public class ProductDTO extends BaseDTO
         this.description = description;
     }
 
-    public String getOwnerFullName()
+    public String getSellerName()
     {
-        return ownerFullName;
+        return sellerName;
     }
 
-    public void setOwnerFullName( String ownerFullName )
+    public void setSellerName( String sellerName )
     {
-        this.ownerFullName = ownerFullName;
+        this.sellerName = sellerName;
+    }
+
+    public double getPrice()
+    {
+        return price;
+    }
+
+    public void setPrice( double price )
+    {
+        this.price = price;
     }
 
     //endregion

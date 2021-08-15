@@ -2,7 +2,6 @@ package ar.com.plug.examen.domain.service;
 
 import ar.com.plug.examen.domain.dto.ProductDTO;
 import ar.com.plug.examen.domain.entity.Product;
-import ar.com.plug.examen.logic.exception.FlexiNotFoundException;
 
 import java.util.List;
 
@@ -18,5 +17,8 @@ import java.util.List;
 public interface ProductService
 {
     List<ProductDTO> findAll();
-    ProductDTO findById( Product product ) throws FlexiNotFoundException;
+    ProductDTO findById( Product product );
+    ProductDTO register( Product buyer );
+    ProductDTO update( Product buyer );
+    void delete( Product buyer );
 }

@@ -35,7 +35,7 @@ public class PaymentType extends BaseEntity
      * Name:                   Transaction List
      * Description:            List of Transaction that contains a PaymentType
      */
-    @OneToMany( mappedBy = "paymentType", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST )
+    @OneToMany( mappedBy = "paymentType", fetch = FetchType.LAZY, cascade = CascadeType.ALL )
     private List<Transaction> transactionList;
 
     //endregion

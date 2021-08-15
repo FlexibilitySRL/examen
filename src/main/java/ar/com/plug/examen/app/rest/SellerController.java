@@ -1,8 +1,8 @@
 package ar.com.plug.examen.app.rest;
 
-import ar.com.plug.examen.domain.dto.ProductDTO;
-import ar.com.plug.examen.domain.service.ProductService;
-import ar.com.plug.examen.logic.mapper.ProductMapper;
+import ar.com.plug.examen.domain.dto.SellerDTO;
+import ar.com.plug.examen.domain.service.SellerService;
+import ar.com.plug.examen.logic.mapper.SellerMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,37 +21,37 @@ import java.util.List;
 
 /**
  * System:                 FlexiTest
- * Name:                   ProductController
- * Description:            Class that serves as proxy for all services available for the Product entity
+ * Name:                   SellerController
+ * Description:            Class that serves as proxy for all services available for the Seller entity
  *
  * @author teixbr
  * @version 1.0
  * @since 14/08/21
  */
 @RestController
-@RequestMapping("/product")
-public class ProductController extends BaseController
+@RequestMapping("/seller")
+public class SellerController extends BaseController
 {
-    private static final Logger logger = LoggerFactory.getLogger( ProductController.class );
+    private static final Logger logger = LoggerFactory.getLogger( SellerController.class );
 
     @Autowired
-    private ProductService service;
+    private SellerService service;
 
     /**
-     * Find all products
+     * Find all sellers
      *
      * @return List<ProductDTO>
      */
     @GetMapping( "/all" )
-    public ResponseEntity<List<ProductDTO>> getAllProduct()
+    public ResponseEntity<List<SellerDTO>> getAllSeller()
     {
-        logger.debug( "getAllProduct :: IN" );
+        logger.debug( "getAllSeller :: IN" );
 
         try
         {
-            final List<ProductDTO> answer = service.findAll();
+            List<SellerDTO> answer = service.findAll();
 
-            logger.debug( "getAllProduct :: OUT" );
+            logger.debug( "getAllSeller :: OUT" );
 
             return new ResponseEntity<>( answer, HttpStatus.OK );
         }
@@ -70,15 +70,15 @@ public class ProductController extends BaseController
      * @throws ar.com.plug.examen.logic.exception.FlexiNotFoundException
      */
     @GetMapping("/profile/{id}")
-    public ResponseEntity<ProductDTO> getProductProfile( @PathVariable long id )
+    public ResponseEntity<SellerDTO> getSellerProfile( @PathVariable long id )
     {
-        logger.debug( "getProductProfile :: IN" );
+        logger.debug( "getSellerProfile :: IN" );
 
         try
         {
-            final ProductDTO answer = service.findById( ProductMapper.mapIdToEntity( id ) );
+            final SellerDTO answer = service.findById( SellerMapper.mapIdToEntity( id ) );
 
-            logger.debug( "getProductProfile :: OUT" );
+            logger.debug( "getSellerProfile :: OUT" );
 
             return new ResponseEntity<>( answer, HttpStatus.OK );
         }
@@ -96,15 +96,15 @@ public class ProductController extends BaseController
      * @return ProductDTO
      */
     @PostMapping("/register")
-    public ResponseEntity<ProductDTO> postRegisterProduct( @RequestBody ProductDTO dto )
+    public ResponseEntity<SellerDTO> postRegisterSeller( @RequestBody SellerDTO dto )
     {
-        logger.debug( "postRegisterProduct :: IN" );
+        logger.debug( "postRegisterSeller :: IN" );
 
         try
         {
-            final ProductDTO answer = service.register( ProductMapper.mapRegisterDtoToEntity( dto ) );
+            final SellerDTO answer = service.register( SellerMapper.mapRegisterDtoToEntity( dto ) );
 
-            logger.debug( "postRegisterProduct :: OUT" );
+            logger.debug( "postRegisterSeller :: OUT" );
 
             return new ResponseEntity<>( answer, HttpStatus.OK );
         }
@@ -123,15 +123,15 @@ public class ProductController extends BaseController
      * @throws ar.com.plug.examen.logic.exception.FlexiNotFoundException
      */
     @PutMapping("/update")
-    public ResponseEntity<ProductDTO> putUpdateProduct( @RequestBody ProductDTO dto )
+    public ResponseEntity<SellerDTO> putUpdateSeller( @RequestBody SellerDTO dto )
     {
-        logger.debug( "putUpdateProduct :: IN" );
+        logger.debug( "putUpdateSeller :: IN" );
 
         try
         {
-            final ProductDTO answer = service.update( ProductMapper.mapUpdateDtoToEntity( dto ) );
+            final SellerDTO answer = service.update( SellerMapper.mapUpdateDtoToEntity( dto ) );
 
-            logger.debug( "putUpdateProduct :: OUT" );
+            logger.debug( "putUpdateSeller :: OUT" );
 
             return new ResponseEntity<>( answer, HttpStatus.OK );
         }
@@ -149,15 +149,15 @@ public class ProductController extends BaseController
      * @throws ar.com.plug.examen.logic.exception.FlexiNotFoundException
      */
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteProduct( @PathVariable long id )
+    public ResponseEntity<?> deleteSeller( @PathVariable long id )
     {
-        logger.debug( "deleteProduct :: IN" );
+        logger.debug( "deleteSeller :: IN" );
 
         try
         {
-            service.delete( ProductMapper.mapIdToEntity( id ) );
+            service.delete( SellerMapper.mapIdToEntity( id ) );
 
-            logger.debug( "deleteProduct :: OUT" );
+            logger.debug( "deleteSeller :: OUT" );
 
             return new ResponseEntity<>( HttpStatus.OK );
         }

@@ -31,11 +31,11 @@ public class PaymentTypeServiceImpl implements PaymentTypeService
     @Override
     public List<PaymentTypeDTO> findAll()
     {
-        logger.info("findAll :: IN");
+        logger.debug( "findAll :: IN" );
 
         List<PaymentTypeDTO> list = PaymentTypeMapper.mapEntityToDtoList( repository.findAll() );
 
-        logger.info("findAll :: OUT");
+        logger.debug( "findAll :: OUT" );
 
         return list;
     }

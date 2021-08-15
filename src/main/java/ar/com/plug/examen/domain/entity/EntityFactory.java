@@ -92,18 +92,34 @@ public class EntityFactory
     }
 
     /**
-     * Method that returns a new instance of User Class
+     * Method that returns a new instance of Seller Class
      */
-    static public User createUser()
+    static public Seller createSeller()
     {
-        return new User();
+        return new Seller();
     }
 
     /**
-     * Method that returns a new instance of User Class
+     * Method that returns a new instance of Seller Class
      */
-    static public User createUser( long id )
+    static public Seller createSeller( long id )
     {
-        return new User( id );
+        return new Seller( id );
+    }
+
+    /**
+     * Method that returns a new instance of Buyer Class
+     */
+    static public Buyer createBuyer()
+    {
+        return new Buyer();
+    }
+
+    /**
+     * Method that returns a new instance of Buyer Class
+     */
+    static public Buyer createBuyer( long id )
+    {
+        return new Buyer( id );
     }
 }

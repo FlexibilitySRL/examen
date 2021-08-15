@@ -43,7 +43,7 @@ public class TransactionStatusMapper extends BaseMapper
 
     public static TransactionStatus mapIdToEntity( long id )
     {
-        BaseMapper.validate( id );
+        BaseMapper.validate( id, "transactionStatusId" );
 
         return EntityFactory.createTransactionStatus( id );
     }

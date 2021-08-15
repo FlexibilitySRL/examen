@@ -13,6 +13,6 @@ public class FlexiIncompleteDataException extends FlexiBaseException
 {
     public FlexiIncompleteDataException( String missing )
     {
-        super( "Incomplete data. Please review missing on attribute: " + missing );
+        super( "Incomplete data. Please review missing data on attribute: " + missing );
     }
 }

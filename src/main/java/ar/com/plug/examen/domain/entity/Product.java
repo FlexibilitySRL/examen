@@ -55,18 +55,18 @@ public class Product extends BaseEntity
     private String description;
 
     /**
-     * Name:                   FK_UserOwner
-     * Description:            Foreign key of Product-Product
+     * Name:                   FK_Seller
+     * Description:            Foreign key of Product-Seller
      */
     @ManyToOne
-    @JoinColumn( name = "fk_userowner", nullable = false )
-    private User owner;
+    @JoinColumn( name = "fk_seller", nullable = false )
+    private Seller seller;
 
     /**
      * Name:                   Order Detail List
      * Description:            List of OrderDetail that contains a Payment
      */
-    @OneToMany( mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST )
+    @OneToMany( mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL )
     private List<TransactionDetail> transactionDetailList;
 
     //endregion
@@ -136,14 +136,14 @@ public class Product extends BaseEntity
         this.price = price;
     }
 
-    public User getOwner()
+    public Seller getSeller()
     {
-        return owner;
+        return seller;
     }
 
-    public void setOwner( User owner )
+    public void setSeller( Seller seller )
     {
-        this.owner = owner;
+        this.seller = seller;
     }
 
     public List<TransactionDetail> getOrderDetailList()

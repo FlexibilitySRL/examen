@@ -22,7 +22,7 @@ public class TransactionDetailDTO extends BaseDTO
 
     public TransactionDetailDTO( long id )
     {
-        setId( id );
+        super( id );
     }
 
     public TransactionDetailDTO()

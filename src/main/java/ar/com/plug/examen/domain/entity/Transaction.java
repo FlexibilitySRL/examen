@@ -43,19 +43,19 @@ public class Transaction extends BaseEntity
 
     /**
      * Name:                   FK_UserBuyer
-     * Description:            Foreign key of Transaction-User
+     * Description:            Foreign key of Transaction-Buyer
      */
     @ManyToOne
-    @JoinColumn( name = "fk_userbuyer", nullable = false )
-    private User buyer;
+    @JoinColumn( name = "fk_buyer", nullable = false )
+    private Buyer buyer;
 
     /**
-     * Name:                   FK_UserSeller
-     * Description:            Foreign key of Transaction-User
+     * Name:                   FK_Seller
+     * Description:            Foreign key of Transaction-Seller
      */
     @ManyToOne
-    @JoinColumn( name = "fk_userseller", nullable = false )
-    private User seller;
+    @JoinColumn( name = "fk_seller", nullable = false )
+    private Seller seller;
 
     /**
      * Name:                   FK_TransactionType
@@ -77,7 +77,7 @@ public class Transaction extends BaseEntity
      * Name:                   TransactionDetail List
      * Description:            List of TransactionDetail that contains a Transaction
      */
-    @OneToMany( mappedBy = "transaction", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST )
+    @OneToMany( mappedBy = "transaction", fetch = FetchType.LAZY, cascade = CascadeType.ALL )
     private List<TransactionDetail> transactionDetailList;
 
     //endregion
@@ -107,22 +107,22 @@ public class Transaction extends BaseEntity
 
     //region Getters & Setters
 
-    public User getBuyer()
+    public Buyer getBuyer()
     {
         return buyer;
     }
 
-    public void setBuyer( User buyer )
+    public void setBuyer( Buyer buyer )
     {
         this.buyer = buyer;
     }
 
-    public User getSeller()
+    public Seller getSeller()
     {
         return seller;
     }
 
-    public void setSeller( User seller )
+    public void setSeller( Seller seller )
     {
         this.seller = seller;
     }
@@ -145,16 +145,6 @@ public class Transaction extends BaseEntity
     public void setAmount( double amount )
     {
         this.amount = amount;
-    }
-
-    public PaymentType getTransactionType()
-    {
-        return paymentType;
-    }
-
-    public void setTransactionType( PaymentType paymentType )
-    {
-        this.paymentType = paymentType;
     }
 
     public PaymentType getPaymentType()

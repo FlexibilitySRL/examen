@@ -92,18 +92,34 @@ public class DTOFactory
     }
 
     /**
-     * Method that returns a new instance of UserDTO Class
+     * Method that returns a new instance of SellerDTO Class
      */
-    static public UserDTO createUserDTO()
+    static public SellerDTO createSellerDTO()
     {
-        return new UserDTO();
+        return new SellerDTO();
     }
 
     /**
-     * Method that returns a new instance of UserDTO Class
+     * Method that returns a new instance of SellerDTO Class
      */
-    static public UserDTO createUserDTO( long id )
+    static public SellerDTO createSellerDTO( long id )
     {
-        return new UserDTO( id );
+        return new SellerDTO( id );
+    }
+
+    /**
+     * Method that returns a new instance of BuyerDTO Class
+     */
+    static public BuyerDTO createBuyerDTO()
+    {
+        return new BuyerDTO();
+    }
+
+    /**
+     * Method that returns a new instance of BuyerDTO Class
+     */
+    static public BuyerDTO createBuyerDTO( long id )
+    {
+        return new BuyerDTO( id );
     }
 }

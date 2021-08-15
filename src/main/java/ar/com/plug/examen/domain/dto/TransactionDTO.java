@@ -32,7 +32,7 @@ public class TransactionDTO extends BaseDTO
 
     public TransactionDTO( long id )
     {
-        setId( id );
+        super( id );
     }
 
     public TransactionDTO()
@@ -43,14 +43,14 @@ public class TransactionDTO extends BaseDTO
 
     //region Getters & Setters
 
-    public LocalDateTime getDate()
+    public long getSellerId()
     {
-        return date;
+        return sellerId;
     }
 
-    public void setDate( LocalDateTime date )
+    public void setSellerId( long sellerId )
     {
-        this.date = date;
+        this.sellerId = sellerId;
     }
 
     public double getAmount()
@@ -73,6 +73,16 @@ public class TransactionDTO extends BaseDTO
         this.buyerId = buyerId;
     }
 
+    public LocalDateTime getDate()
+    {
+        return date;
+    }
+
+    public void setDate( LocalDateTime date )
+    {
+        this.date = date;
+    }
+
     public String getBuyerName()
     {
         return buyerName;
@@ -83,16 +93,6 @@ public class TransactionDTO extends BaseDTO
         this.buyerName = buyerName;
     }
 
-    public long getSellerId()
-    {
-        return sellerId;
-    }
-
-    public void setSellerId( long sellerId )
-    {
-        this.sellerId = sellerId;
-    }
-
     public String getSellerName()
     {
         return sellerName;
@@ -101,6 +101,21 @@ public class TransactionDTO extends BaseDTO
     public void setSellerName( String sellerName )
     {
         this.sellerName = sellerName;
+    }
+
+    public TransactionStatusDTO getStatus()
+    {
+        return status;
+    }
+
+    public void setStatus( TransactionStatusDTO status )
+    {
+        this.status = status;
+    }
+
+    public PaymentTypeDTO getPaymentType()
+    {
+        return paymentType;
     }
 
     public void setPaymentType( PaymentTypeDTO paymentType )
@@ -116,21 +131,6 @@ public class TransactionDTO extends BaseDTO
     public void setDetailList( List<TransactionDetailDTO> detailList )
     {
         this.detailList = detailList;
-    }
-
-    public PaymentTypeDTO getPaymentType()
-    {
-        return paymentType;
-    }
-
-    public TransactionStatusDTO getStatus()
-    {
-        return status;
-    }
-
-    public void setStatus( TransactionStatusDTO status )
-    {
-        this.status = status;
     }
 
     //endregion

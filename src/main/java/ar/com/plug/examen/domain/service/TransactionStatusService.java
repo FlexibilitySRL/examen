@@ -1,6 +1,7 @@
 package ar.com.plug.examen.domain.service;
 
 import ar.com.plug.examen.domain.dto.TransactionStatusDTO;
+import ar.com.plug.examen.domain.entity.TransactionStatus;
 
 import java.util.List;
 
@@ -16,4 +17,5 @@ import java.util.List;
 public interface TransactionStatusService
 {
     List<TransactionStatusDTO> findAll();
+    TransactionStatusDTO findById( TransactionStatus transactionStatus );
 }

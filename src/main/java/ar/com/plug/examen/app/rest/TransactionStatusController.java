@@ -10,10 +10,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
+/**
+ * System:                 FlexiTest
+ * Name:                   TransactionStatusController
+ * Description:            Class that serves as proxy for all services available for the TransactionStatus entity
+ *
+ * @author teixbr
+ * @version 1.0
+ * @since 14/08/21
+ */
 @RestController
 @RequestMapping("/transactionstatus")
 public class TransactionStatusController extends BaseController
@@ -23,20 +31,28 @@ public class TransactionStatusController extends BaseController
     @Autowired
     private TransactionStatusService service;
 
+    /**
+     * Find all buyers
+     *
+     * @return List<TransactionStatusDTO>
+     */
     @GetMapping( "/all" )
     public ResponseEntity<List<TransactionStatusDTO>> getAllTransactionStatus()
     {
-        logger.info( "getAllTransactionStatus :: IN" );
+        logger.debug( "getAllTransactionStatus :: IN" );
 
         try
         {
-            return new ResponseEntity<>( service.findAll(), HttpStatus.OK );
+            final List<TransactionStatusDTO> answer = service.findAll();
+
+            logger.debug( "getAllTransactionStatus :: OUT" );
+
+            return new ResponseEntity<>( answer, HttpStatus.OK );
         }
         catch ( Exception e )
         {
             logger.error( e.toString() );
-            throw new ResponseStatusException(
-                    HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage(), e);
+            throw e;
         }
     }
 }

@@ -21,7 +21,7 @@ public class TransactionStatusDTO extends BaseDTO
 
     public TransactionStatusDTO( long id )
     {
-        setId( id );
+        super( id );
     }
 
     public TransactionStatusDTO()

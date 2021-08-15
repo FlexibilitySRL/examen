@@ -21,7 +21,7 @@ public class PaymentTypeDTO extends BaseDTO
 
     public PaymentTypeDTO( long id )
     {
-        setId( id );
+        super( id );
     }
 
     public PaymentTypeDTO()

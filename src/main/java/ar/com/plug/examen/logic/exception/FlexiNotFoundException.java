@@ -14,6 +14,6 @@ public class FlexiNotFoundException extends FlexiBaseException
 {
     public FlexiNotFoundException()
     {
-        super( ( "The resource that you are trying to find doesn't exist." ) );
+        super( "The resource that you are trying to find doesn't exist." );
     }
 }

@@ -35,7 +35,7 @@ public class TransactionStatus extends BaseEntity
      * Name:                   Transaction List
      * Description:            List of Transaction that contains a TransactionStatus
      */
-    @OneToMany( mappedBy = "transactionStatus", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST )
+    @OneToMany( mappedBy = "transactionStatus", fetch = FetchType.LAZY, cascade = CascadeType.ALL )
     private List<Transaction> transactionList;
 
     //endregion
