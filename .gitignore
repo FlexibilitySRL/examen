@@ -1,12 +1,17 @@
-#deploy
-target
+build
 
-# IntelliJ
-/out/
-
-# IntelliJ IDEA
-.idea/
-*.iml
-
-# Mac
-.DS_Store
+/.settings/
+**/bin/**
+**/out/**
+/.classpath
+/.project
+**/.idea/**
+**/*.iml
+**/*.class
+**/target/**
+**/*.jar
+/.vscode/settings.json
+**/.metadata/**
+*.log
+**/.settings/**
+**/.settings
