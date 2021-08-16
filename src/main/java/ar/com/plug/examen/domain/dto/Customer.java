@@ -13,22 +13,23 @@ import javax.persistence.*;
 @Table(name="customer")
 public class Customer {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "customer_generator")
+    @SequenceGenerator(name="customer_generator", sequenceName = "customer_seq", allocationSize=50)
     @Column(name="id_customer")
-    private Integer id;
+    private Long id;
 
     @Column(name = "name", nullable = false)
     private String name;
 
     @Column(name="id_status")
-    private Integer id_status;
+    private Integer idStatus;
 
     @Override
     public String toString() {
         return "Customer{" +
                 "idCustomer=" + id +
                 ", name='" + name + '\'' +
-                ", status='" + id_status + '\'' +
+                ", status='" + idStatus + '\'' +
                 '}';
     }
 }

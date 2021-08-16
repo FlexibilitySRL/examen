@@ -1,6 +1,7 @@
 package ar.com.plug.examen.objects;
 
 import ar.com.plug.examen.domain.model.ProductModel;
+import ar.com.plug.examen.domain.model.CustomerModel;
 import lombok.*;
 
 import java.io.Serializable;
@@ -16,11 +17,13 @@ public class JsonResponseTransaction implements Serializable {
     private ProductModel productModel;
     private StatusTransaction statusTransaction;
     private String responseMessage;
+    private CustomerModel customerModel;
 
     public JsonResponseTransaction(@NonNull JsonResponseTransaction jsonResponseTransaction){
         this.productModel=jsonResponseTransaction.getProductModel();
         this.statusTransaction=jsonResponseTransaction.getStatusTransaction();
         this.responseMessage=jsonResponseTransaction.getResponseMessage();
+        this.customerModel=jsonResponseTransaction.getCustomerModel();
     }
 
 }
