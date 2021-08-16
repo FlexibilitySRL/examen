@@ -40,6 +40,8 @@
         <commons-codec.version>1.14</commons-codec.version>
         <commons-io.version>2.7</commons-io.version>
         <guava.version>29.0-jre</guava.version>
+        <!--sonar.organization>curruman</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url-->
     </properties>
 
     <dependencies>
