@@ -15,10 +15,13 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 @Table(name="product")
 public class Product {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_generator")
+    @SequenceGenerator(name="product_generator", sequenceName = "product_seq", allocationSize=50)
     @Column(name="id")
-    private Integer id;
+    private Long id;
+
 
     @NotBlank(message="product name cannot be empty")
     @Column(name = "name", nullable = false)

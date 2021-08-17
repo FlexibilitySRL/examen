@@ -9,7 +9,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class ProductModel {
 
-    private Integer id;
+    private Long id;
     private String name;
     private String description;
     private Double unitCost;
