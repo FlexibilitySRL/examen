@@ -1,6 +1,7 @@
 package ar.com.plug.examen.domain.dto;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,10 +34,12 @@ public class TransactionDTO extends BaseDTO
     public TransactionDTO( long id )
     {
         super( id );
+        detailList = new ArrayList<>();
     }
 
     public TransactionDTO()
     {
+        detailList = new ArrayList<>();
     }
 
     //endregion

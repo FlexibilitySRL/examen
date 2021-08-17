@@ -47,7 +47,7 @@ public class PaymentTypeController extends BaseController
 
             logger.debug( "getAllPaymentType :: OUT" );
 
-            return new ResponseEntity<>( service.findAll(), HttpStatus.OK );
+            return new ResponseEntity<>( answer, HttpStatus.OK );
         }
         catch ( Exception e )
         {

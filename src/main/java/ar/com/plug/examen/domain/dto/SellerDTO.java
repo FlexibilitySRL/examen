@@ -1,7 +1,5 @@
 package ar.com.plug.examen.domain.dto;
 
-import ar.com.plug.examen.domain.entity.BaseEntity;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +12,7 @@ import java.util.List;
  * @version 1.0
  * @since 15/08/21
  */
-public class SellerDTO extends BaseEntity
+public class SellerDTO extends BaseDTO
 {
     //region Attributes
 

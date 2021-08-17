@@ -16,6 +16,15 @@ spring:
     username: sa
     password: password
     driver-class-name: org.h2.Driver
+  logging:
+    file: logs/root.log
+    pattern:
+      console: "%d %-5level %logger : %msg%n"
+      file: "%d %-5level [%thread] %logger : %msg%n"
+    level:
+      org.springframework.web: DEBUG
+      guru.springframework.controllers: DEBUG
+      org.hibernate: DEBUG
 
 server:
   port: 8080

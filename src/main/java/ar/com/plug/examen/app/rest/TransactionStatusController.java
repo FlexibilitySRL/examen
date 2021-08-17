@@ -32,7 +32,7 @@ public class TransactionStatusController extends BaseController
     private TransactionStatusService service;
 
     /**
-     * Find all buyers
+     * Find all transaction status
      *
      * @return List<TransactionStatusDTO>
      */
