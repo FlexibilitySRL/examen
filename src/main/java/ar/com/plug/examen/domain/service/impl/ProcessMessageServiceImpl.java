@@ -1,6 +1,6 @@
 package ar.com.plug.examen.domain.service.impl;
 
-import ar.com.plug.examen.domain.model.Message;
+import ar.com.plug.examen.domain.entity.Message;
 import ar.com.plug.examen.domain.service.ProcessMessageService;
 import org.springframework.stereotype.Service;
 

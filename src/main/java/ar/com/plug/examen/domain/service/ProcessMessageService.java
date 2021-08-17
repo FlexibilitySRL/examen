@@ -1,6 +1,6 @@
 package ar.com.plug.examen.domain.service;
 
-import ar.com.plug.examen.domain.model.Message;
+import ar.com.plug.examen.domain.entity.Message;
 
 public interface ProcessMessageService {
 
