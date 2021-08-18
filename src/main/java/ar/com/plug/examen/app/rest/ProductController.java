@@ -27,38 +27,30 @@ public class ProductController {
       + ADD, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<JsonResponseTransaction> addProduct(@RequestBody ProductModel productModel) {
     JsonResponseTransaction jsonResponseTransaction=new JsonResponseTransaction();
-    try{
       jsonResponseTransaction = productService.addProduct(productModel);
-      return ResponseEntity.ok(jsonResponseTransaction);
-    }catch(Exception e){
-      log.error(e.getMessage(), e);
-      jsonResponseTransaction.setStatusTransaction(StatusTransaction.UNEXPECTED);
-      return ResponseEntity.badRequest().body(jsonResponseTransaction);
-    }
+    return validateResponse(jsonResponseTransaction);
   }
 
   @PutMapping(path = PATH_SEPARATOR + API + PATH_SEPARATOR + API_VERSION + PATH_SEPARATOR
           + UPDATE, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<JsonResponseTransaction> updateProduct(@RequestBody ProductModel productModel) {
     JsonResponseTransaction jsonResponseTransaction=new JsonResponseTransaction();
-    try{
       jsonResponseTransaction = productService.updateProduct(productModel);
-      return ResponseEntity.ok(jsonResponseTransaction);
-    }catch(Exception e){
-      log.error(e.getMessage(), e);
-      jsonResponseTransaction.setStatusTransaction(StatusTransaction.UNEXPECTED);
-      return ResponseEntity.badRequest().body(jsonResponseTransaction);
-    }
+    return validateResponse(jsonResponseTransaction);
   }
 
   @DeleteMapping(value = PATH_SEPARATOR + API + PATH_SEPARATOR + API_VERSION + PATH_SEPARATOR
           + DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<JsonResponseTransaction> deleteProduct(@RequestParam(name="id", required=true) Long id) {
     JsonResponseTransaction jsonResponseTransaction=new JsonResponseTransaction();
-    try{
       jsonResponseTransaction = productService.deleteProduct(id);
+    return validateResponse(jsonResponseTransaction);
+  }
+
+  private ResponseEntity<JsonResponseTransaction> validateResponse(JsonResponseTransaction jsonResponseTransaction) {
+    try {
       return ResponseEntity.ok(jsonResponseTransaction);
-    }catch(Exception e){
+    } catch (Exception e) {
       log.error(e.getMessage(), e);
       jsonResponseTransaction.setStatusTransaction(StatusTransaction.UNEXPECTED);
       return ResponseEntity.badRequest().body(jsonResponseTransaction);

@@ -6,6 +6,7 @@ import ar.com.plug.examen.domain.repository.ProductRepository;
 import ar.com.plug.examen.domain.service.ProductService;
 import ar.com.plug.examen.domain.dto.Product;
 import ar.com.plug.examen.objects.JsonResponseTransaction;
+import ar.com.plug.examen.objects.RequestCustomer;
 import ar.com.plug.examen.objects.StatusTransaction;
 import lombok.AllArgsConstructor;
 import org.apache.commons.logging.Log;
@@ -34,6 +35,7 @@ public class ProductServiceImpl implements ProductService {
     Product product = productRepository.save(productConverter.convertFromEntity(productModel));
     JsonResponseTransaction jsonResponseTransaction = new JsonResponseTransaction();
     jsonResponseTransaction = validateStatus(productModel, jsonResponseTransaction);
+    log.info(jsonResponseTransaction.getResponseMessage());
     jsonResponseTransaction.setProductModel(productConverter.convertFromModel(product));
     jsonResponseTransaction.setStatusTransaction(StatusTransaction.fromId(productModel.getIdStatus()));
     return jsonResponseTransaction;
@@ -45,6 +47,7 @@ public class ProductServiceImpl implements ProductService {
     JsonResponseTransaction jsonResponseTransaction = new JsonResponseTransaction();
     productRepository.deleteById(id);
     jsonResponseTransaction.setResponseMessage("Product: "+id + " eliminated of system");
+    log.info(jsonResponseTransaction.getResponseMessage());
     return jsonResponseTransaction;
   }
 
@@ -54,10 +57,18 @@ public class ProductServiceImpl implements ProductService {
         + System.lineSeparator() + " productModel after: " + productModel);
     JsonResponseTransaction jsonResponseTransaction = new JsonResponseTransaction();
     jsonResponseTransaction = validateStatus(productModel, jsonResponseTransaction);
+    log.info(jsonResponseTransaction.getResponseMessage());
     Product product = productRepository.save(productConverter.convertFromEntity(productModel));
     jsonResponseTransaction.setProductModel(productConverter.convertFromModel(product));
     jsonResponseTransaction.setStatusTransaction(StatusTransaction.fromId(productModel.getIdStatus()));
     return jsonResponseTransaction;
+  }
+
+  @Override
+  public Integer findById(Long id) {
+    Integer quantityAvailable = (productRepository.findById(id)).getQuantity();
+    log.info(LOG_CONSTANT + " findQuantityByIdProduct " + id + "quantity available" + quantityAvailable);
+    return quantityAvailable;
   }
 
   private JsonResponseTransaction validateStatus(ProductModel productModel, JsonResponseTransaction jsonResponseTransaction) {

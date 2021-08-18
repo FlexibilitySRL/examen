@@ -21,10 +21,10 @@ public class CustomerServiceImpl implements CustomerService {
     private static final Log log = LogFactory.getLog(CustomerServiceImpl.class);
 
     @Autowired
-    private CustomerRepository customerRepository;
+    private final CustomerRepository customerRepository;
 
     @Autowired
-    private CustomerConverter customerConverter;
+    private final CustomerConverter customerConverter;
 
     @Override
     public JsonResponseTransaction addCustomer(CustomerModel customerModel) {
@@ -32,6 +32,7 @@ public class CustomerServiceImpl implements CustomerService {
         Customer customer = customerRepository.save(customerConverter.convertFromEntity(customerModel));
         JsonResponseTransaction jsonResponseTransaction = new JsonResponseTransaction();
         jsonResponseTransaction = validateStatus(customerModel, jsonResponseTransaction);
+        log.info(jsonResponseTransaction.getResponseMessage());
         jsonResponseTransaction.setCustomerModel(customerConverter.convertFromModel(customer));
         jsonResponseTransaction.setStatusTransaction(StatusTransaction.fromId(customerModel.getIdStatus()));
         return jsonResponseTransaction;
@@ -43,6 +44,7 @@ public class CustomerServiceImpl implements CustomerService {
         JsonResponseTransaction jsonResponseTransaction = new JsonResponseTransaction();
         customerRepository.deleteById(id);
         jsonResponseTransaction.setResponseMessage("Customer: "+id + " eliminated of system");
+        log.info(jsonResponseTransaction.getResponseMessage());
         return jsonResponseTransaction;
     }
 
@@ -52,6 +54,7 @@ public class CustomerServiceImpl implements CustomerService {
                 + System.lineSeparator() + " customerModel after: " + customerModel);
         JsonResponseTransaction jsonResponseTransaction = new JsonResponseTransaction();
         jsonResponseTransaction = validateStatus(customerModel, jsonResponseTransaction);
+        log.info(jsonResponseTransaction.getResponseMessage());
         Customer customer = customerRepository.save(customerConverter.convertFromEntity(customerModel));
         jsonResponseTransaction.setCustomerModel(customerConverter.convertFromModel(customer));
         jsonResponseTransaction.setStatusTransaction(StatusTransaction.fromId(customerModel.getIdStatus()));

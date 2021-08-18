@@ -9,4 +9,5 @@ import java.io.Serializable;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Serializable> {
     Product findById(Long id);
+    Integer findQuantityById(Long id);
 }
