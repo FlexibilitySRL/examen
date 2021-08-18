@@ -35,6 +35,7 @@ public class SellerServiceImpl implements SellerService {
         Seller seller = sellerRepository.save(sellerConverter.convertFromEntity(sellerModel));
         JsonResponseTransaction jsonResponseTransaction = new JsonResponseTransaction();
         jsonResponseTransaction = validateStatus(sellerModel, jsonResponseTransaction);
+        log.info(jsonResponseTransaction.getResponseMessage());
         jsonResponseTransaction.setSellerModel(sellerConverter.convertFromModel(seller));
         jsonResponseTransaction.setStatusTransaction(StatusTransaction.fromId(sellerModel.getIdStatus()));
         return jsonResponseTransaction;
@@ -46,6 +47,7 @@ public class SellerServiceImpl implements SellerService {
         JsonResponseTransaction jsonResponseTransaction = new JsonResponseTransaction();
         sellerRepository.deleteById(id);
         jsonResponseTransaction.setResponseMessage("Seller "+id + " eliminated of system");
+        log.info(jsonResponseTransaction.getResponseMessage());
         return jsonResponseTransaction;
     }
 
@@ -56,6 +58,7 @@ public class SellerServiceImpl implements SellerService {
 
         JsonResponseTransaction jsonResponseTransaction = new JsonResponseTransaction();
         jsonResponseTransaction = validateStatus(sellerModel, jsonResponseTransaction);
+        log.info(jsonResponseTransaction.getResponseMessage());
         Seller seller = sellerRepository.save(sellerConverter.convertFromEntity(sellerModel));
         jsonResponseTransaction.setSellerModel(sellerConverter.convertFromModel(seller));
         jsonResponseTransaction.setStatusTransaction(StatusTransaction.fromId(sellerModel.getIdStatus()));

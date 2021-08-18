@@ -15,9 +15,12 @@ public enum StatusTransaction {
     ACTIVE(1, "ACTIVE"),
     INACTIVE(2, "INACTIVE"),
     PENDING(3, "PENDING"),
-    BAD_REQUEST(4, "400"),
-    UNEXPECTED(5, "500"),
-    NO_FOUND(6, "404");
+    AVAILABLE(4, "AVAILABLE"),
+    DELETE(5, "DELETE"),
+
+    BAD_REQUEST(6, "400"),
+    UNEXPECTED(7, "500"),
+    NO_FOUND(8, "404");
 
 
     private static final long serialVersionUID = 1L;
