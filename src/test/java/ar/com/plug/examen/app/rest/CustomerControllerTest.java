@@ -2,7 +2,6 @@ package ar.com.plug.examen.app.rest;
 
 import ar.com.plug.examen.domain.model.CustomerModel;
 import ar.com.plug.examen.domain.service.CustomerService;
-import ar.com.plug.examen.objects.JsonRequestSale;
 import ar.com.plug.examen.objects.JsonResponseTransaction;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
