@@ -49,14 +49,14 @@ public class SaleController {
 
   @PutMapping(path = PATH_SEPARATOR + API + PATH_SEPARATOR + API_VERSION + PATH_SEPARATOR
       + UPDATE, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<JsonResponseTransaction> updateProduct(@RequestBody SaleModel saleModel) {
+  public ResponseEntity<JsonResponseTransaction> updateSale(@RequestBody SaleModel saleModel) {
     JsonResponseTransaction jsonResponseTransaction = new JsonResponseTransaction();
     jsonResponseTransaction.setSaleModel(saleService.updateSale(saleModel));
     return validateResponse(jsonResponseTransaction);
   }
 
   @DeleteMapping(value = PATH_SEPARATOR + API + PATH_SEPARATOR + API_VERSION + PATH_SEPARATOR + DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<JsonResponseTransaction> deleteProduct(@RequestParam(name = "id", required = true) Long id) {
+  public ResponseEntity<JsonResponseTransaction> deleteSale(@RequestParam(name = "id", required = true) Long id) {
     JsonResponseTransaction jsonResponseTransaction = new JsonResponseTransaction();
     jsonResponseTransaction.setStatusTransaction(saleService.deleteSale(id));
     jsonResponseTransaction.setResponseMessage("sale " + id + " delete successfully");
