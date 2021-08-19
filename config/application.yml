@@ -12,8 +12,24 @@ spring:
       username: root
       password: password
 
+      h2:
+        console:
+          enabled: true
+          path: /h2
+        datasource:
+          url: jdbc:h2:file:~/payments
+          username: root
+          password: password
+          driverClassName: org.h2.Driver
+
 server:
   port: 8080
   servlet:
     context-path: '/payments'
+logging:
+  path: ../../logs
+  file: ${project.name}
+  config:
+    name: logback-spring.xml
+    path: ${logging.path}/${logging.config.name}
 ---
