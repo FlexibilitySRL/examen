@@ -40,22 +40,11 @@ public class ClienteControllerTests {
 	        assertNotNull(response.getBody());
 	        assertThat(response.getStatusCode(), equalTo(HttpStatus.CREATED));
 	        assertThat(response.getBody().getNumeroIdentificacion(), is("V1600000"));
+	        assertThat(response.getBody().getNombre(), is("Maria"));
+	        assertThat(response.getBody().getApellido(), is("Mendoza"));
+	        assertThat(response.getBody().getDireccion(), is("Av. Los Arboles"));
+	        assertThat(response.getBody().getTelefono(), is("1596-58963"));
+	        assertThat(response.getBody().getEmail(), is("maria@correo.com"));
 	        verify(clienteService).crearCliente(clienteParaGuardar);
-    
-	      //  verify(clienteGuardado.c).c(clienteParaGuardar);
-	/*	MockHttpServletRequest request = new MockHttpServletRequest();
-	    RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
-
-		Cliente cliente = new Cliente();
-		cliente.setIdCliente(1L);
-		when(clienteRepository.save(any(Cliente.class))).thenReturn(cliente);
-		ClienteDTO clienteNuevo = new ClienteDTO(0L, "Maria","Mendoza","Av. Los Arboles","1596-58963","maria@correo.com","V1600000"); 
-		ResponseEntity<Cliente> responseEntity = this.clienteService.crearCliente(clienteNuevo);
-
-		assertThat(responseEntity.getStatusCodeValue()).isEqualTo(201);
-		assertThat(responseEntity.getHeaders().getLocation().getPath()).isEqualTo("/1")*/
-	}
-
-	
-	
+	}	
 }
