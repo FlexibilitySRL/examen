@@ -10,3 +10,8 @@ target
 
 # Mac
 .DS_Store
+
+#Elipse IDEA
+.classpath
+.project
+.settings/
