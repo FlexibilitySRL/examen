@@ -1,6 +1,6 @@
 package ar.com.plug.examen.data.entity;
 
-import java.sql.Timestamp;
+import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,9 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -30,18 +27,9 @@ public class FacturaDetalle {
 	@Column(name = "CANTIDAD")
 	private int cantidad;
 
-
 	@Column(name = "SUBTOTAL")
-	private Double subtotal;
+	private BigDecimal subtotal;
 
-	@CreationTimestamp
-	@Column(name = "FECHA_A")
-	private Timestamp fechaA;
-
-	@UpdateTimestamp
-	@Column(name = "FECHA_M")
-	private Timestamp fechaM;
-		
 	@ManyToOne
 	@JsonIgnoreProperties("facturaDetalle")
   	private Factura factura;
@@ -50,14 +38,11 @@ public class FacturaDetalle {
 
 	}
 	
-	public FacturaDetalle(long idFDetalle, long idProducto, int cantidad, Double subtotal, Timestamp fechaA,
-			Timestamp fechaM, Factura factura) {
+	public FacturaDetalle(long idFDetalle, long idProducto, int cantidad, BigDecimal subtotal, Factura factura) {
 		this.idFDetalle = idFDetalle;
 		this.idProducto = idProducto;
 		this.cantidad = cantidad;
 		this.subtotal = subtotal;
-		this.fechaA = fechaA;
-		this.fechaM = fechaM;
 		this.factura = factura;
 	}
 
@@ -85,28 +70,12 @@ public class FacturaDetalle {
 		this.cantidad = cantidad;
 	}
 
-	public Double getSubtotal() {
+	public BigDecimal getSubtotal() {
 		return subtotal;
 	}
 
-	public void setSubtotal(Double subtotal) {
+	public void setSubtotal(BigDecimal subtotal) {
 		this.subtotal = subtotal;
-	}
-
-	public Timestamp getFechaA() {
-		return fechaA;
-	}
-
-	public void setFechaA(Timestamp fechaA) {
-		this.fechaA = fechaA;
-	}
-
-	public Timestamp getFechaM() {
-		return fechaM;
-	}
-
-	public void setFechaM(Timestamp fechaM) {
-		this.fechaM = fechaM;
 	}
 
 	public Factura getFactura() {

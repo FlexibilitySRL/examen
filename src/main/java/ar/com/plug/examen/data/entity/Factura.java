@@ -1,7 +1,7 @@
 package ar.com.plug.examen.data.entity;
 
+import java.math.BigDecimal;
 import java.sql.Date;
-import java.sql.Timestamp;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -36,20 +36,11 @@ public class Factura {
 	private Date fecha;
 	
 	@Column(name="TOTAL")
-	private Double total;
+	private BigDecimal total;
 	
 	@Column(name="ESTADO")
 	private boolean estado;
 	
-	@Column(name = "FECHA_A")
-	private Timestamp fechaA;
-	
-	@Column(name = "FECHA_M")
-	private Timestamp fechaM;
-	
-	//@OneToMany(mappedBy = "book", fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-	//@OneToMany(mappedBy = "factura",  cascade = CascadeType.ALL)
-	//@OneToMany(targetEntity=FacturaDetalle.class, mappedBy="factura",cascade=CascadeType.ALL, fetch = FetchType.LAZY)
 	@OneToMany(mappedBy="factura",targetEntity = FacturaDetalle.class)
 	@JsonIgnoreProperties("factura")
     private List<FacturaDetalle> facturaDetalle;
@@ -58,9 +49,8 @@ public class Factura {
 			
 	}	
 		
-	public Factura(long idFactura, Long idCliente, Long idVendedor, String codigo, Date fecha, Double total,
-			boolean estado, Timestamp fechaA, Timestamp fechaM, List<FacturaDetalle> facturaDetalle) {
-		super();
+	public Factura(long idFactura, Long idCliente, Long idVendedor, String codigo, Date fecha, BigDecimal total,
+			boolean estado, List<FacturaDetalle> facturaDetalle) {
 		this.idFactura = idFactura;
 		this.idCliente = idCliente;
 		this.idVendedor = idVendedor;
@@ -68,13 +58,8 @@ public class Factura {
 		this.fecha = fecha;
 		this.total = total;
 		this.estado = estado;
-		this.fechaA = fechaA;
-		this.fechaM = fechaM;
 		this.facturaDetalle = facturaDetalle;
 	}
-
-
-
 
 	public long getIdFactura() {
 		return idFactura;
@@ -116,11 +101,11 @@ public class Factura {
 		this.fecha = fecha;
 	}
 
-	public Double getTotal() {
+	public BigDecimal getTotal() {
 		return total;
 	}
 
-	public void setTotal(Double total) {
+	public void setTotal(BigDecimal total) {
 		this.total = total;
 	}
 
@@ -130,22 +115,6 @@ public class Factura {
 
 	public void setEstado(boolean estado) {
 		this.estado = estado;
-	}
-
-	public Timestamp getFechaA() {
-		return fechaA;
-	}
-
-	public void setFechaA(Timestamp fechaA) {
-		this.fechaA = fechaA;
-	}
-
-	public Timestamp getFechaM() {
-		return fechaM;
-	}
-
-	public void setFechaM(Timestamp fechaM) {
-		this.fechaM = fechaM;
 	}
 
 	public List<FacturaDetalle> getFacturaDetalle() {
@@ -159,8 +128,7 @@ public class Factura {
 	@Override
 	public String toString() {
 		return "Factura [idFactura=" + idFactura + ", idCliente=" + idCliente + ", idVendedor=" + idVendedor
-				+ ", codigo=" + codigo + ", fecha=" + fecha + ", total=" + total + ", estado=" + estado + ", fechaA="
-				+ fechaA + ", fechaM=" + fechaM + "]";
+				+ ", codigo=" + codigo + ", fecha=" + fecha + ", total=" + total + ", estado=" + estado + "]";
 	}
 	
 }

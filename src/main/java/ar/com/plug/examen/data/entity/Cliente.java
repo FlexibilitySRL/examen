@@ -1,7 +1,5 @@
 package ar.com.plug.examen.data.entity;
 
-import java.sql.Timestamp;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -36,18 +34,12 @@ public class Cliente {
 	@Column(name = "TELEFONO")
 	private String telefono;
 	
-	@Column(name = "FECHA_A")
-	private Timestamp fechaA;
-	
-	@Column(name = "FECHA_M")
-	private Timestamp fechaM;
-	
 	public Cliente(){
 		
 	}
 
 	public Cliente(long idCliente, String numIdent, String nombre, String apellido, String direccion, String email,
-			String telefono, Timestamp fechaA, Timestamp fechaM) {
+			String telefono) {
 		this.idCliente = idCliente;
 		this.numIdent = numIdent;
 		this.nombre = nombre;
@@ -55,8 +47,6 @@ public class Cliente {
 		this.direccion = direccion;
 		this.email = email;
 		this.telefono = telefono;
-		this.fechaA = fechaA;
-		this.fechaM = fechaM;
 	}
 
 	public long getIdCliente() {
@@ -114,30 +104,6 @@ public class Cliente {
 	public void setTelefono(String telefono) {
 		this.telefono = telefono;
 	}
-
-	public Timestamp getFechaA() {
-		return fechaA;
-	}
-
-	public void setFechaA(Timestamp fechaA) {
-		this.fechaA = fechaA;
-	}
-
-	public Timestamp getFechaM() {
-		return fechaM;
-	}
-
-	public void setFechaM(Timestamp fechaM) {
-		this.fechaM = fechaM;
-	}
-
-	@Override
-	public String toString() {
-		return "Cliente [idCliente=" + idCliente + ", numIdent=" + numIdent + ", nombre=" + nombre + ", apellido="
-				+ apellido + ", direccion=" + direccion + ", email=" + email + ", telefono=" + telefono + ", fechaA="
-				+ fechaA + ", fechaM=" + fechaM + "]";
-	}	
-	
 	
 }
 

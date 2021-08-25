@@ -1,68 +1,61 @@
 package ar.com.plug.examen.app.rest;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mock.web.MockHttpServletRequest;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
-import ar.com.plug.examen.data.entity.Cliente;
-import ar.com.plug.examen.data.repository.ClienteRepository;
+import ar.com.plug.examen.domain.dto.ClienteDTO;
+import ar.com.plug.examen.domain.service.ClienteService;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ClienteControllerTests {
 
-	@InjectMocks
-	ClienteController clienteController;
-
 	@Mock
-	ClienteRepository clienteRepository;
+	private ClienteService clienteService;
+
+	@InjectMocks
+	private ClienteController clienteController;
 
 	@Test
 	public void testCrearCliente() 
 	{
-		MockHttpServletRequest request = new MockHttpServletRequest();
-		RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
+		
+			ClienteDTO clienteParaGuardar = new ClienteDTO(0L, "Maria","Mendoza","Av. Los Arboles","1596-58963","maria@correo.com","V1600000");
+			ClienteDTO clienteGuardado = new ClienteDTO(1L, "Maria","Mendoza","Av. Los Arboles","1596-58963","maria@correo.com","V1600000");
+			when(this.clienteService.crearCliente(clienteParaGuardar)).thenReturn(clienteGuardado);
+			
+			ResponseEntity<ClienteDTO> response = clienteController.crearCliente(clienteParaGuardar);
+	        assertNotNull(response);
+	        assertNotNull(response.getBody());
+	        assertThat(response.getStatusCode(), equalTo(HttpStatus.CREATED));
+	        assertThat(response.getBody().getNumeroIdentificacion(), is("V1600000"));
+	        verify(clienteService).crearCliente(clienteParaGuardar);
+    
+	      //  verify(clienteGuardado.c).c(clienteParaGuardar);
+	/*	MockHttpServletRequest request = new MockHttpServletRequest();
+	    RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
 
 		Cliente cliente = new Cliente();
 		cliente.setIdCliente(1L);
-
 		when(clienteRepository.save(any(Cliente.class))).thenReturn(cliente);
-
-		Cliente clienteNuevo = new Cliente(0, "V1600000", "Maria","Mendoza","Av. Los Arboles","maria@correo.com","1596-58963", null ,null); 
-		ResponseEntity<Cliente> responseEntity = clienteController.crearCliente(clienteNuevo);
+		ClienteDTO clienteNuevo = new ClienteDTO(0L, "Maria","Mendoza","Av. Los Arboles","1596-58963","maria@correo.com","V1600000"); 
+		ResponseEntity<Cliente> responseEntity = this.clienteService.crearCliente(clienteNuevo);
 
 		assertThat(responseEntity.getStatusCodeValue()).isEqualTo(201);
-		assertThat(responseEntity.getHeaders().getLocation().getPath()).isEqualTo("/1");
+		assertThat(responseEntity.getHeaders().getLocation().getPath()).isEqualTo("/1")*/
 	}
 
-	@Test
-	public void testFindAll() 
-	{
-		Cliente cliente1 = new Cliente(0, "V2500000", "Jose","Mendoza","Av. Los Arboles","jose@correo.com","0123-5963", null ,null); 
-		Cliente cliente2 = new Cliente(0, "V3000000", "Sofia","Mendoza","Av. Los Arboles","sofia@correo.com","9854-2563", null ,null); 
-		List<Cliente> list = new ArrayList<Cliente>();
-		list.addAll(Arrays.asList(cliente1, cliente2));
-
-		when(clienteRepository.findAll()).thenReturn(list);
-
-		// when
-		ResponseEntity<Iterable<Cliente>> result = clienteController.listarClientes();
-		System.out.println(result.getBody());
-		assertThat(result.getStatusCodeValue()).isEqualTo(200);
-
-
-	}
+	
+	
 }

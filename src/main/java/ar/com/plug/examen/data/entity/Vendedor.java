@@ -1,7 +1,5 @@
 package ar.com.plug.examen.data.entity;
 
-import java.sql.Timestamp;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,9 +16,6 @@ public class Vendedor {
 	 @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long idVendedor; 
 	
-	@Column(name = "NUM_IDENT")
-	private String numIdent;
-	
 	@Column(name = "CODIGO")
 	private String codigo;
 	
@@ -30,33 +25,28 @@ public class Vendedor {
 	@Column(name = "APELLIDO")
 	private String apellido;
 	
+	@Column(name = "DIRECCION")
+	private String direccion;
+	
 	@Column(name = "EMAIL")
 	private String email;
 	
 	@Column(name = "TELEFONO")
 	private String telefono;
 	
-	@Column(name = "FECHA_A")
-	private Timestamp fechaA;
-	
-	@Column(name = "FECHA_M")
-	private Timestamp fechaM;
-	
 	public Vendedor() {
 		
 	}
 
-	public Vendedor(long idVendedor, String numIdent, String codigo, String nombre, String apellido, String email,
-			String telefono, Timestamp fechaA, Timestamp fechaM) {
+	public Vendedor(long idVendedor,  String codigo, String nombre, String apellido, String direccion,String email,
+			String telefono) {
 		this.idVendedor = idVendedor;
-		this.numIdent = numIdent;
 		this.codigo = codigo;
 		this.nombre = nombre;
 		this.apellido = apellido;
+		this.direccion = direccion;
 		this.email = email;
 		this.telefono = telefono;
-		this.fechaA = fechaA;
-		this.fechaM = fechaM;
 	}
 
 	public long getIdVendedor() {
@@ -66,15 +56,7 @@ public class Vendedor {
 	public void setIdVendedor(long idVendedor) {
 		this.idVendedor = idVendedor;
 	}
-
-	public String getNumIdent() {
-		return numIdent;
-	}
-
-	public void setNumIdent(String numIdent) {
-		this.numIdent = numIdent;
-	}
-
+	
 	public String getCodigo() {
 		return codigo;
 	}
@@ -98,6 +80,14 @@ public class Vendedor {
 	public void setApellido(String apellido) {
 		this.apellido = apellido;
 	}
+	
+	public String getDireccion() {
+		return direccion;
+	}
+
+	public void setDireccion(String direccion) {
+		this.direccion = direccion;
+	}
 
 	public String getEmail() {
 		return email;
@@ -115,26 +105,9 @@ public class Vendedor {
 		this.telefono = telefono;
 	}
 
-	public Timestamp getFechaA() {
-		return fechaA;
-	}
-
-	public void setFechaA(Timestamp fechaA) {
-		this.fechaA = fechaA;
-	}
-
-	public Timestamp getFechaM() {
-		return fechaM;
-	}
-
-	public void setFechaM(Timestamp fechaM) {
-		this.fechaM = fechaM;
-	}
-
 	@Override
 	public String toString() {
-		return "Vendedor [idVendedor=" + idVendedor + ", numIdent=" + numIdent + ", codigo=" + codigo + ", nombre="
-				+ nombre + ", apellido=" + apellido + ", email=" + email + ", telefono=" + telefono + ", fechaA="
-				+ fechaA + ", fechaM=" + fechaM + "]";
+		return "Vendedor [idVendedor=" + idVendedor + ", codigo=" + codigo + ", nombre=" + nombre + ", apellido="
+				+ apellido + ", direccion=" + direccion + ", email=" + email + ", telefono=" + telefono + "]";
 	}
 }
