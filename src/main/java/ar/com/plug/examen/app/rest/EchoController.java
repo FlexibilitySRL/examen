@@ -1,7 +1,11 @@
 package ar.com.plug.examen.app.rest;
 
 import ar.com.plug.examen.app.api.MessageApi;
+import ar.com.plug.examen.domain.dto.ResponseDTO;
+import ar.com.plug.examen.domain.model.Productos;
 import ar.com.plug.examen.domain.service.ProcessMessageService;
+import ar.com.plug.examen.domain.service.ProductoService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -16,11 +20,16 @@ import org.springframework.web.bind.annotation.RestController;
 public class EchoController {
 
     private final ProcessMessageService messageService;
+    
+    
 
     @Autowired
     public EchoController (ProcessMessageService messageService) {
         this.messageService = messageService;
+        
     }
+    
+   
 
     @PostMapping(path = "", produces = {MediaType.APPLICATION_JSON_VALUE },
             consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -28,4 +37,6 @@ public class EchoController {
     {
         return new ResponseEntity<>(messageService.processMessage(message.getMessage()), HttpStatus.OK);
     }
+    
+  
 }
