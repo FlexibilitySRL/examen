@@ -1,0 +1,14 @@
+package ar.com.plug.examen.domain.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class GetComprasByClienteDTO {
+	
+	String productos;
+
+}
