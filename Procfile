@@ -1,1 +1,1 @@
-web: java -jar -Dspring.profiles.active=pdn target/examen-0.0.1.jar
+web: java -Dserver.port=$PORT -jar -Dspring.profiles.active=pdn target/examen-0.0.1.jar
