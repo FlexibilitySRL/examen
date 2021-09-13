@@ -1,4 +1,4 @@
-package ar.com.plug.examen.app.rest;
+package ar.com.plug.examen.app.rest.controller;
 
 import ar.com.plug.examen.app.api.MessageApi;
 import ar.com.plug.examen.domain.service.ProcessMessageService;
@@ -28,4 +28,14 @@ public class EchoController {
     {
         return new ResponseEntity<>(messageService.processMessage(message.getMessage()), HttpStatus.OK);
     }
+    
+    @PostMapping(path = "init", produces = {MediaType.APPLICATION_JSON_VALUE },
+            consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> echo(@RequestBody Boolean init)
+    {
+    	
+    	return init ?  new ResponseEntity<>(messageService.init(), HttpStatus.OK) :  new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
+    }
+
 }

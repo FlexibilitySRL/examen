@@ -36,3 +36,27 @@ Bonus
 4) Correr pruebas con base de datos en memoria.
 5) Crear Docker Image.
 6) Hostear la app en un cloud computing libre y enviar la URL para consultar.
+
+
+
+--------------------------------------------------------------------------------
+
+A modo de simplificar las pruebas se agrega un recuso en el controller echoController que carga en la base una pequeña estructura.
+http://localhost:8080/payments/echo/init
+`curl -X POST "http://localhost:8080/payments/echo/init" -H "accept: application/json" -H "Content-Type: application/json" -d "true"`
+
+Importante. 
+Por Cuestiones de tiempo no se implemento un control de respuestas adecuado asi como un control de errores acorde a este. 
+
+Test
+Los Test no cubren todo el codigo pero estan los que se consideraron mas importantes. 
+
+
+
+
+
+
+
+
+
+
