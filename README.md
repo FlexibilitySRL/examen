@@ -51,7 +51,11 @@ Por Cuestiones de tiempo no se implemento un control de respuestas adecuado asi 
 Test
 Los Test no cubren todo el codigo pero estan los que se consideraron mas importantes. 
 
+Consola H2
+http://localhost:8080/payments/h2-console/login.jsp
 
+UI_Swagger
+http://localhost:8080/payments/swagger-ui.html
 
 
 
