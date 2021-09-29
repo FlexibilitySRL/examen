@@ -24,7 +24,7 @@ public class EchoController {
 
     @PostMapping(path = "", produces = {MediaType.APPLICATION_JSON_VALUE },
             consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> echo(@RequestBody MessageApi message)
+    public ResponseEntity<?> echo(@RequestBody MessageApi message, MessageApi message2)
     {
         return new ResponseEntity<>(messageService.processMessage(message.getMessage()), HttpStatus.OK);
     }
