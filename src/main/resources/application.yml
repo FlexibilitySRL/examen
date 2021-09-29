@@ -8,12 +8,12 @@ spring:
       ddl-auto: update
     show-sql: true
   datasource:
-      url: jdbc:mysql://127.0.0.1:3306/payments?zeroDateTimeBehavior=convertToNull
+      url: jdbc:mysql://localhost:3306/registro?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
       username: root
-      password: password
+      password: Maryi2017*
 
 server:
-  port: 8080
+  port: 8088
   servlet:
     context-path: '/payments'
 ---
