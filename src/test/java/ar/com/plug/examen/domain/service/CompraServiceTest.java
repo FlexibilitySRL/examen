@@ -68,6 +68,14 @@ public class CompraServiceTest {
     }
 
     @Test
+    public void testFindAllByTransaccion() {
+        Transaccion transaccion = transaccionMock();
+        Mockito.when(compraRepository.findAllByTransaccionId(transaccion.getId())).thenReturn(compraListMock());
+        List<Compra> expected = compraRepository.findAllByTransaccionId(transaccion.getId());
+        Assert.assertEquals(expected, compraListMock());
+    }
+
+    @Test
     public void testDeleteCompra() {
         Mockito.when(compraRepository.findByProductoIdAndTransaccion(productoMock().getId(), transaccionMock().getId())).thenReturn(compraListMock());
         ResponseEntity expected = compraService.deleteCompraTransaccion(productoMock().getId(), transaccionMock().getId());

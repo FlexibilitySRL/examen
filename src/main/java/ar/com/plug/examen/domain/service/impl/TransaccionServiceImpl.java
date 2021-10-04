@@ -2,23 +2,19 @@ package ar.com.plug.examen.domain.service.impl;
 
 import ar.com.plug.examen.domain.model.Cliente;
 import ar.com.plug.examen.domain.model.Compra;
-import ar.com.plug.examen.domain.model.Producto;
 import ar.com.plug.examen.domain.model.Transaccion;
 import ar.com.plug.examen.domain.repository.ClienteRepository;
 import ar.com.plug.examen.domain.repository.CompraRepository;
 import ar.com.plug.examen.domain.repository.ProductoRepository;
 import ar.com.plug.examen.domain.repository.TransaccionRepository;
+import ar.com.plug.examen.domain.service.CompraService;
 import ar.com.plug.examen.domain.service.TransaccionService;
-import ar.com.plug.examen.dto.requests.CompraRequest;
-import ar.com.plug.examen.dto.responses.CompraResponse;
 import ar.com.plug.examen.dto.responses.ListaComprasResponse;
 import ar.com.plug.examen.dto.responses.TransaccionResponse;
 import ar.com.plug.examen.enums.EstadosComprasEnum;
 import ar.com.plug.examen.enums.EstadosTransaccionEnum;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -37,6 +33,9 @@ public class TransaccionServiceImpl implements TransaccionService {
 
     @Autowired
     private ClienteRepository clienteRepository;
+
+    @Autowired
+    private CompraService compraService;
 
     @Override
     public ResponseEntity startTransaccion(Long clienteId) {
@@ -79,7 +78,7 @@ public class TransaccionServiceImpl implements TransaccionService {
                 }
                 transaccionResponse.setTotalTransaccion(valorTotal);
                 Transaccion transaccion = transaccionRepository.findById(transaccionId).orElse(null);
-                endTransaccion(transaccionResponse, transaccion);
+                saveTransaccion(transaccionResponse, transaccion);
                 return transaccionResponse;
             }
             else {
@@ -104,8 +103,8 @@ public class TransaccionServiceImpl implements TransaccionService {
         else throw new RuntimeException("La transacción con identificador " + transaccionId + "no existe.");
     }
 
-
-    public ResponseEntity endTransaccion(TransaccionResponse transaccionResponse, Transaccion transaccion) {
+    @Override
+    public ResponseEntity saveTransaccion(TransaccionResponse transaccionResponse, Transaccion transaccion) {
         if(transaccion != null){
             transaccion.setEstado(transaccionResponse.getEstado());
             transaccion.setTotalTransaccion(transaccionResponse.getTotalTransaccion());
@@ -120,12 +119,9 @@ public class TransaccionServiceImpl implements TransaccionService {
     @Override
     public ListaComprasResponse findAllByTransaccion(Long transaccionId) {
         List<Compra> compras = compraRepository.findAllByTransaccionId(transaccionId);
-        CompraResponse compraResponse = new CompraResponse();
         ListaComprasResponse listaComprasResponse = new ListaComprasResponse();
-        List<CompraResponse> compraResponseList = new ArrayList<>();
 
         listaComprasResponse.setCompras(compras);
-        System.out.println(compraResponseList);
         listaComprasResponse.setTransaccionId(transaccionId);
 
         return listaComprasResponse;

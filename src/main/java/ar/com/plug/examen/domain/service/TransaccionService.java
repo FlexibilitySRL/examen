@@ -13,4 +13,5 @@ public interface TransaccionService {
     TransaccionResponse endTransaccion(Long transaccionId);
     Boolean transaccionActivo(Long transaccionId);
     ListaComprasResponse findAllByTransaccion(Long transaccionId);
+    ResponseEntity saveTransaccion(TransaccionResponse transaccionResponse, Transaccion transaccion);
 }

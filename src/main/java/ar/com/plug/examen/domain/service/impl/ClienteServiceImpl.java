@@ -5,8 +5,6 @@ import ar.com.plug.examen.domain.repository.ClienteRepository;
 import ar.com.plug.examen.domain.service.ClienteService;
 import ar.com.plug.examen.dto.requests.ClienteRequest;
 import ar.com.plug.examen.dto.responses.ClienteResponse;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;

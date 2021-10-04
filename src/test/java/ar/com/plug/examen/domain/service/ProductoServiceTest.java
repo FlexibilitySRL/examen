@@ -8,7 +8,6 @@ import ar.com.plug.examen.dto.responses.ProductoResponse;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import org.checkerframework.common.value.qual.StaticallyExecutable;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -3,7 +3,6 @@ package ar.com.plug.examen.app.rest;
 import ar.com.plug.examen.domain.service.CompraService;
 import ar.com.plug.examen.domain.service.TransaccionService;
 import ar.com.plug.examen.dto.requests.CompraRequest;
-import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;

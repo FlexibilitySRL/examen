@@ -84,8 +84,10 @@ public class CompraServiceImpl implements CompraService {
     public ResponseEntity listCompras() {
         return ResponseEntity.ok(compraRepository.findAll());
     }
+
     @Override
     public List<Compra> listComprasByTransaccion(Long idTransaccion) {
         return compraRepository.findAllByTransaccionId(idTransaccion);
     }
+
 }
