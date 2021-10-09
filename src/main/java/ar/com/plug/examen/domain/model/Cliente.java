@@ -12,7 +12,6 @@ import com.sun.istack.NotNull;
 @Entity
 @Table(name = "tbl_clientes")
 public class Cliente {
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_cliente")

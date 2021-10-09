@@ -10,19 +10,20 @@ import ar.com.plug.examen.domain.repository.ProductoRepository;
 
 @Service
 public class ProcessProductoServiceImpl {
-	@Autowired
-	ProductoRepository repo;
 
-	public Producto addProducto(Producto producto) {
-		producto.setIdProducto(0);
-		return repo.save(producto);
-	}
+    @Autowired
+    ProductoRepository repo;
 
-	public Optional<Producto> getProducto(Integer producto) {
-		return repo.findById(producto);
-	}
+    public Producto addProducto(Producto producto) {
+        producto.setIdProducto(0);
+        return repo.save(producto);
+    }
 
-	public void delete(Integer producto) {
-		repo.deleteById(producto);
-	}
+    public Optional<Producto> getProducto(Integer producto) {
+        return repo.findById(producto);
+    }
+
+    public void delete(Integer producto) {
+        repo.deleteById(producto);
+    }
 }

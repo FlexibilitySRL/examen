@@ -7,4 +7,5 @@ import ar.com.plug.examen.domain.model.Cliente;
 
 public interface ClienteRepository extends JpaRepository<Cliente, Integer>, JpaSpecificationExecutor<Cliente> {
 
+    
 }

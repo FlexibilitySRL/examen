@@ -117,7 +117,7 @@ public class EchoController {
 	public Transaccion guardarTransaccion(@RequestBody Transaccion transaccion) {
 		return this.serviceTransaccion.addTransaccion(transaccion);
 	}
-
+//</editor-fold>
 //	<editor-fold defaultstate="collapsed" desc="traerTransaccion metodo para traer transaccion por medio de id">
 	@GetMapping(path = "/transaccion")
 	public Optional<Transaccion> traerTransaccion(@RequestParam(value = "id", defaultValue = "0") Integer id) {

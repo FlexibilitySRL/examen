@@ -10,19 +10,20 @@ import ar.com.plug.examen.domain.repository.TransaccionRepository;
 
 @Service
 public class ProcessTransaccionServiceImpl {
-	@Autowired
-	TransaccionRepository repo;
 
-	public Transaccion addTransaccion(Transaccion transaccion) {
-		transaccion.setIdTransaccion(0);
-		return repo.save(transaccion);
-	}
+    @Autowired
+    TransaccionRepository repo;
 
-	public Optional<Transaccion> getTransaccion(Integer transaccion) {
-		return repo.findById(transaccion);
-	}
+    public Transaccion addTransaccion(Transaccion transaccion) {
+        transaccion.setIdTransaccion(0);
+        return repo.save(transaccion);
+    }
 
-	public void delete(Integer transaccion) {
-		repo.deleteById(transaccion);
-	}
+    public Optional<Transaccion> getTransaccion(Integer transaccion) {
+        return repo.findById(transaccion);
+    }
+
+    public void delete(Integer transaccion) {
+        repo.deleteById(transaccion);
+    }
 }

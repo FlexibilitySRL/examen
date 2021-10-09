@@ -7,4 +7,5 @@ import ar.com.plug.examen.domain.model.Producto;
 
 public interface ProductoRepository extends JpaRepository<Producto, Integer>, JpaSpecificationExecutor<Producto> {
 
+    
 }

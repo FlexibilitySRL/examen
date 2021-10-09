@@ -12,6 +12,7 @@ spring:
       username: root
       password: 
 
+
 server:
   port: 8080
   servlet:

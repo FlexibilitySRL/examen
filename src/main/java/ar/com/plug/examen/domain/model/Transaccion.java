@@ -12,6 +12,7 @@ import com.sun.istack.NotNull;
 @Entity
 @Table(name = "tbl_transacciones")
 public class Transaccion {
+    
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_transaccion")
