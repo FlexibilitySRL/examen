@@ -1,7 +1,7 @@
 package ar.com.plug.examen.domain.service.impl;
 
 import ar.com.plug.examen.domain.model.Customer;
-import ar.com.plug.examen.domain.repository.impl.CustomerRepository;
+import ar.com.plug.examen.domain.repository.ICustomerRepository;
 import ar.com.plug.examen.domain.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,7 +13,7 @@ import java.util.Optional;
 public class CustomerServiceImpl implements CustomerService {
 
     @Autowired
-    private CustomerRepository customerRepository;
+    private ICustomerRepository customerRepository;
 
     @Override
     public Customer save(Customer customer) {
