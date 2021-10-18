@@ -1,8 +1,11 @@
 package ar.com.plug.examen.domain.service.impl;
 
+import ar.com.plug.examen.domain.dto.CustomerDTO;
 import ar.com.plug.examen.domain.model.Customer;
 import ar.com.plug.examen.domain.repository.ICustomerRepository;
 import ar.com.plug.examen.domain.service.CustomerService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,13 +18,15 @@ public class CustomerServiceImpl implements CustomerService {
     @Autowired
     private ICustomerRepository customerRepository;
 
+    private static Logger logger = LoggerFactory.getLogger(CustomerServiceImpl.class);
+
     @Override
-    public Customer save(Customer customer) {
+    public CustomerDTO save(CustomerDTO customer) {
         return customerRepository.save(customer);
     }
 
     @Override
-    public Customer update(Customer customer) {
+    public CustomerDTO update(CustomerDTO customer) {
 
         return customerRepository.update(customer);
     }
@@ -32,14 +37,14 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Optional<Customer> getById(String customerId) {
+    public Optional<CustomerDTO> getById(String customerId) {
 
         return customerRepository.getById(customerId);
     }
 
     @Override
-    public List<Customer> getAll() {
+    public List<CustomerDTO> getAll() {
 
-        return (List<Customer>) customerRepository.getAll();
+        return (List<CustomerDTO>) customerRepository.getAll();
     }
 }

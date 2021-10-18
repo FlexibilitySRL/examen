@@ -1,5 +1,7 @@
 package ar.com.plug.examen.domain.repository.impl;
 
+import ar.com.plug.examen.domain.dto.CustomerDTO;
+import ar.com.plug.examen.domain.mapper.CustomerMapper;
 import ar.com.plug.examen.domain.model.Customer;
 import ar.com.plug.examen.domain.crud.CustomerCrudRepository;
 import ar.com.plug.examen.domain.repository.ICustomerRepository;
@@ -15,16 +17,21 @@ public class CustomerRepository implements ICustomerRepository {
     @Autowired
     private CustomerCrudRepository customerCrudRepository;
 
-    @Override
-    public Customer save(Customer customer) {
+    @Autowired
+    private CustomerMapper customerMapper;
 
-        return customerCrudRepository.save(customer);
+    @Override
+    public CustomerDTO save(CustomerDTO customerDTO) {
+
+        Customer customer = customerMapper.toCustomer(customerDTO);
+        return   customerMapper.toCustomerDto(customerCrudRepository.save(customer));
     }
 
     @Override
-    public Customer update(Customer customer) {
+    public CustomerDTO update(CustomerDTO customerDTO) {
 
-        return customerCrudRepository.save(customer);
+        Customer customer = customerMapper.toCustomer(customerDTO);
+        return   customerMapper.toCustomerDto(customerCrudRepository.save(customer));
     }
 
     @Override
@@ -34,15 +41,17 @@ public class CustomerRepository implements ICustomerRepository {
     }
 
     @Override
-    public Optional<Customer> getById(String customerId) {
+    public Optional<CustomerDTO> getById(String customerId) {
 
-        return customerCrudRepository.findById(customerId);
+        return customerCrudRepository.findById(customerId)
+                .map(customer -> customerMapper.toCustomerDto(customer));
     }
 
 
     @Override
-    public List<Customer> getAll() {
+    public List<CustomerDTO> getAll() {
+        List<Customer> customers = (List<Customer>) customerCrudRepository.findAll();
+        return customerMapper.toListCustomerDto(customers);
 
-        return (List<Customer>) customerCrudRepository.findAll();
     }
 }

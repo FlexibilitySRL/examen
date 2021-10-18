@@ -1,5 +1,6 @@
 package ar.com.plug.examen.domain.repository;
 
+import ar.com.plug.examen.domain.dto.ProductDTO;
 import ar.com.plug.examen.domain.model.Customer;
 import ar.com.plug.examen.domain.model.Product;
 
@@ -8,13 +9,13 @@ import java.util.Optional;
 
 public interface IProductRepository {
 
-    Product save(Product product);
-    Product update(Product product);
+    ProductDTO save(ProductDTO productDTO);
+    ProductDTO update(ProductDTO productDTO);
     void delete(long productId);
 
-    Optional<Product> getById(long productId);
-    Optional<List<Product>> findByStokGreatherThan(int stock);
-    Optional<List<Product>>  findByPriceIsLessthan(double price);
-    List<Product> getAll();
+    Optional<ProductDTO> getById(long productId);
+    Optional<List<ProductDTO>> findByStokGreatherThan(int stock);
+    Optional<List<ProductDTO>>  findByPriceIsLessthan(double price);
+    List<ProductDTO> getAll();
 
 }

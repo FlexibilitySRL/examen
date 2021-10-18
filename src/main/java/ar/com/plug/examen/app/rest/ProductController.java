@@ -1,5 +1,6 @@
 package ar.com.plug.examen.app.rest;
 
+import ar.com.plug.examen.domain.dto.ProductDTO;
 import ar.com.plug.examen.domain.model.Product;
 import ar.com.plug.examen.domain.service.ProductService;
 import io.swagger.annotations.ApiOperation;
@@ -24,16 +25,16 @@ public class ProductController {
     @PostMapping("save")
     @ApiOperation("Registrar un nuevo producto")
     @ApiResponse(code = 201, message = "CREATED")
-    public ResponseEntity<Product> save(@RequestBody Product product){
+    public ResponseEntity<ProductDTO> save(@RequestBody ProductDTO productDto){
 
-        return new ResponseEntity<>(productService.save(product), HttpStatus.CREATED);
+        return new ResponseEntity<>(productService.save(productDto), HttpStatus.CREATED);
     }
     @PutMapping("update")
     @ApiOperation("Actualizar un  producto")
     @ApiResponse(code = 200, message = "OK")
-    public ResponseEntity<Product> update(@RequestBody Product product){
+    public ResponseEntity<ProductDTO> update(@RequestBody ProductDTO productDto){
 
-        return new ResponseEntity<>(productService.update(product), HttpStatus.OK);
+        return new ResponseEntity<>(productService.update(productDto), HttpStatus.OK);
     }
 
 
@@ -44,7 +45,7 @@ public class ProductController {
             @ApiResponse(code = 404, message = "NOT FOUND"),
 
     })
-    public ResponseEntity<Product> getProductById(
+    public ResponseEntity<ProductDTO> getProductById(
             @ApiParam(value = "Id del producto a consultar", required = true, example = "2")
             @PathVariable("id") long productId){
 
@@ -61,7 +62,7 @@ public class ProductController {
             @ApiResponse(code = 404, message = "NOT FOUND"),
 
     })
-    public ResponseEntity<List<Product>> findByStokGreatherThan(
+    public ResponseEntity<List<ProductDTO>> findByStokGreatherThan(
             @ApiParam(value = "stock a consultar", required = true, example = "20")
             @PathVariable("stock") int stock) {
 
@@ -77,7 +78,7 @@ public class ProductController {
             @ApiResponse(code = 200, message = "OK"),
             @ApiResponse(code = 404, message = "NOT FOUND")
     })
-    public ResponseEntity<List<Product>> findByPriceIsLessthan(
+    public ResponseEntity<List<ProductDTO>> findByPriceIsLessthan(
             @ApiParam(value = "precio por el que se desea consultar", required = true, example = "150000")
             @PathVariable("price") long price) {
 
@@ -89,7 +90,7 @@ public class ProductController {
     @GetMapping("/all")
     @ApiOperation("Buscar todos los productos")
     @ApiResponse(code = 200, message = "OK")
-    public ResponseEntity<List<Product>> findAllProducts(){
+    public ResponseEntity<List<ProductDTO>> findAllProducts(){
         return new ResponseEntity<>(productService.getAll(),HttpStatus.OK);
     }
 

@@ -1,6 +1,8 @@
 package ar.com.plug.examen.domain.repository.impl;
 
 import ar.com.plug.examen.domain.crud.ProductCrudRepository;
+import ar.com.plug.examen.domain.dto.ProductDTO;
+import ar.com.plug.examen.domain.mapper.ProductMapper;
 import ar.com.plug.examen.domain.model.Product;
 import ar.com.plug.examen.domain.repository.IProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,38 +17,51 @@ public class ProductRepository implements IProductRepository {
     @Autowired
     private ProductCrudRepository productCrudRepository;
 
+    @Autowired
+    private ProductMapper productMapper;
+
     @Override
-    public Product save(Product product) {
-        return productCrudRepository.save(product);
+    public ProductDTO save(ProductDTO productDto) {
+
+        Product product = productMapper.toProduct(productDto);
+        return productMapper.toProductDto(productCrudRepository.save(product));
     }
 
     @Override
-    public Product update(Product product) {
-        return productCrudRepository.save(product);
+    public ProductDTO update(ProductDTO productDto) {
+
+        Product product = productMapper.toProduct(productDto);
+        return productMapper.toProductDto(productCrudRepository.save(product));
     }
 
     @Override
     public void delete(long productId) {
-       productCrudRepository.deleteById(productId);
+
+        productCrudRepository.deleteById(productId);
     }
 
     @Override
-    public Optional<Product> getById(long productId) {
-        return productCrudRepository.findById(productId);
+    public Optional<ProductDTO> getById(long productId) {
+
+        return productCrudRepository.findById(productId)
+                .map(product -> productMapper.toProductDto(product));
     }
 
     @Override
-    public Optional<List<Product>> findByStokGreatherThan(int stock) {
-        return productCrudRepository.findByStockIsGreaterThan(stock);
+    public Optional<List<ProductDTO>> findByStokGreatherThan(int stock) {
+        return productCrudRepository.findByStockIsGreaterThan(stock)
+                .map(products -> productMapper.toListProductDto(products));
     }
 
     @Override
-    public Optional<List<Product>>  findByPriceIsLessthan(double price) {
-        return productCrudRepository.findByPriceIsLessThan(price);
+    public Optional<List<ProductDTO>>  findByPriceIsLessthan(double price) {
+        return productCrudRepository.findByPriceIsLessThan(price)
+                .map(products -> productMapper.toListProductDto(products));
     }
 
     @Override
-    public List<Product> getAll() {
-        return (List<Product>) productCrudRepository.findAll();
+    public List<ProductDTO> getAll() {
+        List<Product> products = (List<Product>) productCrudRepository.findAll();
+        return productMapper.toListProductDto(products);
     }
 }

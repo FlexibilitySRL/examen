@@ -1,5 +1,6 @@
 package ar.com.plug.examen.domain.service.impl;
 
+import ar.com.plug.examen.domain.dto.ProductDTO;
 import ar.com.plug.examen.domain.model.Product;
 import ar.com.plug.examen.domain.repository.IProductRepository;
 import ar.com.plug.examen.domain.service.ProductService;
@@ -16,13 +17,13 @@ public class ProductServiceImpl implements ProductService {
     private IProductRepository productRepository;
 
     @Override
-    public Product save(Product product) {
-        return productRepository.save(product);
+    public ProductDTO save(ProductDTO productDto) {
+        return productRepository.save(productDto);
     }
 
     @Override
-    public Product update(Product product) {
-        return productRepository.save(product);
+    public ProductDTO update(ProductDTO productDto) {
+        return productRepository.save(productDto);
     }
 
     @Override
@@ -32,22 +33,22 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Optional<Product> getById(long productId) {
+    public Optional<ProductDTO> getById(long productId) {
         return productRepository.getById(productId);
     }
 
     @Override
-    public Optional<List<Product>> findByStokGreatherThan(int stock) {
+    public Optional<List<ProductDTO>> findByStokGreatherThan(int stock) {
         return productRepository.findByStokGreatherThan(stock);
     }
 
     @Override
-    public Optional<List<Product>>  findByPriceIsLessthan(double price) {
+    public Optional<List<ProductDTO>>  findByPriceIsLessthan(double price) {
         return productRepository.findByPriceIsLessthan(price);
     }
 
     @Override
-    public List<Product> getAll() {
+    public List<ProductDTO> getAll() {
         return productRepository.getAll();
     }
 }

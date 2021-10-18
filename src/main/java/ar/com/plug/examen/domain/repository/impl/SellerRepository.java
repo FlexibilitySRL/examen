@@ -1,6 +1,8 @@
 package ar.com.plug.examen.domain.repository.impl;
 
 import ar.com.plug.examen.domain.crud.SellerCrudRepository;
+import ar.com.plug.examen.domain.dto.SellerDTO;
+import ar.com.plug.examen.domain.mapper.SellerMapper;
 import ar.com.plug.examen.domain.model.Seller;
 import ar.com.plug.examen.domain.repository.ISellerRepository;
 import ar.com.plug.examen.utils.SellerUtils;
@@ -16,16 +18,20 @@ public class SellerRepository implements ISellerRepository {
     @Autowired
     private SellerCrudRepository sellerCrudRepository;
 
-    @Override
-    public Seller save(Seller seller) {
+    @Autowired
+    private SellerMapper sellerMapper;
 
-        return sellerCrudRepository.save(seller);
+    @Override
+    public SellerDTO save(SellerDTO sellerDTO) {
+        Seller seller = sellerMapper.toSeller(sellerDTO);
+        return sellerMapper.toSellerDto(sellerCrudRepository.save(seller));
     }
 
     @Override
-    public Seller update(Seller seller) {
+    public SellerDTO update(SellerDTO sellerDTO) {
 
-        return sellerCrudRepository.save(seller);
+        Seller seller = sellerMapper.toSeller(sellerDTO);
+        return sellerMapper.toSellerDto(sellerCrudRepository.save(seller));
     }
 
     @Override
@@ -34,18 +40,21 @@ public class SellerRepository implements ISellerRepository {
     }
 
     @Override
-    public Optional<Seller> findById(long sellerId) {
+    public Optional<SellerDTO> findById(long sellerId) {
 
-        return sellerCrudRepository.findById(sellerId);
+        return sellerCrudRepository.findById(sellerId)
+                .map(seller -> sellerMapper.toSellerDto(seller));
     }
 
     @Override
-    public Optional<List<Seller>> getAllActive() {
-        return sellerCrudRepository.findByStateEquals(SellerUtils.ACTIVE);
+    public Optional<List<SellerDTO>> getAllActive() {
+        return sellerCrudRepository.findByStateEquals(SellerUtils.ACTIVE)
+                .map(sellerList -> sellerMapper.toListSellerDtos(sellerList));
     }
 
     @Override
-    public List<Seller> getAll() {
-        return (List<Seller>) sellerCrudRepository.findAll();
+    public List<SellerDTO> getAll() {
+          List<Seller> sellers = (List<Seller>) sellerCrudRepository.findAll();
+          return sellerMapper.toListSellerDtos(sellers);
     }
 }

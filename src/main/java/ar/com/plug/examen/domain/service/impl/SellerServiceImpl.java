@@ -1,5 +1,6 @@
 package ar.com.plug.examen.domain.service.impl;
 
+import ar.com.plug.examen.domain.dto.SellerDTO;
 import ar.com.plug.examen.domain.model.Seller;
 import ar.com.plug.examen.domain.repository.ISellerRepository;
 import ar.com.plug.examen.domain.service.SellerService;
@@ -16,13 +17,13 @@ public class SellerServiceImpl implements SellerService {
     private ISellerRepository sellerRepository;
 
     @Override
-    public Seller save(Seller seller) {
-        return sellerRepository.save(seller);
+    public SellerDTO save(SellerDTO sellerDTO) {
+        return sellerRepository.save(sellerDTO);
     }
 
     @Override
-    public Seller update(Seller seller) {
-        return sellerRepository.update(seller);
+    public SellerDTO update(SellerDTO sellerDTO) {
+        return sellerRepository.update(sellerDTO);
     }
 
     @Override
@@ -31,17 +32,17 @@ public class SellerServiceImpl implements SellerService {
     }
 
     @Override
-    public Optional<Seller> findById(long sellerId) {
+    public Optional<SellerDTO> findById(long sellerId) {
         return sellerRepository.findById(sellerId);
     }
 
     @Override
-    public Optional<List<Seller>> getAllActive() {
+    public Optional<List<SellerDTO>> getAllActive() {
         return sellerRepository.getAllActive();
     }
 
     @Override
-    public List<Seller> getAll() {
+    public List<SellerDTO> getAll() {
         return sellerRepository.getAll();
     }
 }

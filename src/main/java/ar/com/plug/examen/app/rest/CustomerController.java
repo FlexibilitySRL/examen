@@ -1,5 +1,6 @@
 package ar.com.plug.examen.app.rest;
 
+import ar.com.plug.examen.domain.dto.CustomerDTO;
 import ar.com.plug.examen.domain.model.Customer;
 import ar.com.plug.examen.domain.service.CustomerService;
 import io.swagger.annotations.ApiOperation;
@@ -23,15 +24,15 @@ public class CustomerController {
     @PostMapping("save")
     @ApiOperation("Registrar un nuevo cliente")
     @ApiResponse(code = 201, message = "CREATED")
-    public ResponseEntity<Customer> save(@RequestBody Customer customer){
-        return new ResponseEntity<>(customerService.save(customer), HttpStatus.CREATED);
+    public ResponseEntity<CustomerDTO> save(@RequestBody CustomerDTO customerDto){
+        return new ResponseEntity<>(customerService.save(customerDto), HttpStatus.CREATED);
     }
 
     @PutMapping("update")
     @ApiOperation("Actualizar un cliente")
     @ApiResponse(code = 200, message = "OK")
-    public ResponseEntity<Customer> update(@RequestBody Customer customer){
-        return new ResponseEntity<>(customerService.save(customer), HttpStatus.OK);
+    public ResponseEntity<CustomerDTO> update(@RequestBody CustomerDTO customerDto){
+        return new ResponseEntity<>(customerService.save(customerDto), HttpStatus.OK);
     }
 
 
@@ -42,19 +43,19 @@ public class CustomerController {
             @ApiResponse(code = 404, message = "NOT FOUND"),
 
     })
-    public ResponseEntity<Customer>  findById(
+    public ResponseEntity<CustomerDTO>  findById(
             @ApiParam(value = "Id del cliente  buscar", required = true, example = "1129578649")
             @PathVariable("id") String customerId){
 
         return customerService.getById(customerId)
-                .map(customer -> new ResponseEntity<>(customer, HttpStatus.OK))
+                .map(customerDto -> new ResponseEntity<>(customerDto, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @GetMapping("/all")
     @ApiOperation("Consutar a todos los clientes")
     @ApiResponse(code = 200, message = "OK")
-    public ResponseEntity<List<Customer>> findAll(){
+    public ResponseEntity<List<CustomerDTO>> findAll(){
 
         return new ResponseEntity<>(customerService.getAll(), HttpStatus.OK);
     }
