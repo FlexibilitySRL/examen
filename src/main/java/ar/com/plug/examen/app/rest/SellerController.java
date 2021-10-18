@@ -1,7 +1,6 @@
 package ar.com.plug.examen.app.rest;
 
 import ar.com.plug.examen.domain.dto.SellerDTO;
-import ar.com.plug.examen.domain.model.Seller;
 import ar.com.plug.examen.domain.service.SellerService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -14,6 +13,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Seller Controller
+ */
 @RestController
 @RequestMapping("/sellers")
 public class SellerController {
@@ -21,6 +23,12 @@ public class SellerController {
     @Autowired
     private SellerService sellerService;
 
+
+    /**
+     * Save a new Seller
+     * @param sellerDTO
+     * @return ResponseEntity<SellerDTO>
+     */
     @PostMapping("save")
     @ApiOperation("Registrar un nuevo vendedor")
     @ApiResponse(code = 201, message = "CREATED")
@@ -28,6 +36,12 @@ public class SellerController {
 
         return new ResponseEntity<>(sellerService.save(sellerDTO), HttpStatus.CREATED);
     }
+
+    /**
+     * update a seller if exist
+     * @param sellerDTO
+     * @return ResponseEntity<SellerDTO>
+     */
     @PutMapping("update")
     @ApiOperation("Actualizar  un vendedor")
     @ApiResponse(code = 200, message = "OK")
@@ -36,6 +50,11 @@ public class SellerController {
         return new ResponseEntity<>(sellerService.update(sellerDTO), HttpStatus.OK);
     }
 
+    /**
+     * Find a seller given its Id
+     * @param sellerId
+     * @return ResponseEntity<SellerDTO>
+     */
     @GetMapping("/{id}")
     @ApiOperation("Buscar vendedor por ID")
     @ApiResponses({
@@ -51,6 +70,10 @@ public class SellerController {
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    /**
+     * Find a list of sellers which state is Active
+     * @return ResponseEntity<List<SellerDTO>>
+     */
     @GetMapping("/actives")
     @ApiOperation("Buscar todos los vendedores que se encuentren activos")
     @ApiResponses({
@@ -63,6 +86,10 @@ public class SellerController {
                  .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    /**
+     * Find all sellers
+     * @return ResponseEntity<List<SellerDTO>>
+     */
     @GetMapping("/all")
     @ApiOperation("Buscar todos los vendedores")
     @ApiResponse(code = 200, message = "OK")

@@ -1,7 +1,6 @@
 package ar.com.plug.examen.app.rest;
 
 import ar.com.plug.examen.domain.dto.ProductDTO;
-import ar.com.plug.examen.domain.model.Product;
 import ar.com.plug.examen.domain.service.ProductService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -14,7 +13,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
+/**
+ * Product Controller
+ */
 @RestController
 @RequestMapping("/products")
 public class ProductController {
@@ -22,6 +23,12 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
+
+    /**
+     * Save a new Product
+     * @param productDto
+     * @return ResponseEntity<ProductDTO>
+     */
     @PostMapping("save")
     @ApiOperation("Registrar un nuevo producto")
     @ApiResponse(code = 201, message = "CREATED")
@@ -29,6 +36,12 @@ public class ProductController {
 
         return new ResponseEntity<>(productService.save(productDto), HttpStatus.CREATED);
     }
+
+    /**
+     * Update an existing product
+     * @param productDto
+     * @return ResponseEntity<ProductDTO>
+     */
     @PutMapping("update")
     @ApiOperation("Actualizar un  producto")
     @ApiResponse(code = 200, message = "OK")
@@ -37,7 +50,11 @@ public class ProductController {
         return new ResponseEntity<>(productService.update(productDto), HttpStatus.OK);
     }
 
-
+    /**
+     * Find a product given its Id
+     * @param productId
+     * @return ResponseEntity<ProductDTO>
+     */
     @GetMapping("/{id}")
     @ApiOperation("Buscar producto por Id")
     @ApiResponses({
@@ -54,7 +71,11 @@ public class ProductController {
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-
+    /**
+     *  Find a list of products which stock is greater than
+     * @param stock
+     * @return ResponseEntity<List<ProductDTO>>
+     */
     @GetMapping("/stockgreaterthan/{stock}")
     @ApiOperation("Buscar productos cuyo stock es mayor que")
     @ApiResponses({
@@ -72,6 +93,11 @@ public class ProductController {
     }
 
 
+    /**
+     * Find a list of products which price is less than
+     * @param price
+     * @return ResponseEntity<List<ProductDTO>>
+     */
     @GetMapping("/pricelessthan/{price}")
     @ApiOperation("Buscar productos cuyo precio es menor que")
     @ApiResponses({
@@ -87,6 +113,10 @@ public class ProductController {
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    /**
+     * Find All products
+     * @return ResponseEntity<List<ProductDTO>>
+     */
     @GetMapping("/all")
     @ApiOperation("Buscar todos los productos")
     @ApiResponse(code = 200, message = "OK")

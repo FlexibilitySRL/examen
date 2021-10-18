@@ -1,7 +1,6 @@
 package ar.com.plug.examen.app.rest;
 
 import ar.com.plug.examen.domain.dto.TransactionDTO;
-import ar.com.plug.examen.domain.model.Transaction;
 import ar.com.plug.examen.domain.service.TransactionService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -13,8 +12,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
+
+/**
+ * Transaction Controller
+ */
 @RestController
 @RequestMapping("/transactions")
 public class TransactionController {
@@ -22,6 +24,12 @@ public class TransactionController {
     @Autowired
     private TransactionService transactionService;
 
+
+    /**
+     * Save a new Transaction. This transaction is set as pending state
+     * @param transaction
+     * @return  ResponseEntity<TransactionDTO>
+     */
     @PostMapping("register")
     @ApiOperation("Registrar transacción: Las transacciones quedan con un estado 'P' (Pendiente) y deben ser aprobadas")
     @ApiResponse(code = 201, message = "CREATED")
@@ -31,6 +39,11 @@ public class TransactionController {
                 HttpStatus.CREATED);
     }
 
+    /**
+     * Approve a transaction given its Id
+     * @param id
+     * @return ResponseEntity<TransactionDTO>
+     */
     @PatchMapping("/approve/{id}")
     @ApiOperation("Aprobar una transacción identificada con el id suministrado")
     @ApiResponses({
@@ -48,6 +61,11 @@ public class TransactionController {
 
     }
 
+    /**
+     * Find a transaction given its Id
+     * @param id
+     * @return ResponseEntity<TransactionDTO>
+     */
     @GetMapping("/{id}")
     @ApiOperation("Buscar una transacción por su ID")
     @ApiResponses({
@@ -63,6 +81,10 @@ public class TransactionController {
                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    /**
+     * Find a list of all approved transasctions
+     * @return ResponseEntity<List<TransactionDTO>>
+     */
     @GetMapping("/approved")
     @ApiOperation("Buscar todas las transacciones aprobadas")
     @ApiResponses({
