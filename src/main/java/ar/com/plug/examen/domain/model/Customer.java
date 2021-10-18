@@ -1,9 +1,7 @@
 package ar.com.plug.examen.domain.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "clientes")
@@ -23,6 +21,9 @@ public class Customer {
 
      @Column(name = "telefono")
      private String phoneNumber;
+
+     @OneToMany(mappedBy = "customer", cascade = {CascadeType.ALL})
+     private List<Transaction> transactions;
 
     public String getId() {
         return id;
@@ -62,5 +63,13 @@ public class Customer {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public List<Transaction> getTransactions() {
+        return transactions;
+    }
+
+    public void setTransactions(List<Transaction> transactions) {
+        this.transactions = transactions;
     }
 }

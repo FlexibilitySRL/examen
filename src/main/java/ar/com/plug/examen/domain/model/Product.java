@@ -1,6 +1,7 @@
 package ar.com.plug.examen.domain.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "productos")

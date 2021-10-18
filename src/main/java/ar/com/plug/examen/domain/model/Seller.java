@@ -1,6 +1,7 @@
 package ar.com.plug.examen.domain.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "vendedores")
@@ -21,6 +22,9 @@ public class Seller {
 
     @Column(name = "estado")
     private String state;
+
+    @OneToMany(mappedBy = "seller", cascade = {CascadeType.ALL})
+    private List<Transaction> transactions;
 
 
     public Long getId() {
@@ -61,5 +65,13 @@ public class Seller {
 
     public void setState(String state) {
         this.state = state;
+    }
+
+    public List<Transaction> getTransactions() {
+        return transactions;
+    }
+
+    public void setTransactions(List<Transaction> transactions) {
+        this.transactions = transactions;
     }
 }
