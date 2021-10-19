@@ -3,8 +3,7 @@ package ar.com.plug.examen.domain.service.impl;
 import ar.com.plug.examen.domain.dto.CustomerDTO;
 import ar.com.plug.examen.domain.repository.ICustomerRepository;
 import ar.com.plug.examen.domain.service.CustomerService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,8 +18,6 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Autowired
     private ICustomerRepository customerRepository;
-
-    private static Logger logger = LoggerFactory.getLogger(CustomerServiceImpl.class);
 
 
     @Override
@@ -54,7 +51,6 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public List<CustomerDTO> getAll() {
-        logger.info("llamado a getAll");
         return (List<CustomerDTO>) customerRepository.getAll();
     }
 }
