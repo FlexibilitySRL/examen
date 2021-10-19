@@ -129,6 +129,12 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- set PATCH method in TestRestTemplate-->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.4.1</version>
+        </dependency>
 
     </dependencies>
 
@@ -146,7 +152,6 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <!-- Este es el nombre del jar, que se debe colocar en el Dockerfile -->
                     <finalName>test-app</finalName>
                 </configuration>
             </plugin>
