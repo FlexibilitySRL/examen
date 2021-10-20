@@ -1,0 +1,19 @@
+spring:
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  datasource:
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${JDBC_DATABASE_USERNAME}
+    password: ${JDBC_DATABASE_PASSWORD}
+
+server:
+  port: {$PORT}
+  servlet:
+    context-path: '/payments'
+---

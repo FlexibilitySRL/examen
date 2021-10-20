@@ -4,21 +4,21 @@
 
 La prueba consiste en agregar nueva funcionalidad a la API REST que corre en este repositorio. Para eso vamos a guiarnos por los siguientes puntos:
 
-1) Hacer un fork del repositorio, crear un nuevo branch y realizar las tareas enunciadas a continuación.
+1) -[x] Hacer un fork del repositorio, crear un nuevo branch y realizar las tareas enunciadas a continuación.
 
-2) Proveer servicios para la administración de la compra de productos. Los mismos deberán incluir:
+2) -[x] Proveer servicios para la administración de la compra de productos. Los mismos deberán incluir:
 - ABM de productos.
 - ABM de clientes.
 - Consulta de transacciones de compra.
 - Aprobación de compras.
  
-3) Los servicios deben contar con logs que indiquen si el servicio respondió y proceso correctamente o no.
+3) -[x] Los servicios deben contar con logs que indiquen si el servicio respondió y proceso correctamente o no.
   
-4) Documentar brevemente los servicios implementados.
+4) -[x] Documentar brevemente los servicios implementados.
  
-5) Todos los servicios deben contar, al menos, con test unitarios.
+5) -[x] Todos los servicios deben contar, al menos, con test unitarios.
  
-6) Enviar un Pull Request con todos los cambios realizados. 
+6) -[x] Enviar un Pull Request con todos los cambios realizados. 
 
 Para correr la aplicación se puede utilizar maven: 
 
@@ -30,9 +30,38 @@ Pueden probar el servicio echo con un curl de la siguiente forma:
 
 Bonus
 
-1) ABM de vendedores.
+1) -[x] ABM de vendedores.
 2) Agregar test de integración.
 3) Calcular la cobertura de los tests.
 4) Correr pruebas con base de datos en memoria.
-5) Crear Docker Image.
-6) Hostear la app en un cloud computing libre y enviar la URL para consultar.
+5) -[x] Crear Docker Image.
+6) -[x] Hostear la app en un cloud computing libre y enviar la URL para consultar.
+
+
+
+
+#### URL Swagger
+https://app-hexacta.herokuapp.com/payments/swagger-ui.html
+
+#### Create Docker Image
+En la terminal ubicarse en la carpeta donde se encuentra el archivo Dockerfile y ejeccutar el siguiente comando:
+
+docker build -t hexacta-test-app:latest .  
+
+#### Scripst SQL
+se encuentran en la carpeta resources
+
+ 1. test-hexacta-db.sql
+ 2. test-hexacta-db-data.sql
+
+### Base de datos usada para el proyecto
+MySQL
+
+### Poryecto de postman para probar la API desplegada en cloud computing
+se encuetra en la carpeta resources: app-hexacta-postman.json
+
+
+
+
+
+
