@@ -1,0 +1,473 @@
+{
+	"info": {
+		"_postman_id": "b899f71b-13a9-4057-852b-9cd92a506b96",
+		"name": "Test-Hexacta PROD",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Save Customer",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\n \"id\": \"75246310\",\n \"name\": \"Andrea\",\n \"lastName\":\"Sanchez\",\n  \"email\": \"asanchez@gmail.com\",\n  \"phoneNumber\": \"3002826534\"\n\n\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "app-hexacta.herokuapp.com/payments/customers/save",
+					"host": [
+						"app-hexacta",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"payments",
+						"customers",
+						"save"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Customer",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\n \"id\": \"32632074\",\n \"name\": \"Belky2\",\n \"lastName\":\"Arroyo2\",\n \"email\": \"barroyo@gmail.com\",\n \"phoneNumber\": \"3002526634\"\n\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "app-hexacta.herokuapp.com/payments/customers/update",
+					"host": [
+						"app-hexacta",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"payments",
+						"customers",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Customer by Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "app-hexacta.herokuapp.com/payments/customers/32632074",
+					"host": [
+						"app-hexacta",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"payments",
+						"customers",
+						"32632074"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all Customers",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "app-hexacta.herokuapp.com/payments/customers/all",
+					"host": [
+						"app-hexacta",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"payments",
+						"customers",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Save Product",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n \n\"name\": \"Sannduchera\",\n\"description\": \"Sanduchera color negro\",\n\"price\": 120000,\n\"stock\":22\n\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "app-hexacta.herokuapp.com/payments/products/save",
+					"host": [
+						"app-hexacta",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"payments",
+						"products",
+						"save"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Product",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 4,\n    \"name\": \"Sanduchera\",\n    \"description\": \"Sanduchera color negro\",\n    \"price\": 120000.0,\n    \"stock\": 22\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "app-hexacta.herokuapp.com/payments/products/update",
+					"host": [
+						"app-hexacta",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"payments",
+						"products",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Product by Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "app-hexacta.herokuapp.com/payments/products/5",
+					"host": [
+						"app-hexacta",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"payments",
+						"products",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all Products",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "app-hexacta.herokuapp.com/payments/products/all",
+					"host": [
+						"app-hexacta",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"payments",
+						"products",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all products with stock greater than",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "app-hexacta.herokuapp.com/payments/products/stockgreaterthan/10",
+					"host": [
+						"app-hexacta",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"payments",
+						"products",
+						"stockgreaterthan",
+						"10"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all products with price less than",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "app-hexacta.herokuapp.com/payments/products/pricelessthan/300000",
+					"host": [
+						"app-hexacta",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"payments",
+						"products",
+						"pricelessthan",
+						"300000"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Save Seller",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n   \"user\": \"ksarria 2\",\n   \"name\": \"Kevin2\",\n   \"lastName\": \"Sarria 2\",\n   \"state\":\"A\" \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "app-hexacta.herokuapp.com/payments/sellers/save",
+					"host": [
+						"app-hexacta",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"payments",
+						"sellers",
+						"save"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Seller",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 5,\n    \"user\": \"ksarria\",\n    \"name\": \"Kevin\",\n    \"lastName\": \"Sarria\",\n    \"state\": \"I\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "app-hexacta.herokuapp.com/payments/sellers/update",
+					"host": [
+						"app-hexacta",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"payments",
+						"sellers",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all Sellers",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "app-hexacta.herokuapp.com/payments/sellers/all",
+					"host": [
+						"app-hexacta",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"payments",
+						"sellers",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all Active Sellers",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "app-hexacta.herokuapp.com/payments/sellers/actives",
+					"host": [
+						"app-hexacta",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"payments",
+						"sellers",
+						"actives"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all Approved Transactions",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "app-hexacta.herokuapp.com/payments/transactions/approved",
+					"host": [
+						"app-hexacta",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"payments",
+						"transactions",
+						"approved"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Registrar/Crear Transaccion",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"customerId\": \"1129578649\",\n    \"sellerId\": 7,\n    \"date\":\"\",\n    \"state\":\"\",\n    \"itemsTransaction\":[\n        {\n          \"productId\": 5,\n          \"amount\": 4,\n          \"total\": 600000\n        }\n    ]\n    \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "app-hexacta.herokuapp.com/payments/transactions/register",
+					"host": [
+						"app-hexacta",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"payments",
+						"transactions",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Transaction by ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "app-hexacta.herokuapp.com/payments/transactions/40",
+					"host": [
+						"app-hexacta",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"payments",
+						"transactions",
+						"40"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "To Approve Transaction by Id",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "app-hexacta.herokuapp.com/payments/transactions/approve/40",
+					"host": [
+						"app-hexacta",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"payments",
+						"transactions",
+						"approve",
+						"40"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
