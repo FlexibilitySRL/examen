@@ -8,9 +8,9 @@ spring:
       ddl-auto: update
     show-sql: true
   datasource:
-    url: ${SPRING_DATASOURCE_URL}
-    username: ${SPRING_DATASOURCE_USERNAME}
-    password: ${SPRING_DATASOURCE_PASSWORD}}
+    url: jdbc:mysql://b4br0jg8oe5fx0cn:xj5ndx7muovxuo1u@uyu7j8yohcwo35j3.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/ci7u7uu5uyfn3315
+    username: b4br0jg8oe5fx0cn
+    password: xj5ndx7muovxuo1u
 
 server:
   port: ${PORT}
