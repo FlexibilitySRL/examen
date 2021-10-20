@@ -37,11 +37,31 @@ Bonus
 5) -[x] Crear Docker Image.
 6) -[x] Hostear la app en un cloud computing libre y enviar la URL para consultar.
 
+
+
+
 #### URL Swagger
-hexacta-test-app.herokuapp.com/payments/swagger-ui.html
+https://app-hexacta.herokuapp.com/payments/swagger-ui.html
 
 #### Create Docker Image
+En la terminal ubicarse en la carpeta donde se encuentra el archivo Dockerfile y ejeccutar el siguiente comando:
+
 docker build -t hexacta-test-app:latest .  
+
+#### Scripst SQL
+se encuentran en la carpeta resources
+
+ 1. test-hexacta-db.sql
+ 2. test-hexacta-db-data.sql
+
+### Base de datos usada para el proyecto
+MySQL
+
+### Poryecto de postman para probar la API desplegada en cloud computing
+se encuetra en la carpeta resources: app-hexacta-postman.json
+
+
+
 
 
 
