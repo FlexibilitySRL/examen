@@ -1,1 +1,1 @@
-web: java -jar -Dspring.profiles.active=pdn target/test-app.jar
+web: java -jar -Dspring.profiles.active=pdn -Dserver.port=$PORT target/test-app.jar
