@@ -1,4 +1,4 @@
-package ar.com.plug.examen.controller;
+package ar.com.plug.examen.app.rest;
 
 import java.util.List;
 
@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import ar.com.plug.examen.domain.service.IProductService;
 import ar.com.plug.examen.domain.service.impl.ProductServiceImpl;
 import ar.com.plug.examen.dto.ProductDto;
 

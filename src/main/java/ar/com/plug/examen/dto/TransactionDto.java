@@ -2,12 +2,9 @@ package ar.com.plug.examen.dto;
 
 import java.util.List;
 
-import ar.com.plug.examen.dao.entities.Client;
-import ar.com.plug.examen.dao.entities.Product;
-import ar.com.plug.examen.domain.model.Status;
-import lombok.AllArgsConstructor;
+import ar.com.plug.examen.domain.model.entities.Client;
+import ar.com.plug.examen.domain.model.entities.Product;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter

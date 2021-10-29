@@ -5,8 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ar.com.plug.examen.dao.jpa.TransactionJpaDao;
-import ar.com.plug.examen.domain.model.Status;
+import ar.com.plug.examen.domain.model.jpa.TransactionJpaDao;
 import ar.com.plug.examen.domain.service.ITransactionService;
 import ar.com.plug.examen.dto.TransactionDto;
 import ar.com.plug.examen.mapper.TransactionMapper;

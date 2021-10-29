@@ -1,4 +1,4 @@
-package ar.com.plug.examen.controller;
+package ar.com.plug.examen.app.rest;
 
 import java.util.List;
 
@@ -8,13 +8,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import ar.com.plug.examen.dao.entities.Transaction;
-import ar.com.plug.examen.domain.service.ITransactionService;
 import ar.com.plug.examen.domain.service.impl.TransactionServiceImpl;
 import ar.com.plug.examen.dto.TransactionDto;
 

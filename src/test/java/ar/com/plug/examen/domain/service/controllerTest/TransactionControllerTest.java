@@ -1,4 +1,4 @@
-package ar.com.plug.examen.domain.service;
+package ar.com.plug.examen.domain.service.controllerTest;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -21,12 +21,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import ar.com.plug.examen.Application;
-import ar.com.plug.examen.controller.TransactionController;
-import ar.com.plug.examen.creator.ClientCreator;
+import ar.com.plug.examen.app.rest.TransactionController;
 import ar.com.plug.examen.creator.TransactionCreator;
 import ar.com.plug.examen.domain.service.impl.TransactionServiceImpl;
-import ar.com.plug.examen.dto.ClientDto;
-import ar.com.plug.examen.dto.ProductDto;
 import ar.com.plug.examen.dto.TransactionDto;
 
 @RunWith(SpringJUnit4ClassRunner.class)

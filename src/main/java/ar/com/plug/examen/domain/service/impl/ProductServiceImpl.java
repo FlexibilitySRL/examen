@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ar.com.plug.examen.dao.jpa.ProductJpaDao;
+import ar.com.plug.examen.domain.model.jpa.ProductJpaDao;
 import ar.com.plug.examen.domain.service.IProductService;
 import ar.com.plug.examen.dto.ProductDto;
 import ar.com.plug.examen.mapper.ProductMapper;

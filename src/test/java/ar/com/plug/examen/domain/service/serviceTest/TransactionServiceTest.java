@@ -1,7 +1,6 @@
-package ar.com.plug.examen.domain.service;
+package ar.com.plug.examen.domain.service.serviceTest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -18,10 +17,10 @@ import org.mockito.junit.MockitoJUnitRunner;
 import ar.com.plug.examen.creator.ClientCreator;
 import ar.com.plug.examen.creator.ProductCreator;
 import ar.com.plug.examen.creator.TransactionCreator;
-import ar.com.plug.examen.dao.entities.Client;
-import ar.com.plug.examen.dao.entities.Product;
-import ar.com.plug.examen.dao.entities.Transaction;
-import ar.com.plug.examen.dao.jpa.TransactionJpaDao;
+import ar.com.plug.examen.domain.model.entities.Client;
+import ar.com.plug.examen.domain.model.entities.Product;
+import ar.com.plug.examen.domain.model.entities.Transaction;
+import ar.com.plug.examen.domain.model.jpa.TransactionJpaDao;
 import ar.com.plug.examen.domain.service.impl.TransactionServiceImpl;
 import ar.com.plug.examen.dto.TransactionDto;
 import ar.com.plug.examen.mapper.TransactionMapper;

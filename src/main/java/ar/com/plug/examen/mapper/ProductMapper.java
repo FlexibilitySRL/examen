@@ -3,12 +3,9 @@ package ar.com.plug.examen.mapper;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.ReportingPolicy;
-import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Component;
 
-import ar.com.plug.examen.dao.entities.Product;
+import ar.com.plug.examen.domain.model.entities.Product;
 import ar.com.plug.examen.dto.ProductDto;
 
 @Component

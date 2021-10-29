@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ar.com.plug.examen.dao.jpa.ClientJpaDao;
+import ar.com.plug.examen.domain.model.jpa.ClientJpaDao;
 import ar.com.plug.examen.domain.service.IClientService;
 import ar.com.plug.examen.dto.ClientDto;
 import ar.com.plug.examen.mapper.ClientMapper;

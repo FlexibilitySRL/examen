@@ -1,10 +1,10 @@
-package ar.com.plug.examen.domain.service;
+package ar.com.plug.examen.domain.service.controllerTest;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.mockito.ArgumentMatchers.any;
 
 import java.util.HashMap;
 import java.util.List;
@@ -13,64 +13,60 @@ import java.util.Map;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import ar.com.plug.examen.Application;
-import ar.com.plug.examen.controller.ProductController;
-import ar.com.plug.examen.creator.ProductCreator;
-import ar.com.plug.examen.dao.entities.Product;
-import ar.com.plug.examen.dao.jpa.ProductJpaDao;
-import ar.com.plug.examen.domain.service.impl.ProductServiceImpl;
+import ar.com.plug.examen.app.rest.ClientController;
+import ar.com.plug.examen.creator.ClientCreator;
+import ar.com.plug.examen.domain.service.impl.ClientServiceImpl;
+import ar.com.plug.examen.dto.ClientDto;
 import ar.com.plug.examen.dto.ProductDto;
-import ar.com.plug.examen.mapper.ProductMapper;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ContextConfiguration(classes = Application.class)
-public class ProductControllerTest {
-	
+public class ClientControllerTest {
+
 	@InjectMocks
-	private ProductController controller;
+	private ClientController controller;
 	
 	@MockBean
-	private ProductServiceImpl service;
+	private ClientServiceImpl service;
 	
 	@Autowired
 	private TestRestTemplate restTemplate;
 	
-	private final String url = "/product/";
-
+	private final String url = "/client/";
+	
+	
 	@Test
-	public void createProductTest() {
-		ProductDto product = ProductCreator.createProductDto();
+	public void createClientTest() {
+		ClientDto client = ClientCreator.createClientDtoMock();
 		
-		ResponseEntity<ProductDto> response = restTemplate.postForEntity(url + "create", product, ProductDto.class);
+		ResponseEntity<ClientDto> response = restTemplate.postForEntity(url + "create", client, ClientDto.class);
 
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 		
-		verify(this.service, times(1)).save(any(ProductDto.class));
+		verify(this.service, times(1)).save(any(ClientDto.class));
 		
 	}
 	
 	@Test
-	public void findAllProductTest() {
-		List<ProductDto> pList = ProductCreator.createProductDtoList(
-				ProductCreator.createProductDtoWithId(1L),
-				ProductCreator.createProductDtoWithId(2L));
+	public void findAllClientTest() {
+		List<ClientDto> cList = ClientCreator
+				.createClientDtoList(ClientCreator.createClientDtoWithId(1L),
+						ClientCreator.createClientDtoWithId(2L));
 		
-		when(service.findAll()).thenReturn(pList);
+		when(service.findAll()).thenReturn(cList);
 
 		ResponseEntity<List> response = restTemplate.getForEntity(url + "all", List.class);
 
@@ -81,10 +77,10 @@ public class ProductControllerTest {
 		
 	}
 	@Test
-	public void findProductByIdTest() throws Exception {
-		ProductDto product = ProductCreator.createProductDtoWithId(1L);
+	public void findClientByIdTest() throws Exception {
+		ClientDto client = ClientCreator.createClientDtoMock();
 		
-		when(service.findById(1L)).thenReturn(product);
+		when(service.findById(1L)).thenReturn(client);
 
 		ResponseEntity<ProductDto> response = restTemplate.getForEntity(url + 1L, ProductDto.class);
 
@@ -96,15 +92,15 @@ public class ProductControllerTest {
 	
 	
 	@Test
-	public void upgradeProductTest() throws Exception {
-		ProductDto product = ProductCreator.createProductDtoWithNameAndDescription("Product1","Product1");
-		ProductDto pMock = ProductCreator.createProductDtoWithId(1L);
+	public void upgradeClientTest() throws Exception {
+		ClientDto client = ClientCreator.createClientDtoMock();
+		ClientDto cMock = ClientCreator.createClientDtoMock();
 		
-		when(service.update(product)).thenReturn(pMock);
+		when(service.update(client)).thenReturn(cMock);
 		
-		HttpEntity<ProductDto> httpEntity = new HttpEntity<>(pMock);
+		HttpEntity<ClientDto> httpEntity = new HttpEntity<>(cMock);
 
-		ResponseEntity<ProductDto> response = restTemplate.exchange(url + "update", HttpMethod.PUT, httpEntity, ProductDto.class);
+		ResponseEntity<ClientDto> response = restTemplate.exchange(url + "update", HttpMethod.PUT, httpEntity, ClientDto.class);
 
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 		
@@ -114,11 +110,12 @@ public class ProductControllerTest {
 	
 
 	@Test
-	public void deleteProductTest() {
+	public void deleteClientTest() {
 		Map<String, String> params = new HashMap<String, String>();
 	    params.put("id", "1");
 	    restTemplate.delete(url + "delete/{id}", params);
 
 	    verify(this.service, times(1)).delete(1L);
 	}
+	
 }

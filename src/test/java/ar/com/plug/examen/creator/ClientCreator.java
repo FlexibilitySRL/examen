@@ -3,7 +3,7 @@ package ar.com.plug.examen.creator;
 import java.util.ArrayList;
 import java.util.List;
 
-import ar.com.plug.examen.dao.entities.Client;
+import ar.com.plug.examen.domain.model.entities.Client;
 import ar.com.plug.examen.dto.ClientDto;
 
 public class ClientCreator {

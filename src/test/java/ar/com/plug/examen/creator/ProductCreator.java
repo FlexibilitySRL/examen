@@ -3,7 +3,7 @@ package ar.com.plug.examen.creator;
 import java.util.ArrayList;
 import java.util.List;
 
-import ar.com.plug.examen.dao.entities.Product;
+import ar.com.plug.examen.domain.model.entities.Product;
 import ar.com.plug.examen.dto.ProductDto;
 
 public class ProductCreator {

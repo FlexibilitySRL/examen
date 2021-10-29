@@ -3,12 +3,10 @@ package ar.com.plug.examen.mapper;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.ReportingPolicy;
 import org.springframework.stereotype.Component;
 
-import ar.com.plug.examen.dao.entities.Transaction;
 import ar.com.plug.examen.domain.model.Status;
+import ar.com.plug.examen.domain.model.entities.Transaction;
 import ar.com.plug.examen.dto.TransactionDto;
 
 @Component

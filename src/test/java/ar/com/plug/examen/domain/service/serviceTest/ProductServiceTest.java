@@ -1,8 +1,7 @@
-package ar.com.plug.examen.domain.service;
+package ar.com.plug.examen.domain.service.serviceTest;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -14,20 +13,12 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 
 import java.util.Optional;
 
 import ar.com.plug.examen.creator.ProductCreator;
-import ar.com.plug.examen.Application;
-import ar.com.plug.examen.dao.entities.Product;
-import ar.com.plug.examen.dao.jpa.ProductJpaDao;
+import ar.com.plug.examen.domain.model.entities.Product;
+import ar.com.plug.examen.domain.model.jpa.ProductJpaDao;
 import ar.com.plug.examen.domain.service.impl.ProductServiceImpl;
 import ar.com.plug.examen.dto.ProductDto;
 import ar.com.plug.examen.mapper.ProductMapper;

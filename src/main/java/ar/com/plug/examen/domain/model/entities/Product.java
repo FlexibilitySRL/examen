@@ -1,6 +1,4 @@
-package ar.com.plug.examen.dao.entities;
-
-import java.util.List;
+package ar.com.plug.examen.domain.model.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,12 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import ar.com.plug.examen.domain.model.Status;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
 @Table(name = "products")
