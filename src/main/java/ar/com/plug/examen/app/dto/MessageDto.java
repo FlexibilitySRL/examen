@@ -1,4 +1,4 @@
-package ar.com.plug.examen.app.api;
+package ar.com.plug.examen.app.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 
 @JsonRootName(value = "message")
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class MessageApi {
+public class MessageDto {
 
     @JsonProperty
     private String message;
