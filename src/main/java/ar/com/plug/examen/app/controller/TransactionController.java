@@ -1,7 +1,7 @@
-package ar.com.plug.examen.app.rest;
+package ar.com.plug.examen.app.controller;
 
-import ar.com.plug.examen.app.api.TransactionApi;
-import ar.com.plug.examen.app.api.TransactionApiRequest;
+import ar.com.plug.examen.app.dto.TransactionDto;
+import ar.com.plug.examen.app.dto.TransactionApiRequest;
 import ar.com.plug.examen.domain.enums.TransactionStatusEnum;
 import ar.com.plug.examen.domain.exceptions.GenericBadRequestException;
 import ar.com.plug.examen.domain.exceptions.GenericNotFoundException;
@@ -36,7 +36,7 @@ public class TransactionController {
      * @return List<TransactionApi>
      */
     @GetMapping()
-    public ResponseEntity<List<TransactionApi>> getTransactions() {
+    public ResponseEntity<List<TransactionDto>> getTransactions() {
         return new ResponseEntity<>(this.transactionService.findAll(), HttpStatus.OK);
     }
 
@@ -48,7 +48,7 @@ public class TransactionController {
      * @throws GenericNotFoundException
      */
     @GetMapping("/findById/{id}")
-    public ResponseEntity<TransactionApi> getTransactionById(@PathVariable("id") Long id) throws GenericNotFoundException {
+    public ResponseEntity<TransactionDto> getTransactionById(@PathVariable("id") Long id) throws GenericNotFoundException {
         return new ResponseEntity<>(this.transactionService.findByIdChecked(id), HttpStatus.OK);
     }
 
@@ -60,7 +60,7 @@ public class TransactionController {
      * @throws GenericBadRequestException
      */
     @PostMapping()
-    public ResponseEntity<TransactionApi> saveTransaction(@RequestBody TransactionApiRequest transactionApi) throws GenericBadRequestException {
+    public ResponseEntity<TransactionDto> saveTransaction(@RequestBody TransactionApiRequest transactionApi) throws GenericBadRequestException {
         return new ResponseEntity<>(this.transactionService.save(transactionApi), HttpStatus.CREATED);
     }
 
@@ -74,7 +74,7 @@ public class TransactionController {
      * @throws GenericBadRequestException
      */
     @PutMapping(value = "/{id}")
-    public ResponseEntity<TransactionApi> approveTransaction(@PathVariable Long id, @RequestParam TransactionStatusEnum status) throws GenericNotFoundException, GenericBadRequestException {
+    public ResponseEntity<TransactionDto> approveTransaction(@PathVariable Long id, @RequestParam TransactionStatusEnum status) throws GenericNotFoundException, GenericBadRequestException {
         return new ResponseEntity<>(this.transactionService.updateStatus(id, status), HttpStatus.OK);
     }
 }

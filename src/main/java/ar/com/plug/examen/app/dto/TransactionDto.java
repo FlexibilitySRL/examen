@@ -1,4 +1,4 @@
-package ar.com.plug.examen.app.api;
+package ar.com.plug.examen.app.dto;
 
 import ar.com.plug.examen.domain.enums.TransactionStatusEnum;
 import java.util.Date;
@@ -14,17 +14,17 @@ import lombok.Data;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class TransactionApi {
+public class TransactionDto {
     
   private Long id;
-  private ClientApi client;
-  private SellerApi seller;
-  private List<TransactionItemsApi> transactionItems;
+  private ClientDto client;
+  private SellerDto seller;
+  private List<TransactionItemsDto> transactionItems;
   private Date creationDate;
   private TransactionStatusEnum status;
   
-  public TransactionApi(ClientApi client, SellerApi seller,
-      List<TransactionItemsApi> transactionItems, Date creationDate,
+  public TransactionDto(ClientDto client, SellerDto seller,
+      List<TransactionItemsDto> transactionItems, Date creationDate,
       TransactionStatusEnum status) {
     this.client = client;
     this.seller = seller;

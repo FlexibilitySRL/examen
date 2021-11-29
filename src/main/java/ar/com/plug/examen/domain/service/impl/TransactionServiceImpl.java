@@ -1,10 +1,10 @@
 package ar.com.plug.examen.domain.service.impl;
 
-import ar.com.plug.examen.app.api.ClientApi;
-import ar.com.plug.examen.app.api.ProductStockApi;
-import ar.com.plug.examen.app.api.SellerApi;
-import ar.com.plug.examen.app.api.TransactionApi;
-import ar.com.plug.examen.app.api.TransactionApiRequest;
+import ar.com.plug.examen.app.dto.ClientDto;
+import ar.com.plug.examen.app.dto.ProductStockDto;
+import ar.com.plug.examen.app.dto.SellerDto;
+import ar.com.plug.examen.app.dto.TransactionDto;
+import ar.com.plug.examen.app.dto.TransactionApiRequest;
 import ar.com.plug.examen.domain.enums.TransactionStatusEnum;
 import ar.com.plug.examen.domain.exceptions.GenericBadRequestException;
 import ar.com.plug.examen.domain.exceptions.GenericNotFoundException;
@@ -58,7 +58,7 @@ public class TransactionServiceImpl implements TransactionService {
      * @see ar.com.plug.examen.domain.service.TransactionService#findAll()
      */
     @Override
-    public List<TransactionApi> findAll() {
+    public List<TransactionDto> findAll() {
         return this.transactionMapper
                 .transactionsToListTransactionApi(this.transactionRepository.findAll());
     }
@@ -70,7 +70,7 @@ public class TransactionServiceImpl implements TransactionService {
      * ar.com.plug.examen.domain.service.TransactionService#findByIdChecked(Long)
      */
     @Override
-    public TransactionApi findByIdChecked(Long id) throws GenericNotFoundException {
+    public TransactionDto findByIdChecked(Long id) throws GenericNotFoundException {
         return this.transactionMapper.transactionToTransactionApi(
                 this.transactionRepository.findById(id)
                         .orElseThrow(() -> new GenericNotFoundException("Transaction not found")));
@@ -84,7 +84,7 @@ public class TransactionServiceImpl implements TransactionService {
      */
     @Override
     @Transactional
-    public TransactionApi save(TransactionApiRequest transactionApiRquest)
+    public TransactionDto save(TransactionApiRequest transactionApiRquest)
             throws GenericBadRequestException {
         this.validator.validateTransaction(transactionApiRquest);
         Transaction transactionToSave = preparetoSave(transactionApiRquest);
@@ -93,16 +93,16 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     private Transaction preparetoSave(TransactionApiRequest transactionApiRquest) {
-        ClientApi client = this.clientService.findById(
+        ClientDto client = this.clientService.findById(
                 transactionApiRquest.getClientId());
-        SellerApi seller = this.sellerService.findByIdChecked(
+        SellerDto seller = this.sellerService.findByIdChecked(
                 transactionApiRquest.getSellerId());
         List<Product> lsProducts = this.productService
                 .getProductsWithStock(transactionApiRquest.getListProducts());
         List<TransactionItems> lsItems = new ArrayList<>();
         for (Product product : lsProducts) {
             TransactionItems item = new TransactionItems();
-            ProductStockApi productStockApi = transactionApiRquest.getListProducts().stream()
+            ProductStockDto productStockApi = transactionApiRquest.getListProducts().stream()
                     .filter(i -> i.getIdProduct().equals(product.getId())).collect(
                     Collectors.toList()).get(0);
             item.setQuantity(productStockApi.getQuantity());
@@ -110,7 +110,7 @@ public class TransactionServiceImpl implements TransactionService {
             item.setProduct(product);
             lsItems.add(item);
         }
-        TransactionApi transactionApi = new TransactionApi(client, seller,
+        TransactionDto transactionApi = new TransactionDto(client, seller,
                 this.transactionItemMapper.transactionItemsToListTransactionitemsApi(lsItems), new Date(),
                 TransactionStatusEnum.PENDING);
         Transaction transactionToSave = this.transactionMapper
@@ -130,7 +130,7 @@ public class TransactionServiceImpl implements TransactionService {
      */
     @Override
     @Transactional
-    public TransactionApi updateStatus(Long id, TransactionStatusEnum status)
+    public TransactionDto updateStatus(Long id, TransactionStatusEnum status)
             throws GenericNotFoundException, GenericBadRequestException {
         this.validator.validateTransactionStatus(status);
         Transaction transactionToUpdate = this.transactionRepository.findById(id)

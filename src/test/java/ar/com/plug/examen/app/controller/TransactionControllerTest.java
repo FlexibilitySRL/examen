@@ -1,12 +1,12 @@
-package ar.com.plug.examen.app.rest;
+package ar.com.plug.examen.app.controller;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import ar.com.plug.examen.Application;
-import ar.com.plug.examen.app.api.TransactionApi;
-import ar.com.plug.examen.app.api.TransactionApiRequest;
+import ar.com.plug.examen.app.dto.TransactionDto;
+import ar.com.plug.examen.app.dto.TransactionApiRequest;
 import ar.com.plug.examen.app.fixtures.TransactionFixture;
 import ar.com.plug.examen.domain.enums.TransactionStatusEnum;
 import ar.com.plug.examen.domain.service.impl.TransactionServiceImpl;
@@ -39,7 +39,7 @@ public class TransactionControllerTest {
 
     @Test
     public void getTransactions() {
-        List<TransactionApi> lsTransactions = TransactionFixture
+        List<TransactionDto> lsTransactions = TransactionFixture
                 .getTransactionApiList(TransactionFixture.getTransactionApi(),
                         TransactionFixture.getTransactionApi());
         when(this.transactionService.findAll()).thenReturn(lsTransactions);
@@ -50,11 +50,11 @@ public class TransactionControllerTest {
 
     @Test
     public void testGetTransactionsById() {
-        TransactionApi transactionApi = TransactionFixture.getTransactionApi();
+        TransactionDto transactionApi = TransactionFixture.getTransactionApi();
         when(this.transactionService.findByIdChecked(1L)).thenReturn(transactionApi);
 
-        ResponseEntity<TransactionApi> responseEntity = restTemplate
-                .getForEntity(URL + "/findById/" + 1L, TransactionApi.class);
+        ResponseEntity<TransactionDto> responseEntity = restTemplate
+                .getForEntity(URL + "/findById/" + 1L, TransactionDto.class);
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         assertEquals(transactionApi, responseEntity.getBody());
         verify(this.transactionService, times(1)).findByIdChecked(1L);
@@ -62,24 +62,24 @@ public class TransactionControllerTest {
 
     @Test
     public void testSave() {
-        TransactionApi transactionApi = TransactionFixture.getTransactionApi();
+        TransactionDto transactionApi = TransactionFixture.getTransactionApi();
         TransactionApiRequest transactionApiRquest = TransactionFixture.getTransactionApiRequest();
 
-        ResponseEntity<TransactionApi> response = restTemplate
-                .postForEntity(URL, transactionApiRquest, TransactionApi.class);
+        ResponseEntity<TransactionDto> response = restTemplate
+                .postForEntity(URL, transactionApiRquest, TransactionDto.class);
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
         verify(this.transactionService, times(1)).save(transactionApiRquest);
     }
 
     @Test
     public void testApproveTransaction() {
-        TransactionApi transactionApi = TransactionFixture.getTransactionApi();
+        TransactionDto transactionApi = TransactionFixture.getTransactionApi();
         TransactionStatusEnum newStatus = TransactionStatusEnum.APPROVED;
         when(this.transactionService.updateStatus(1L, newStatus)).thenReturn(transactionApi);
 
-        ResponseEntity<TransactionApi> responseEntity = restTemplate
+        ResponseEntity<TransactionDto> responseEntity = restTemplate
                 .exchange(URL + "/" + 1L + "?status=" + newStatus, HttpMethod.PUT, null,
-                        TransactionApi.class);
+                        TransactionDto.class);
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         verify(this.transactionService, times(1)).updateStatus(1L, newStatus);
     }

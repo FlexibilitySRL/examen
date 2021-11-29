@@ -1,9 +1,9 @@
 package ar.com.plug.examen.domain.validators;
 
-import ar.com.plug.examen.app.api.ClientApi;
-import ar.com.plug.examen.app.api.ProductApi;
-import ar.com.plug.examen.app.api.SellerApi;
-import ar.com.plug.examen.app.api.TransactionApiRequest;
+import ar.com.plug.examen.app.dto.ClientDto;
+import ar.com.plug.examen.app.dto.ProductDto;
+import ar.com.plug.examen.app.dto.SellerDto;
+import ar.com.plug.examen.app.dto.TransactionApiRequest;
 import ar.com.plug.examen.domain.enums.TransactionStatusEnum;
 import ar.com.plug.examen.domain.exceptions.GenericBadRequestException;
 import org.springframework.stereotype.Component;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class Validator {
 
-    public void validateProduct(ProductApi productApi, Boolean withId) {
+    public void validateProduct(ProductDto productApi, Boolean withId) {
         if (withId && productApi.getId() == null) {
             throw new GenericBadRequestException("The id is required");
         }
@@ -30,7 +30,7 @@ public class Validator {
         }
     }
 
-    public void validateClient(ClientApi clientApi, Boolean withId) {
+    public void validateClient(ClientDto clientApi, Boolean withId) {
         if (withId && clientApi.getId() == null) {
             throw new GenericBadRequestException("The id is required");
         }
@@ -51,7 +51,7 @@ public class Validator {
         }
     }
 
-    public void validateSeller(SellerApi sellerApi, Boolean withId) {
+    public void validateSeller(SellerDto sellerApi, Boolean withId) {
         if (withId && sellerApi.getId() == null) {
             throw new GenericBadRequestException("The id is required");
         }

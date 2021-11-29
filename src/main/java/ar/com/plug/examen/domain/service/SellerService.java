@@ -1,7 +1,8 @@
 package ar.com.plug.examen.domain.service;
 
-import ar.com.plug.examen.app.api.SellerApi;
 import java.util.List;
+
+import ar.com.plug.examen.app.dto.SellerDto;
 
 
 public interface SellerService {
@@ -10,28 +11,28 @@ public interface SellerService {
    * List all sellers
    * @return List<ClientApi>
    */
-  List<SellerApi> findAll();
+  List<SellerDto> findAll();
 
   /**
    * Find seller by id
    * @param id
    * @return SellerApi
    */
-  SellerApi findByIdChecked(Long id);
+  SellerDto findByIdChecked(Long id);
 
   /**
    * Save a seller
    * @param sellerApi
    * @return SellerApi
    */
-  SellerApi save(SellerApi sellerApi);
+  SellerDto save(SellerDto sellerApi);
 
   /**
    * Update a seller
    * @param sellerApi
    * @return SellerApi
    */
-  SellerApi update(SellerApi sellerApi);
+  SellerDto update(SellerDto sellerApi);
 
   /**
    * Delete a seller by id

@@ -1,6 +1,6 @@
 package ar.com.plug.examen.app.fixtures;
 
-import ar.com.plug.examen.app.api.ClientApi;
+import ar.com.plug.examen.app.dto.ClientDto;
 import ar.com.plug.examen.domain.model.Client;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,15 +8,15 @@ import java.util.List;
 
 public class ClientFixture {
 
-    public static ClientApi getClientApiWithId(Long id) {
-        ClientApi clientApi = ClientApi.builder()
+    public static ClientDto getClientApiWithId(Long id) {
+        ClientDto clientApi = ClientDto.builder()
                 .id(id)
                 .build();
         return clientApi;
     }
 
-    public static ClientApi getClientApi() {
-        ClientApi clientApi = ClientApi.builder()
+    public static ClientDto getClientApi() {
+        ClientDto clientApi = ClientDto.builder()
                 .userName("matiasrh84")
                 .firstName("Matías")
                 .lastName("Ruiz Holgado")
@@ -26,8 +26,8 @@ public class ClientFixture {
         return clientApi;
     }
 
-    public static List<ClientApi> getClientApitList(ClientApi clientApi1, ClientApi clientApi2) {
-        List<ClientApi> lsClients = new ArrayList<>();
+    public static List<ClientDto> getClientApitList(ClientDto clientApi1, ClientDto clientApi2) {
+        List<ClientDto> lsClients = new ArrayList<>();
         lsClients.add(clientApi1);
         lsClients.add(clientApi2);
         return lsClients;

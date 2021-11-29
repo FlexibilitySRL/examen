@@ -24,7 +24,7 @@ public class SwaggerConfig {
   public Docket apiDocket() {
     return new Docket(DocumentationType.SWAGGER_2)
         .select()
-        .apis(RequestHandlerSelectors.basePackage("ar.com.plug.examen.app.rest"))
+        .apis(RequestHandlerSelectors.basePackage("ar.com.plug.examen.app.controller"))
         .paths(PathSelectors.any())
         .build()
         .apiInfo(getApiInfo());

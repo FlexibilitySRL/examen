@@ -1,7 +1,7 @@
 package ar.com.plug.examen.domain.service;
 
-import ar.com.plug.examen.app.api.ProductApi;
-import ar.com.plug.examen.app.api.ProductStockApi;
+import ar.com.plug.examen.app.dto.ProductDto;
+import ar.com.plug.examen.app.dto.ProductStockDto;
 import ar.com.plug.examen.domain.model.Product;
 import java.util.List;
 
@@ -13,7 +13,7 @@ public interface ProductService {
      *
      * @return List<ProductApi>
      */
-    List<ProductApi> findAll();
+    List<ProductDto> findAll();
 
     /**
      * Find product by id
@@ -21,7 +21,7 @@ public interface ProductService {
      * @param id
      * @return ProductApi
      */
-    ProductApi findById(Long id);
+    ProductDto findById(Long id);
 
     /**
      * Save a product
@@ -29,7 +29,7 @@ public interface ProductService {
      * @param productApi
      * @return ProductApi
      */
-    ProductApi save(ProductApi productApi);
+    ProductDto save(ProductDto productApi);
 
     /**
      * Update a product
@@ -37,7 +37,7 @@ public interface ProductService {
      * @param productApi
      * @return ProductApi
      */
-    ProductApi update(ProductApi productApi);
+    ProductDto update(ProductDto productApi);
 
     /**
      * Delete a product by id
@@ -52,5 +52,5 @@ public interface ProductService {
      * @param listProducts
      * @return List<Product>
      */
-    List<Product> getProductsWithStock(List<ProductStockApi> listProducts);
+    List<Product> getProductsWithStock(List<ProductStockDto> listProducts);
 }

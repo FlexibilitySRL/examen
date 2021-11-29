@@ -11,7 +11,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import ar.com.plug.examen.app.api.SellerApi;
+import ar.com.plug.examen.app.dto.SellerDto;
 import ar.com.plug.examen.app.fixtures.SellerFixture;
 import ar.com.plug.examen.domain.repository.SellerRepository;
 import ar.com.plug.examen.domain.exceptions.GenericBadRequestException;
@@ -46,11 +46,11 @@ public class SellerServiceTest {
 
     @Test
     public void findAllTest() {
-        List<SellerApi> listSellers = SellerFixture.getSellerApitList(SellerFixture.getSellerApi(), SellerFixture.getSellerApi());
+        List<SellerDto> listSellers = SellerFixture.getSellerApitList(SellerFixture.getSellerApi(), SellerFixture.getSellerApi());
         when(this.sellerMapper.sellersToListSellerApi(this.sellerRepository.findAll()))
                 .thenReturn(listSellers);
 
-        List<SellerApi> response = this.sellerService.findAll();
+        List<SellerDto> response = this.sellerService.findAll();
         assertEquals(listSellers, response);
         verify(this.sellerRepository, times(2)).findAll();
     }
@@ -60,7 +60,7 @@ public class SellerServiceTest {
         Seller seller = SellerFixture.getSellerWithId(1L);
         when(this.sellerRepository.findById(1L)).thenReturn(Optional.of(seller));
 
-        SellerApi response = this.sellerService.findByIdChecked(1L);
+        SellerDto response = this.sellerService.findByIdChecked(1L);
         assertEquals(this.sellerMapper.sellerToSellerApi(seller), response);
         verify(this.sellerRepository, times(1)).findById(1L);
     }
@@ -79,20 +79,20 @@ public class SellerServiceTest {
 
     @Test
     public void save_successTest() {
-        SellerApi sellerMock = SellerFixture.getSellerApiWithId(1L);
+        SellerDto sellerMock = SellerFixture.getSellerApiWithId(1L);
         Seller seller = SellerFixture.getSeller();
-        SellerApi sellerToSave = SellerFixture.getSellerApi();
+        SellerDto sellerToSave = SellerFixture.getSellerApi();
         when(this.sellerMapper.sellerToSellerApi(this.sellerRepository.save(seller))).thenReturn(sellerMock);
         doNothing().when(this.validator).validateSeller(sellerToSave, Boolean.FALSE);
 
-        SellerApi response = this.sellerService.save(sellerToSave);
+        SellerDto response = this.sellerService.save(sellerToSave);
         assertEquals(sellerMock, response);
         verify(this.sellerRepository, times(1)).save(seller);
     }
 
     @Test
     public void save_badRequestTest() {
-        SellerApi sellerMock = SellerFixture.getSellerApiWithId(1L);
+        SellerDto sellerMock = SellerFixture.getSellerApiWithId(1L);
         sellerMock.setUserName(null);
         Seller seller = SellerFixture.getSeller();
         GenericBadRequestException badRequestException = new GenericBadRequestException("The username is required");
@@ -109,21 +109,21 @@ public class SellerServiceTest {
 
     @Test
     public void update_successTest() {
-        SellerApi sellerMock = SellerFixture.getSellerApiWithId(1L);
+        SellerDto sellerMock = SellerFixture.getSellerApiWithId(1L);
         Seller seller = SellerFixture.getSellerWithId(1L);
-        SellerApi sellerToSave = SellerFixture.getSellerApiWithId(1L);
+        SellerDto sellerToSave = SellerFixture.getSellerApiWithId(1L);
         when(this.sellerMapper.sellerToSellerApi(this.sellerRepository.save(seller))).thenReturn(sellerMock);
         doNothing().when(this.validator).validateSeller(sellerToSave, Boolean.TRUE);
         when(this.sellerRepository.findById(1L)).thenReturn(Optional.of(seller));
 
-        SellerApi response = this.sellerService.update(sellerToSave);
+        SellerDto response = this.sellerService.update(sellerToSave);
         assertEquals(sellerMock, response);
         verify(this.sellerRepository, times(1)).save(seller);
     }
 
     @Test
     public void update_badRequestTest() {
-        SellerApi sellerMock = SellerFixture.getSellerApiWithId(1L);
+        SellerDto sellerMock = SellerFixture.getSellerApiWithId(1L);
         Seller seller = SellerFixture.getSellerWithId(1L);
         GenericBadRequestException badRequestException = new GenericBadRequestException("The id is required");
         when(this.sellerMapper.sellerToSellerApi(this.sellerRepository.save(seller))).thenReturn(sellerMock);
@@ -140,7 +140,7 @@ public class SellerServiceTest {
 
     @Test
     public void update_notFoundTest() {
-        SellerApi sellerMock = SellerFixture.getSellerApiWithId(1L);
+        SellerDto sellerMock = SellerFixture.getSellerApiWithId(1L);
         Seller seller = SellerFixture.getSellerWithId(1L);
         GenericNotFoundException genericNotFoundException = new GenericNotFoundException("The id is required");
         when(this.sellerMapper.sellerToSellerApi(this.sellerRepository.save(seller))).thenReturn(sellerMock);
@@ -157,7 +157,7 @@ public class SellerServiceTest {
 
     @Test
     public void deleteTest() {
-        SellerApi sellerMock = SellerFixture.getSellerApiWithId(1L);
+        SellerDto sellerMock = SellerFixture.getSellerApiWithId(1L);
         Seller seller = SellerFixture.getSellerWithId(1L);
         when(this.sellerMapper.sellerToSellerApi(this.sellerRepository.save(seller))).thenReturn(sellerMock);
         when(this.sellerRepository.findById(1L)).thenReturn(Optional.of(seller));

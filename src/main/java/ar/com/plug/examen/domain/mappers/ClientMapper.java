@@ -1,18 +1,20 @@
 package ar.com.plug.examen.domain.mappers;
 
-import ar.com.plug.examen.app.api.ClientApi;
-import ar.com.plug.examen.domain.model.Client;
 import java.util.List;
 import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Component;
+
+import ar.com.plug.examen.app.dto.ClientDto;
+import ar.com.plug.examen.domain.model.Client;
 
 
 @Component
 public class ClientMapper {
 
-    public ClientApi clientToClientApi(Client client) {
+    public ClientDto clientToClientApi(Client client) {
 
-        ClientApi clientApi = ClientApi.builder()
+        ClientDto clientApi = ClientDto.builder()
                 .id(client.getId())
                 .userName(client.getUserName())
                 .firstName(client.getFirstName())
@@ -24,7 +26,7 @@ public class ClientMapper {
         return clientApi;
     }
     
-    public Client clientApiToClient(ClientApi clientApi) {
+    public Client clientApiToClient(ClientDto clientApi) {
 
         Client client = Client.builder()
                 .id(clientApi.getId())
@@ -38,7 +40,7 @@ public class ClientMapper {
         return client;
     }
     
-    public List<ClientApi> clientsToListClientApi(List<Client> clients) {
+    public List<ClientDto> clientsToListClientApi(List<Client> clients) {
     return clients.stream().map(this::clientToClientApi).collect(Collectors.toList());
   }
 

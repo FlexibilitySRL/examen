@@ -1,4 +1,4 @@
-package ar.com.plug.examen.app.api;
+package ar.com.plug.examen.app.dto;
 
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -15,6 +15,6 @@ public class TransactionApiRequest {
     
   private Long clientId;
   private Long sellerId;
-  private List<ProductStockApi> listProducts;
+  private List<ProductStockDto> listProducts;
     
 }

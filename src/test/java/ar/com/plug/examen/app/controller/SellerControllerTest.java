@@ -1,4 +1,4 @@
-package ar.com.plug.examen.app.rest;
+package ar.com.plug.examen.app.controller;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -6,7 +6,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import ar.com.plug.examen.Application;
-import ar.com.plug.examen.app.api.SellerApi;
+import ar.com.plug.examen.app.dto.SellerDto;
 import ar.com.plug.examen.app.fixtures.SellerFixture;
 import ar.com.plug.examen.domain.service.impl.SellerServiceImpl;
 import java.util.HashMap;
@@ -41,7 +41,7 @@ public class SellerControllerTest {
 
     @Test
     public void testGetSellers() {
-        List<SellerApi> lsSellersApi = SellerFixture
+        List<SellerDto> lsSellersApi = SellerFixture
                 .getSellerApitList(SellerFixture.getSellerApi(), SellerFixture.getSellerApi());
         when(this.sellerService.findAll()).thenReturn(lsSellersApi);
 
@@ -53,11 +53,11 @@ public class SellerControllerTest {
 
     @Test
     public void testGetSellertById() {
-        SellerApi sellerApi = SellerFixture.getSellerApi();
+        SellerDto sellerApi = SellerFixture.getSellerApi();
         when(this.sellerService.findByIdChecked(1L)).thenReturn(sellerApi);
 
-        ResponseEntity<SellerApi> responseEntity = restTemplate
-                .getForEntity(URL + "/findById/" + 1L, SellerApi.class);
+        ResponseEntity<SellerDto> responseEntity = restTemplate
+                .getForEntity(URL + "/findById/" + 1L, SellerDto.class);
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         assertEquals(sellerApi, responseEntity.getBody());
         verify(this.sellerService, times(1)).findByIdChecked(1L);
@@ -65,22 +65,22 @@ public class SellerControllerTest {
 
     @Test
     public void testSave() {
-        SellerApi sellerApi = SellerFixture.getSellerApi();
+        SellerDto sellerApi = SellerFixture.getSellerApi();
 
-        ResponseEntity<SellerApi> response = restTemplate
-                .postForEntity(URL, sellerApi, SellerApi.class);
+        ResponseEntity<SellerDto> response = restTemplate
+                .postForEntity(URL, sellerApi, SellerDto.class);
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
         verify(this.sellerService, times(1)).save(sellerApi);
     }
 
     @Test
     public void testUpdate() {
-        SellerApi sellerApi = SellerFixture.getSellerApiWithId(1L);
+        SellerDto sellerApi = SellerFixture.getSellerApiWithId(1L);
         when(this.sellerService.update(any())).thenReturn(sellerApi);
-        HttpEntity<SellerApi> requestUpdate = new HttpEntity<>(sellerApi);
+        HttpEntity<SellerDto> requestUpdate = new HttpEntity<>(sellerApi);
 
-        ResponseEntity<SellerApi> responseEntity = restTemplate
-                .exchange(URL, HttpMethod.PUT, requestUpdate, SellerApi.class);
+        ResponseEntity<SellerDto> responseEntity = restTemplate
+                .exchange(URL, HttpMethod.PUT, requestUpdate, SellerDto.class);
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         verify(this.sellerService, times(1)).update(sellerApi);
     }

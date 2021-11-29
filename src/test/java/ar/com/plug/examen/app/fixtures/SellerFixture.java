@@ -1,6 +1,6 @@
 package ar.com.plug.examen.app.fixtures;
 
-import ar.com.plug.examen.app.api.SellerApi;
+import ar.com.plug.examen.app.dto.SellerDto;
 import ar.com.plug.examen.domain.model.Seller;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,18 +8,18 @@ import java.util.List;
 
 public class SellerFixture {
 
-    public static SellerApi getSellerApiWithId(Long id) {
+    public static SellerDto getSellerApiWithId(Long id) {
 
-        SellerApi sellerApi = SellerApi.builder()
+        SellerDto sellerApi = SellerDto.builder()
                 .id(id)
                 .build();
 
         return sellerApi;
     }
 
-    public static SellerApi getSellerApi() {
+    public static SellerDto getSellerApi() {
 
-        SellerApi sellerApi = SellerApi.builder()
+        SellerDto sellerApi = SellerDto.builder()
                 .userName("lrobles")
                 .firstName("Lucas")
                 .lastName("Robles")
@@ -30,9 +30,9 @@ public class SellerFixture {
         return sellerApi;
     }
 
-    public static List<SellerApi> getSellerApitList(SellerApi sellerApi1, SellerApi sellerApi2) {
+    public static List<SellerDto> getSellerApitList(SellerDto sellerApi1, SellerDto sellerApi2) {
 
-        List<SellerApi> lsSellers = new ArrayList<>();
+        List<SellerDto> lsSellers = new ArrayList<>();
         lsSellers.add(sellerApi1);
         lsSellers.add(sellerApi2);
         return lsSellers;

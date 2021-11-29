@@ -11,7 +11,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import ar.com.plug.examen.app.api.ClientApi;
+import ar.com.plug.examen.app.dto.ClientDto;
 import ar.com.plug.examen.app.fixtures.ClientFixture;
 import ar.com.plug.examen.domain.repository.ClientRepository;
 import ar.com.plug.examen.domain.exceptions.GenericBadRequestException;
@@ -46,13 +46,13 @@ public class ClientServiceTest {
 
     @Test
     public void findAllTest() {
-        List<ClientApi> listClients = ClientFixture
+        List<ClientDto> listClients = ClientFixture
                 .getClientApitList(ClientFixture.getClientApi(),
                         ClientFixture.getClientApi());
         when(this.clientMapper.clientsToListClientApi(this.clientRepository.findAll()))
                 .thenReturn(listClients);
 
-        List<ClientApi> response = this.clientService.findAll();
+        List<ClientDto> response = this.clientService.findAll();
         assertEquals(listClients, response);
         verify(this.clientRepository, times(2)).findAll();
     }
@@ -62,7 +62,7 @@ public class ClientServiceTest {
         Client client = ClientFixture.getClientWithId(1L);
         when(this.clientRepository.findById(1L)).thenReturn(Optional.of(client));
 
-        ClientApi response = this.clientService.findById(1L);
+        ClientDto response = this.clientService.findById(1L);
         assertEquals(this.clientMapper.clientToClientApi(client), response);
         verify(this.clientRepository, times(1)).findById(1L);
     }
@@ -81,20 +81,20 @@ public class ClientServiceTest {
 
     @Test
     public void save_successTest() {
-        ClientApi clientMock = ClientFixture.getClientApiWithId(1L);
+        ClientDto clientMock = ClientFixture.getClientApiWithId(1L);
         Client client = ClientFixture.getClient();
-        ClientApi clientToSave = ClientFixture.getClientApi();
+        ClientDto clientToSave = ClientFixture.getClientApi();
         when(this.clientMapper.clientToClientApi(this.clientRepository.save(client))).thenReturn(clientMock);
         doNothing().when(this.validator).validateClient(clientToSave, Boolean.FALSE);
 
-        ClientApi response = this.clientService.save(clientToSave);
+        ClientDto response = this.clientService.save(clientToSave);
         assertEquals(clientMock, response);
         verify(this.clientRepository, times(1)).save(client);
     }
 
     @Test
     public void save_badRequestTest() {
-        ClientApi clientMock = ClientFixture.getClientApiWithId(1L);
+        ClientDto clientMock = ClientFixture.getClientApiWithId(1L);
         clientMock.setUserName(null);
         Client client = ClientFixture.getClient();
         GenericBadRequestException badRequestException = new GenericBadRequestException("The username is required");
@@ -111,21 +111,21 @@ public class ClientServiceTest {
 
     @Test
     public void update_successTest() {
-        ClientApi clientMock = ClientFixture.getClientApiWithId(1L);
+        ClientDto clientMock = ClientFixture.getClientApiWithId(1L);
         Client client = ClientFixture.getClientWithId(1L);
-        ClientApi clientToSave = ClientFixture.getClientApiWithId(1L);
+        ClientDto clientToSave = ClientFixture.getClientApiWithId(1L);
         when(this.clientMapper.clientToClientApi(this.clientRepository.save(client))).thenReturn(clientMock);
         doNothing().when(this.validator).validateClient(clientToSave, Boolean.TRUE);
         when(this.clientRepository.findById(1L)).thenReturn(Optional.of(client));
 
-        ClientApi response = this.clientService.update(clientToSave);
+        ClientDto response = this.clientService.update(clientToSave);
         assertEquals(clientMock, response);
         verify(this.clientRepository, times(1)).save(client);
     }
 
     @Test
     public void update_badRequestTest() {
-        ClientApi clientMock = ClientFixture.getClientApiWithId(1L);
+        ClientDto clientMock = ClientFixture.getClientApiWithId(1L);
         Client client = ClientFixture.getClientWithId(1L);
         GenericBadRequestException badRequestException = new GenericBadRequestException("The id is required");
         when(this.clientMapper.clientToClientApi(this.clientRepository.save(client))).thenReturn(clientMock);
@@ -142,7 +142,7 @@ public class ClientServiceTest {
 
     @Test
     public void update_notFoundTest() {
-        ClientApi clientMock = ClientFixture.getClientApiWithId(1L);
+        ClientDto clientMock = ClientFixture.getClientApiWithId(1L);
         Client client = ClientFixture.getClientWithId(1L);
         GenericNotFoundException genericNotFoundException = new GenericNotFoundException("The id is required");
         when(this.clientMapper.clientToClientApi(this.clientRepository.save(client))).thenReturn(clientMock);
@@ -159,7 +159,7 @@ public class ClientServiceTest {
 
     @Test
     public void deleteTest() {
-        ClientApi clientMock = ClientFixture.getClientApiWithId(1L);
+        ClientDto clientMock = ClientFixture.getClientApiWithId(1L);
         Client client = ClientFixture.getClientWithId(1L);
         when(this.clientMapper.clientToClientApi(this.clientRepository.save(client))).thenReturn(clientMock);
         when(this.clientRepository.findById(1L)).thenReturn(Optional.of(client));

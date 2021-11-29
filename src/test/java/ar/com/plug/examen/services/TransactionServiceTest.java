@@ -10,10 +10,10 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import ar.com.plug.examen.app.api.ClientApi;
-import ar.com.plug.examen.app.api.SellerApi;
-import ar.com.plug.examen.app.api.TransactionApi;
-import ar.com.plug.examen.app.api.TransactionApiRequest;
+import ar.com.plug.examen.app.dto.ClientDto;
+import ar.com.plug.examen.app.dto.SellerDto;
+import ar.com.plug.examen.app.dto.TransactionDto;
+import ar.com.plug.examen.app.dto.TransactionApiRequest;
 import ar.com.plug.examen.app.fixtures.ClientFixture;
 import ar.com.plug.examen.app.fixtures.ProductFixture;
 import ar.com.plug.examen.app.fixtures.SellerFixture;
@@ -69,11 +69,11 @@ public class TransactionServiceTest {
 
     @Test
     public void findAllTest() {
-        List<TransactionApi> lsTransacions = TransactionFixture.getTransactionApiList(TransactionFixture.getTransactionApi(), TransactionFixture.getTransactionApi());
+        List<TransactionDto> lsTransacions = TransactionFixture.getTransactionApiList(TransactionFixture.getTransactionApi(), TransactionFixture.getTransactionApi());
         when(this.transactionMapper.transactionsToListTransactionApi(this.transactionRepository.findAll()))
                 .thenReturn(lsTransacions);
 
-        List<TransactionApi> response = this.transactionService.findAll();
+        List<TransactionDto> response = this.transactionService.findAll();
         assertEquals(lsTransacions, response);
         verify(this.transactionRepository, times(2)).findAll();
     }
@@ -83,7 +83,7 @@ public class TransactionServiceTest {
         Transaction transaction = TransactionFixture.getTransactionWithId(1L);
         when(this.transactionRepository.findById(1L)).thenReturn(Optional.of(transaction));
 
-        TransactionApi response = this.transactionService.findByIdChecked(1L);
+        TransactionDto response = this.transactionService.findByIdChecked(1L);
         assertEquals(this.transactionMapper.transactionToTransactionApi(transaction), response);
         verify(this.transactionRepository, times(1)).findById(1L);
     }
@@ -102,11 +102,11 @@ public class TransactionServiceTest {
 
     @Test
     public void save_successTest() {
-        TransactionApi transactionMock = TransactionFixture.getTransactionApiWithId(1L);
+        TransactionDto transactionMock = TransactionFixture.getTransactionApiWithId(1L);
         Transaction transaction = TransactionFixture.getTransaction();
         TransactionApiRequest transactionToSave = TransactionFixture.getTransactionApiRequest();
-        ClientApi client = ClientFixture.getClientApiWithId(1L);
-        SellerApi seller = SellerFixture.getSellerApiWithId(2L);
+        ClientDto client = ClientFixture.getClientApiWithId(1L);
+        SellerDto seller = SellerFixture.getSellerApiWithId(2L);
         List<Product> lsProducts = ProductFixture.getProductList(ProductFixture.getProductWithId(1L));
         when(this.clientService.findById(1L)).thenReturn(client);
         when(this.sellerService.findByIdChecked(2L)).thenReturn(seller);
@@ -116,7 +116,7 @@ public class TransactionServiceTest {
         when(this.transactionMapper.transactionApiToTransaction(any())).thenReturn(transaction);
         doNothing().when(this.validator).validateTransaction(transactionToSave);
 
-        TransactionApi response = this.transactionService.save(transactionToSave);
+        TransactionDto response = this.transactionService.save(transactionToSave);
         assertEquals(transactionMock, response);
         verify(this.transactionRepository, times(1)).save(transaction);
     }
@@ -136,14 +136,14 @@ public class TransactionServiceTest {
 
     @Test
     public void approveTransactionTest() {
-        TransactionApi transactionApi = TransactionFixture.getTransactionApi();
+        TransactionDto transactionApi = TransactionFixture.getTransactionApi();
         TransactionStatusEnum newStatus = TransactionStatusEnum.APPROVED;
         Transaction transaction = TransactionFixture.getTransactionWithId(1L);
         doNothing().when(this.validator).validateTransactionStatus(newStatus);
         when(this.transactionRepository.findById(1L)).thenReturn(Optional.of(transaction));
         when(this.transactionMapper.transactionToTransactionApi(this.transactionRepository.save(transaction))).thenReturn(transactionApi);
 
-        TransactionApi response = this.transactionService.updateStatus(1L, newStatus);
+        TransactionDto response = this.transactionService.updateStatus(1L, newStatus);
         assertEquals(transactionApi, response);
         verify(this.transactionRepository, times(2)).save(transaction);
     }

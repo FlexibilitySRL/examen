@@ -1,6 +1,6 @@
 package ar.com.plug.examen.domain.mappers;
 
-import ar.com.plug.examen.app.api.ProductApi;
+import ar.com.plug.examen.app.dto.ProductDto;
 import ar.com.plug.examen.domain.model.Product;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -10,9 +10,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class ProductMapper {
 
-    public ProductApi productToProductApi(Product product) {
+    public ProductDto productToProductApi(Product product) {
 
-        ProductApi productApi = ProductApi
+        ProductDto productApi = ProductDto
                 .builder()
                 .id(product.getId())
                 .name(product.getName())
@@ -24,7 +24,7 @@ public class ProductMapper {
         return productApi;
     }
 
-    public Product productApiToProduct(ProductApi productApi) {
+    public Product productApiToProduct(ProductDto productApi) {
 
         Product product = Product
                 .builder()
@@ -38,7 +38,7 @@ public class ProductMapper {
         return product;
     }
 
-    public List<ProductApi> productsToListProductApi(List<Product> products) {
+    public List<ProductDto> productsToListProductApi(List<Product> products) {
         return products.stream().map(this::productToProductApi).collect(Collectors.toList());
     }
 }

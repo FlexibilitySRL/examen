@@ -1,6 +1,6 @@
 package ar.com.plug.examen.domain.mappers;
 
-import ar.com.plug.examen.app.api.SellerApi;
+import ar.com.plug.examen.app.dto.SellerDto;
 import ar.com.plug.examen.domain.model.Seller;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -10,9 +10,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class SellerMapper {
 
-    public SellerApi sellerToSellerApi(Seller seller) {
+    public SellerDto sellerToSellerApi(Seller seller) {
 
-        SellerApi sellerApi = SellerApi
+        SellerDto sellerApi = SellerDto
                 .builder()
                 .id(seller.getId())
                 .userName(seller.getUserName())
@@ -25,7 +25,7 @@ public class SellerMapper {
         return sellerApi;
     }
 
-    public Seller sellerApiToSeller(SellerApi sellerApi) {
+    public Seller sellerApiToSeller(SellerDto sellerApi) {
 
         Seller seller = Seller
                 .builder()
@@ -40,7 +40,7 @@ public class SellerMapper {
         return seller;
     }
 
-    public List<SellerApi> sellersToListSellerApi(List<Seller> sellers) {
+    public List<SellerDto> sellersToListSellerApi(List<Seller> sellers) {
         return sellers
                 .stream()
                 .map(this::sellerToSellerApi)

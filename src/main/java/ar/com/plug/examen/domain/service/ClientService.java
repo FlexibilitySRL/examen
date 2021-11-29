@@ -1,7 +1,8 @@
 package ar.com.plug.examen.domain.service;
 
-import ar.com.plug.examen.app.api.ClientApi;
 import java.util.List;
+
+import ar.com.plug.examen.app.dto.ClientDto;
 
 
 public interface ClientService {
@@ -11,7 +12,7 @@ public interface ClientService {
      *
      * @return List<ClientApi>
      */
-    List<ClientApi> findAll();
+    List<ClientDto> findAll();
 
     /**
      * Find client by id
@@ -19,7 +20,7 @@ public interface ClientService {
      * @param id
      * @return ClientApi
      */
-    ClientApi findById(Long id);
+    ClientDto findById(Long id);
 
     /**
      * Save a client
@@ -27,14 +28,14 @@ public interface ClientService {
      * @param clientApi
      * @return ClientApi
      */
-    ClientApi save(ClientApi clientApi);
+    ClientDto save(ClientDto clientApi);
 
     /**
    * Update a client
    * @param clientApi
    * @return ClientApi
    */
-    ClientApi update(ClientApi clientApi);
+    ClientDto update(ClientDto clientApi);
 
     /**
    * Delete a client by id

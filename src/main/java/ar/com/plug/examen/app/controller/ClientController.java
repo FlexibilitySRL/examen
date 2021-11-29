@@ -1,6 +1,6 @@
-package ar.com.plug.examen.app.rest;
+package ar.com.plug.examen.app.controller;
 
-import ar.com.plug.examen.app.api.ClientApi;
+import ar.com.plug.examen.app.dto.ClientDto;
 import ar.com.plug.examen.domain.exceptions.GenericBadRequestException;
 import ar.com.plug.examen.domain.exceptions.GenericNotFoundException;
 import ar.com.plug.examen.domain.service.ClientService;
@@ -34,7 +34,7 @@ public class ClientController {
      * @return List<ClientApi>
      */
     @GetMapping()
-    public ResponseEntity<List<ClientApi>> getClients() {
+    public ResponseEntity<List<ClientDto>> getClients() {
         return new ResponseEntity<>(this.clientService.findAll(), HttpStatus.OK);
     }
 
@@ -46,7 +46,7 @@ public class ClientController {
      * @throws GenericNotFoundException
      */
     @GetMapping("/findById/{id}")
-    public ResponseEntity<ClientApi> getClientById(@PathVariable("id") Long id) throws GenericNotFoundException {
+    public ResponseEntity<ClientDto> getClientById(@PathVariable("id") Long id) throws GenericNotFoundException {
         return new ResponseEntity<>(this.clientService.findById(id), HttpStatus.OK);
     }
 
@@ -58,7 +58,7 @@ public class ClientController {
      * @throws GenericBadRequestException
      */
     @PostMapping()
-    public ResponseEntity<ClientApi> save(@RequestBody ClientApi clientApi) throws GenericBadRequestException {
+    public ResponseEntity<ClientDto> save(@RequestBody ClientDto clientApi) throws GenericBadRequestException {
         return new ResponseEntity<>(this.clientService.save(clientApi), HttpStatus.CREATED);
     }
 
@@ -71,7 +71,7 @@ public class ClientController {
      * @throws GenericBadRequestException
      */
     @PutMapping()
-    public ResponseEntity<ClientApi> update(@RequestBody ClientApi clientApi) throws GenericNotFoundException, GenericBadRequestException {
+    public ResponseEntity<ClientDto> update(@RequestBody ClientDto clientApi) throws GenericNotFoundException, GenericBadRequestException {
         return new ResponseEntity<>(this.clientService.update(clientApi), HttpStatus.OK);
     }
 

@@ -1,6 +1,6 @@
-package ar.com.plug.examen.app.rest;
+package ar.com.plug.examen.app.controller;
 
-import ar.com.plug.examen.app.api.MessageApi;
+import ar.com.plug.examen.app.dto.MessageDto;
 import ar.com.plug.examen.domain.service.ProcessMessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,7 +24,7 @@ public class EchoController {
 
     @PostMapping(path = "", produces = {MediaType.APPLICATION_JSON_VALUE },
             consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> echo(@RequestBody MessageApi message)
+    public ResponseEntity<?> echo(@RequestBody MessageDto message)
     {
         return new ResponseEntity<>(messageService.processMessage(message.getMessage()), HttpStatus.OK);
     }

@@ -11,7 +11,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import ar.com.plug.examen.app.api.ProductApi;
+import ar.com.plug.examen.app.dto.ProductDto;
 import ar.com.plug.examen.app.fixtures.ProductFixture;
 import ar.com.plug.examen.domain.repository.ProductRepository;
 import ar.com.plug.examen.domain.exceptions.GenericBadRequestException;
@@ -46,13 +46,13 @@ public class ProductServiceTest {
 
     @Test
     public void findAllTest() {
-        List<ProductApi> listProducts = ProductFixture
+        List<ProductDto> listProducts = ProductFixture
                 .getProducApitList(ProductFixture.getProductApiWithNameAndDescription("Notebook", "Lenovo"),
                         ProductFixture.getProductApiWithNameAndDescription("Mouse", "Logitech"));
         when(this.productMapper.productsToListProductApi(this.productRepository.findAll()))
                 .thenReturn(listProducts);
 
-        List<ProductApi> response = this.productService.findAll();
+        List<ProductDto> response = this.productService.findAll();
         assertEquals(listProducts, response);
         verify(this.productRepository, times(2)).findAll();
     }
@@ -62,7 +62,7 @@ public class ProductServiceTest {
         Product product = ProductFixture.getProductWithId(1L);
         when(this.productRepository.findById(1L)).thenReturn(Optional.of(product));
 
-        ProductApi response = this.productService.findById(1L);
+        ProductDto response = this.productService.findById(1L);
         assertEquals(this.productMapper.productToProductApi(product), response);
         verify(this.productRepository, times(1)).findById(1L);
     }
@@ -81,20 +81,20 @@ public class ProductServiceTest {
 
     @Test
     public void save_successTest() {
-        ProductApi productMock = ProductFixture.getProductApiWithId(1L);
+        ProductDto productMock = ProductFixture.getProductApiWithId(1L);
         Product product = ProductFixture.getProduct();
-        ProductApi productToSave = ProductFixture.getProductApi();
+        ProductDto productToSave = ProductFixture.getProductApi();
         when(this.productMapper.productToProductApi(this.productRepository.save(product))).thenReturn(productMock);
         doNothing().when(this.validator).validateProduct(productToSave, Boolean.FALSE);
 
-        ProductApi response = this.productService.save(productToSave);
+        ProductDto response = this.productService.save(productToSave);
         assertEquals(productMock, response);
         verify(this.productRepository, times(1)).save(product);
     }
 
     @Test
     public void save_badRequestTest() {
-        ProductApi productMock = ProductFixture.getProductApiWithId(1L);
+        ProductDto productMock = ProductFixture.getProductApiWithId(1L);
         productMock.setName(null);
         Product product = ProductFixture.getProduct();
         GenericBadRequestException badRequestException = new GenericBadRequestException("The name is required");
@@ -111,21 +111,21 @@ public class ProductServiceTest {
 
     @Test
     public void update_successTest() {
-        ProductApi productMock = ProductFixture.getProductApiWithId(1L);
+        ProductDto productMock = ProductFixture.getProductApiWithId(1L);
         Product product = ProductFixture.getProductWithId(1L);
-        ProductApi productToSave = ProductFixture.getProductApiWithId(1L);
+        ProductDto productToSave = ProductFixture.getProductApiWithId(1L);
         when(this.productMapper.productToProductApi(this.productRepository.save(product))).thenReturn(productMock);
         doNothing().when(this.validator).validateProduct(productToSave, Boolean.TRUE);
         when(this.productRepository.findById(1L)).thenReturn(Optional.of(product));
 
-        ProductApi response = this.productService.update(productToSave);
+        ProductDto response = this.productService.update(productToSave);
         assertEquals(productMock, response);
         verify(this.productRepository, times(1)).save(product);
     }
 
     @Test
     public void update_badRequestTest() {
-        ProductApi productMock = ProductFixture.getProductApiWithId(1L);
+        ProductDto productMock = ProductFixture.getProductApiWithId(1L);
         Product product = ProductFixture.getProductWithId(1L);
         GenericBadRequestException badRequestException = new GenericBadRequestException("The id is required");
         when(this.productMapper.productToProductApi(this.productRepository.save(product))).thenReturn(productMock);
@@ -142,7 +142,7 @@ public class ProductServiceTest {
 
     @Test
     public void update_notFoundTest() {
-        ProductApi productMock = ProductFixture.getProductApiWithId(1L);
+        ProductDto productMock = ProductFixture.getProductApiWithId(1L);
         Product product = ProductFixture.getProductWithId(1L);
         GenericNotFoundException genericNotFoundException = new GenericNotFoundException("The id is required");
         when(this.productMapper.productToProductApi(this.productRepository.save(product))).thenReturn(productMock);
@@ -159,7 +159,7 @@ public class ProductServiceTest {
 
     @Test
     public void deleteTest() {
-        ProductApi productMock = ProductFixture.getProductApiWithId(1L);
+        ProductDto productMock = ProductFixture.getProductApiWithId(1L);
         Product product = ProductFixture.getProductWithId(1L);
         when(this.productMapper.productToProductApi(this.productRepository.save(product))).thenReturn(productMock);
         when(this.productRepository.findById(1L)).thenReturn(Optional.of(product));

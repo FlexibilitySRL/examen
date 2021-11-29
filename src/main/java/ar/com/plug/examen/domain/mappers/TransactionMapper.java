@@ -1,6 +1,6 @@
 package ar.com.plug.examen.domain.mappers;
 
-import ar.com.plug.examen.app.api.TransactionApi;
+import ar.com.plug.examen.app.dto.TransactionDto;
 import ar.com.plug.examen.domain.model.Transaction;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,9 +20,9 @@ public class TransactionMapper {
     @Autowired
     TransactionItemsMapper transactionItemsMapper;
     
-    public TransactionApi transactionToTransactionApi (Transaction transaction) {
+    public TransactionDto transactionToTransactionApi (Transaction transaction) {
         
-        TransactionApi transactionApi = TransactionApi
+        TransactionDto transactionApi = TransactionDto
                 .builder()
                 .client(clientMapper.clientToClientApi(transaction.getClient()))
                 .creationDate(transaction.getCreationDate())
@@ -35,7 +35,7 @@ public class TransactionMapper {
         return transactionApi;
     }
     
-    public Transaction transactionApiToTransaction (TransactionApi transactionApi) {
+    public Transaction transactionApiToTransaction (TransactionDto transactionApi) {
         
         Transaction transaction = Transaction
                 .builder()
@@ -50,7 +50,7 @@ public class TransactionMapper {
         return transaction;
     }
     
-    public List<TransactionApi> transactionsToListTransactionApi(List<Transaction> transactions) {
+    public List<TransactionDto> transactionsToListTransactionApi(List<Transaction> transactions) {
     return transactions.stream().map(this::transactionToTransactionApi).collect(Collectors.toList());
   }
     

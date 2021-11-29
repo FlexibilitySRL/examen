@@ -1,4 +1,4 @@
-package ar.com.plug.examen.app.rest;
+package ar.com.plug.examen.app.controller;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -6,7 +6,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import ar.com.plug.examen.Application;
-import ar.com.plug.examen.app.api.ProductApi;
+import ar.com.plug.examen.app.dto.ProductDto;
 import ar.com.plug.examen.app.fixtures.ProductFixture;
 import ar.com.plug.examen.domain.service.impl.ProductServiceImpl;
 import java.util.HashMap;
@@ -41,7 +41,7 @@ public class ProductControllerTest {
 
     @Test
     public void testGetProducts() {
-        List<ProductApi> lsProductApi = ProductFixture
+        List<ProductDto> lsProductApi = ProductFixture
                 .getProducApitList(ProductFixture.getProductApi(), ProductFixture.getProductApi());
         when(this.productService.findAll()).thenReturn(lsProductApi);
 
@@ -53,11 +53,11 @@ public class ProductControllerTest {
 
     @Test
     public void testGetProductById() {
-        ProductApi productApi = ProductFixture.getProductApi();
+        ProductDto productApi = ProductFixture.getProductApi();
         when(this.productService.findById(1L)).thenReturn(productApi);
 
-        ResponseEntity<ProductApi> responseEntity = restTemplate
-                .getForEntity(URL + "/findById/" + 1L, ProductApi.class);
+        ResponseEntity<ProductDto> responseEntity = restTemplate
+                .getForEntity(URL + "/findById/" + 1L, ProductDto.class);
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         assertEquals(productApi, responseEntity.getBody());
         verify(this.productService, times(1)).findById(1L);
@@ -65,22 +65,22 @@ public class ProductControllerTest {
 
     @Test
     public void testSave() {
-        ProductApi productApi = ProductFixture.getProductApi();
+        ProductDto productApi = ProductFixture.getProductApi();
 
-        ResponseEntity<ProductApi> response = restTemplate
-                .postForEntity(URL, productApi, ProductApi.class);
+        ResponseEntity<ProductDto> response = restTemplate
+                .postForEntity(URL, productApi, ProductDto.class);
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
         verify(this.productService, times(1)).save(productApi);
     }
 
     @Test
     public void testUpdate() {
-        ProductApi productApi = ProductFixture.getProductApiWithId(1L);
+        ProductDto productApi = ProductFixture.getProductApiWithId(1L);
         when(this.productService.update(any())).thenReturn(productApi);
-        HttpEntity<ProductApi> requestUpdate = new HttpEntity<>(productApi);
+        HttpEntity<ProductDto> requestUpdate = new HttpEntity<>(productApi);
 
-        ResponseEntity<ProductApi> responseEntity = restTemplate
-                .exchange(URL, HttpMethod.PUT, requestUpdate, ProductApi.class);
+        ResponseEntity<ProductDto> responseEntity = restTemplate
+                .exchange(URL, HttpMethod.PUT, requestUpdate, ProductDto.class);
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         verify(this.productService, times(1)).update(productApi);
     }

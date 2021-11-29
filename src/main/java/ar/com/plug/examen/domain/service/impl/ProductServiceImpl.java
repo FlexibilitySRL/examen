@@ -4,8 +4,8 @@
  */
 package ar.com.plug.examen.domain.service.impl;
 
-import ar.com.plug.examen.app.api.ProductApi;
-import ar.com.plug.examen.app.api.ProductStockApi;
+import ar.com.plug.examen.app.dto.ProductDto;
+import ar.com.plug.examen.app.dto.ProductStockDto;
 import ar.com.plug.examen.domain.exceptions.GenericBadRequestException;
 import ar.com.plug.examen.domain.exceptions.GenericNotFoundException;
 import ar.com.plug.examen.domain.mappers.ProductMapper;
@@ -38,7 +38,7 @@ public class ProductServiceImpl implements ProductService {
      * @see ar.com.plug.examen.domain.service.ProductService#findAll()
      */
     @Override
-    public List<ProductApi> findAll() {
+    public List<ProductDto> findAll() {
         return this.productMapper
                 .productsToListProductApi(this.productRepository.findAll());
     }
@@ -50,7 +50,7 @@ public class ProductServiceImpl implements ProductService {
      * ar.com.plug.examen.domain.service.ProductService#findByIdChecked(Long) ()
      */
     @Override
-    public ProductApi findById(Long id) throws GenericNotFoundException {
+    public ProductDto findById(Long id) throws GenericNotFoundException {
         return this.productMapper.productToProductApi(
                 this.productRepository.findById(id)
                         .orElseThrow(() -> new GenericNotFoundException("Product not found")));
@@ -59,11 +59,11 @@ public class ProductServiceImpl implements ProductService {
     /**
      * (non-Javadoc)
      *
-     * @see ar.com.plug.examen.domain.service.ProductService#save(ProductApi) ()
+     * @see ar.com.plug.examen.domain.service.ProductService#save(ProductDto) ()
      */
     @Override
     @Transactional
-    public ProductApi save(ProductApi productApi) throws GenericBadRequestException {
+    public ProductDto save(ProductDto productApi) throws GenericBadRequestException {
         this.validator.validateProduct(productApi, Boolean.FALSE);
         return this.productMapper.productToProductApi(
                 this.productRepository.save(this.productMapper.productApiToProduct(productApi)));
@@ -72,12 +72,12 @@ public class ProductServiceImpl implements ProductService {
     /**
      * (non-Javadoc)
      *
-     * @see ar.com.plug.examen.domain.service.ProductService#update(ProductApi)
+     * @see ar.com.plug.examen.domain.service.ProductService#update(ProductDto)
      * ()
      */
     @Override
     @Transactional
-    public ProductApi update(ProductApi productApi)
+    public ProductDto update(ProductDto productApi)
             throws GenericNotFoundException, GenericBadRequestException {
         this.validator.validateProduct(productApi, Boolean.TRUE);
         this.productRepository.findById(productApi.getId())
@@ -107,9 +107,9 @@ public class ProductServiceImpl implements ProductService {
      * ()
      */
     @Override
-    public List<Product> getProductsWithStock(List<ProductStockApi> lsProducts) {
+    public List<Product> getProductsWithStock(List<ProductStockDto> lsProducts) {
         List<Product> products = new ArrayList<>();
-        for (ProductStockApi productStockApi : lsProducts) {
+        for (ProductStockDto productStockApi : lsProducts) {
             Product product = this.productRepository
                     .findByIdAndStockGreaterThanEqual(productStockApi.getIdProduct(),
                             productStockApi.getQuantity()).orElseThrow(() -> new GenericBadRequestException(

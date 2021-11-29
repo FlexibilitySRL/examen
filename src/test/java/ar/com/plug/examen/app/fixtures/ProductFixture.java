@@ -1,6 +1,6 @@
 package ar.com.plug.examen.app.fixtures;
 
-import ar.com.plug.examen.app.api.ProductApi;
+import ar.com.plug.examen.app.dto.ProductDto;
 import ar.com.plug.examen.domain.model.Product;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,9 +8,9 @@ import java.util.List;
 
 public class ProductFixture {
 
-    public static ProductApi getProductApiWithNameAndDescription(String name, String description) {
+    public static ProductDto getProductApiWithNameAndDescription(String name, String description) {
 
-        ProductApi productApi = ProductApi.builder()
+        ProductDto productApi = ProductDto.builder()
                 .name(name)
                 .description(description)
                 .price(100.0)
@@ -19,17 +19,17 @@ public class ProductFixture {
         return productApi;
     }
 
-    public static ProductApi getProductApiWithId(Long id) {
+    public static ProductDto getProductApiWithId(Long id) {
 
-        ProductApi productApi = ProductApi.builder()
+        ProductDto productApi = ProductDto.builder()
                 .id(id)
                 .build();
         return productApi;
     }
 
-    public static ProductApi getProductApi() {
+    public static ProductDto getProductApi() {
 
-        ProductApi productApi = ProductApi.builder()
+        ProductDto productApi = ProductDto.builder()
                 .name("Notebook")
                 .description("Lenovo")
                 .price(5000.0)
@@ -38,9 +38,9 @@ public class ProductFixture {
         return productApi;
     }
 
-    public static List<ProductApi> getProducApitList(ProductApi productApi1, ProductApi productApi2) {
+    public static List<ProductDto> getProducApitList(ProductDto productApi1, ProductDto productApi2) {
 
-        List<ProductApi> lsProducts = new ArrayList<>();
+        List<ProductDto> lsProducts = new ArrayList<>();
         lsProducts.add(productApi1);
         lsProducts.add(productApi2);
         return lsProducts;

@@ -1,4 +1,4 @@
-package ar.com.plug.examen.app.api;
+package ar.com.plug.examen.app.dto;
 
 import ar.com.plug.examen.domain.model.Transaction;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -8,9 +8,9 @@ import lombok.Data;
 
 @Data
 @Builder
-public class TransactionItemsApi {
+public class TransactionItemsDto {
     
-  private ProductApi product;
+  private ProductDto product;
   private Long quantity;
   @JsonIgnore
   private Transaction transaction;

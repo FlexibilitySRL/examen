@@ -1,7 +1,7 @@
 package ar.com.plug.examen.domain.service;
 
-import ar.com.plug.examen.app.api.TransactionApi;
-import ar.com.plug.examen.app.api.TransactionApiRequest;
+import ar.com.plug.examen.app.dto.TransactionDto;
+import ar.com.plug.examen.app.dto.TransactionApiRequest;
 import ar.com.plug.examen.domain.enums.TransactionStatusEnum;
 import java.util.List;
 
@@ -12,21 +12,21 @@ public interface TransactionService {
    * List all transactions
    * @return List<TransactionApi>
    */
-  List<TransactionApi> findAll();
+  List<TransactionDto> findAll();
 
   /**
    * Find transaction by id
    * @param id
    * @return TransactionApi
    */
-  TransactionApi findByIdChecked(Long id);
+  TransactionDto findByIdChecked(Long id);
 
   /**
    * Create a transaction
    * @param transactionApiRequest
    * @return TransactionApi
    */
-  TransactionApi save(TransactionApiRequest transactionApiRequest);
+  TransactionDto save(TransactionApiRequest transactionApiRequest);
 
   /**
    * Approve transaction by id
@@ -34,6 +34,6 @@ public interface TransactionService {
    * @param status
    * @return TransactionApi
    */
-  TransactionApi updateStatus(Long id, TransactionStatusEnum status);
+  TransactionDto updateStatus(Long id, TransactionStatusEnum status);
   
 }

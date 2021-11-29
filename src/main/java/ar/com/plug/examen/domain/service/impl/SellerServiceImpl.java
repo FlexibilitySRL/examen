@@ -1,6 +1,6 @@
 package ar.com.plug.examen.domain.service.impl;
 
-import ar.com.plug.examen.app.api.SellerApi;
+import ar.com.plug.examen.app.dto.SellerDto;
 import ar.com.plug.examen.domain.exceptions.GenericBadRequestException;
 import ar.com.plug.examen.domain.exceptions.GenericNotFoundException;
 import ar.com.plug.examen.domain.mappers.SellerMapper;
@@ -31,7 +31,7 @@ public class SellerServiceImpl implements SellerService {
      * @see ar.com.plug.examen.domain.service.SellerService#findAll()
      */
     @Override
-    public List<SellerApi> findAll() {
+    public List<SellerDto> findAll() {
         return this.sellerMapper.sellersToListSellerApi(this.sellerRepository.findAll());
     }
 
@@ -42,7 +42,7 @@ public class SellerServiceImpl implements SellerService {
      * ar.com.plug.examen.domain.service.SellerService#findByIdChecked(Long)
      */
     @Override
-    public SellerApi findByIdChecked(Long id) throws GenericNotFoundException {
+    public SellerDto findByIdChecked(Long id) throws GenericNotFoundException {
         return this.sellerMapper.sellerToSellerApi(this.sellerRepository.findById(id)
                 .orElseThrow(() -> new GenericNotFoundException("Seller not found")));
     }
@@ -50,11 +50,11 @@ public class SellerServiceImpl implements SellerService {
     /**
      * (non-Javadoc)
      *
-     * @see ar.com.plug.examen.domain.service.SellerService#save(SellerApi)
+     * @see ar.com.plug.examen.domain.service.SellerService#save(SellerDto)
      */
     @Override
     @Transactional
-    public SellerApi save(SellerApi sellerApi) throws GenericBadRequestException {
+    public SellerDto save(SellerDto sellerApi) throws GenericBadRequestException {
         this.validator.validateSeller(sellerApi, Boolean.FALSE);
         return this.sellerMapper.sellerToSellerApi(
                 this.sellerRepository.save(this.sellerMapper.sellerApiToSeller(sellerApi)));
@@ -63,11 +63,11 @@ public class SellerServiceImpl implements SellerService {
     /**
      * (non-Javadoc)
      *
-     * @see ar.com.plug.examen.domain.service.SellerService#update(SellerApi)
+     * @see ar.com.plug.examen.domain.service.SellerService#update(SellerDto)
      */
     @Override
     @Transactional
-    public SellerApi update(SellerApi sellerApi)
+    public SellerDto update(SellerDto sellerApi)
             throws GenericNotFoundException, GenericBadRequestException {
         this.validator.validateSeller(sellerApi, Boolean.TRUE);
         this.sellerRepository.findById(sellerApi.getId())

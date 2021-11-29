@@ -1,4 +1,5 @@
-package ar.com.plug.examen.app.api;
+
+package ar.com.plug.examen.app.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class SellerApi {
+public class ClientDto {
     
   private Long id;
   private String userName;

@@ -1,6 +1,6 @@
-package ar.com.plug.examen.app.rest;
+package ar.com.plug.examen.app.controller;
 
-import ar.com.plug.examen.app.api.SellerApi;
+import ar.com.plug.examen.app.dto.SellerDto;
 import ar.com.plug.examen.domain.exceptions.GenericBadRequestException;
 import ar.com.plug.examen.domain.exceptions.GenericNotFoundException;
 import ar.com.plug.examen.domain.service.SellerService;
@@ -34,7 +34,7 @@ public class SellerController {
      * @return List<SellerApi>
      */
     @GetMapping()
-    public ResponseEntity<List<SellerApi>> getSellers() {
+    public ResponseEntity<List<SellerDto>> getSellers() {
         return new ResponseEntity<>(this.sellerService.findAll(), HttpStatus.OK);
     }
 
@@ -46,7 +46,7 @@ public class SellerController {
      * @throws GenericNotFoundException
      */
     @GetMapping("/findById/{id}")
-    public ResponseEntity<SellerApi> getSellerById(@PathVariable("id") Long id) throws GenericNotFoundException {
+    public ResponseEntity<SellerDto> getSellerById(@PathVariable("id") Long id) throws GenericNotFoundException {
         return new ResponseEntity<>(this.sellerService.findByIdChecked(id), HttpStatus.OK);
     }
 
@@ -58,7 +58,7 @@ public class SellerController {
      * @throws GenericBadRequestException
      */
     @PostMapping()
-    public ResponseEntity<SellerApi> saveSeller(@RequestBody SellerApi sellerApi) throws GenericBadRequestException {
+    public ResponseEntity<SellerDto> saveSeller(@RequestBody SellerDto sellerApi) throws GenericBadRequestException {
         return new ResponseEntity<>(this.sellerService.save(sellerApi), HttpStatus.CREATED);
     }
 
@@ -71,7 +71,7 @@ public class SellerController {
      * @throws GenericBadRequestException
      */
     @PutMapping()
-    public ResponseEntity<SellerApi> updateSeller(@RequestBody SellerApi sellerApi) throws GenericNotFoundException, GenericBadRequestException {
+    public ResponseEntity<SellerDto> updateSeller(@RequestBody SellerDto sellerApi) throws GenericNotFoundException, GenericBadRequestException {
         return new ResponseEntity<>(this.sellerService.update(sellerApi), HttpStatus.OK);
     }
 

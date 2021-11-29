@@ -1,6 +1,6 @@
 package ar.com.plug.examen.domain.mappers;
 
-import ar.com.plug.examen.app.api.TransactionItemsApi;
+import ar.com.plug.examen.app.dto.TransactionItemsDto;
 import ar.com.plug.examen.domain.model.TransactionItems;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,9 +14,9 @@ public class TransactionItemsMapper {
     @Autowired
     ProductMapper productMapper;
 
-    public TransactionItemsApi transactionItemsToTransactionItemsApi(TransactionItems transactionItems) {
+    public TransactionItemsDto transactionItemsToTransactionItemsApi(TransactionItems transactionItems) {
 
-        TransactionItemsApi transactionItemsApi = TransactionItemsApi
+        TransactionItemsDto transactionItemsApi = TransactionItemsDto
                 .builder()
                 .product(productMapper.productToProductApi(transactionItems.getProduct()))
                 .quantity(transactionItems.getQuantity())
@@ -26,7 +26,7 @@ public class TransactionItemsMapper {
         return transactionItemsApi;
     }
 
-    public TransactionItems transactionItemsApiToTransactionItems(TransactionItemsApi transactionItemsApi) {
+    public TransactionItems transactionItemsApiToTransactionItems(TransactionItemsDto transactionItemsApi) {
 
         TransactionItems transactionItems = TransactionItems
                 .builder()
@@ -38,11 +38,11 @@ public class TransactionItemsMapper {
         return transactionItems;
     }
 
-    public List<TransactionItemsApi> transactionItemsToListTransactionitemsApi(List<TransactionItems> transactionItems) {
+    public List<TransactionItemsDto> transactionItemsToListTransactionitemsApi(List<TransactionItems> transactionItems) {
         return transactionItems.stream().map(this::transactionItemsToTransactionItemsApi).collect(Collectors.toList());
     }
 
-    public List<TransactionItems> transactionItemsApiToListTransactionitems(List<TransactionItemsApi> transactionItems) {
+    public List<TransactionItems> transactionItemsApiToListTransactionitems(List<TransactionItemsDto> transactionItems) {
         return transactionItems.stream().map(this::transactionItemsApiToTransactionItems).collect(Collectors.toList());
     }
 

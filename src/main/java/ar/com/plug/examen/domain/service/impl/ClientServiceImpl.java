@@ -1,6 +1,6 @@
 package ar.com.plug.examen.domain.service.impl;
 
-import ar.com.plug.examen.app.api.ClientApi;
+import ar.com.plug.examen.app.dto.ClientDto;
 import ar.com.plug.examen.domain.exceptions.GenericBadRequestException;
 import ar.com.plug.examen.domain.exceptions.GenericNotFoundException;
 import ar.com.plug.examen.domain.mappers.ClientMapper;
@@ -31,7 +31,7 @@ public class ClientServiceImpl implements ClientService {
      * @see ar.com.plug.examen.domain.service.ClientService#findAll()
      */
     @Override
-    public List<ClientApi> findAll() {
+    public List<ClientDto> findAll() {
         return clientMapper.clientsToListClientApi(clientRepository.findAll());
     }
 
@@ -41,7 +41,7 @@ public class ClientServiceImpl implements ClientService {
      * @see ar.com.plug.examen.domain.service.ClientService#findById(Long) ()
      */
     @Override
-    public ClientApi findById(Long id) throws GenericNotFoundException {
+    public ClientDto findById(Long id) throws GenericNotFoundException {
         return this.clientMapper.clientToClientApi(this.clientRepository.findById(id)
                 .orElseThrow(() -> new GenericNotFoundException("Client not found")));
     }
@@ -49,10 +49,10 @@ public class ClientServiceImpl implements ClientService {
     /**
      * (non-Javadoc)
      *
-     * @see ar.com.plug.examen.domain.service.ClientService#save(ClientApi) ()
+     * @see ar.com.plug.examen.domain.service.ClientService#save(ClientDto) ()
      */
     @Override
-    public ClientApi save(ClientApi clientApi) throws GenericBadRequestException {
+    public ClientDto save(ClientDto clientApi) throws GenericBadRequestException {
         validator.validateClient(clientApi, Boolean.FALSE);
         return this.clientMapper.clientToClientApi(
                 this.clientRepository.save(this.clientMapper.clientApiToClient(clientApi)));
@@ -61,10 +61,10 @@ public class ClientServiceImpl implements ClientService {
     /**
      * (non-Javadoc)
      *
-     * @see ar.com.plug.examen.domain.service.ClientService#update(ClientApi) ()
+     * @see ar.com.plug.examen.domain.service.ClientService#update(ClientDto) ()
      */
     @Override
-    public ClientApi update(ClientApi clientApi)
+    public ClientDto update(ClientDto clientApi)
             throws GenericNotFoundException, GenericBadRequestException {
         validator.validateClient(clientApi, Boolean.TRUE);
         this.clientRepository.findById(clientApi.getId())

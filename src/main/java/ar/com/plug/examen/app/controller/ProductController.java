@@ -1,6 +1,6 @@
-package ar.com.plug.examen.app.rest;
+package ar.com.plug.examen.app.controller;
 
-import ar.com.plug.examen.app.api.ProductApi;
+import ar.com.plug.examen.app.dto.ProductDto;
 import ar.com.plug.examen.domain.exceptions.GenericBadRequestException;
 import ar.com.plug.examen.domain.exceptions.GenericNotFoundException;
 import ar.com.plug.examen.domain.service.ProductService;
@@ -34,7 +34,7 @@ public class ProductController {
      * @return List<ProductApi>
      */
     @GetMapping()
-    public ResponseEntity<List<ProductApi>> getProducts() {
+    public ResponseEntity<List<ProductDto>> getProducts() {
         return new ResponseEntity<>(this.productService.findAll(), HttpStatus.OK);
     }
 
@@ -46,7 +46,7 @@ public class ProductController {
      * @throws GenericNotFoundException
      */
     @GetMapping("/findById/{id}")
-    public ResponseEntity<ProductApi> getProductById(@PathVariable("id") Long id) throws GenericNotFoundException {
+    public ResponseEntity<ProductDto> getProductById(@PathVariable("id") Long id) throws GenericNotFoundException {
         return new ResponseEntity<>(this.productService.findById(id), HttpStatus.OK);
     }
 
@@ -58,7 +58,7 @@ public class ProductController {
      * @throws GenericBadRequestException
      */
     @PostMapping()
-    public ResponseEntity<ProductApi> saveProduct(@RequestBody ProductApi productApi) throws GenericBadRequestException {
+    public ResponseEntity<ProductDto> saveProduct(@RequestBody ProductDto productApi) throws GenericBadRequestException {
         return new ResponseEntity<>(this.productService.save(productApi), HttpStatus.CREATED);
     }
 
@@ -71,7 +71,7 @@ public class ProductController {
      * @throws GenericBadRequestException
      */
     @PutMapping()
-    public ResponseEntity<ProductApi> updateProduct(@RequestBody ProductApi productApi) throws GenericNotFoundException, GenericBadRequestException {
+    public ResponseEntity<ProductDto> updateProduct(@RequestBody ProductDto productApi) throws GenericNotFoundException, GenericBadRequestException {
         return new ResponseEntity<>(this.productService.update(productApi), HttpStatus.OK);
     }
 

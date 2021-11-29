@@ -1,8 +1,8 @@
 package ar.com.plug.examen.app.fixtures;
 
-import ar.com.plug.examen.app.api.ProductStockApi;
-import ar.com.plug.examen.app.api.TransactionApi;
-import ar.com.plug.examen.app.api.TransactionApiRequest;
+import ar.com.plug.examen.app.dto.ProductStockDto;
+import ar.com.plug.examen.app.dto.TransactionDto;
+import ar.com.plug.examen.app.dto.TransactionApiRequest;
 import ar.com.plug.examen.domain.enums.TransactionStatusEnum;
 import ar.com.plug.examen.domain.model.Client;
 import ar.com.plug.examen.domain.model.Seller;
@@ -15,17 +15,17 @@ import java.util.List;
 
 public class TransactionFixture {
 
-    public static TransactionApi getTransactionApiWithId(Long id) {
+    public static TransactionDto getTransactionApiWithId(Long id) {
 
-        TransactionApi transactionApi = new TransactionApi();
+        TransactionDto transactionApi = new TransactionDto();
         transactionApi.setId(id);
 
         return transactionApi;
     }
 
-    public static TransactionApi getTransactionApi() {
+    public static TransactionDto getTransactionApi() {
 
-        TransactionApi transactionApi = new TransactionApi();
+        TransactionDto transactionApi = new TransactionDto();
         transactionApi.setStatus(TransactionStatusEnum.PENDING);
         transactionApi.setCreationDate(new Date());
         transactionApi.setClient(ClientFixture.getClientApi());
@@ -41,21 +41,21 @@ public class TransactionFixture {
                 .sellerId(2L)
                 .build();
 
-        ProductStockApi product = ProductStockApi.builder()
+        ProductStockDto product = ProductStockDto.builder()
                 .idProduct(1L)
                 .quantity(10L)
                 .build();
 
-        List<ProductStockApi> listProducts = new ArrayList<>();
+        List<ProductStockDto> listProducts = new ArrayList<>();
         listProducts.add(product);
         transactionApiRequest.setListProducts(listProducts);
 
         return transactionApiRequest;
     }
 
-    public static List<TransactionApi> getTransactionApiList(TransactionApi transactionApi1, TransactionApi transactionApi2) {
+    public static List<TransactionDto> getTransactionApiList(TransactionDto transactionApi1, TransactionDto transactionApi2) {
 
-        List<TransactionApi> listTransactions = new ArrayList<>();
+        List<TransactionDto> listTransactions = new ArrayList<>();
         listTransactions.add(transactionApi1);
         listTransactions.add(transactionApi2);
 
