@@ -16,7 +16,7 @@ public class Purchase {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
-	@Column(name="idCompra")
+	@Column(name="id_compra")
 	private Long idCompra;
 	@Column(name="unidad")
 	private int unidad;

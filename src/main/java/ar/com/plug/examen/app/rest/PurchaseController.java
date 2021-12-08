@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import ar.com.plug.examen.app.dto.PurchaseDTO;
 import ar.com.plug.examen.domain.model.Purchase;
 import ar.com.plug.examen.domain.service.impl.PurchaseImpl;
 import io.swagger.annotations.Api;
@@ -49,8 +50,8 @@ public class PurchaseController {
 			@ApiResponse(code = 401, message = "Not Authorized!"), @ApiResponse(code = 403, message = "Forbidden!"),
 			@ApiResponse(code = 404, message = "Not Found!") })
 	@PutMapping("/approvalpurchase")
-	public ResponseEntity<Object> aprobacionCompras(@RequestBody Long idCompra) {
-		purchaseImpl.aprobarCompra(idCompra);
+	public ResponseEntity<Object> aprobacionCompras(@RequestBody PurchaseDTO idCompra) {
+		purchaseImpl.aprobarCompra(idCompra.getIdCompra());
 		return new ResponseEntity<>("approval purchase transactions successfully", HttpStatus.CREATED);
 	}
 

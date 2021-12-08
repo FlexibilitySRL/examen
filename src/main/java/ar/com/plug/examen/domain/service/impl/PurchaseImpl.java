@@ -29,8 +29,11 @@ public class PurchaseImpl implements PurchaseService{
 
 	@Override
 	public void aprobarCompra(Long idCompra) {
-		List<Purchase> purchase = purchaseRepository.findByidCompra(idCompra);
-		purchaseRepository.saveAll(purchase);
+		List<Purchase> purchaselist = purchaseRepository.findByidCompra(idCompra);
+		purchaselist.stream().forEach((p)-> {
+			p.setEstado_Transaccion("APROB");
+			});
+		purchaseRepository.saveAll(purchaselist);
 		
 	}
 	
