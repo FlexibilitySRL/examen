@@ -9,11 +9,16 @@ spring:
     show-sql: true
   datasource:
       url: jdbc:mysql://127.0.0.1:3306/payments?zeroDateTimeBehavior=convertToNull
-      username: root
+      username: root2
       password: password
 
 server:
   port: 8080
+  error:
+    include-message: always
+    include-binding-errors: always
+    include-stacktrace: on_trace_param
+    include-exception: false
   servlet:
     context-path: '/payments'
 ---
