@@ -1,7 +1,9 @@
 package ar.com.plug.examen.app.rest;
 
 import ar.com.plug.examen.app.api.ClientDTO;
+import ar.com.plug.examen.domain.exception.ClientException;
 import ar.com.plug.examen.domain.service.ClientService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -15,7 +17,6 @@ import java.util.List;
 @RequestMapping(path = "/clients")
 public class ClientController
 {
-
     @Autowired
     private ClientService clientService;
 
@@ -31,5 +32,13 @@ public class ClientController
     public ResponseEntity<List<ClientDTO>> getAllClients()
     {
         return new ResponseEntity<>(clientService.getAllClients(), HttpStatus.OK);
+    }
+
+    @GetMapping("/{documentId}")
+    @ApiOperation(value = "API to get account by id", consumes = MediaType.APPLICATION_JSON_VALUE,
+          produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getClientByDocumentId(@PathVariable String documentId) throws ClientException
+    {
+        return new ResponseEntity<>(clientService.getClientByDocumentId(documentId), HttpStatus.OK);
     }
 }

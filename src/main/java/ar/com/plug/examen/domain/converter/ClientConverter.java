@@ -1,4 +1,4 @@
-package ar.com.plug.examen.domain.mapper;
+package ar.com.plug.examen.domain.converter;
 
 import ar.com.plug.examen.app.api.ClientDTO;
 import ar.com.plug.examen.domain.model.Client;
@@ -6,9 +6,9 @@ import org.springframework.stereotype.Component;
 
 
 @Component
-public class ClientMapper
+public class ClientConverter
 {
-	public Client clientDTOToClient(ClientDTO clientDTO) {
+	public Client toModel(ClientDTO clientDTO) {
 		return Client.builder()
 				.documentId(clientDTO.getDocumentId())
 				.documentType(clientDTO.getDocumentType())
@@ -18,7 +18,7 @@ public class ClientMapper
 				.build();
 	}
 
-	public ClientDTO clientToClientDTO(Client client) {
+	public ClientDTO toDTO(Client client) {
 		return ClientDTO.builder()
 				.documentId(client.getDocumentId())
 				.documentType(client.getDocumentType())

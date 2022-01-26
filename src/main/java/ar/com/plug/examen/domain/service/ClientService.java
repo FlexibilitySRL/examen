@@ -10,4 +10,6 @@ public interface ClientService
     ClientDTO save(ClientDTO clientDTO);
 
     List<ClientDTO> getAllClients();
+
+    ClientDTO getClientByDocumentId(String documentId);
 }
