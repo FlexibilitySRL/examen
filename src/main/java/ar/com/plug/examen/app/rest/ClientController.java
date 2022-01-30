@@ -1,8 +1,9 @@
 package ar.com.plug.examen.app.rest;
 
 import ar.com.plug.examen.app.api.ClientDTO;
-import ar.com.plug.examen.domain.exception.ClientException;
+import ar.com.plug.examen.domain.exception.ClientNotFoundException;
 import ar.com.plug.examen.domain.service.ClientService;
+import ar.com.plug.examen.domain.validators.Validator;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,11 +21,15 @@ public class ClientController
     @Autowired
     private ClientService clientService;
 
+    @Autowired
+    private Validator validator;
+
 
     @PostMapping(path = "", produces = {MediaType.APPLICATION_JSON_VALUE },
             consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> saveClient(@RequestBody ClientDTO clientDTO)
+    public ResponseEntity<?> save(@RequestBody ClientDTO clientDTO)
     {
+        validator.validateClientDTO(clientDTO, Boolean.FALSE);
         return new ResponseEntity<>(clientService.save(clientDTO), HttpStatus.CREATED);
     }
 
@@ -34,11 +39,24 @@ public class ClientController
         return new ResponseEntity<>(clientService.getAllClients(), HttpStatus.OK);
     }
 
-    @GetMapping("/{documentId}")
-    @ApiOperation(value = "API to get account by id", consumes = MediaType.APPLICATION_JSON_VALUE,
+    @GetMapping("/{id}")
+    @ApiOperation(value = "API to get client by id", consumes = MediaType.APPLICATION_JSON_VALUE,
           produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getClientByDocumentId(@PathVariable String documentId) throws ClientException
+    public ResponseEntity<?> getClientById(@PathVariable Long id)
     {
-        return new ResponseEntity<>(clientService.getClientByDocumentId(documentId), HttpStatus.OK);
+        return new ResponseEntity<>(clientService.getClientById(id), HttpStatus.OK);
+    }
+
+    @PutMapping()
+    public ResponseEntity<ClientDTO> update(@RequestBody ClientDTO clientDTO) {
+
+        validator.validateClientDTO(clientDTO, Boolean.TRUE);
+        return new ResponseEntity<>(this.clientService.update(clientDTO), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable("id") Long id) {
+        this.clientService.delete(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

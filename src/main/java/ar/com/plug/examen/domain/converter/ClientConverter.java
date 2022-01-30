@@ -10,6 +10,7 @@ public class ClientConverter
 {
 	public Client toModel(ClientDTO clientDTO) {
 		return Client.builder()
+				.id(clientDTO.getId())
 				.documentId(clientDTO.getDocumentId())
 				.documentType(clientDTO.getDocumentType())
 				.email(clientDTO.getEmail())

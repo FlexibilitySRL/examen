@@ -13,7 +13,7 @@ spring:
       password: password
 
 server:
-  port: 8090
+  port: 8080
   servlet:
     context-path: '/payments'
 ---

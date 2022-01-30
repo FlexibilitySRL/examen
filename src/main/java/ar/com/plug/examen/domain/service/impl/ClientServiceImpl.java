@@ -2,10 +2,12 @@ package ar.com.plug.examen.domain.service.impl;
 
 import ar.com.plug.examen.app.api.ClientDTO;
 import ar.com.plug.examen.domain.converter.ClientConverter;
-import ar.com.plug.examen.domain.exception.ClientException;
+import ar.com.plug.examen.domain.exception.ClientFoundException;
+import ar.com.plug.examen.domain.exception.ClientNotFoundException;
 import ar.com.plug.examen.domain.model.Client;
 import ar.com.plug.examen.domain.repository.ClientRepository;
 import ar.com.plug.examen.domain.service.ClientService;
+import ar.com.plug.examen.domain.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +16,9 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 
+/**
+ * Implementation of {@link ClientService}
+ */
 @Service
 public class ClientServiceImpl implements ClientService
 {
@@ -25,8 +30,16 @@ public class ClientServiceImpl implements ClientService
     private ClientConverter clientConverter;
 
     @Override
+    @Transactional
     public ClientDTO save(ClientDTO clientDTO)
     {
+        Optional<Client> client1 = clientRepository
+              .findByDocumentIdAndDocumentType(clientDTO.getDocumentId(), clientDTO.getDocumentType());
+
+        if (client1.isPresent()) {
+            throw new ClientFoundException("The client is already registered");
+        }
+
         Client client = clientRepository.save(clientConverter.toModel(clientDTO));
         return clientConverter.toDTO(client);
     }
@@ -49,15 +62,29 @@ public class ClientServiceImpl implements ClientService
      */
     @Override
     @Transactional(readOnly = true)
-    public ClientDTO getClientByDocumentId(String documentId)
+    public ClientDTO getClientById(Long id)
     {
-        Optional<Client> client = clientRepository.findByDocumentId(documentId);
-
-        if (client.isEmpty()) {
-            throw new ClientException("Client with Document Id "+documentId+" not found");
-        }
-
-        return clientConverter.toDTO(client.get());
+        return clientConverter.toDTO(getClientByIdIfExists(id));
     }
 
+    @Override
+    @Transactional
+    public ClientDTO update(ClientDTO clientDTO)
+    {
+        getClientByIdIfExists(clientDTO.getId());
+        return clientConverter.toDTO(clientRepository.save(clientConverter.toModel(clientDTO)));
+    }
+
+    @Override
+    @Transactional
+    public void delete(Long id)
+    {
+        clientRepository.delete(getClientByIdIfExists(id));
+    }
+
+    private Client getClientByIdIfExists(Long id) {
+
+        return clientRepository.findById(id)
+              .orElseThrow(() -> new ClientNotFoundException("Client with Id "+id+" not found"));
+    }
 }
