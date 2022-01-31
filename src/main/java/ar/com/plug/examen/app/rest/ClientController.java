@@ -5,6 +5,7 @@ import ar.com.plug.examen.domain.exception.ClientNotFoundException;
 import ar.com.plug.examen.domain.service.ClientService;
 import ar.com.plug.examen.domain.validators.Validator;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -48,6 +49,8 @@ public class ClientController
     }
 
     @PutMapping()
+    @ApiOperation(value = "API to update client", consumes = MediaType.APPLICATION_JSON_VALUE,
+          produces = MediaType.APPLICATION_JSON_VALUE, response = ClientDTO.class)
     public ResponseEntity<ClientDTO> update(@RequestBody ClientDTO clientDTO) {
 
         validator.validateClientDTO(clientDTO, Boolean.TRUE);

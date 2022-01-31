@@ -75,6 +75,12 @@ public class SellerServiceImpl implements SellerService
         sellerRepository.delete(getSellerByIdIfExists(id));
     }
 
+    /**
+     * Get Seller by id, if exists return Seller Model, if not, throws exception.
+
+     * @param id
+     * @return Seller
+     */
     private Seller getSellerByIdIfExists(Long id) {
 
         return sellerRepository.findById(id)

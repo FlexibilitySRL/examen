@@ -7,7 +7,6 @@ import ar.com.plug.examen.domain.exception.ClientNotFoundException;
 import ar.com.plug.examen.domain.model.Client;
 import ar.com.plug.examen.domain.repository.ClientRepository;
 import ar.com.plug.examen.domain.service.ClientService;
-import ar.com.plug.examen.domain.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -82,6 +81,12 @@ public class ClientServiceImpl implements ClientService
         clientRepository.delete(getClientByIdIfExists(id));
     }
 
+    /**
+     * Get Client by id, if exists return it. If not, throws exception.
+     *
+     * @param id
+     * @return
+     */
     private Client getClientByIdIfExists(Long id) {
 
         return clientRepository.findById(id)

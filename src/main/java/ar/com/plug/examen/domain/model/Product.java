@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 
 @Data
@@ -23,5 +24,8 @@ public class Product
     private String description;
     private Double price;
     private Long stock;
+
+//    @OneToMany(mappedBy="product", cascade= CascadeType.ALL)
+//    private List<OrderItems> orderItems;
 
 }

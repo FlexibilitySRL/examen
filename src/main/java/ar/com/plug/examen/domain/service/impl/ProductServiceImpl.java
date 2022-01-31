@@ -2,12 +2,10 @@ package ar.com.plug.examen.domain.service.impl;
 
 import ar.com.plug.examen.app.api.ProductDTO;
 import ar.com.plug.examen.domain.converter.ProductConverter;
-import ar.com.plug.examen.domain.exception.ClientNotFoundException;
 import ar.com.plug.examen.domain.exception.ProductNotFoundException;
 import ar.com.plug.examen.domain.model.Product;
 import ar.com.plug.examen.domain.repository.ProductRepository;
 import ar.com.plug.examen.domain.service.ProductService;
-import ar.com.plug.examen.domain.validators.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -72,7 +70,7 @@ public class ProductServiceImpl implements ProductService
     }
 
     /**
-     * Get Product by id, if exists return id if not, throws exception.
+     * Get Product by id, if exists return it. If not, throws exception.
      *
      * @param id
      * @return Product

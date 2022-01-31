@@ -1,9 +1,11 @@
 package ar.com.plug.examen.domain.validators;
 
 import ar.com.plug.examen.app.api.ClientDTO;
+import ar.com.plug.examen.app.api.OrderRequest;
 import ar.com.plug.examen.app.api.ProductDTO;
 import ar.com.plug.examen.app.api.SellerDTO;
 import ar.com.plug.examen.domain.exception.ClientBadRequestException;
+import ar.com.plug.examen.domain.exception.OrderBadRequestException;
 import ar.com.plug.examen.domain.exception.ProductBadRequestException;
 import ar.com.plug.examen.domain.exception.SellerBadRequestException;
 import org.springframework.stereotype.Component;
@@ -84,22 +86,18 @@ public class Validator
 	}
 
 
-//
-//	public void validateTransaction(TransactionApiRquest transaction) {
-//		if (transaction.getClientId() == null) {
-//			throw new GenericBadRequestException("The clientId is required");
-//		}
-//		if (transaction.getSellerId() == null) {
-//			throw new GenericBadRequestException("The sellerId is required");
-//		}
-//		if (transaction.getLsProducts().isEmpty()) {
-//			throw new GenericBadRequestException("The products cannot be empty");
-//		}
-//	}
-//
-//	public void validateTransactionStatus(TransactionStatusEnum status) {
-//		if (status == null) {
-//			throw new GenericBadRequestException("The status of transaction is required");
-//		}
-//	}
+	public void validateTransaction(OrderRequest orderRequest)
+	{
+		if (orderRequest.getClientId() == null) {
+			throw new OrderBadRequestException("The client id is required");
+		}
+		if (orderRequest.getSellerId() == null) {
+			throw new OrderBadRequestException("The seller id is required");
+		}
+		if (orderRequest.getProductRequests().isEmpty()) {
+			throw new OrderBadRequestException("The products cannot be empty");
+		}
+
+	}
+
 }
