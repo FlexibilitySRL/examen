@@ -14,13 +14,24 @@ import java.util.List;
 @Data
 @Builder(toBuilder = true)
 @AllArgsConstructor
-@NoArgsConstructor
 public class OrderDTO
 {
 	private Long id;
-	private ClientDTO clientDTO;
-	private SellerDTO sellerDTO;
+	private ClientDTO client;
+	private SellerDTO seller;
+	private List<OrderItemsDTO> orderItems;
 	private Date orderCreationDate;
-	private OrderStatusEnum orderStatus;
+	private OrderStatusEnum status;
 
+	public OrderDTO() {}
+
+	public OrderDTO(ClientDTO client, SellerDTO seller, List<OrderItemsDTO> orderItems, Date orderCreationDate,
+			OrderStatusEnum status)
+	{
+		this.client = client;
+		this.seller = seller;
+		this.orderItems = orderItems;
+		this.orderCreationDate = orderCreationDate;
+		this.status = status;
+	}
 }

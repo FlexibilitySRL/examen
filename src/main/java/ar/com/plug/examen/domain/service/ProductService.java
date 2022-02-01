@@ -47,5 +47,13 @@ public interface ProductService
      */
     void delete(Long id);
 
+    /**
+     * Get Product by Id and valid if exist in stock
+     *
+     * @param id
+     * @param quantity
+     * @return ProductDTO
+     */
+    ProductDTO getProductByIdInStock(Long id, Long quantity);
 
 }

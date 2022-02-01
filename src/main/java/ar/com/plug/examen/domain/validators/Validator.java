@@ -86,7 +86,7 @@ public class Validator
 	}
 
 
-	public void validateTransaction(OrderRequest orderRequest)
+	public void validateOrder(OrderRequest orderRequest)
 	{
 		if (orderRequest.getClientId() == null) {
 			throw new OrderBadRequestException("The client id is required");

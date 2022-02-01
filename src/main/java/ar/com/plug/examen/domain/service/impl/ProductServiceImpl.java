@@ -80,4 +80,16 @@ public class ProductServiceImpl implements ProductService
         return productRepository.findById(id)
               .orElseThrow(() -> new ProductNotFoundException("Product with Id "+id+" not found"));
     }
+
+    @Override
+    public ProductDTO getProductByIdInStock(Long id, Long quantity)
+    {
+        Product productByIdIfExists = getProductByIdIfExists(id);
+
+        if (productByIdIfExists.getStock() < quantity) {
+            throw new ProductNotFoundException("The product with id "+id+" is not in stock");
+        }
+
+        return productConverter.toDTO(productByIdIfExists);
+    }
 }

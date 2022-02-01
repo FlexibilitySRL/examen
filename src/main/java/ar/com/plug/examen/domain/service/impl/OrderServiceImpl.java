@@ -1,11 +1,13 @@
 package ar.com.plug.examen.domain.service.impl;
 
-import ar.com.plug.examen.app.api.ClientDTO;
-import ar.com.plug.examen.app.api.OrderDTO;
-import ar.com.plug.examen.app.api.OrderRequest;
-import ar.com.plug.examen.app.api.SellerDTO;
-import ar.com.plug.examen.domain.converter.ClientConverter;
+import ar.com.plug.examen.app.api.*;
+import ar.com.plug.examen.domain.OrderStatusEnum;
+import ar.com.plug.examen.domain.converter.*;
+import ar.com.plug.examen.domain.model.Order;
+import ar.com.plug.examen.domain.model.OrderItems;
+import ar.com.plug.examen.domain.model.Product;
 import ar.com.plug.examen.domain.repository.OrderRepository;
+import ar.com.plug.examen.domain.repository.ProductRepository;
 import ar.com.plug.examen.domain.service.ClientService;
 import ar.com.plug.examen.domain.service.OrderService;
 import ar.com.plug.examen.domain.service.ProductService;
@@ -13,6 +15,11 @@ import ar.com.plug.examen.domain.service.SellerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 /**
@@ -35,77 +42,105 @@ public class OrderServiceImpl implements OrderService
     private SellerService sellerService;
 
     @Autowired
-    private ClientConverter clientConverter;
+    private ProductConverter productConverter;
+
+    @Autowired
+    private OrderConverter orderConverter;
+
+    @Autowired
+    private OrderItemsConverter orderItemsConverter;
+
+    @Autowired
+    private ProductRepository productRepository;
 
     @Override
     @Transactional
     public OrderDTO save(OrderRequest orderRequest)
     {
-        ClientDTO clientById = clientService.getClientById(orderRequest.getClientId());
-        SellerDTO sellerById = sellerService.getSellerById(orderRequest.getSellerId());
-
-        orderRequest.getProductRequests().stream()
-              .forEach(orderRequest1 -> {
-
-
-              });
-
-        return null;
+        return getOrderConverter()
+              .orderToOrderDTO(getOrderRepository().save(getDomainsToSave(orderRequest)));
     }
-//    @Override
-//    @Transactional
-//    public TransactionApi save(TransactionApiRquest transactionApiRquest)
-//          throws GenericBadRequestException {
-//        this.validator.validateTransaction(transactionApiRquest);
-//        Transaction transactionToSave = preparetoSave(transactionApiRquest);
-//        return this.transactionMapper
-//              .transactionToTransactionApi(this.transactionRepository.save(transactionToSave));
-//    }
-//
-//    private Transaction preparetoSave(TransactionApiRquest transactionApiRquest) {
-//        ClientApi client = this.clientService.findByIdChecked(
-//              transactionApiRquest.getClientId());
-//        SellerApi seller = this.sellerService.findByIdChecked(
-//              transactionApiRquest.getSellerId());
-//        List<Product> lsProducts = this.productService
-//              .getProductsWithStock(transactionApiRquest.getLsProducts());
-//        List<TransactionItems> lsItems = new ArrayList<>();
-//        for (Product product : lsProducts) {
-//            TransactionItems item = new TransactionItems();
-//            ProductStockApi productStockApi = transactionApiRquest.getLsProducts().stream()
-//                  .filter(i -> i.getIdProduct().equals(product.getId())).collect(
-//                        Collectors.toList()).get(0);
-//            item.setQuantity(productStockApi.getQuantity());
-//            product.setStock(product.getStock() - productStockApi.getQuantity());
-//            item.setProduct(product);
-//            lsItems.add(item);
-//        }
-//        TransactionApi transactionApi = new TransactionApi(client, seller,
-//              this.transactionItemMapper.transactionItemsToListTransactionitemsApi(lsItems), new Date(),
-//              TransactionStatusEnum.PENDING);
-//        Transaction transactionToSave = this.transactionMapper
-//              .transactionApiToTransaction(transactionApi);
-//        for (TransactionItems item : transactionToSave.getTransactionItems()) {
-//            item.setTransaction(transactionToSave);
-//        }
-//        return transactionToSave;
-//    }
-//
-//    /**
-//     * (non-Javadoc)
-//     *
-//     * @see ar.com.plug.examen.domain.service.TransactionService#updateStatus(Long,
-//     * TransactionStatusEnum)
-//     */
-//    @Override
-//    @Transactional
-//    public TransactionApi updateStatus(Long id, TransactionStatusEnum status)
-//          throws GenericNotFoundException, GenericBadRequestException {
-//        this.validator.validateTransactionStatus(status);
-//        Transaction transactionToUpdate = this.transactionRepository.findById(id)
-//              .orElseThrow(() -> new GenericNotFoundException("Transaction not found"));
-//        transactionToUpdate.setStatus(status);
-//        return this.transactionMapper
-//              .transactionToTransactionApi(this.transactionRepository.save(transactionToUpdate));
-//    }
+
+    private Order getDomainsToSave(OrderRequest orderRequest) {
+
+        ClientDTO clientDTO = getClientService().getClientById(orderRequest.getClientId());
+        SellerDTO sellerDTO = getSellerService().getSellerById(orderRequest.getSellerId());
+
+        List<Product> productList = orderRequest.getProductRequests().stream()
+              .map(productRequest -> getProductService().getProductByIdInStock(productRequest.getId(),productRequest.getQuantity()))
+              .map(productDTO -> getProductConverter().toModel(productDTO))
+              .collect(Collectors.toList());
+
+        List<OrderItems> orderItemsList = new ArrayList<>();
+
+        if (!productList.isEmpty())
+            productList.forEach(product -> {
+                OrderItems orderItem = new OrderItems();
+                ProductRequest productStockApi = orderRequest.getProductRequests().stream()
+                      .filter(i -> i.getId().equals(product.getId())).collect(
+                            Collectors.toList()).get(0);
+                orderItem.setQuantity(productStockApi.getQuantity());
+                product.setStock(product.getStock() - productStockApi.getQuantity());
+                orderItem.setProduct(product);
+                getProductRepository().save(product);
+                orderItemsList.add(orderItem);
+            });
+
+        OrderDTO orderDTO = new OrderDTO(clientDTO, sellerDTO,
+              getOrderItemsConverter().orderItemsToOrderItemsDTOList(orderItemsList), new Date(),
+              OrderStatusEnum.PENDING);
+
+        Order orderToSave = getOrderConverter()
+              .orderDTOToOrder(orderDTO);
+        for (OrderItems item : orderToSave.getOrderItems()) {
+            item.setOrders(orderToSave);
+        }
+        return orderToSave;
+    }
+
+    @Override
+    public List<OrderDTO> getAllOrderItems()
+    {
+        return orderConverter.orderListToOrderDTOList( orderRepository.findAll());
+    }
+
+    public ClientService getClientService()
+    {
+        return clientService;
+    }
+
+    public OrderRepository getOrderRepository()
+    {
+        return orderRepository;
+    }
+
+    public ProductService getProductService()
+    {
+        return productService;
+    }
+
+    public SellerService getSellerService()
+    {
+        return sellerService;
+    }
+
+    public ProductConverter getProductConverter()
+    {
+        return productConverter;
+    }
+
+    public OrderConverter getOrderConverter()
+    {
+        return orderConverter;
+    }
+
+    public OrderItemsConverter getOrderItemsConverter()
+    {
+        return orderItemsConverter;
+    }
+
+    public ProductRepository getProductRepository()
+    {
+        return productRepository;
+    }
 }

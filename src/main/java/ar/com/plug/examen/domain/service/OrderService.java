@@ -3,6 +3,7 @@ package ar.com.plug.examen.domain.service;
 import ar.com.plug.examen.app.api.ClientDTO;
 import ar.com.plug.examen.app.api.OrderDTO;
 import ar.com.plug.examen.app.api.OrderRequest;
+import ar.com.plug.examen.domain.model.OrderItems;
 
 import java.util.List;
 
@@ -19,5 +20,7 @@ public interface OrderService
      * @return OrderRequest
      */
     OrderDTO save(OrderRequest orderRequest);
+
+    List<OrderDTO> getAllOrderItems();
 
 }

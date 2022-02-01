@@ -14,18 +14,18 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table
+@Table(name = "product")
 public class Product
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String description;
     private Double price;
     private Long stock;
 
-//    @OneToMany(mappedBy="product", cascade= CascadeType.ALL)
-//    private List<OrderItems> orderItems;
+    @OneToMany(mappedBy="product", cascade= CascadeType.ALL)
+    private List<OrderItems> orderItems;
 
 }

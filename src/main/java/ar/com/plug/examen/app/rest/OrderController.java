@@ -3,6 +3,7 @@ package ar.com.plug.examen.app.rest;
 import ar.com.plug.examen.app.api.ClientDTO;
 import ar.com.plug.examen.app.api.OrderDTO;
 import ar.com.plug.examen.app.api.OrderRequest;
+import ar.com.plug.examen.domain.model.OrderItems;
 import ar.com.plug.examen.domain.service.ClientService;
 import ar.com.plug.examen.domain.service.OrderService;
 import ar.com.plug.examen.domain.validators.Validator;
@@ -23,14 +24,21 @@ public class OrderController
     @Autowired
     private OrderService orderService;
 
+
+
     @Autowired
     private Validator validator;
 
     @PostMapping()
     public ResponseEntity<OrderDTO> saveOrder(@RequestBody OrderRequest orderRequest)
     {
-        validator.validateTransaction(orderRequest);
+        validator.validateOrder(orderRequest);
         return new ResponseEntity<>(orderService.save(orderRequest), HttpStatus.CREATED);
+    }
+
+    @GetMapping()
+    public ResponseEntity<List<OrderDTO>> getAllOrderItems() {
+        return new ResponseEntity<>(orderService.getAllOrderItems(), HttpStatus.OK);
     }
 
 

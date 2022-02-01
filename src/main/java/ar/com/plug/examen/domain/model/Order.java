@@ -1,5 +1,6 @@
 package ar.com.plug.examen.domain.model;
 
+import ar.com.plug.examen.domain.OrderStatusEnum;
 import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 
 @Data
@@ -30,8 +32,10 @@ public class Order
 	@JoinColumn(name = "seller_id")
 	private Seller seller;
 
-//	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-//	private List<OrderItems> orderItems;
+	@OneToMany(mappedBy = "orders", cascade = CascadeType.ALL)
+	private List<OrderItems> orderItems;
+
+	private OrderStatusEnum status;
 
 	@NotNull
 	private Date creationDate;
