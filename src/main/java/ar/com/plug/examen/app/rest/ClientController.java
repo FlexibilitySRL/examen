@@ -28,7 +28,7 @@ public class ClientController
 
     @PostMapping(path = "", produces = {MediaType.APPLICATION_JSON_VALUE },
             consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> save(@RequestBody ClientDTO clientDTO)
+    public ResponseEntity<ClientDTO> save(@RequestBody ClientDTO clientDTO)
     {
         validator.validateClientDTO(clientDTO, Boolean.FALSE);
         return new ResponseEntity<>(clientService.save(clientDTO), HttpStatus.CREATED);
@@ -43,7 +43,7 @@ public class ClientController
     @GetMapping("/{id}")
     @ApiOperation(value = "API to get client by id", consumes = MediaType.APPLICATION_JSON_VALUE,
           produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getClientById(@PathVariable Long id)
+    public ResponseEntity<ClientDTO> getClientById(@PathVariable Long id)
     {
         return new ResponseEntity<>(clientService.getClientById(id), HttpStatus.OK);
     }

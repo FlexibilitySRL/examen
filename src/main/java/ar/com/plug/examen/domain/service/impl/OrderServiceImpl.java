@@ -3,6 +3,7 @@ package ar.com.plug.examen.domain.service.impl;
 import ar.com.plug.examen.app.api.*;
 import ar.com.plug.examen.domain.OrderStatusEnum;
 import ar.com.plug.examen.domain.converter.*;
+import ar.com.plug.examen.domain.exception.OrderNotFoundException;
 import ar.com.plug.examen.domain.model.Order;
 import ar.com.plug.examen.domain.model.OrderItems;
 import ar.com.plug.examen.domain.model.Product;
@@ -12,10 +13,10 @@ import ar.com.plug.examen.domain.service.ClientService;
 import ar.com.plug.examen.domain.service.OrderService;
 import ar.com.plug.examen.domain.service.ProductService;
 import ar.com.plug.examen.domain.service.SellerService;
+import ar.com.plug.examen.logs.LogAnnotation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -25,6 +26,7 @@ import java.util.stream.Collectors;
 /**
  * Implementation of {@link OrderService}
  */
+@LogAnnotation
 @Service
 public class OrderServiceImpl implements OrderService
 {
@@ -73,35 +75,49 @@ public class OrderServiceImpl implements OrderService
 
         List<OrderItems> orderItemsList = new ArrayList<>();
 
-        if (!productList.isEmpty())
-            productList.forEach(product -> {
-                OrderItems orderItem = new OrderItems();
-                ProductRequest productStockApi = orderRequest.getProductRequests().stream()
-                      .filter(i -> i.getId().equals(product.getId())).collect(
-                            Collectors.toList()).get(0);
-                orderItem.setQuantity(productStockApi.getQuantity());
-                product.setStock(product.getStock() - productStockApi.getQuantity());
-                orderItem.setProduct(product);
-                getProductRepository().save(product);
-                orderItemsList.add(orderItem);
-            });
+        for (Product product : productList)
+        {
+            OrderItems orderItem = new OrderItems();
+            ProductRequest productStockApi = orderRequest.getProductRequests()
+                  .stream()
+                  .filter(productRequest -> productRequest.getId().equals(product.getId()))
+                  .collect(Collectors.toList()).get(0);
+
+            orderItem.setQuantity(productStockApi.getQuantity());
+            product.setStock(product.getStock() - productStockApi.getQuantity());
+            orderItem.setProduct(product);
+            getProductRepository().save(product);
+            orderItemsList.add(orderItem);
+        }
 
         OrderDTO orderDTO = new OrderDTO(clientDTO, sellerDTO,
               getOrderItemsConverter().orderItemsToOrderItemsDTOList(orderItemsList), new Date(),
               OrderStatusEnum.PENDING);
 
-        Order orderToSave = getOrderConverter()
-              .orderDTOToOrder(orderDTO);
-        for (OrderItems item : orderToSave.getOrderItems()) {
-            item.setOrders(orderToSave);
+        Order order = getOrderConverter().orderDTOToOrder(orderDTO);
+        for (OrderItems item : order.getOrderItems()) {
+            item.setOrders(order);
         }
-        return orderToSave;
+        return order;
     }
 
     @Override
     public List<OrderDTO> getAllOrderItems()
     {
         return orderConverter.orderListToOrderDTOList( orderRepository.findAll());
+    }
+
+    @Override
+    public OrderDTO updateStatus(Long id, OrderStatusEnum orderStatusEnum)
+    {
+        Order order = getOrderRepository().findById(id)
+              .orElseThrow(() -> new OrderNotFoundException("Order with Id " + id + " not found"));
+
+        Order savedOrder = getOrderRepository().save(order.toBuilder()
+              .status(orderStatusEnum)
+              .build());
+
+        return orderConverter.orderToOrderDTO(savedOrder);
     }
 
     public ClientService getClientService()

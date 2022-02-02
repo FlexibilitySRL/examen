@@ -27,14 +27,14 @@ public class ProductController
 
     @PostMapping(path = "", produces = {MediaType.APPLICATION_JSON_VALUE },
             consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> save(@RequestBody ProductDTO productDTO)
+    public ResponseEntity<ProductDTO> save(@RequestBody ProductDTO productDTO)
     {
         validator.validateProductDTO(productDTO, Boolean.FALSE);
         return new ResponseEntity<>(productService.save(productDTO), HttpStatus.CREATED);
     }
 
     @GetMapping()
-    public ResponseEntity<List<ProductDTO>> getAllCProducts()
+    public ResponseEntity<List<ProductDTO>> getAllProducts()
     {
         return new ResponseEntity<>(productService.getAllProducts(), HttpStatus.OK);
     }
@@ -42,7 +42,7 @@ public class ProductController
     @GetMapping("/{id}")
     @ApiOperation(value = "API to get product by id", consumes = MediaType.APPLICATION_JSON_VALUE,
           produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getProductById(@PathVariable Long id)
+    public ResponseEntity<ProductDTO> getProductById(@PathVariable Long id)
     {
         return new ResponseEntity<>(productService.getProductById(id), HttpStatus.OK);
     }

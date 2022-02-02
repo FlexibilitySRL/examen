@@ -4,10 +4,12 @@ import ar.com.plug.examen.app.api.ClientDTO;
 import ar.com.plug.examen.app.api.OrderRequest;
 import ar.com.plug.examen.app.api.ProductDTO;
 import ar.com.plug.examen.app.api.SellerDTO;
+import ar.com.plug.examen.domain.OrderStatusEnum;
 import ar.com.plug.examen.domain.exception.ClientBadRequestException;
 import ar.com.plug.examen.domain.exception.OrderBadRequestException;
 import ar.com.plug.examen.domain.exception.ProductBadRequestException;
 import ar.com.plug.examen.domain.exception.SellerBadRequestException;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 
@@ -98,6 +100,12 @@ public class Validator
 			throw new OrderBadRequestException("The products cannot be empty");
 		}
 
+	}
+
+	public void validateStatusApproved(String status) {
+		if (!OrderStatusEnum.APPROVED.name().equals(status)) {
+			throw new OrderBadRequestException("The status is not the correct");
+		}
 	}
 
 }

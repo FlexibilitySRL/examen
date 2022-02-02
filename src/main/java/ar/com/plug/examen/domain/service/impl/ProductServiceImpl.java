@@ -6,18 +6,19 @@ import ar.com.plug.examen.domain.exception.ProductNotFoundException;
 import ar.com.plug.examen.domain.model.Product;
 import ar.com.plug.examen.domain.repository.ProductRepository;
 import ar.com.plug.examen.domain.service.ProductService;
+import ar.com.plug.examen.logs.LogAnnotation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 
 /**
  * Implementation of {@link ProductService}
  */
+@LogAnnotation
 @Service
 public class ProductServiceImpl implements ProductService
 {

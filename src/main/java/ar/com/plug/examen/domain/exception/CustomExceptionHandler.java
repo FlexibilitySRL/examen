@@ -64,6 +64,18 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler
 		return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
 	}
 
+	@ExceptionHandler(OrderBadRequestException.class)
+	public ResponseEntity<Object> handleOrderBadRequestException(OrderBadRequestException e, WebRequest request) {
+		ErrorResponse error = new ErrorResponse(HttpStatus.BAD_REQUEST.name(), "Order Bad Request", getDetails(e));
+		return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+	}
+
+	@ExceptionHandler(OrderNotFoundException.class)
+	public ResponseEntity<Object> handleOrderNotFoundException(OrderNotFoundException e, WebRequest request) {
+		ErrorResponse error = new ErrorResponse(HttpStatus.NOT_FOUND.name(), "Order Not Found", getDetails(e));
+		return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+	}
+
 	private List<String> getDetails(Exception e) {
 		return Arrays.asList(e.getLocalizedMessage());
 	}
