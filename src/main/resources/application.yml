@@ -1,19 +1,51 @@
+#spring:
+#  jackson:
+#    serialization:
+#      write-dates-as-timestamps: false
+#  jpa:
+#    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+#    hibernate:
+#      ddl-auto: update
+#    show-sql: true
+#  datasource:
+#      url: jdbc:mysql://localhost/prueba?userSSL=false
+#      dbname: prueba
+#      username: root
+#      password:
+#      driver-class-name: com.mysql.cj.jdbc.Driver
+
 spring:
-  jackson:
-    serialization:
-      write-dates-as-timestamps: false
+  h2:
+    console:
+      enabled: true
+  # ===============================
+  # DB
+  # ===============================
+  datasource:
+    url: jdbc:h2:mem:productDB;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driverClassName: org.h2.Driver
+    platform: h2
+    username: sa
+    password:
+
+  # ===============================
+  # JPA / HIBERNATE
+  # ===============================
   jpa:
-    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    show-sql: true
     hibernate:
       ddl-auto: update
-    show-sql: true
-  datasource:
-      url: jdbc:mysql://127.0.0.1:3306/payments?zeroDateTimeBehavior=convertToNull
-      username: root
-      password: password
+    database-platform: org.hibernate.dialect.H2Dialect
+    properties:
+      hibernate:
+        show_sql: true
+        use_sql_comments: false
+        format_sql: false
 
 server:
   port: 8080
+  error:
+    include-message: always
   servlet:
-    context-path: '/payments'
+    context-path: '/api/payments'
 ---
