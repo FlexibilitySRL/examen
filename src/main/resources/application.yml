@@ -3,13 +3,13 @@ spring:
     serialization:
       write-dates-as-timestamps: false
   jpa:
-    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
       ddl-auto: update
     show-sql: true
   datasource:
-      url: jdbc:mysql://127.0.0.1:3306/payments?zeroDateTimeBehavior=convertToNull
-      username: root
+      url: jdbc:h2:mem:payments
+      username: sa
       password: password
 
 server:
