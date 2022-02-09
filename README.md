@@ -61,10 +61,19 @@ Bonus
 
 Los diferentes urls nos llegan al servicio en funcionamiento y la documentación swagger.
 
+Documentación de la api con postman:
 
-[Postman](/https://documenter.getpostman.com/view/14355310/UVeDtT1r)
+- [Postman](https://documenter.getpostman.com/view/14355310/UVeDtT1r)
 
-[Swagger](/https://prueba-springboot-rest.herokuapp.com/api/payments/swagger-ui.html)
+Api Hosteada:
+
+- Servicio hosteado en Heroku
+
+  - [base url](https://prueba-springboot-rest.herokuapp.com/api/payments)
+
+- Doc de la api hosteada en heroku
+
+  - [Swagger](https://prueba-springboot-rest.herokuapp.com/api/payments/swagger-ui.html)
 
 
 
