@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 
 @SpringBootApplication
 @Configuration
-@ComponentScan("ar.com.plug")
+//@ComponentScan("ar.com.plug")
 public class Application {
 
     public static void main(final String[] args)
