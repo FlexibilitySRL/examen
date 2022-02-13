@@ -1,51 +1,59 @@
 package ar.com.plug.examen.app.rest;
 
+import ar.com.plug.examen.app.api.ClientApi;
+import ar.com.plug.examen.domain.exception.ClientNotFoundException;
+import ar.com.plug.examen.domain.exception.ErrorResponse;
 import ar.com.plug.examen.domain.model.Client;
 import ar.com.plug.examen.domain.service.ClientService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("clients")
 @RequiredArgsConstructor
+@Tag(name = "Client service", description = "Client CRUD")
+@Validated
 public class ClientController {
 
     private final ClientService clientService;
 
     @GetMapping
     public ResponseEntity<List<Client>> getClients() {
-        return new ResponseEntity<>(clientService.getClients(), HttpStatus.OK);
+        return new ResponseEntity<>(clientService.getAll(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Client> getClientById(@PathVariable("id") long id) {
-        Optional<Client> client = clientService.findById(id);
-        return client.map(value -> new ResponseEntity<>(value, HttpStatus.OK)).orElseGet(() -> ResponseEntity.notFound().build());
+        return new ResponseEntity<>(clientService.findById(id), HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<Client> createClient(@Valid @RequestBody Client request) {
-        Client client = clientService.save(new Client(request.getFirstName(), request.getLastName()));
-        return new ResponseEntity<>(client, HttpStatus.CREATED);
+    public ResponseEntity<Client> createClient(@Valid @RequestBody ClientApi clientApi) {
+        return new ResponseEntity<>(clientService.save(new Client(clientApi.getFirstName(), clientApi.getLastName())), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Client> updateClient(@PathVariable("id") long id, @Valid @RequestBody Client request) {
-        Optional<Client> clientData = clientService.findById(id);
-        if (clientData.isPresent()) {
-            Client client = clientData.get();
-            client.setFirstName(request.getFirstName());
-            client.setLastName(request.getLastName());
-            return new ResponseEntity<>(clientService.save(client), HttpStatus.OK);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<Client> updateClient(@PathVariable("id") long id, @Valid @RequestBody ClientApi clientApi) {
+
+        Client client = clientService.findById(id);
+        client.setFirstName(clientApi.getFirstName());
+        client.setLastName(clientApi.getLastName());
+        return new ResponseEntity<>(clientService.save(client), HttpStatus.OK);
 
     }
 
@@ -54,4 +62,10 @@ public class ClientController {
         clientService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
+
+    @ExceptionHandler(value = ClientNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleClientNotFoundException() {
+        return ResponseEntity.notFound().build();
+    }
+
 }

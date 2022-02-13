@@ -1,7 +1,7 @@
 package ar.com.plug.examen.integration;
 
+import ar.com.plug.examen.app.api.ClientApi;
 import ar.com.plug.examen.app.rest.ClientController;
-import ar.com.plug.examen.domain.model.Client;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,15 +19,24 @@ public class ClientIntegrationTest {
     private ClientController clientController;
 
     @Test
-    public void testCreateClient() {
-
-        Client client = new Client("John", "Smith");
-
-        clientController.createClient(client);
+    public void testGetClients() {
 
         ResponseEntity response = clientController.getClients();
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(1, ((ArrayList) response.getBody()).size());
+        assertEquals(2, ((ArrayList) response.getBody()).size());
+    }
+
+    @Test
+    public void testCreateClient() {
+
+        ClientApi clientApi = new ClientApi("John", "Smith");
+
+        clientController.createClient(clientApi);
+
+        ResponseEntity response = clientController.getClients();
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(3, ((ArrayList) response.getBody()).size());
     }
 }
