@@ -42,7 +42,12 @@ Bonus
 
 You can see and test every endpoint here: /payments/swagger-ui/index.html
 
-or use postman collection
+or use postman collection (in project folder)
+
+AWS EC2 API example: http://ec2-3-140-242-134.us-east-2.compute.amazonaws.com/payments/clients
+
+SWAGGER: http://ec2-3-140-242-134.us-east-2.compute.amazonaws.com/payments/swagger-ui/index.html
+
 
 ##Clients: 
 Endpoints with CRUD operation for clients

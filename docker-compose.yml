@@ -9,7 +9,21 @@ services:
       MYSQL_DATABASE: payments
     ports:
       - 3306:3306
-#  backend:
+  examen:
+    depends_on:
+      - db
+    image: public.ecr.aws/y8h4j0q9/examen
+    ports:
+      - 8080:8080
+    environment:
+      SPRING_APPLICATION_JSON: '{
+        "spring.datasource.url"  : "jdbc:mysql://ec2-user_db_1:3306/payments?allowPublicKeyRetrieval=true&useSSL=false",
+        "spring.datasource.username" : "root",
+        "spring.datasource.password" : "password",
+        "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQL8Dialect",
+        "spring.jpa.hibernate.ddl-auto" : "update"
+      }'
+#  examen:
 #    depends_on:
 #      - db
 #    build: .

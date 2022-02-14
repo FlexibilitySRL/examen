@@ -1,0 +1,515 @@
+{
+	"info": {
+		"_postman_id": "9190c093-8c2d-4103-804e-791a1898c6b9",
+		"name": "examen",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "clients",
+			"item": [
+				{
+					"name": "getClients",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"message\": \"hola\"\n}"
+						},
+						"url": {
+							"raw": "{{host}}/payments/clients",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"payments",
+								"clients"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getClientsById",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"message\": \"hola\"\n}"
+						},
+						"url": {
+							"raw": "localhost:8080/payments/clients/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"payments",
+								"clients",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addClient",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"John\",\n    \"lastName\": \"Smith\"\n}"
+						},
+						"url": {
+							"raw": "{{host}}/payments/clients",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"payments",
+								"clients"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateClient",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"Martin\",\n    \"lastName\": \"Zoe2\"\n}"
+						},
+						"url": {
+							"raw": "{{host}}/payments/clients/19",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"payments",
+								"clients",
+								"19"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteClient",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"Martin\",\n    \"lastName\": \"Zoe2\"\n}"
+						},
+						"url": {
+							"raw": "{{host}}/payments/clients/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"payments",
+								"clients",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "products",
+			"item": [
+				{
+					"name": "getProducts",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"message\": \"hola\"\n}"
+						},
+						"url": {
+							"raw": "{{host}}/payments/products",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"payments",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteProduct",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"Martin\",\n    \"lastName\": \"Zoe2\"\n}"
+						},
+						"url": {
+							"raw": "{{host}}/payments/products/2",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"payments",
+								"products",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addProduct",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"description\": \"Product3\",\n    \"price\": 12\n}"
+						},
+						"url": {
+							"raw": "{{host}}/payments/products",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"payments",
+								"products"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "transactions",
+			"item": [
+				{
+					"name": "newTransaction",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"type\": \"BUY\",\n    \"clientId\": \"2\",\n    \"vendorId\": \"1\",\n    \"products\": [\n        {\n            \"product\": \"1\",\n            \"amount\": \"10\"\n        },\n         {\n            \"product\": \"2\",\n            \"amount\": \"5\"\n        }\n    ]\n}"
+						},
+						"url": {
+							"raw": "{{host}}/payments/transactions",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"payments",
+								"transactions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "confirmTransaction",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/payments/transactions/3/confirm",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"payments",
+								"transactions",
+								"3",
+								"confirm"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getTransactions",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"message\": \"hola\"\n}"
+						},
+						"url": {
+							"raw": "{{host}}/payments/transactions/3",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"payments",
+								"transactions",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "vendors",
+			"item": [
+				{
+					"name": "getVendors",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"message\": \"hola\"\n}"
+						},
+						"url": {
+							"raw": "{{host}}/payments/vendors",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"payments",
+								"vendors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addVendor",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"John\",\n    \"ssn\": \"123-12-1234\"\n}"
+						},
+						"url": {
+							"raw": "{{host}}/payments/vendors",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"payments",
+								"vendors"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "echo",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "default"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"message\": \"hola\"\n}"
+				},
+				"url": {
+					"raw": "localhost:8080/payments/echo",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"payments",
+						"echo"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
