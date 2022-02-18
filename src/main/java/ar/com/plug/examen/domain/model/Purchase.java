@@ -1,7 +1,6 @@
 package ar.com.plug.examen.domain.model;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -12,6 +11,9 @@ import lombok.ToString.Exclude;
 @Setter
 @Getter
 @Entity
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Purchase {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

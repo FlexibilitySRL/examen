@@ -14,6 +14,7 @@ import ar.com.plug.examen.domain.service.PurchaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -71,6 +72,19 @@ public class PurchaseServiceImpl implements PurchaseService {
                 .stream()
                 .map(PurchaseDTO::fromModelToDto)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public void approvePurchase(long idPurchase) {
+        Optional<Purchase> purchaseResult = purchaseRepository.findById(idPurchase);
+        purchaseResult.get().setIdPurchase(idPurchase);
+        purchaseResult.get().setUpdateDate(LocalDateTime.now());
+        purchaseRepository.save(purchaseResult.get());
+
+        PurchaseDetail purchaseDetail = PurchaseDetail.builder()
+                .purchaseState(PurchaseState.APROBADA)
+                .purchase(purchaseResult.get()).build();
+        purchaseDetailRepository.save(purchaseDetail);
     }
 
 

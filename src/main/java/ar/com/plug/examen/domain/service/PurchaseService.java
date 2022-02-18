@@ -8,4 +8,6 @@ public interface PurchaseService {
     void createPurchase(PurchaseDTO purchaseDTO);
 
     List<PurchaseDTO> listPurchase();
+
+    void approvePurchase(long idPurchase);
 }

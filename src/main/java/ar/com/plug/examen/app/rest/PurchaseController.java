@@ -17,12 +17,19 @@ public class PurchaseController {
     @PostMapping(path = "/savePurchase",  produces = {MediaType.APPLICATION_JSON_VALUE },
             consumes = MediaType.APPLICATION_JSON_VALUE)
 
-    public void createProduct(@RequestBody PurchaseDTO purchaseDTO) {
+    public void createPurchase(@RequestBody PurchaseDTO purchaseDTO) {
         purchaseService.createPurchase(purchaseDTO);
     }
 
     @GetMapping(value = "/listPurchases", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<PurchaseDTO> getListPurchase() {
       return purchaseService.listPurchase();
+    }
+
+    @PostMapping(path = "/approvePurchase/{idPurchase}",  produces = {MediaType.APPLICATION_JSON_VALUE },
+            consumes = MediaType.APPLICATION_JSON_VALUE)
+
+    public void approvePurchase(@PathVariable("idPurchase") Long id) {
+        purchaseService.approvePurchase(id);
     }
 }
