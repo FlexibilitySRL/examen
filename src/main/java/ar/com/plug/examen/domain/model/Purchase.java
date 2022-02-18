@@ -3,9 +3,11 @@ package ar.com.plug.examen.domain.model;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import lombok.ToString.Exclude;
 
 @Setter
 @Getter
@@ -15,12 +17,14 @@ public class Purchase {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idPurchase;
 
-    @ManyToOne
-    @JoinColumn(name = "id_customer", nullable = false)
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_customer")
+    @Exclude
     private Customer customer;
 
-    @ManyToOne
-    @JoinColumn(name = "id_seller", nullable = false)
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_seller")
+    @Exclude
     private Seller seller;
 
     @Column
@@ -34,4 +38,6 @@ public class Purchase {
 
     @Column
     private BigDecimal amount;
+
+    private LocalDateTime updateDate;
 }
