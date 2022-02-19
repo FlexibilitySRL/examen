@@ -2,6 +2,8 @@ package ar.com.plug.examen.domain.exception;
 
 import java.util.NoSuchElementException;
 
+import javax.xml.bind.ValidationException;
+
 import ar.com.plug.examen.app.api.ApiError;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -35,7 +37,7 @@ public class CustomExceptionHandler {
 
 	@ApiResponse(responseCode = BAD_REQUEST_VALUE, content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ApiError.class))})
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	@ExceptionHandler(value = {MethodArgumentNotValidException.class})
+	@ExceptionHandler(value = {MethodArgumentNotValidException.class, ValidationException.class})
 	protected ApiError handleMethodArgumentNotValid(MethodArgumentNotValidException ex) {
 		return responseBody(HttpStatus.BAD_REQUEST, ex);
 	}
@@ -45,6 +47,13 @@ public class CustomExceptionHandler {
 	@ExceptionHandler(value = {NoSuchElementException.class})
 	public final ApiError handleNoElement(final NoSuchElementException ex) {
 		return responseBody(HttpStatus.NOT_FOUND, ex);
+	}
+
+	@ApiResponse(responseCode = NOT_FOUND_VALUE, content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ApiError.class))})
+	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+	@ExceptionHandler(value = {Exception.class})
+	public final ApiError handleInternalError(final Exception ex) {
+		return responseBody(HttpStatus.INTERNAL_SERVER_ERROR, ex);
 	}
 
 	private ApiError responseBody(final HttpStatus httpStatus, final Exception ex) {

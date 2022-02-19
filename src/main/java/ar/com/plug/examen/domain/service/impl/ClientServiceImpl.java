@@ -1,8 +1,13 @@
 package ar.com.plug.examen.domain.service.impl;
 
+import java.util.Date;
 import java.util.NoSuchElementException;
 import java.util.Objects;
+import java.util.Optional;
 
+import javax.xml.bind.ValidationException;
+
+import ar.com.plug.examen.app.api.ClientDto;
 import ar.com.plug.examen.app.api.PageDto;
 import ar.com.plug.examen.domain.model.Client;
 import ar.com.plug.examen.domain.repository.ClientRepository;
@@ -45,7 +50,12 @@ public class ClientServiceImpl implements ClientService
 		if(Objects.isNull(id)) {
 			throw new NoSuchElementException("El id del cliente no puede ser nulo.");
 		}
-		return this.clientRepository.getOne(id);
+		Optional<Client> optionalClient = this.clientRepository.findById(id);
+		if (optionalClient.isPresent()){
+			return optionalClient.get();
+		} else {
+			throw new NoSuchElementException("El id del cliente no se encuentra en la base de datos.");
+		}
 	}
 
 	@Override
@@ -54,8 +64,82 @@ public class ClientServiceImpl implements ClientService
 		if(StringUtils.isBlank(document)) {
 			throw new NoSuchElementException("El número de documento del cliente no puede ser nulo.");
 		}
-		return this.clientRepository.findByDocument(document);
+		Client clientToReturn = this.clientRepository.findByDocument(document);
+		if (Objects.nonNull(clientToReturn)){
+			return clientToReturn;
+		} else {
+			throw new NoSuchElementException("El número de documento del cliente no se encuentra en la base de datos.");
+		}
 	}
 
+	@Override
+	public Client saveClient(ClientDto clientDto) throws ValidationException
+	{
+		if(Objects.isNull(clientDto)){
+			throw new ValidationException("Los datos para la creación de un cliente no pueden ser nulos.");
+		}
+		Client newClient = Client.builder()
+			.name(clientDto.getName())
+			.lastname(clientDto.getLastname())
+			.document(clientDto.getDocument())
+			.phone(clientDto.getPhone())
+			.email(clientDto.getEmail())
+			.active(clientDto.getActive())
+			.modificationDate(new Date())
+			.build();
+		return this.clientRepository.save(newClient);
+	}
 
+	@Override
+	public Client updateClient(Long id, ClientDto clientDto) throws ValidationException
+	{
+		if (Objects.isNull(id) || (Objects.isNull(clientDto))){
+			throw new ValidationException("Los datos para la actualización de un cliente no pueden ser nulos.");
+		}
+		if (this.clientRepository.existsById(id)) {
+
+			Client updateClient = Client.builder()
+				.id(id)
+				.name(clientDto.getName())
+				.lastname(clientDto.getLastname())
+				.document(clientDto.getDocument())
+				.phone(clientDto.getPhone())
+				.email(clientDto.getEmail())
+				.active(clientDto.getActive())
+				.modificationDate(new Date())
+				.build();
+			return this.clientRepository.save(updateClient);
+		} else {
+			throw new NoSuchElementException("El cliente con el id "+id+" no existe.");
+		}
+	}
+
+	@Override
+	public Client inactivateClient(Long id) throws ValidationException
+	{
+		if (Objects.isNull(id)) {
+			throw new ValidationException("Los datos para la actualización de un cliente no pueden ser nulos.");
+		}
+		if (this.clientRepository.existsById(id)) {
+			Client clientFromDatabase = this.clientRepository.getOne(id);
+			clientFromDatabase.setActive(Boolean.FALSE);
+			return this.clientRepository.save(clientFromDatabase);
+		} else {
+			throw new NoSuchElementException("El cliente con el id "+id+" no existe.");
+		}
+	}
+
+	@Override
+	public Long deleteClient(Long id) throws ValidationException
+	{
+		if (Objects.isNull(id)) {
+			throw new ValidationException("Los datos para la actualización de un cliente no pueden ser nulos.");
+		}
+		if (this.clientRepository.existsById(id)) {
+			this.clientRepository.deleteById(id);
+			return id;
+		} else {
+			throw new NoSuchElementException("El cliente con el id "+id+" no existe.");
+		}
+	}
 }

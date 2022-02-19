@@ -1,13 +1,16 @@
 package ar.com.plug.examen.domain.service.service;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
+import javax.xml.bind.ValidationException;
 
+import ar.com.plug.examen.app.api.ClientDto;
 import ar.com.plug.examen.app.api.PageDto;
 import ar.com.plug.examen.domain.model.Client;
 import ar.com.plug.examen.domain.repository.ClientRepository;
@@ -101,7 +104,7 @@ public class ClientServiceImplTest
 	public void getClientByIdTest()
 	{
 		client1.setId(10L);
-		when(repository.getOne(10L)).thenReturn(client1);
+		when(repository.findById(10L)).thenReturn(Optional.ofNullable(client1));
 		Client clientFromService = service.getClientById(10L);
 		assertThat(clientFromService.getId()).isEqualTo(client1.getId());
 	}
@@ -140,5 +143,110 @@ public class ClientServiceImplTest
 		assertThat(clientPageTest.getContent().size()).isEqualTo(pageSize);
 		assertThat(clientPageTest.getContent().get(0).getDocument()).isEqualTo(client1.getDocument());
 		assertThat(clientPageTest.getContent().get(1).getDocument()).isEqualTo(client2.getDocument());
+	}
+
+	@Test(expected = ValidationException.class)
+	public void saveClientThrowsExceptionTest() throws ValidationException
+	{
+		service.saveClient(null);
+	}
+
+	@Test
+	public void saveClientTest() throws ValidationException
+	{
+		client1.setId(1L);
+		ClientDto dto = new ClientDto(client1.getName(), client1.getLastname(),
+			client1.getDocument(), client1.getPhone(), client1.getEmail(), client1.getActive());
+		when(repository.save(any(Client.class))).thenReturn(client1);
+		Client savedClient = service.saveClient(dto);
+		assertThat(savedClient).isNotNull();
+		assertThat(savedClient.getDocument()).isEqualTo(dto.getDocument());
+	}
+
+	@Test
+	public void updateClientTest() throws ValidationException
+	{
+		String updatedName = "updated";
+		client1.setId(1L);
+		client1.setName(updatedName);
+
+		ClientDto dto = new ClientDto(updatedName, client1.getLastname(),
+			client1.getDocument(), client1.getPhone(), client1.getEmail(), client1.getActive());
+		when(repository.existsById(1L)).thenReturn(true);
+		when(repository.save(any(Client.class))).thenReturn(client1);
+
+		Client updatedClient = service.updateClient(1L, dto);
+		assertThat(updatedClient).isNotNull();
+		assertThat(updatedClient.getDocument()).isEqualTo(dto.getDocument());
+		assertThat(updatedClient.getName()).isEqualTo(updatedName);
+	}
+
+	@Test(expected = NoSuchElementException.class)
+	public void updateClientWrongId() throws ValidationException
+	{
+		String updatedName = "updated";
+		client1.setId(1L);
+		client1.setName(updatedName);
+
+		ClientDto dto = new ClientDto(updatedName, client1.getLastname(),
+			client1.getDocument(), client1.getPhone(), client1.getEmail(), client1.getActive());
+		when(repository.existsById(1L)).thenReturn(false);
+		when(repository.save(any(Client.class))).thenReturn(client1);
+		service.updateClient(1L, dto);
+	}
+
+	@Test(expected = ValidationException.class)
+	public void updateClientNullId() throws ValidationException
+	{
+		String updatedName = "updated";
+		client1.setId(1L);
+		client1.setName(updatedName);
+
+		ClientDto dto = new ClientDto(updatedName, client1.getLastname(),
+			client1.getDocument(), client1.getPhone(), client1.getEmail(), client1.getActive());
+		when(repository.existsById(1L)).thenReturn(false);
+		when(repository.save(any(Client.class))).thenReturn(client1);
+		service.updateClient(null, dto);
+	}
+
+	@Test(expected = ValidationException.class)
+	public void updateClientNullDto() throws ValidationException
+	{
+		String updatedName = "updated";
+		client1.setId(1L);
+		client1.setName(updatedName);
+
+		ClientDto dto = new ClientDto(updatedName, client1.getLastname(),
+			client1.getDocument(), client1.getPhone(), client1.getEmail(), client1.getActive());
+		when(repository.existsById(1L)).thenReturn(false);
+		when(repository.save(any(Client.class))).thenReturn(client1);
+		service.updateClient(1L, null);
+	}
+
+	@Test(expected = ValidationException.class)
+	public void inactiveClientNullId() throws ValidationException
+	{
+		service.inactivateClient(null);
+	}
+
+	@Test(expected = NoSuchElementException.class)
+	public void inactivateClientWrongId() throws ValidationException
+	{
+		when(repository.existsById(1L)).thenReturn(false);
+		service.inactivateClient(1L);
+	}
+
+	@Test
+	public void inactivateClientTest() throws ValidationException
+	{
+		client1.setId(1L);
+		client1.setActive(false);
+		when(repository.existsById(1L)).thenReturn(true);
+		when(repository.getOne(1L)).thenReturn(client1);
+		when(repository.save(any(Client.class))).thenReturn(client1);
+		Client inactiveClient = service.inactivateClient(1L);
+		assertThat(inactiveClient).isNotNull();
+		assertThat(inactiveClient.getActive()).isFalse();
+		assertThat(inactiveClient.getId()).isEqualTo(client1.getId());
 	}
 }
