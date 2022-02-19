@@ -20,4 +20,4 @@ INSERT INTO product
 VALUES ('own-001', 'dbug-001', null, null, 'product-1-description', true, 1, 10, now(), now());
 INSERT INTO product
 (sku, sku_vendor, cost, sale_price, description, active, seller_id, stock_quantity, modification_date, creation_date)
-VALUES ('own-001', 'wen-001', null, null, 'product-10-description', true, 2, 10, now(), now());
+VALUES ('own-002', 'wen-001', null, null, 'product-10-description', true, 2, 10, now(), now());

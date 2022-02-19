@@ -20,7 +20,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class ClientRepositoryTest
 {
 	@Autowired
-	private ClientRepository clientRepository;
+	private ClientRepository repository;
 	private Client client1;
 	private Client client2;
 	private Client client3;
@@ -89,45 +89,45 @@ public class ClientRepositoryTest
 	@Test
 	public void autowiredNotNull()
 	{
-		assertThat(clientRepository).isNotNull();
+		assertThat(repository).isNotNull();
 	}
 
 	@Test
 	public void testSaveClient()
 	{
-		Client savedClient = clientRepository.save(client1);
-		assertThat(savedClient.getId()).isGreaterThan(0);
-		assertThat(savedClient.getActive()).isEqualTo(Boolean.TRUE);
-		assertThat(savedClient.getName()).isEqualTo("TestClient1");
-		assertThat(savedClient.getLastname()).isEqualTo("TestClient1Lastname");
-		assertThat(savedClient.getPhone()).isEqualTo("+595971100100");
-		assertThat(savedClient.getEmail()).isEqualTo("testclient1@email.com");
+		Client savedEntity = repository.save(client1);
+		assertThat(savedEntity.getId()).isGreaterThan(0);
+		assertThat(savedEntity.getActive()).isEqualTo(Boolean.TRUE);
+		assertThat(savedEntity.getName()).isEqualTo("TestClient1");
+		assertThat(savedEntity.getLastname()).isEqualTo("TestClient1Lastname");
+		assertThat(savedEntity.getPhone()).isEqualTo("+595971100100");
+		assertThat(savedEntity.getEmail()).isEqualTo("testclient1@email.com");
 	}
 
 	@Test
 	public void testFindClientByDocument()
 	{
-		Client savedClient = clientRepository.save(client2);
-		assertThat(savedClient).isNotNull();
-		assertThat(savedClient.getDocument()).isEqualTo(clientRepository.findByDocument("564632").getDocument());
+		Client savedEntity = repository.save(client2);
+		assertThat(savedEntity).isNotNull();
+		assertThat(savedEntity.getDocument()).isEqualTo(repository.findByDocument("564632").getDocument());
 	}
 
 	@Test
 	public void testFindClientsPageable()
 	{
-		clientRepository.save(client1);
-		clientRepository.save(client2);
-		clientRepository.save(client3);
-		clientRepository.save(client4);
-		clientRepository.save(client5);
+		repository.save(client1);
+		repository.save(client2);
+		repository.save(client3);
+		repository.save(client4);
+		repository.save(client5);
 
-		Page<Client> page1 = clientRepository.findAll(PageRequest.of(0, 3));
+		Page<Client> page1 = repository.findAll(PageRequest.of(0, 3));
 		assertThat(page1).isNotNull();
 		assertThat(page1.getSize()).isEqualTo(3);
 		assertThat(page1.getContent().get(0).getDocument()).isEqualTo("564631");
 		assertThat(page1.getContent().get(1).getDocument()).isEqualTo("564632");
 
-		Page<Client> page2 = clientRepository.findAll(PageRequest.of(1, 3));
+		Page<Client> page2 = repository.findAll(PageRequest.of(1, 3));
 		assertThat(page2).isNotNull();
 		assertThat(page2.getSize()).isEqualTo(3);
 		assertThat(page2.getContent().get(0).getDocument()).isEqualTo("564634");

@@ -101,6 +101,12 @@ public class ClientServiceImplTest
 	}
 
 	@Test
+	public void autowiredNotNull()
+	{
+		assertThat(repository).isNotNull();
+	}
+
+	@Test
 	public void getClientByIdTest()
 	{
 		client1.setId(10L);

@@ -36,7 +36,7 @@ public class Client
 	@Column(name = "lastname", nullable = false)
 	private String lastname;
 
-	@Column(name = "document", nullable = false)
+	@Column(name = "document", nullable = false, unique = true)
 	private String document;
 
 	@Column(name = "phone")

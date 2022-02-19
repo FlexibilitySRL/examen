@@ -28,7 +28,8 @@ CREATE TABLE seller (
 	active bool NOT NULL DEFAULT TRUE,
 	modification_date timestamp NOT NULL DEFAULT now(),
 	creation_date timestamp NOT NULL DEFAULT now(),
-	CONSTRAINT seller_pk PRIMARY KEY (id)
+	CONSTRAINT seller_pk PRIMARY KEY (id),
+	CONSTRAINT unique_seller_code UNIQUE (code)
 );
 
 CREATE TABLE product (
@@ -43,7 +44,8 @@ CREATE TABLE product (
 	stock_quantity int NOT NULL DEFAULT 0,
 	modification_date timestamp NOT NULL DEFAULT now(),
 	creation_date timestamp NOT NULL DEFAULT now(),
-	CONSTRAINT product_pk PRIMARY KEY (id)
+	CONSTRAINT product_pk PRIMARY KEY (id),
+	CONSTRAINT unique_product_sku UNIQUE (sku)
 );
 ALTER TABLE product ADD CONSTRAINT product_seller_fk FOREIGN KEY (seller_id) REFERENCES seller(id);
 

@@ -3,10 +3,10 @@ package ar.com.plug.examen.app.rest;
 import javax.validation.Valid;
 import javax.xml.bind.ValidationException;
 
-import ar.com.plug.examen.app.api.ClientDto;
 import ar.com.plug.examen.app.api.PageDto;
-import ar.com.plug.examen.domain.model.Client;
-import ar.com.plug.examen.domain.service.ClientService;
+import ar.com.plug.examen.app.api.SellerDto;
+import ar.com.plug.examen.domain.model.Seller;
+import ar.com.plug.examen.domain.service.SellerService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -29,19 +29,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @Log4j2
-@Tag(name = "Clients")
-public class ClientController
+@Tag(name = "Sellers")
+public class SellerController
 {
-
-	private final ClientService clientService;
+	private final SellerService sellerService;
 
 	@Autowired
-	public ClientController(ClientService clientService)
+	public SellerController(SellerService sellerService)
 	{
-		this.clientService = clientService;
+		this.sellerService = sellerService;
 	}
 
-	@Operation(summary = "Gets a paginated list of clients")
+	@Operation(summary = "Gets a paginated list of sellers")
 	@ResponseStatus(HttpStatus.OK)
 	@ApiResponse(
 		responseCode = "200",
@@ -52,17 +51,17 @@ public class ClientController
 			)
 		}
 	)
-	@GetMapping(value = "/clients", produces = MediaType.APPLICATION_JSON_VALUE)
-	public PageDto<Client> allClients(
+	@GetMapping(value = "/sellers", produces = MediaType.APPLICATION_JSON_VALUE)
+	public PageDto<Seller> allSellers(
 		@Parameter(description = "Number of the starting page", example = "0")
 		@RequestParam(defaultValue = "0") int page,
 		@Parameter(description = "Amount of items per page", example = "5")
 		@RequestParam(defaultValue = "5") int size)
 	{
-		return this.clientService.getAllClients(page, size);
+		return this.sellerService.getAllSellersPageable(page, size);
 	}
 
-	@Operation(summary = "Gets a paginated list of active clients")
+	@Operation(summary = "Gets a paginated list of active sellers")
 	@ResponseStatus(HttpStatus.OK)
 	@ApiResponse(
 		responseCode = "200",
@@ -73,126 +72,126 @@ public class ClientController
 			)
 		}
 	)
-	@GetMapping(value = "/clients/active", produces = MediaType.APPLICATION_JSON_VALUE)
-	public PageDto<Client> activeClients(
+	@GetMapping(value = "/sellers/active", produces = MediaType.APPLICATION_JSON_VALUE)
+	public PageDto<Seller> activeSellers(
 		@Parameter(description = "Number of the starting page", example = "0")
 		@RequestParam(defaultValue = "0") int page,
 		@Parameter(description = "Amount of items per page", example = "5")
 		@RequestParam(defaultValue = "5") int size)
 	{
-		return this.clientService.getActiveClientsPageable(page, size);
+		return this.sellerService.getActiveSellersPageable(page, size);
 	}
 
-	@Operation(summary = "Gets client by its document number")
+	@Operation(summary = "Gets a seller by its code number")
 	@ResponseStatus(HttpStatus.OK)
 	@ApiResponse(
 		responseCode = "200",
 		content = {
 			@Content(
 				mediaType = MediaType.APPLICATION_JSON_VALUE,
-				schema = @Schema(implementation = Client.class)
+				schema = @Schema(implementation = Seller.class)
 			)
 		}
 	)
-	@GetMapping(value = "/client", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Client clientByDocument(
-		@Parameter(description = "Client's document number", example = "3509091")
-		@RequestParam String document)
+	@GetMapping(value = "/seller", produces = MediaType.APPLICATION_JSON_VALUE)
+	public Seller sellerByCode(
+		@Parameter(description = "Seller's code number", example = "3509091")
+		@RequestParam String code)
 	{
-		return this.clientService.getClientByDocumentNumber(document);
+		return this.sellerService.getSellerByCode(code);
 	}
 
-	@Operation(summary = "Gets client by its id")
+	@Operation(summary = "Gets a seller by its id")
 	@ResponseStatus(HttpStatus.OK)
 	@ApiResponse(
 		responseCode = "200",
 		content = {
 			@Content(
 				mediaType = MediaType.APPLICATION_JSON_VALUE,
-				schema = @Schema(implementation = Client.class)
+				schema = @Schema(implementation = Seller.class)
 			)
 		}
 	)
-	@GetMapping(value = "/client/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Client clientByDocument(
-		@Parameter(description = "Client's internal id", example = "2")
+	@GetMapping(value = "/seller/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public Seller sellerByDocument(
+		@Parameter(description = "Seller's internal id", example = "2")
 		@PathVariable Long id)
 	{
-		return this.clientService.getClientById(id);
+		return this.sellerService.getSellerById(id);
 	}
 
-	@Operation(summary = "Creates a new client.")
+	@Operation(summary = "Creates a new seller.")
 	@ResponseStatus(HttpStatus.OK)
 	@ApiResponse(
 		responseCode = "200",
 		content = {
 			@Content(
 				mediaType = MediaType.APPLICATION_JSON_VALUE,
-				schema = @Schema(implementation = Client.class)
+				schema = @Schema(implementation = Seller.class)
 			)
 		}
 	)
-	@PostMapping(value = "/client", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Client createClient(@RequestBody @Valid ClientDto clientDto) throws ValidationException
+	@PostMapping(value = "/seller", produces = MediaType.APPLICATION_JSON_VALUE)
+	public Seller createSeller(@RequestBody @Valid SellerDto sellerDto) throws ValidationException
 	{
-		return this.clientService.saveClient(clientDto);
+		return this.sellerService.saveSeller(sellerDto);
 	}
 
-	@Operation(summary = "Updates the information of a client.")
+	@Operation(summary = "Updates the information of a seller.")
 	@ResponseStatus(HttpStatus.OK)
 	@ApiResponse(
 		responseCode = "200",
 		content = {
 			@Content(
 				mediaType = MediaType.APPLICATION_JSON_VALUE,
-				schema = @Schema(implementation = Client.class)
+				schema = @Schema(implementation = Seller.class)
 			)
 		}
 	)
-	@PutMapping(value = "/client/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Client updateClient(
-		@Parameter(description = "Client's internal id", example = "2")
+	@PutMapping(value = "/seller/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public Seller updateSeller(
+		@Parameter(description = "Seller's internal id", example = "2")
 		@PathVariable Long id,
-		@RequestBody @Valid ClientDto dto) throws ValidationException
+		@RequestBody @Valid SellerDto dto) throws ValidationException
 	{
-		return this.clientService.updateClient(id, dto);
+		return this.sellerService.updateSeller(id, dto);
 	}
 
-	@Operation(summary = "Delete a client logically by inactivate him.")
+	@Operation(summary = "Delete a seller logically by inactivate him.")
 	@ResponseStatus(HttpStatus.OK)
 	@ApiResponse(
 		responseCode = "200",
 		content = {
 			@Content(
 				mediaType = MediaType.APPLICATION_JSON_VALUE,
-				schema = @Schema(implementation = Client.class)
+				schema = @Schema(implementation = Seller.class)
 			)
 		}
 	)
-	@PutMapping(value = "/client/inactivate/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Client inactivateClient(
-		@Parameter(description = "Client's internal id", example = "2")
+	@PutMapping(value = "/seller/inactivate/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public Seller inactivateSeller(
+		@Parameter(description = "Seller's internal id", example = "2")
 		@PathVariable Long id) throws ValidationException
 	{
-		return this.clientService.inactivateClient(id);
+		return this.sellerService.inactivateSeller(id);
 	}
 
-	@Operation(summary = "Delete a client physically from the database")
+	@Operation(summary = "Delete a seller physically from the database")
 	@ResponseStatus(HttpStatus.OK)
 	@ApiResponse(
 		responseCode = "200",
 		content = {
 			@Content(
 				mediaType = MediaType.APPLICATION_JSON_VALUE,
-				schema = @Schema(implementation = Client.class)
+				schema = @Schema(implementation = Seller.class)
 			)
 		}
 	)
-	@DeleteMapping(value = "/client/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Long deleteClient(
-		@Parameter(description = "Client's internal id", example = "2")
+	@DeleteMapping(value = "/seller/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public Long deleteSeller(
+		@Parameter(description = "Seller's internal id", example = "2")
 		@PathVariable Long id) throws ValidationException
 	{
-		return this.clientService.deleteClient(id);
+		return this.sellerService.deleteSeller(id);
 	}
 }
