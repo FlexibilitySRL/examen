@@ -4,9 +4,9 @@ import javax.validation.Valid;
 import javax.xml.bind.ValidationException;
 
 import ar.com.plug.examen.app.api.PageDto;
-import ar.com.plug.examen.app.api.SellerDto;
-import ar.com.plug.examen.domain.model.Seller;
-import ar.com.plug.examen.domain.service.SellerService;
+import ar.com.plug.examen.app.api.ProductDto;
+import ar.com.plug.examen.domain.model.Product;
+import ar.com.plug.examen.domain.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -29,18 +29,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @Log4j2
-@Tag(name = "Sellers")
-public class SellerController
+@Tag(name = "Products")
+public class ProductController
 {
-	private final SellerService sellerService;
+	private final ProductService productService;
 
 	@Autowired
-	public SellerController(SellerService sellerService)
+	public ProductController(ProductService productService)
 	{
-		this.sellerService = sellerService;
+		this.productService = productService;
 	}
 
-	@Operation(summary = "Gets a paginated list of sellers")
+	@Operation(summary = "Gets a paginated list of products")
 	@ResponseStatus(HttpStatus.OK)
 	@ApiResponse(
 		responseCode = "200",
@@ -51,17 +51,17 @@ public class SellerController
 			)
 		}
 	)
-	@GetMapping(value = "/sellers", produces = MediaType.APPLICATION_JSON_VALUE)
-	public PageDto<Seller> allSellers(
+	@GetMapping(value = "/products", produces = MediaType.APPLICATION_JSON_VALUE)
+	public PageDto<Product> allProducts(
 		@Parameter(description = "Number of the starting page", example = "0")
 		@RequestParam(defaultValue = "0") int page,
 		@Parameter(description = "Amount of items per page", example = "5")
 		@RequestParam(defaultValue = "5") int size)
 	{
-		return this.sellerService.getAllSellersPageable(page, size);
+		return this.productService.getAllProductsPageable(page, size);
 	}
 
-	@Operation(summary = "Gets a paginated list of active sellers")
+	@Operation(summary = "Gets a paginated list of active products")
 	@ResponseStatus(HttpStatus.OK)
 	@ApiResponse(
 		responseCode = "200",
@@ -72,126 +72,126 @@ public class SellerController
 			)
 		}
 	)
-	@GetMapping(value = "/sellers/active", produces = MediaType.APPLICATION_JSON_VALUE)
-	public PageDto<Seller> activeSellers(
+	@GetMapping(value = "/products/active", produces = MediaType.APPLICATION_JSON_VALUE)
+	public PageDto<Product> activeProducts(
 		@Parameter(description = "Number of the starting page", example = "0")
 		@RequestParam(defaultValue = "0") int page,
 		@Parameter(description = "Amount of items per page", example = "5")
 		@RequestParam(defaultValue = "5") int size)
 	{
-		return this.sellerService.getActiveSellersPageable(page, size);
+		return this.productService.getActiveProductsPageable(page, size);
 	}
 
-	@Operation(summary = "Gets a seller by its code number")
+	@Operation(summary = "Gets a product by its sku")
 	@ResponseStatus(HttpStatus.OK)
 	@ApiResponse(
 		responseCode = "200",
 		content = {
 			@Content(
 				mediaType = MediaType.APPLICATION_JSON_VALUE,
-				schema = @Schema(implementation = Seller.class)
+				schema = @Schema(implementation = Product.class)
 			)
 		}
 	)
-	@GetMapping(value = "/seller", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Seller sellerByCode(
-		@Parameter(description = "Seller's code number", example = "3509091")
-		@RequestParam String code)
+	@GetMapping(value = "/product", produces = MediaType.APPLICATION_JSON_VALUE)
+	public Product productBySku(
+		@Parameter(description = "Product's sku", example = "sku-231")
+		@RequestParam String sku)
 	{
-		return this.sellerService.getSellerByCode(code);
+		return this.productService.getProductBySku(sku);
 	}
 
-	@Operation(summary = "Gets a seller by its id")
+	@Operation(summary = "Gets a product by its id")
 	@ResponseStatus(HttpStatus.OK)
 	@ApiResponse(
 		responseCode = "200",
 		content = {
 			@Content(
 				mediaType = MediaType.APPLICATION_JSON_VALUE,
-				schema = @Schema(implementation = Seller.class)
+				schema = @Schema(implementation = Product.class)
 			)
 		}
 	)
-	@GetMapping(value = "/seller/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Seller sellerById(
-		@Parameter(description = "Seller's internal id", example = "2")
+	@GetMapping(value = "/product/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public Product productById(
+		@Parameter(description = "Product's internal id", example = "2")
 		@PathVariable Long id)
 	{
-		return this.sellerService.getSellerById(id);
+		return this.productService.getProductById(id);
 	}
 
-	@Operation(summary = "Creates a new seller.")
+	@Operation(summary = "Creates a new product.")
 	@ResponseStatus(HttpStatus.OK)
 	@ApiResponse(
 		responseCode = "200",
 		content = {
 			@Content(
 				mediaType = MediaType.APPLICATION_JSON_VALUE,
-				schema = @Schema(implementation = Seller.class)
+				schema = @Schema(implementation = Product.class)
 			)
 		}
 	)
-	@PostMapping(value = "/seller", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Seller createSeller(@RequestBody @Valid SellerDto sellerDto) throws ValidationException
+	@PostMapping(value = "/product", produces = MediaType.APPLICATION_JSON_VALUE)
+	public Product createProduct(@RequestBody @Valid ProductDto productDto) throws ValidationException
 	{
-		return this.sellerService.saveSeller(sellerDto);
+		return this.productService.saveProduct(productDto);
 	}
 
-	@Operation(summary = "Updates the information of a seller.")
+	@Operation(summary = "Updates the information of a product.")
 	@ResponseStatus(HttpStatus.OK)
 	@ApiResponse(
 		responseCode = "200",
 		content = {
 			@Content(
 				mediaType = MediaType.APPLICATION_JSON_VALUE,
-				schema = @Schema(implementation = Seller.class)
+				schema = @Schema(implementation = Product.class)
 			)
 		}
 	)
-	@PutMapping(value = "/seller/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Seller updateSeller(
-		@Parameter(description = "Seller's internal id", example = "2")
+	@PutMapping(value = "/product/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public Product updateProduct(
+		@Parameter(description = "Product's internal id", example = "2")
 		@PathVariable Long id,
-		@RequestBody @Valid SellerDto dto) throws ValidationException
+		@RequestBody @Valid ProductDto dto) throws ValidationException
 	{
-		return this.sellerService.updateSeller(id, dto);
+		return this.productService.updateProduct(id, dto);
 	}
 
-	@Operation(summary = "Delete a seller logically by inactivate him.")
+	@Operation(summary = "Delete a product logically by inactivate it.")
 	@ResponseStatus(HttpStatus.OK)
 	@ApiResponse(
 		responseCode = "200",
 		content = {
 			@Content(
 				mediaType = MediaType.APPLICATION_JSON_VALUE,
-				schema = @Schema(implementation = Seller.class)
+				schema = @Schema(implementation = Product.class)
 			)
 		}
 	)
-	@PutMapping(value = "/seller/inactivate/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Seller inactivateSeller(
-		@Parameter(description = "Seller's internal id", example = "2")
+	@PutMapping(value = "/product/inactivate/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public Product inactivateProduct(
+		@Parameter(description = "Product's internal id", example = "2")
 		@PathVariable Long id) throws ValidationException
 	{
-		return this.sellerService.inactivateSeller(id);
+		return this.productService.inactivateProduct(id);
 	}
 
-	@Operation(summary = "Delete a seller physically from the database")
+	@Operation(summary = "Delete a product physically from the database")
 	@ResponseStatus(HttpStatus.OK)
 	@ApiResponse(
 		responseCode = "200",
 		content = {
 			@Content(
 				mediaType = MediaType.APPLICATION_JSON_VALUE,
-				schema = @Schema(implementation = Seller.class)
+				schema = @Schema(implementation = Product.class)
 			)
 		}
 	)
-	@DeleteMapping(value = "/seller/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Long deleteSeller(
-		@Parameter(description = "Seller's internal id", example = "2")
+	@DeleteMapping(value = "/product/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public Long deleteProduct(
+		@Parameter(description = "Product's internal id", example = "2")
 		@PathVariable Long id) throws ValidationException
 	{
-		return this.sellerService.deleteSeller(id);
+		return this.productService.deleteProduct(id);
 	}
 }

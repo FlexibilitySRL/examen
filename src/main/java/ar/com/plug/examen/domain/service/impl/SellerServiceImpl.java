@@ -27,6 +27,14 @@ public class SellerServiceImpl implements SellerService
 		this.sellerRepository = sellerRepository;
 	}
 
+	/**
+	 * Returns a list of {@link Seller} in a paginated format according to {@link PageDto} attributes.
+	 * All the sellers must have the active attribute set to true.
+	 *
+	 * @param pageNumber initial page
+	 * @param pageSize   size of the page
+	 * @return {@link PageDto} with the active sellers in it.
+	 */
 	@Override
 	public PageDto<Seller> getActiveSellersPageable(int pageNumber, int pageSize)
 	{
@@ -35,6 +43,13 @@ public class SellerServiceImpl implements SellerService
 		);
 	}
 
+	/**
+	 * Returns the list of all {@link Seller} in a paginated format according to {@link PageDto} attributes.
+	 *
+	 * @param pageNumber initial page
+	 * @param pageSize   size of the page
+	 * @return {@link PageDto} with all sellers in it.
+	 */
 	@Override
 	public PageDto<Seller> getAllSellersPageable(int pageNumber, int pageSize)
 	{
@@ -43,8 +58,15 @@ public class SellerServiceImpl implements SellerService
 		);
 	}
 
+	/**
+	 * Returns a {@link Seller} according to its {@code id}.
+	 *
+	 * @param id id of the Seller to query
+	 * @return {@link Seller} with the corresponding {@code id}.
+	 */
 	@Override
-	public Seller getSellerById(Long id) {
+	public Seller getSellerById(Long id)
+	{
 		if(Objects.isNull(id)) {
 			throw new NoSuchElementException("El id del proveedor no puede ser nulo.");
 		}
@@ -56,8 +78,15 @@ public class SellerServiceImpl implements SellerService
 		}
 	}
 
+	/**
+	 * Returns a {@link Seller} according to its {@code code}.
+	 *
+	 * @param code internal code used as an identifier of a seller
+	 * @return {@link Seller} with the corresponding {@code sku}.
+	 */
 	@Override
-	public Seller getSellerByCode(String code) {
+	public Seller getSellerByCode(String code)
+	{
 		if(StringUtils.isBlank(code)) {
 			throw new NoSuchElementException("El código del proveedor no puede ser nulo.");
 		}
@@ -69,6 +98,14 @@ public class SellerServiceImpl implements SellerService
 		}
 	}
 
+	/**
+	 * Creates a new {@link Seller} by using the data of the {@link SellerDto} passed as parameter.
+	 *
+	 * @param sellerDto data which will be used to create a new Seller.
+	 * @return the new created {@link Seller}
+	 * @throws ValidationException    In case of a null parameters.
+	 * @throws NoSuchElementException In case of that the seller doesn't exist on the database.
+	 */
 	@Override
 	public Seller saveSeller(SellerDto sellerDto) throws ValidationException
 	{
@@ -85,6 +122,15 @@ public class SellerServiceImpl implements SellerService
 		return this.sellerRepository.save(newSeller);
 	}
 
+	/**
+	 * Updates a {@link Seller} by using the data of the {@link SellerDto} passed as parameter.
+	 *
+	 * @param id        identifier to query the Seller in the database.
+	 * @param sellerDto data which will be used to create a new Seller.
+	 * @return the updated {@link Seller}
+	 * @throws ValidationException    In case of a null parameters.
+	 * @throws NoSuchElementException In case of that the seller doesn't exist on the database.
+	 */
 	@Override
 	public Seller updateSeller(Long id, SellerDto sellerDto) throws ValidationException
 	{
@@ -107,6 +153,14 @@ public class SellerServiceImpl implements SellerService
 		}
 	}
 
+	/**
+	 * Updates a {@link Seller} by setting the active attribute to false.
+	 *
+	 * @param id identifier to query the Seller in the database.
+	 * @return the inactivated {@link Seller}
+	 * @throws ValidationException    In case of a null parameters.
+	 * @throws NoSuchElementException In case of that the seller doesn't exist on the database.
+	 */
 	@Override
 	public Seller inactivateSeller(Long id) throws ValidationException
 	{
@@ -116,16 +170,24 @@ public class SellerServiceImpl implements SellerService
 		Seller sellerFromDatabase = this.sellerRepository.findById(id)
 			.orElseThrow(
 				() -> new NoSuchElementException("El proveedor con el id " + id + " no existe.")
-			);;
+			);
 		sellerFromDatabase.setActive(Boolean.FALSE);
 		return this.sellerRepository.save(sellerFromDatabase);
 	}
 
+	/**
+	 * Performs a physical delete of a {@link Seller}.
+	 *
+	 * @param id identifier to query the Seller in the database.
+	 * @return the inactivated {@link Seller}
+	 * @throws ValidationException    In case of a null parameters.
+	 * @throws NoSuchElementException In case of that the seller doesn't exist on the database.
+	 */
 	@Override
 	public Long deleteSeller(Long id) throws ValidationException
 	{
 		if(Objects.isNull(id)) {
-			throw new ValidationException("Los datos para la actualización de un cliente no pueden ser nulos.");
+			throw new ValidationException("Los datos para el borrado del proveedor no pueden ser nulos.");
 		}
 		if(this.sellerRepository.existsById(id)) {
 			this.sellerRepository.deleteById(id);

@@ -17,7 +17,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @Sql(scripts = {"/schema.sql"})
-public class SellerRespositoryTest
+public class SellerRepositoryTest
 {
 	@Autowired
 	private SellerRepository repository;

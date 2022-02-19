@@ -28,6 +28,14 @@ public class ClientServiceImpl implements ClientService
 		this.clientRepository = clientRepository;
 	}
 
+	/**
+	 * Returns a list of {@link Client} in a paginated format according to {@link PageDto} attributes.
+	 * All the clients must have the active attribute set to true.
+	 *
+	 * @param pageNumber initial page
+	 * @param pageSize   size of the page
+	 * @return {@link PageDto} with the active clients in it.
+	 */
 	@Override
 	public PageDto<Client> getActiveClientsPageable(int pageNumber, int pageSize)
 	{
@@ -36,6 +44,13 @@ public class ClientServiceImpl implements ClientService
 		);
 	}
 
+	/**
+	 * Returns the list of all {@link Client} in a paginated format according to {@link PageDto} attributes.
+	 *
+	 * @param pageNumber initial page
+	 * @param pageSize   size of the page
+	 * @return {@link PageDto} with all clients in it.
+	 */
 	@Override
 	public PageDto<Client> getAllClients(int pageNumber, int pageSize)
 	{
@@ -44,6 +59,12 @@ public class ClientServiceImpl implements ClientService
 		);
 	}
 
+	/**
+	 * Returns a {@link Client} according to its {@code id}.
+	 *
+	 * @param id id of the Client to query
+	 * @return {@link Client} with the corresponding {@code id}.
+	 */
 	@Override
 	public Client getClientById(Long id)
 	{
@@ -58,6 +79,12 @@ public class ClientServiceImpl implements ClientService
 		}
 	}
 
+	/**
+	 * Returns a {@link Client} according to its {@code document} number.
+	 *
+	 * @param document legal document number of a client
+	 * @return {@link Client} with the corresponding {@code sku}.
+	 */
 	@Override
 	public Client getClientByDocumentNumber(String document)
 	{
@@ -72,6 +99,14 @@ public class ClientServiceImpl implements ClientService
 		}
 	}
 
+	/**
+	 * Creates a new {@link Client} by using the data of the {@link ClientDto} passed as parameter.
+	 *
+	 * @param clientDto data which will be used to create a new Client.
+	 * @return the new created {@link Client}
+	 * @throws ValidationException    In case of a null parameters.
+	 * @throws NoSuchElementException In case of that the client doesn't exist on the database.
+	 */
 	@Override
 	public Client saveClient(ClientDto clientDto) throws ValidationException
 	{
@@ -90,6 +125,15 @@ public class ClientServiceImpl implements ClientService
 		return this.clientRepository.save(newClient);
 	}
 
+	/**
+	 * Updates a {@link Client} by using the data of the {@link ClientDto} passed as parameter.
+	 *
+	 * @param id        identifier to query the Client in the database.
+	 * @param clientDto data which will be used to create a new Client.
+	 * @return the updated {@link Client}
+	 * @throws ValidationException    In case of a null parameters.
+	 * @throws NoSuchElementException In case of that the client doesn't exist on the database.
+	 */
 	@Override
 	public Client updateClient(Long id, ClientDto clientDto) throws ValidationException
 	{
@@ -110,6 +154,14 @@ public class ClientServiceImpl implements ClientService
 		return this.clientRepository.save(clientFromDatabase);
 	}
 
+	/**
+	 * Updates a {@link Client} by setting the active attribute to false.
+	 *
+	 * @param id identifier to query the Client in the database.
+	 * @return the inactivated {@link Client}
+	 * @throws ValidationException    In case of a null parameters.
+	 * @throws NoSuchElementException In case of that the client doesn't exist on the database.
+	 */
 	@Override
 	public Client inactivateClient(Long id) throws ValidationException
 	{
@@ -125,6 +177,14 @@ public class ClientServiceImpl implements ClientService
 		}
 	}
 
+	/**
+	 * Performs a physical delete of a {@link Client}.
+	 *
+	 * @param id identifier to query the Client in the database.
+	 * @return the inactivated {@link Client}
+	 * @throws ValidationException    In case of a null parameters.
+	 * @throws NoSuchElementException In case of that the client doesn't exist on the database.
+	 */
 	@Override
 	public Long deleteClient(Long id) throws ValidationException
 	{
