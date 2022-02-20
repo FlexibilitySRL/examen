@@ -67,6 +67,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void editProduct(Long idProduct, ProductDTO productDTO) {
         try {
+            validateInputData(productDTO);
             Optional<Product> productResult = existsProduct(idProduct);
             productResult.get().setDescriptionProduct(productDTO.getDescriptionProduct());
             productResult.get().setCategory(productDTO.getCategory());

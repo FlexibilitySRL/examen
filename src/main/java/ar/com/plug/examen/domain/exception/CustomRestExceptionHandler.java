@@ -19,9 +19,8 @@ import java.util.stream.Collectors;
 @ControllerAdvice
 public class CustomRestExceptionHandler {
 
-    @ExceptionHandler({ProductParamException.class})
-    public ResponseEntity<Object> handleApiNotFoundException(
-            ProductParamException ex, WebRequest request) {
+    @ExceptionHandler({ProductParamException.class, CustomParamException.class})
+    public ResponseEntity<Object> handleApiNotFoundException() {
 
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", LocalDateTime.now());
@@ -30,9 +29,8 @@ public class CustomRestExceptionHandler {
         return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(ProductNotFoundException.class)
-    public ResponseEntity<Object> handleNodataFoundException(
-            ProductNotFoundException ex, WebRequest request) {
+    @ExceptionHandler({ProductNotFoundException.class, CustomerNotFoundException.class})
+    public ResponseEntity<Object> handleNodataFoundException() {
 
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", LocalDateTime.now());
