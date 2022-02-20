@@ -137,20 +137,16 @@ public class SellerServiceImpl implements SellerService
 		if(Objects.isNull(id) || (Objects.isNull(sellerDto))) {
 			throw new ValidationException("Los datos para la actualización de un proveedor no pueden ser nulos.");
 		}
-		if(this.sellerRepository.existsById(id)) {
-			Seller sellerFromDatabase = this.sellerRepository.findByCode(sellerDto.getCode());
-			if(Objects.nonNull(sellerFromDatabase) && !sellerFromDatabase.getId().equals(id)) {
-				throw new ValidationException("El número de documento ya pertenece a otro proveedor.");
-			}
-			sellerFromDatabase.setCode(sellerDto.getCode());
-			sellerFromDatabase.setDocument(sellerDto.getDocument());
-			sellerFromDatabase.setDescription(sellerDto.getDescription());
-			sellerFromDatabase.setActive(sellerDto.getActive());
-			sellerFromDatabase.setModificationDate(new Date());
-			return this.sellerRepository.save(sellerFromDatabase);
-		} else {
-			throw new NoSuchElementException("El proveedor con el id " + id + " no existe.");
-		}
+		Seller sellerFromDatabase = this.sellerRepository.findById(id)
+			.orElseThrow(
+				() -> new NoSuchElementException("El proveedor con el id " + id + " no existe.")
+			);
+		sellerFromDatabase.setCode(sellerDto.getCode());
+		sellerFromDatabase.setDocument(sellerDto.getDocument());
+		sellerFromDatabase.setDescription(sellerDto.getDescription());
+		sellerFromDatabase.setActive(sellerDto.getActive());
+		sellerFromDatabase.setModificationDate(new Date());
+		return this.sellerRepository.save(sellerFromDatabase);
 	}
 
 	/**

@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -31,28 +32,28 @@ public class CustomExceptionHandler {
 		schema = @Schema(implementation = ApiError.class))})
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(value = {HttpMessageNotReadableException.class})
-	protected ApiError handleHttpMessageNotReadable(HttpMessageNotReadableException ex) {
+	protected ApiError handleHttpMessageNotReadable(Exception ex) {
 		return responseBody(HttpStatus.BAD_REQUEST, ex);
 	}
 
 	@ApiResponse(responseCode = BAD_REQUEST_VALUE, content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ApiError.class))})
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	@ExceptionHandler(value = {MethodArgumentNotValidException.class, ValidationException.class})
-	protected ApiError handleMethodArgumentNotValid(MethodArgumentNotValidException ex) {
+	@ExceptionHandler(value = {MethodArgumentNotValidException.class, ValidationException.class, DataIntegrityViolationException.class})
+	protected ApiError handleMethodArgumentNotValid(Exception ex) {
 		return responseBody(HttpStatus.BAD_REQUEST, ex);
 	}
 
 	@ApiResponse(responseCode = NOT_FOUND_VALUE, content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ApiError.class))})
 	@ResponseStatus(HttpStatus.NOT_FOUND)
 	@ExceptionHandler(value = {NoSuchElementException.class})
-	public final ApiError handleNoElement(final NoSuchElementException ex) {
+	public final ApiError handleNoElement(Exception ex) {
 		return responseBody(HttpStatus.NOT_FOUND, ex);
 	}
 
 	@ApiResponse(responseCode = NOT_FOUND_VALUE, content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ApiError.class))})
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 	@ExceptionHandler(value = {Exception.class})
-	public final ApiError handleInternalError(final Exception ex) {
+	public final ApiError handleInternalError(Exception ex) {
 		return responseBody(HttpStatus.INTERNAL_SERVER_ERROR, ex);
 	}
 

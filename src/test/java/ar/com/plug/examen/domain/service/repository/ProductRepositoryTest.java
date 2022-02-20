@@ -28,7 +28,7 @@ public class ProductRepositoryTest
 
 	@Autowired
 	private SellerRepository sellerRepository;
-	
+
 	private Product product1;
 	private Product product2;
 	private Product product3;
@@ -37,6 +37,7 @@ public class ProductRepositoryTest
 	private Product product6;
 	
 	private Seller seller1;
+
 	@Before
 	public void setup() {
 		seller1 = Seller.builder()

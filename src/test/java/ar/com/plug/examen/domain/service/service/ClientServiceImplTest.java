@@ -101,9 +101,10 @@ public class ClientServiceImplTest
 	}
 
 	@Test
-	public void autowiredNotNull()
+	public void mockNotNull()
 	{
 		assertThat(repository).isNotNull();
+		assertThat(service).isNotNull();
 	}
 
 	@Test
@@ -247,8 +248,7 @@ public class ClientServiceImplTest
 	{
 		client1.setId(1L);
 		client1.setActive(false);
-		when(repository.existsById(1L)).thenReturn(true);
-		when(repository.getOne(1L)).thenReturn(client1);
+		when(repository.findById(1L)).thenReturn(Optional.ofNullable(client1));
 		when(repository.save(any(Client.class))).thenReturn(client1);
 		Client inactiveClient = service.inactivateClient(1L);
 		assertThat(inactiveClient).isNotNull();

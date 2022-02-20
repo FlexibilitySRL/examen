@@ -168,13 +168,13 @@ public class ClientServiceImpl implements ClientService
 		if(Objects.isNull(id)) {
 			throw new ValidationException("Los datos para la actualización de un cliente no pueden ser nulos.");
 		}
-		if(this.clientRepository.existsById(id)) {
-			Client clientFromDatabase = this.clientRepository.getOne(id);
-			clientFromDatabase.setActive(Boolean.FALSE);
-			return this.clientRepository.save(clientFromDatabase);
-		} else {
-			throw new NoSuchElementException("El cliente con el id " + id + " no existe.");
-		}
+
+		Client clientFromDatabase = this.clientRepository.findById(id)
+			.orElseThrow(
+				() -> new NoSuchElementException("El cliente con el id " + id + " no existe.")
+			);
+		clientFromDatabase.setActive(Boolean.FALSE);
+		return this.clientRepository.save(clientFromDatabase);
 	}
 
 	/**
