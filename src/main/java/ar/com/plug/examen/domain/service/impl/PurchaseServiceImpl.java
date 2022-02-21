@@ -1,9 +1,9 @@
 package ar.com.plug.examen.domain.service.impl;
 
 import ar.com.plug.examen.domain.constants.ErrorConstants;
-import ar.com.plug.examen.domain.dto.ProductDTO;
 import ar.com.plug.examen.domain.dto.PurchaseDTO;
 import ar.com.plug.examen.domain.enums.PurchaseState;
+import ar.com.plug.examen.domain.enums.Result;
 import ar.com.plug.examen.domain.exception.*;
 import ar.com.plug.examen.domain.model.*;
 import ar.com.plug.examen.domain.repository.*;
@@ -21,7 +21,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-import static ar.com.plug.examen.domain.constants.ErrorConstants.INVALID_PRODUCT_FIELD;
+import static ar.com.plug.examen.domain.constants.ErrorConstants.*;
 
 @Service
 public class PurchaseServiceImpl implements PurchaseService {
@@ -33,6 +33,11 @@ public class PurchaseServiceImpl implements PurchaseService {
     private static final String CUSTOMER = "customer";
     private static final String SELLER = "seller";
     private static final String PRODUCT = "product";
+    private static final String ACTION_SAVE = "guardar compra";
+    private static final String GET_PURCHASE = "consulta compras";
+    private static final String ACTION_APPROVE_PURCHASE = "aprobar compra";
+    private static final String DETAIL_PURCHASE = "Tambien se registro en detalle compra";
+    private static final String VALIDATE_DATA = "validación datos";
     @Autowired
     private PurchaseRepository purchaseRepository;
 
@@ -48,6 +53,9 @@ public class PurchaseServiceImpl implements PurchaseService {
     @Autowired
     private ProductRepository productRepository;
 
+    @Autowired
+    private LogTransationRepository logTransationRepository;
+
     @Override
     public void createPurchase(PurchaseDTO purchaseDTO) {
         try {
@@ -62,17 +70,24 @@ public class PurchaseServiceImpl implements PurchaseService {
             purchaseToSave.setVoucher(purchaseDTO.getVoucher());
             purchaseToSave.setTaxes(purchaseDTO.getTaxes());
             purchaseToSave.setAmount(purchaseDTO.getAmount());
-            purchaseRepository.save(purchaseToSave);
+            Purchase PurchaseSave = purchaseRepository.saveAndFlush(purchaseToSave);
 
             PurchaseDetail purchaseDetail = PurchaseDetail.builder()
                     .purchase(purchaseToSave)
                     .purchaseState(PurchaseState.SOLICITADA).build();
-            purchaseDetailRepository.save(purchaseDetail);
+            purchaseDetailRepository.saveAndFlush(purchaseDetail);
+
+            StringBuilder description = new StringBuilder();
+            description.append(SAVE_SUCCESS);
+            description.append(" ");
+            description.append(PurchaseSave.getIdPurchase());
+            description.append(" ");
+            description.append(DETAIL_PURCHASE);
+            createLog(ACTION_SAVE, Result.SUCCESS, description.toString());
         } catch (ExceptionInInitializerError ex) {
+            createLog(ACTION_SAVE, Result.ERROR, ERROR_UNKNOW);
             LOGGER.log(Level.SEVERE, ErrorConstants.API_ERROR, ex.getMessage());
             ex.printStackTrace();
-        } finally {
-
         }
 
     }
@@ -80,6 +95,11 @@ public class PurchaseServiceImpl implements PurchaseService {
     private Optional<Customer> existsCustomer(long idCustomer) {
         Optional<Customer> customerResult = customerRepository.findById(idCustomer);
         if (!customerResult.isPresent()) {
+            StringBuilder description = new StringBuilder();
+            description.append(ERROR_EMPTY_ID);
+            description.append(" ");
+            description.append(idCustomer);
+            createLog(ACTION_SAVE, Result.ERROR, description.toString());
             throw new CustomerNotFoundException();
         }
         return customerResult;
@@ -88,6 +108,11 @@ public class PurchaseServiceImpl implements PurchaseService {
     private Optional<Seller> existsSeller(long idSeller) {
         Optional<Seller> sellerResult = sellerRepository.findById(idSeller);
         if (!sellerResult.isPresent()) {
+            StringBuilder description = new StringBuilder();
+            description.append(ERROR_EMPTY_ID);
+            description.append(" ");
+            description.append(idSeller);
+            createLog(ACTION_SAVE, Result.ERROR, description.toString());
             throw new SellerNotFoundException();
         }
         return sellerResult;
@@ -96,6 +121,11 @@ public class PurchaseServiceImpl implements PurchaseService {
     private Optional<Product> existsProduct(long idProduct) {
         Optional<Product> productResult = productRepository.findById(idProduct);
         if (!productResult.isPresent()) {
+            StringBuilder description = new StringBuilder();
+            description.append(ERROR_EMPTY_ID);
+            description.append(" ");
+            description.append(idProduct);
+            createLog(ACTION_SAVE, Result.ERROR, description.toString());
             throw new ProductNotFoundException();
         }
         return productResult;
@@ -103,10 +133,11 @@ public class PurchaseServiceImpl implements PurchaseService {
 
     @Override
     public List<PurchaseDTO> listPurchase() {
+        createLog(GET_PURCHASE, Result.SUCCESS, GET_PURCHASE_BD);
         return purchaseRepository.findAll()
                 .stream()
-                .map(PurchaseDTO::fromModelToDto)
-                .collect(Collectors.toList());
+                .map(PurchaseDTO::fromModelToDto).collect(Collectors.toList());
+
     }
 
     @Override
@@ -121,11 +152,14 @@ public class PurchaseServiceImpl implements PurchaseService {
                     .purchaseState(PurchaseState.APROBADA)
                     .purchase(purchaseResult.get()).build();
             purchaseDetailRepository.save(purchaseDetail);
+            StringBuilder description = new StringBuilder();
+            description.append(APPROVE_PURCHASE);
+            description.append(idPurchase);
+            createLog(ACTION_APPROVE_PURCHASE, Result.SUCCESS, description.toString());
         } catch (ExceptionInInitializerError ex) {
+            createLog(ACTION_SAVE, Result.ERROR, ERROR_UNKNOW);
             LOGGER.log(Level.SEVERE, ErrorConstants.API_ERROR, ex.getMessage());
             ex.printStackTrace();
-        } finally {
-
         }
     }
 
@@ -151,8 +185,16 @@ public class PurchaseServiceImpl implements PurchaseService {
             param.add(PRODUCT);
         }
         if (!param.isEmpty()) {
+            createLog(VALIDATE_DATA, Result.ERROR, ERROR_DATA_EMPTY);
             throw new PurchaseParamException(INVALID_PRODUCT_FIELD, param);
         }
+    }
+    private void createLog(String action, Result result, String description) {
+        LogTransation logTransation = LogTransation.builder()
+                .module(action)
+                .Result(result)
+                .description(description).build();
+        logTransationRepository.save(logTransation);
     }
 
 }

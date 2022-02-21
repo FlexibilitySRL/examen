@@ -2,6 +2,7 @@ package ar.com.plug.examen.domain.dto;
 
 import ar.com.plug.examen.domain.enums.PurchaseState;
 import ar.com.plug.examen.domain.model.Customer;
+import ar.com.plug.examen.domain.model.Product;
 import ar.com.plug.examen.domain.model.Purchase;
 import ar.com.plug.examen.domain.model.Seller;
 import lombok.Builder;
@@ -18,6 +19,7 @@ public class PurchaseDTO {
     private long idPurchase;
     private Customer customer;
     private Seller seller;
+    private Product product;
     private String voucher;
     private LocalDateTime datePurchase;
     private BigDecimal taxes;
@@ -32,6 +34,7 @@ public class PurchaseDTO {
                 .voucher(purchase.getVoucher())
                //  .customer(purchase.getCustomer())
                 // .seller(purchase.getSeller())
+              //   .product.getIdProduct(purchase.getProduct())
                 .taxes(purchase.getTaxes())
                 .amount(purchase.getAmount())
                 .datePurchase(purchase.getDatePurchase())
