@@ -37,9 +37,10 @@ public class ProductServiceImpl implements ProductService {
     private static final String DESCRIPTION_PRODUCT = "description product";
     private static final String ACTION_SAVE = "guardar producto";
     private static final String ACTION_EMPTY_DATA = "editar producto o eliminar producto";
-    private static final String VALIDATE_DATA = "validación datos";
+    private static final String VALIDATE_DATA = "validación datos producto";
     private static final String ACTION_DELETE = "eliminar producto";
     private static final String ACTION_EDIT = "editar producto";
+    public static final String ERROR_ID_PRODUCT = "Debe eliminar primero de compras el producto con id ";
     @Autowired
     private ProductRepository productRepository;
 
@@ -166,7 +167,7 @@ public class ProductServiceImpl implements ProductService {
         List<Purchase> purchaseResult = purchaseRepository.findProductByCustomerIdCustomerOrProductIdProductOrSellerIdSeller(null,idProduct, null);
         if (!purchaseResult.isEmpty()) {
            StringBuilder description = new StringBuilder();
-           description.append(ERROR_ID);
+           description.append(ERROR_ID_PRODUCT);
            description.append(" ");
            description.append(idProduct);
            createLog(ACTION_DELETE, Result.ERROR, description.toString());

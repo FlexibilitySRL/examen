@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @ControllerAdvice
 public class CustomRestExceptionHandler {
 
-    @ExceptionHandler({ProductParamException.class, CustomParamException.class})
+    @ExceptionHandler({ProductParamException.class, CustomerParamException.class})
     public ResponseEntity<Object> handleApiNotFoundException() {
 
         Map<String, Object> body = new LinkedHashMap<>();
@@ -29,7 +29,7 @@ public class CustomRestExceptionHandler {
         return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler({ProductNotFoundException.class, CustomerNotFoundException.class})
+    @ExceptionHandler({ProductNotFoundException.class, CustomerNotFoundException.class, SellerNotFoundException.class})
     public ResponseEntity<Object> handleNodataFoundException() {
 
         Map<String, Object> body = new LinkedHashMap<>();

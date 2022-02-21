@@ -38,9 +38,10 @@ public class CustomerServiceImpl implements CustomerService {
     private static final String PHONE = "phone";
     private static final String ACTION_SAVE = "guardar cliente";
     private static final String ACTION_EMPTY_DATA = "editar cliente o eliminar cliente";
-    private static final String VALIDATE_DATA = "validación datos";
+    private static final String VALIDATE_DATA = "validación datos cliente";
     private static final String ACTION_DELETE = "eliminar cliente";
     private static final String ACTION_EDIT = "editar cliente";
+    public static final String ERROR_ID_CUSTOMER = "Debe eliminar primero de compras el vendedor con id ";
     @Autowired
     private CustomerRepository customerRepository;
 
@@ -169,11 +170,10 @@ public class CustomerServiceImpl implements CustomerService {
         List<Purchase> purchaseResult = purchaseRepository.findProductByCustomerIdCustomerOrProductIdProductOrSellerIdSeller(idCustomer, null, null);
         if (!purchaseResult.isEmpty()) {
             StringBuilder description = new StringBuilder();
-            description.append(ERROR_ID);
+            description.append(ERROR_ID_CUSTOMER);
             description.append(" ");
             description.append(idCustomer);
             createLog(ACTION_DELETE, Result.ERROR, description.toString());
-            System.out.println("integridad");
             throw new ProductNotFoundException();
         }
         return purchaseResult;

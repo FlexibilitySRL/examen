@@ -5,12 +5,12 @@ import org.springframework.http.HttpStatus;
 
 import java.util.List;
 
-public class CustomParamException extends ExerciseApiException{
-    public CustomParamException() {
+public class CustomerParamException extends ExerciseApiException{
+    public CustomerParamException() {
         super();
     }
 
-    public CustomParamException(String message, List<String> parameters) {
+    public CustomerParamException(String message, List<String> parameters) {
         super(message, parameters);
     }
 
