@@ -29,6 +29,11 @@ public class Purchase {
     @Exclude
     private Seller seller;
 
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_product")
+    @Exclude
+    private Product product;
+
     @Column
     private String voucher;
 

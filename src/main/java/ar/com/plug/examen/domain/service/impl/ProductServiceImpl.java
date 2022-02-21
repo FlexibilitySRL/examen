@@ -2,9 +2,12 @@ package ar.com.plug.examen.domain.service.impl;
 
 import ar.com.plug.examen.domain.constants.ErrorConstants;
 import ar.com.plug.examen.domain.dto.ProductDTO;
+import ar.com.plug.examen.domain.enums.Result;
 import ar.com.plug.examen.domain.exception.ProductNotFoundException;
 import ar.com.plug.examen.domain.exception.ProductParamException;
+import ar.com.plug.examen.domain.model.LogTransation;
 import ar.com.plug.examen.domain.model.Product;
+import ar.com.plug.examen.domain.repository.LogTransationRepository;
 import ar.com.plug.examen.domain.repository.ProductRepository;
 import ar.com.plug.examen.domain.service.ProductService;
 import ar.com.plug.examen.domain.util.LoggerExample;
@@ -19,7 +22,7 @@ import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static ar.com.plug.examen.domain.constants.ErrorConstants.INVALID_PRODUCT_FIELD;
+import static ar.com.plug.examen.domain.constants.ErrorConstants.*;
 
 
 @Service
@@ -30,24 +33,44 @@ public class ProductServiceImpl implements ProductService {
     private static final String PRICE = "price";
     private static final String STOCK = "stock";
     private static final String DESCRIPTION_PRODUCT = "description product";
+    private static final String ACTION_SAVE = "guardar producto";
+    private static final String ACTION_EMPTY_DATA = "editar producto o eliminar producto";
+    private static final String VALIDATE_DATA = "validación datos";
+    private static final String ACTION_DELETE = "eliminar producto";
+    private static final String ACTION_EDIT = "editar producto";
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private LogTransationRepository logTransationRepository;
 
     @Override
     public void createProduct(ProductDTO productDTO) {
         try {
             validateInputData(productDTO);
+            existsProductDescription(productDTO.getCategory(), productDTO.getDescriptionProduct());
             Product productToSave = new Product();
             productToSave.setDescriptionProduct(productDTO.getDescriptionProduct());
             productToSave.setCategory(productDTO.getCategory());
             productToSave.setPrice(productDTO.getPrice());
             productToSave.setStock(productDTO.getStock());
-            productRepository.save(productToSave);
+            Product productSave = productRepository.saveAndFlush(productToSave);
+
+            StringBuilder description = new StringBuilder();
+            description.append(SAVE_SUCCESS);
+            description.append(" ");
+            description.append(productSave.getIdProduct());
+            createLog(ACTION_SAVE, Result.SUCCESS, description.toString());
         } catch (ExceptionInInitializerError ex) {
+            StringBuilder description = new StringBuilder();
+            description.append(ERROR_UNKNOW);
+            description.append(" ");
+            description.append(productDTO.getCategory());
+            description.append(" ");
+            description.append(productDTO.getDescriptionProduct());
+            createLog(ACTION_SAVE, Result.ERROR, description.toString());
             LOGGER.log(Level.SEVERE, ErrorConstants.API_ERROR, ex.getMessage());
             ex.printStackTrace();
-        } finally {
-
         }
     }
 
@@ -56,11 +79,19 @@ public class ProductServiceImpl implements ProductService {
         try {
             existsProduct(idProduct);
             productRepository.deleteById(idProduct);
+            StringBuilder description = new StringBuilder();
+            description.append(DELETE_SUCCESS);
+            description.append(" ");
+            description.append(idProduct);
+            createLog(ACTION_DELETE, Result.SUCCESS, description.toString());
         } catch (ExceptionInInitializerError ex) {
+            StringBuilder description = new StringBuilder();
+            description.append(ERROR_UNKNOW);
+            description.append(" ");
+            description.append(idProduct);
+            createLog(ACTION_DELETE, Result.ERROR, description.toString());
             LOGGER.log(Level.SEVERE, ErrorConstants.API_ERROR, ex.getMessage());
             ex.printStackTrace();
-        } finally {
-
         }
     }
 
@@ -74,12 +105,22 @@ public class ProductServiceImpl implements ProductService {
             productResult.get().setPrice(productDTO.getPrice());
             productResult.get().setStock(productDTO.getStock());
             productResult.get().setUpdateDate(LocalDateTime.now());
-            productRepository.save(productResult.get());
+            productRepository.saveAndFlush(productResult.get());
+            StringBuilder description = new StringBuilder();
+            description.append(EDIT_SUCCESS);
+            description.append(" ");
+            description.append(idProduct);
+            createLog(ACTION_EDIT, Result.SUCCESS, description.toString());
         } catch (ExceptionInInitializerError ex) {
+            StringBuilder description = new StringBuilder();
+            description.append(ERROR_UNKNOW);
+            description.append(" ");
+            description.append(productDTO.getCategory());
+            description.append(" ");
+            description.append(productDTO.getDescriptionProduct());
+            createLog(ACTION_EDIT, Result.ERROR, description.toString());
             LOGGER.log(Level.SEVERE, ErrorConstants.API_ERROR, ex.getMessage());
             ex.printStackTrace();
-        } finally {
-
         }
     }
 
@@ -99,6 +140,13 @@ public class ProductServiceImpl implements ProductService {
             param.add(DESCRIPTION_PRODUCT);
         }
         if (!param.isEmpty()) {
+            StringBuilder description = new StringBuilder();
+            description.append(ERROR_DATA_EMPTY);
+            description.append(" ");
+            description.append(productDTO.getCategory());
+            description.append(" ");
+            description.append(productDTO.getDescriptionProduct());
+            createLog(VALIDATE_DATA, Result.ERROR, description.toString());
             throw new ProductParamException(INVALID_PRODUCT_FIELD, param);
         }
     }
@@ -106,9 +154,35 @@ public class ProductServiceImpl implements ProductService {
     private Optional<Product> existsProduct(long idProduct) {
         Optional<Product> productResult = productRepository.findById(idProduct);
         if (!productResult.isPresent()) {
+            StringBuilder description = new StringBuilder();
+            description.append(ERROR_EMPTY_ID);
+            description.append(" ");
+            description.append(idProduct);
+            createLog(ACTION_EMPTY_DATA, Result.ERROR, description.toString());
             throw new ProductNotFoundException();
         }
         return productResult;
+    }
+
+    private void existsProductDescription(String category, String descriptionProduct) {
+        if (productRepository.findProductByCategoryAndDescriptionProduct(category, descriptionProduct) != null) {
+            StringBuilder description = new StringBuilder();
+            description.append(ERROR_EXIST_PRODUCT);
+            description.append(" ");
+            description.append(category);
+            description.append(" ");
+            description.append(descriptionProduct);
+            createLog(ACTION_SAVE, Result.ERROR, description.toString());
+            throw new ProductNotFoundException();
+        }
+    }
+
+    private void createLog(String action, Result result, String description) {
+        LogTransation logTransation = LogTransation.builder()
+                .module(action)
+                .Result(result)
+                .description(description).build();
+        logTransationRepository.save(logTransation);
     }
 
 }
