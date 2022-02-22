@@ -9,12 +9,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
-
 import javax.xml.bind.ValidationException;
 
 import ar.com.plug.examen.app.api.PageDto;
 import ar.com.plug.examen.app.api.ProductDto;
-import ar.com.plug.examen.app.api.SellerDto;
 import ar.com.plug.examen.domain.model.Product;
 import ar.com.plug.examen.domain.model.Seller;
 import ar.com.plug.examen.domain.repository.ProductRepository;
@@ -53,7 +51,8 @@ public class ProductServiceImplTest
 	private Seller seller1;
 
 	@Before
-	public void setup() {
+	public void setup()
+	{
 		seller1 = Seller.builder()
 			.id(10L)
 			.code("SELL-1")
@@ -192,7 +191,8 @@ public class ProductServiceImplTest
 	{
 		product1.setId(1L);
 		ProductDto dto = new ProductDto(product1.getSku(), product1.getSkuVendor(), product1.getCost(),
-			product1.getSalePrice(), product1.getDescription(), product1.getActive(), product1.getSeller().getId(), product1.getStockQty());
+			product1.getSalePrice(), product1.getDescription(), product1.getActive(), product1.getSeller().getId(),
+			product1.getStockQty());
 		when(repository.save(any(Product.class))).thenReturn(product1);
 		when(sellerRepository.findById(any(Long.class))).thenReturn(Optional.ofNullable(seller1));
 		Product savedProduct = service.saveProduct(dto);
@@ -208,7 +208,8 @@ public class ProductServiceImplTest
 		product1.setSku(updatedSku);
 
 		ProductDto dto = new ProductDto(product1.getSku(), product1.getSkuVendor(), product1.getCost(),
-			product1.getSalePrice(), product1.getDescription(), product1.getActive(), product1.getSeller().getId(), product1.getStockQty());
+			product1.getSalePrice(), product1.getDescription(), product1.getActive(), product1.getSeller().getId(),
+			product1.getStockQty());
 		when(repository.existsById(any(Long.class))).thenReturn(true);
 		when(repository.findBySku(any(String.class))).thenReturn(product1);
 		when(sellerRepository.findById(any(Long.class))).thenReturn(Optional.ofNullable(seller1));

@@ -51,14 +51,15 @@ ALTER TABLE product ADD CONSTRAINT product_seller_fk FOREIGN KEY (seller_id) REF
 
 CREATE TABLE purchase (
 	id INTEGER NOT NULL AUTO_INCREMENT,
-	receipt varchar(200) NOT NULL,
+	receipt_number varchar(200) NOT NULL,
 	total_amount decimal NULL,
 	taxes decimal NULL,
-	status bool NOT NULL,
+	approve bool NOT NULL,
 	client_id int8 NOT NULL,
 	modification_date timestamp NOT NULL DEFAULT now(),
 	creation_date timestamp NOT NULL DEFAULT now(),
-	CONSTRAINT purchase_pk PRIMARY KEY (id)
+	CONSTRAINT purchase_pk PRIMARY KEY (id),
+    CONSTRAINT unique_purchase_receipt UNIQUE (receipt_number)
 );
 ALTER TABLE purchase ADD CONSTRAINT purchase_client_fk FOREIGN KEY (client_id) REFERENCES client(id);
 
