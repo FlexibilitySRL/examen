@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+	<Properties>
+		<Property name="LOG-PATH">./logs</Property>
+	</Properties>
+	<Appenders>
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout
+					pattern="%style{%d{ISO8601}}{bright,white} %highlight{%-5level}[%style{%t}{bright,blue}] %style{%C{1.}}{bright,yellow}: %msg%n%throwable" />
+		</Console>
+
+		<RollingFile name="INFO-RollingFile" fileName="${LOG-PATH}/info-payments.log" filePattern="${LOG-PATH}/$${date:yyyy-MM}/info-payments-%d{-dd-MMMM-yyyy}-%i.log.gz">
+			<PatternLayout>
+				<pattern>%d{ISO8601} %-5level [%t] %C{1.}: %msg%n%throwable</pattern>
+			</PatternLayout>
+			<Policies>
+				<SizeBasedTriggeringPolicy size="10 MB" />
+			</Policies>
+			<ThresholdFilter level="INFO"/>
+		</RollingFile>
+
+		<RollingFile name="DEBUG-RollingFile" fileName="${LOG-PATH}/debug-payments.log" filePattern="${LOG-PATH}/$${date:yyyy-MM}/debug-payments-%d{-dd-MMMM-yyyy}-%i.log.gz">
+			<PatternLayout>
+				<pattern>%d{ISO8601} %-5level [%t] %C{1.}: %msg%n%throwable</pattern>
+			</PatternLayout>
+			<Policies>
+				<SizeBasedTriggeringPolicy size="10 MB" />
+			</Policies>
+			<ThresholdFilter level="DEBUG"/>
+		</RollingFile>
+	</Appenders>
+
+	<Loggers>
+		<Root level="info">
+			<AppenderRef ref="Console" />
+		</Root>
+
+		<Logger name="ar.com.plug.examen" level="debug">
+			<AppenderRef ref="INFO-RollingFile" />
+			<AppenderRef ref="DEBUG-RollingFile" />
+		</Logger>
+	</Loggers>
+
+</Configuration>
