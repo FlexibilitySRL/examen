@@ -52,42 +52,36 @@ public class PurchaseRepositoryTest
 		purchase1 = Purchase.builder()
 			.receiptNumber("random-value-1")
 			.total(new BigDecimal(100))
-			.taxes(new BigDecimal(10))
 			.approve(Boolean.TRUE)
 			.build();
 
 		purchase2 = Purchase.builder()
 			.receiptNumber("random-value-2")
 			.total(new BigDecimal(200))
-			.taxes(new BigDecimal(20))
 			.approve(Boolean.TRUE)
 			.build();
 
 		purchase3 = Purchase.builder()
 			.receiptNumber("random-value-3")
 			.total(new BigDecimal(300))
-			.taxes(new BigDecimal(30))
 			.approve(Boolean.TRUE)
 			.build();
 
 		purchase4 = Purchase.builder()
 			.receiptNumber("random-value-4")
 			.total(new BigDecimal(400))
-			.taxes(new BigDecimal(40))
 			.approve(Boolean.TRUE)
 			.build();
 
 		purchase5 = Purchase.builder()
 			.receiptNumber("random-value-5")
 			.total(new BigDecimal(500))
-			.taxes(new BigDecimal(50))
 			.approve(Boolean.TRUE)
 			.build();
 
 		purchase6 = Purchase.builder()
 			.receiptNumber("random-value-6")
 			.total(new BigDecimal(600))
-			.taxes(new BigDecimal(60))
 			.approve(Boolean.TRUE)
 			.build();
 	}

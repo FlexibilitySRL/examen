@@ -6,6 +6,7 @@ import static org.mockito.Mockito.when;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -14,8 +15,13 @@ import javax.xml.bind.ValidationException;
 import ar.com.plug.examen.app.api.PageDto;
 import ar.com.plug.examen.app.api.PurchaseDto;
 import ar.com.plug.examen.domain.model.Client;
+import ar.com.plug.examen.domain.model.Product;
 import ar.com.plug.examen.domain.model.Purchase;
+import ar.com.plug.examen.domain.model.PurchaseDetail;
+import ar.com.plug.examen.domain.model.Seller;
 import ar.com.plug.examen.domain.repository.ClientRepository;
+import ar.com.plug.examen.domain.repository.ProductRepository;
+import ar.com.plug.examen.domain.repository.PurchaseDetailRepository;
 import ar.com.plug.examen.domain.repository.PurchaseRepository;
 import ar.com.plug.examen.domain.service.impl.PurchaseServiceImpl;
 import org.junit.Before;
@@ -41,6 +47,12 @@ public class PurchaseServiceImplTest
 	@Mock
 	private ClientRepository clientRepository;
 
+	@Mock
+	private PurchaseDetailRepository purchaseDetailRepository;
+
+	@Mock
+	private ProductRepository productRepository;
+
 	private Purchase purchase1;
 	private Purchase purchase2;
 	private Purchase purchase3;
@@ -48,6 +60,11 @@ public class PurchaseServiceImplTest
 	private Purchase purchase5;
 	private Purchase purchase6;
 
+	private Product product1;
+	private Seller seller1;
+	private PurchaseDetail purchaseDetail1;
+	private PurchaseDetail purchaseDetail2;
+	private PurchaseDetail purchaseDetail3;
 	private Client client1;
 
 	@Before
@@ -66,7 +83,6 @@ public class PurchaseServiceImplTest
 		purchase1 = Purchase.builder()
 			.receiptNumber("random-value-1")
 			.total(new BigDecimal(100))
-			.taxes(new BigDecimal(10))
 			.approve(Boolean.TRUE)
 			.client(client1)
 			.build();
@@ -74,7 +90,6 @@ public class PurchaseServiceImplTest
 		purchase2 = Purchase.builder()
 			.receiptNumber("random-value-2")
 			.total(new BigDecimal(200))
-			.taxes(new BigDecimal(20))
 			.approve(Boolean.TRUE)
 			.client(client1)
 			.build();
@@ -82,14 +97,12 @@ public class PurchaseServiceImplTest
 		purchase3 = Purchase.builder()
 			.receiptNumber("random-value-3")
 			.total(new BigDecimal(300))
-			.taxes(new BigDecimal(30))
 			.approve(Boolean.TRUE)
 			.build();
 
 		purchase4 = Purchase.builder()
 			.receiptNumber("random-value-4")
 			.total(new BigDecimal(400))
-			.taxes(new BigDecimal(40))
 			.approve(Boolean.TRUE)
 			.client(client1)
 			.build();
@@ -97,7 +110,6 @@ public class PurchaseServiceImplTest
 		purchase5 = Purchase.builder()
 			.receiptNumber("random-value-5")
 			.total(new BigDecimal(500))
-			.taxes(new BigDecimal(50))
 			.approve(Boolean.TRUE)
 			.client(client1)
 			.build();
@@ -105,9 +117,52 @@ public class PurchaseServiceImplTest
 		purchase6 = Purchase.builder()
 			.receiptNumber("random-value-6")
 			.total(new BigDecimal(600))
-			.taxes(new BigDecimal(60))
 			.approve(Boolean.TRUE)
 			.client(client1)
+			.build();
+
+		seller1 = Seller.builder()
+			.id(1L)
+			.code("SELL-1")
+			.document("0-11")
+			.description("SELLERTEST1")
+			.active(Boolean.TRUE)
+			.build();
+
+		product1 = Product.builder()
+			.id(1L)
+			.sku("sku-1")
+			.skuVendor("sku-vendor-1")
+			.cost(BigDecimal.ONE)
+			.salePrice(BigDecimal.TEN)
+			.description("product-1-description")
+			.active(Boolean.TRUE)
+			.stockQty(10)
+			.seller(seller1)
+			.build();
+
+		purchaseDetail1 = PurchaseDetail.builder()
+			.product(product1)
+			.quantity(10)
+			.purchase(purchase1)
+			.unitSalePrice(new BigDecimal(5))
+			.totalSalePrice(new BigDecimal(50))
+			.build();
+
+		purchaseDetail2 = PurchaseDetail.builder()
+			.product(product1)
+			.quantity(20)
+			.purchase(purchase1)
+			.unitSalePrice(new BigDecimal(5))
+			.totalSalePrice(new BigDecimal(100))
+			.build();
+
+		purchaseDetail3 = PurchaseDetail.builder()
+			.product(product1)
+			.quantity(30)
+			.purchase(purchase1)
+			.unitSalePrice(new BigDecimal(5))
+			.totalSalePrice(new BigDecimal(150))
 			.build();
 	}
 
@@ -173,7 +228,7 @@ public class PurchaseServiceImplTest
 	public void savePurchaseTest() throws ValidationException
 	{
 		purchase1.setId(1L);
-		PurchaseDto dto = new PurchaseDto(purchase1.getReceiptNumber(), purchase1.getTotal(), purchase1.getTaxes(),
+		PurchaseDto dto = new PurchaseDto(purchase1.getReceiptNumber(),
 			purchase1.getApprove(), purchase1.getClient().getId());
 		when(repository.save(any(Purchase.class))).thenReturn(purchase1);
 		when(clientRepository.findById(any(Long.class))).thenReturn(Optional.ofNullable(client1));
@@ -189,7 +244,7 @@ public class PurchaseServiceImplTest
 		purchase1.setId(1L);
 		purchase1.setReceiptNumber(updatedReceiptNumber);
 
-		PurchaseDto dto = new PurchaseDto(purchase1.getReceiptNumber(), purchase1.getTotal(), purchase1.getTaxes(),
+		PurchaseDto dto = new PurchaseDto(purchase1.getReceiptNumber(),
 			purchase1.getApprove(), purchase1.getClient().getId());
 		when(repository.existsById(any(Long.class))).thenReturn(true);
 		when(repository.findByReceiptNumber(any(String.class))).thenReturn(purchase1);
@@ -231,13 +286,34 @@ public class PurchaseServiceImplTest
 		service.approvePurchase(100L);
 	}
 
-	@Test
-	public void approvePurchaseTest() throws ValidationException
+	@Test(expected = ValidationException.class)
+	public void approvePurchaseExceedStockQtyTest() throws ValidationException
 	{
 		purchase1.setId(1L);
 		purchase1.setApprove(false);
 		when(repository.findById(1L)).thenReturn(Optional.ofNullable(purchase1));
 		when(repository.save(any(Purchase.class))).thenReturn(purchase1);
+		when(purchaseDetailRepository.findAllByPurchaseId(any(Long.class))).thenReturn(
+			Arrays.asList(purchaseDetail1, purchaseDetail2, purchaseDetail3)
+		);
+		Purchase approvedPurchase = service.approvePurchase(1L);
+		assertThat(approvedPurchase).isNotNull();
+		assertThat(approvedPurchase.getApprove()).isTrue();
+		assertThat(approvedPurchase.getId()).isEqualTo(purchase1.getId());
+	}
+
+	@Test
+	public void approvePurchaseTest() throws ValidationException
+	{
+		purchase1.setId(1L);
+		purchase1.setApprove(false);
+		product1.setStockQty(1000000);
+		when(repository.findById(1L)).thenReturn(Optional.ofNullable(purchase1));
+		when(repository.save(any(Purchase.class))).thenReturn(purchase1);
+		when(purchaseDetailRepository.findAllByPurchaseId(any(Long.class))).thenReturn(
+			Arrays.asList(purchaseDetail1, purchaseDetail2, purchaseDetail3)
+		);
+		when(productRepository.saveAll(any())).thenReturn(Collections.emptyList());
 		Purchase approvedPurchase = service.approvePurchase(1L);
 		assertThat(approvedPurchase).isNotNull();
 		assertThat(approvedPurchase.getApprove()).isTrue();

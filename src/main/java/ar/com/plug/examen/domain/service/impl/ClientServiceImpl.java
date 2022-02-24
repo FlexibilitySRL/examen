@@ -12,11 +12,13 @@ import ar.com.plug.examen.app.api.PageDto;
 import ar.com.plug.examen.domain.model.Client;
 import ar.com.plug.examen.domain.repository.ClientRepository;
 import ar.com.plug.examen.domain.service.ClientService;
+import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+@Log4j2
 @Service
 public class ClientServiceImpl implements ClientService
 {
@@ -39,6 +41,7 @@ public class ClientServiceImpl implements ClientService
 	@Override
 	public PageDto<Client> getActiveClientsPageable(int pageNumber, int pageSize)
 	{
+		log.debug("[getActiveClientsPageable] page:{}, size:{}", pageNumber, pageSize);
 		return new PageDto<>(
 			this.clientRepository.findAllByActiveTrue(PageRequest.of(pageNumber, pageSize))
 		);
@@ -54,6 +57,7 @@ public class ClientServiceImpl implements ClientService
 	@Override
 	public PageDto<Client> getAllClients(int pageNumber, int pageSize)
 	{
+		log.debug("[getAllClients] page:{}, size:{}", pageNumber, pageSize);
 		return new PageDto<>(
 			this.clientRepository.findAll(PageRequest.of(pageNumber, pageSize))
 		);
@@ -68,6 +72,7 @@ public class ClientServiceImpl implements ClientService
 	@Override
 	public Client getClientById(Long id)
 	{
+		log.debug("[getClientById] id:{}", id);
 		if(Objects.isNull(id)) {
 			throw new NoSuchElementException("El id del cliente no puede ser nulo.");
 		}
@@ -88,6 +93,7 @@ public class ClientServiceImpl implements ClientService
 	@Override
 	public Client getClientByDocumentNumber(String document)
 	{
+		log.debug("[getClientByDocument] document:{}", document);
 		if(StringUtils.isBlank(document)) {
 			throw new NoSuchElementException("El número de documento del cliente no puede ser nulo.");
 		}
@@ -110,6 +116,7 @@ public class ClientServiceImpl implements ClientService
 	@Override
 	public Client saveClient(ClientDto clientDto) throws ValidationException
 	{
+		log.debug("[saveClient] clientDto:{}", clientDto);
 		if(Objects.isNull(clientDto)) {
 			throw new ValidationException("Los datos para la creación de un cliente no pueden ser nulos.");
 		}
@@ -137,6 +144,7 @@ public class ClientServiceImpl implements ClientService
 	@Override
 	public Client updateClient(Long id, ClientDto clientDto) throws ValidationException
 	{
+		log.debug("[updateClient] id:{}, clientDto:{}", id, clientDto);
 		if(Objects.isNull(id) || (Objects.isNull(clientDto))) {
 			throw new ValidationException("Los datos para la actualización de un cliente no pueden ser nulos.");
 		}
@@ -165,6 +173,7 @@ public class ClientServiceImpl implements ClientService
 	@Override
 	public Client inactivateClient(Long id) throws ValidationException
 	{
+		log.debug("[inactivateClient] id:{}", id);
 		if(Objects.isNull(id)) {
 			throw new ValidationException("Los datos para la actualización de un cliente no pueden ser nulos.");
 		}
@@ -188,6 +197,7 @@ public class ClientServiceImpl implements ClientService
 	@Override
 	public Long deleteClient(Long id) throws ValidationException
 	{
+		log.debug("[deleteClient] id:{}", id);
 		if(Objects.isNull(id)) {
 			throw new ValidationException("Los datos para la actualización de un cliente no pueden ser nulos.");
 		}

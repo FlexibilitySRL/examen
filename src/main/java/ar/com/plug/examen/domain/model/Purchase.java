@@ -18,12 +18,14 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ToString
 @Entity
 @Table(name = "purchase")
 public class Purchase
@@ -38,9 +40,6 @@ public class Purchase
 
 	@Column(name = "total_amount")
 	private BigDecimal total;
-
-	@Column(name = "taxes")
-	private BigDecimal taxes;
 
 	@Column(name = "approve")
 	private Boolean approve;

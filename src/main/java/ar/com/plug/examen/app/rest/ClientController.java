@@ -5,6 +5,7 @@ import javax.xml.bind.ValidationException;
 
 import ar.com.plug.examen.app.api.ClientDto;
 import ar.com.plug.examen.app.api.PageDto;
+import ar.com.plug.examen.aspect.LogController;
 import ar.com.plug.examen.domain.model.Client;
 import ar.com.plug.examen.domain.service.ClientService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -52,6 +53,7 @@ public class ClientController
 			)
 		}
 	)
+	@LogController
 	@GetMapping(value = "/clients", produces = MediaType.APPLICATION_JSON_VALUE)
 	public PageDto<Client> allClients(
 		@Parameter(description = "Number of the starting page", example = "0")
@@ -73,6 +75,7 @@ public class ClientController
 			)
 		}
 	)
+	@LogController
 	@GetMapping(value = "/clients/active", produces = MediaType.APPLICATION_JSON_VALUE)
 	public PageDto<Client> activeClients(
 		@Parameter(description = "Number of the starting page", example = "0")
@@ -94,6 +97,7 @@ public class ClientController
 			)
 		}
 	)
+	@LogController
 	@GetMapping(value = "/client", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Client clientByDocument(
 		@Parameter(description = "Client's document number", example = "3509091")
@@ -113,6 +117,7 @@ public class ClientController
 			)
 		}
 	)
+	@LogController
 	@GetMapping(value = "/client/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Client clientByDocument(
 		@Parameter(description = "Client's internal id", example = "2")
@@ -132,6 +137,7 @@ public class ClientController
 			)
 		}
 	)
+	@LogController
 	@PostMapping(value = "/client", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Client createClient(@RequestBody @Valid ClientDto clientDto) throws ValidationException
 	{
@@ -149,6 +155,7 @@ public class ClientController
 			)
 		}
 	)
+	@LogController
 	@PutMapping(value = "/client/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Client updateClient(
 		@Parameter(description = "Client's internal id", example = "2")
@@ -169,6 +176,7 @@ public class ClientController
 			)
 		}
 	)
+	@LogController
 	@PutMapping(value = "/client/inactivate/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Client inactivateClient(
 		@Parameter(description = "Client's internal id", example = "2")
@@ -188,6 +196,7 @@ public class ClientController
 			)
 		}
 	)
+	@LogController
 	@DeleteMapping(value = "/client/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Long deleteClient(
 		@Parameter(description = "Client's internal id", example = "2")
