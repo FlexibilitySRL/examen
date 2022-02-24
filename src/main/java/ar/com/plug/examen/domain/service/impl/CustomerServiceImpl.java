@@ -3,9 +3,7 @@ package ar.com.plug.examen.domain.service.impl;
 import ar.com.plug.examen.domain.constants.ErrorConstants;
 import ar.com.plug.examen.domain.dto.CustomerDTO;
 import ar.com.plug.examen.domain.enums.Result;
-import ar.com.plug.examen.domain.exception.CustomerNotFoundException;
-import ar.com.plug.examen.domain.exception.ProductNotFoundException;
-import ar.com.plug.examen.domain.exception.ProductParamException;
+import ar.com.plug.examen.domain.exception.*;
 import ar.com.plug.examen.domain.model.Customer;
 import ar.com.plug.examen.domain.model.LogTransation;
 import ar.com.plug.examen.domain.model.Purchase;
@@ -19,7 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
@@ -51,6 +48,11 @@ public class CustomerServiceImpl implements CustomerService {
     @Autowired
     private PurchaseRepository purchaseRepository;
 
+    /**
+     * Method with logical to save a customer
+     *
+     * @param customerDTO: Object type dto with information to save
+     */
     @Override
     public void createCustomer(CustomerDTO customerDTO) {
         try {
@@ -119,26 +121,29 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     private void validateInputData(CustomerDTO customerDTO) {
-        List<String> param = new ArrayList<>();
-
+        boolean isError = false;
         if (Util.isBlank(customerDTO.getName())) {
-            param.add(NAME);
+            isError = true;
+            throw new CustomerParamException(NAME);
         }
         if (Util.isBlank(customerDTO.getLastName())) {
-            param.add(LAST_NAME);
+            isError = true;
+            throw new CustomerParamException(LAST_NAME);
         }
         if (Util.isBlank(customerDTO.getDocumentNumber())) {
-            param.add(DOCUMENT_NUMBER);
+            isError = true;
+            throw new CustomerParamException(DOCUMENT_NUMBER);
         }
         if (Util.isBlank(customerDTO.getEmail())) {
-            param.add(EMAIL);
+            isError = true;
+            throw new CustomerParamException(EMAIL);
         }
         if (Util.isBlank(customerDTO.getPhone())) {
-            param.add(PHONE);
+            isError = true;
+            throw new CustomerParamException(PHONE);
         }
-        if (!param.isEmpty()) {
+        if (isError) {
             createLog(VALIDATE_DATA, Result.ERROR, ERROR_DATA_EMPTY);
-            throw new ProductParamException(INVALID_PRODUCT_FIELD, param);
         }
     }
 
@@ -162,7 +167,7 @@ public class CustomerServiceImpl implements CustomerService {
             description.append(" ");
             description.append(documentNumber);
             createLog(ACTION_SAVE, Result.ERROR, description.toString());
-            throw new ProductNotFoundException();
+            throw new CustomerFoundException();
         }
     }
 
@@ -174,10 +179,11 @@ public class CustomerServiceImpl implements CustomerService {
             description.append(" ");
             description.append(idCustomer);
             createLog(ACTION_DELETE, Result.ERROR, description.toString());
-            throw new ProductNotFoundException();
+            throw new SellerInvalidDeleteException();
         }
         return purchaseResult;
     }
+
     private void createLog(String action, Result result, String description) {
         LogTransation logTransation = LogTransation.builder()
                 .module(action)
@@ -185,4 +191,5 @@ public class CustomerServiceImpl implements CustomerService {
                 .description(description).build();
         logTransationRepository.save(logTransation);
     }
+
 }

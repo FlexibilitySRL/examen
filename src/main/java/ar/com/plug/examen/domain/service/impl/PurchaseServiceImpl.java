@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
@@ -164,31 +163,38 @@ public class PurchaseServiceImpl implements PurchaseService {
     }
 
     private void validateInputData(PurchaseDTO purchaseDTO) {
-        List<String> param = new ArrayList<>();
-
+        boolean isError = false;
         if (Util.isBlank(purchaseDTO.getVoucher())) {
-            param.add(VOUCHER);
+            isError = true;
+            throw new PurchaseParamException(VOUCHER);
         }
         if (null == purchaseDTO.getTaxes()) {
-            param.add(TAXES);
+            isError = true;
+            throw new PurchaseParamException(TAXES);
         }
         if (null == purchaseDTO.getAmount()) {
-            param.add(AMOUNT);
+            isError = true;
+            throw new PurchaseParamException(AMOUNT);
         }
         if (null == purchaseDTO.getSeller()) {
-            param.add(SELLER);
+            isError = true;
+            throw new PurchaseParamException(SELLER);
         }
         if (null == purchaseDTO.getCustomer()) {
-            param.add(CUSTOMER);
+            isError = true;
+            throw new PurchaseParamException(CUSTOMER);
+
         }
         if (null == purchaseDTO.getProduct()) {
-            param.add(PRODUCT);
+            isError = true;
+            throw new PurchaseParamException(PRODUCT);
+
         }
-        if (!param.isEmpty()) {
+        if (isError) {
             createLog(VALIDATE_DATA, Result.ERROR, ERROR_DATA_EMPTY);
-            throw new PurchaseParamException(INVALID_PRODUCT_FIELD, param);
         }
     }
+
     private void createLog(String action, Result result, String description) {
         LogTransation logTransation = LogTransation.builder()
                 .module(action)

@@ -3,6 +3,8 @@ package ar.com.plug.examen.domain.service.impl;
 import ar.com.plug.examen.domain.constants.ErrorConstants;
 import ar.com.plug.examen.domain.dto.ProductDTO;
 import ar.com.plug.examen.domain.enums.Result;
+import ar.com.plug.examen.domain.exception.ProductFoundException;
+import ar.com.plug.examen.domain.exception.ProductInvalidDeleteException;
 import ar.com.plug.examen.domain.exception.ProductNotFoundException;
 import ar.com.plug.examen.domain.exception.ProductParamException;
 import ar.com.plug.examen.domain.model.LogTransation;
@@ -18,7 +20,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
@@ -117,23 +118,25 @@ public class ProductServiceImpl implements ProductService {
     }
 
     private void validateInputData(ProductDTO productDTO) {
-        List<String> param = new ArrayList<>();
-
+        boolean isError = false;
         if (Util.isBlank(productDTO.getCategory())) {
-            param.add(CATEGORY);
+            isError = true;
+            throw new ProductParamException(CATEGORY);
         }
         if (null == productDTO.getPrice()) {
-            param.add(PRICE);
+            isError = true;
+            throw new ProductParamException(PRICE);
         }
         if (productDTO.getStock() == null) {
-            param.add(STOCK);
+            isError = true;
+            throw new ProductParamException(STOCK);
         }
         if (Util.isBlank(productDTO.getDescriptionProduct())) {
-            param.add(DESCRIPTION_PRODUCT);
+            isError = true;
+            throw new ProductParamException(DESCRIPTION_PRODUCT);
         }
-        if (!param.isEmpty()) {
+        if (isError) {
             createLog(VALIDATE_DATA, Result.ERROR, ERROR_DATA_EMPTY);
-            throw new ProductParamException(INVALID_PRODUCT_FIELD, param);
         }
     }
 
@@ -159,19 +162,19 @@ public class ProductServiceImpl implements ProductService {
             description.append(" ");
             description.append(descriptionProduct);
             createLog(ACTION_SAVE, Result.ERROR, description.toString());
-            throw new ProductNotFoundException();
+            throw new ProductFoundException();
         }
     }
 
     private List<Purchase> existsRelationProduct(long idProduct) {
-        List<Purchase> purchaseResult = purchaseRepository.findProductByCustomerIdCustomerOrProductIdProductOrSellerIdSeller(null,idProduct, null);
+        List<Purchase> purchaseResult = purchaseRepository.findProductByCustomerIdCustomerOrProductIdProductOrSellerIdSeller(null, idProduct, null);
         if (!purchaseResult.isEmpty()) {
-           StringBuilder description = new StringBuilder();
-           description.append(ERROR_ID_PRODUCT);
-           description.append(" ");
-           description.append(idProduct);
-           createLog(ACTION_DELETE, Result.ERROR, description.toString());
-           throw new ProductNotFoundException();
+            StringBuilder description = new StringBuilder();
+            description.append(ERROR_ID_PRODUCT);
+            description.append(" ");
+            description.append(idProduct);
+            createLog(ACTION_DELETE, Result.ERROR, description.toString());
+            throw new ProductInvalidDeleteException();
         }
         return purchaseResult;
     }

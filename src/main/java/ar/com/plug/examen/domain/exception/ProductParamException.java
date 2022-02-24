@@ -1,25 +1,19 @@
 package ar.com.plug.examen.domain.exception;
-import ar.com.plug.examen.domain.constants.ErrorConstants;
-import org.springframework.http.HttpStatus;
 
-import java.util.List;
-
-public class ProductParamException extends ExerciseApiException{
+public class ProductParamException extends RuntimeException{
     public ProductParamException() {
         super();
     }
 
-    public ProductParamException(String message, List<String> parameters) {
-        super(message, parameters);
+    public ProductParamException(String message, Throwable cause) {
+        super(message, cause);
     }
 
-    @Override
-    public String getErrorCode() {
-        return ErrorConstants.INVALID_PRODUCT_PARAMETERS_ERROR_CODE;
+    public ProductParamException(String message) {
+        super(message);
     }
 
-    @Override
-    public HttpStatus getStatus() {
-        return HttpStatus.BAD_REQUEST;
+    public ProductParamException(Throwable cause) {
+        super(cause);
     }
 }

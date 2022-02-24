@@ -1,5 +1,6 @@
 package ar.com.plug.examen.domain.dto;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
@@ -10,6 +11,7 @@ import java.time.LocalDateTime;
 
 @Setter
 @Getter
+@Builder
 public class SellerDTO {
     private long idSeller;
     private String name;

@@ -3,9 +3,7 @@ package ar.com.plug.examen.domain.service.impl;
 import ar.com.plug.examen.domain.constants.ErrorConstants;
 import ar.com.plug.examen.domain.dto.SellerDTO;
 import ar.com.plug.examen.domain.enums.Result;
-import ar.com.plug.examen.domain.exception.CustomerNotFoundException;
-import ar.com.plug.examen.domain.exception.ProductNotFoundException;
-import ar.com.plug.examen.domain.exception.ProductParamException;
+import ar.com.plug.examen.domain.exception.*;
 import ar.com.plug.examen.domain.model.LogTransation;
 import ar.com.plug.examen.domain.model.Purchase;
 import ar.com.plug.examen.domain.model.Seller;
@@ -18,7 +16,6 @@ import ar.com.plug.examen.domain.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
@@ -46,24 +43,25 @@ public class SellerServiceImpl implements SellerService {
     private LogTransationRepository logTransationRepository;
     @Autowired
     private PurchaseRepository purchaseRepository;
+
     @Override
     public void createSeller(SellerDTO sellerDTO) {
         try {
-        validateInputData(sellerDTO);
-        existsDocumentNumber(sellerDTO.getDocumentNumber());
-        Seller sellerToSave = new Seller();
-        sellerToSave.setEmail(sellerDTO.getEmail());
-        sellerToSave.setDocumentNumber(sellerDTO.getDocumentNumber());
-        sellerToSave.setName(sellerDTO.getName());
-        sellerToSave.setLastName(sellerDTO.getLastName());
-        sellerToSave.setPhone(sellerDTO.getPhone());
-        Seller sellerSave = sellerRepository.save(sellerToSave);
+            validateInputData(sellerDTO);
+            existsDocumentNumber(sellerDTO.getDocumentNumber());
+            Seller sellerToSave = new Seller();
+            sellerToSave.setEmail(sellerDTO.getEmail());
+            sellerToSave.setDocumentNumber(sellerDTO.getDocumentNumber());
+            sellerToSave.setName(sellerDTO.getName());
+            sellerToSave.setLastName(sellerDTO.getLastName());
+            sellerToSave.setPhone(sellerDTO.getPhone());
+            Seller sellerSave = sellerRepository.save(sellerToSave);
 
-        StringBuilder description = new StringBuilder();
-        description.append(SAVE_SUCCESS);
-        description.append(" ");
-        description.append(sellerSave.getIdSeller());
-        createLog(ACTION_SAVE, Result.SUCCESS, description.toString());
+            StringBuilder description = new StringBuilder();
+            description.append(SAVE_SUCCESS);
+            description.append(" ");
+            description.append(sellerSave.getIdSeller());
+            createLog(ACTION_SAVE, Result.SUCCESS, description.toString());
         } catch (ExceptionInInitializerError ex) {
             createLog(ACTION_SAVE, Result.ERROR, ERROR_UNKNOW);
             LOGGER.log(Level.SEVERE, ErrorConstants.API_ERROR, ex.getMessage());
@@ -73,38 +71,38 @@ public class SellerServiceImpl implements SellerService {
 
     @Override
     public void deleteSeller(Long idSeller) {
-       try{
-        existsSeller(idSeller);
-        existsRelationSeller(idSeller);
-        sellerRepository.deleteById(idSeller);
-        StringBuilder description = new StringBuilder();
-        description.append(DELETE_SUCCESS);
-        description.append(" ");
-        description.append(idSeller);
-        createLog(ACTION_DELETE, Result.SUCCESS, description.toString());
-       } catch (ExceptionInInitializerError ex) {
-           createLog(ACTION_DELETE, Result.ERROR, ERROR_UNKNOW);
-           LOGGER.log(Level.SEVERE, ErrorConstants.API_ERROR, ex.getMessage());
-           ex.printStackTrace();
-       }
+        try {
+            existsSeller(idSeller);
+            existsRelationSeller(idSeller);
+            sellerRepository.deleteById(idSeller);
+            StringBuilder description = new StringBuilder();
+            description.append(DELETE_SUCCESS);
+            description.append(" ");
+            description.append(idSeller);
+            createLog(ACTION_DELETE, Result.SUCCESS, description.toString());
+        } catch (ExceptionInInitializerError ex) {
+            createLog(ACTION_DELETE, Result.ERROR, ERROR_UNKNOW);
+            LOGGER.log(Level.SEVERE, ErrorConstants.API_ERROR, ex.getMessage());
+            ex.printStackTrace();
+        }
     }
 
     @Override
     public void editSeller(Long idSeller, SellerDTO sellerDTO) {
         try {
-        validateInputData(sellerDTO);
-        Optional<Seller> sellerResult = existsSeller(idSeller);
-        sellerResult.get().setPhone(sellerDTO.getPhone());
-        sellerResult.get().setName(sellerDTO.getName());
-        sellerResult.get().setLastName(sellerDTO.getLastName());
-        sellerResult.get().setEmail(sellerDTO.getEmail());
-        sellerResult.get().setDocumentNumber(sellerDTO.getDocumentNumber());
-        sellerRepository.saveAndFlush(sellerResult.get());
-        StringBuilder description = new StringBuilder();
-        description.append(EDIT_SUCCESS);
-        description.append(" ");
-        description.append(idSeller);
-        createLog(ACTION_EDIT, Result.SUCCESS, description.toString());
+            validateInputData(sellerDTO);
+            Optional<Seller> sellerResult = existsSeller(idSeller);
+            sellerResult.get().setPhone(sellerDTO.getPhone());
+            sellerResult.get().setName(sellerDTO.getName());
+            sellerResult.get().setLastName(sellerDTO.getLastName());
+            sellerResult.get().setEmail(sellerDTO.getEmail());
+            sellerResult.get().setDocumentNumber(sellerDTO.getDocumentNumber());
+            sellerRepository.saveAndFlush(sellerResult.get());
+            StringBuilder description = new StringBuilder();
+            description.append(EDIT_SUCCESS);
+            description.append(" ");
+            description.append(idSeller);
+            createLog(ACTION_EDIT, Result.SUCCESS, description.toString());
         } catch (ExceptionInInitializerError ex) {
             createLog(ACTION_EDIT, Result.ERROR, ERROR_UNKNOW);
             LOGGER.log(Level.SEVERE, ErrorConstants.API_ERROR, ex.getMessage());
@@ -113,28 +111,32 @@ public class SellerServiceImpl implements SellerService {
     }
 
     private void validateInputData(SellerDTO sellerDTO) {
-        List<String> param = new ArrayList<>();
-
+        boolean isError = false;
         if (Util.isBlank(sellerDTO.getName())) {
-            param.add(NAME);
+            isError = true;
+            throw new SellerParamException(NAME);
         }
         if (Util.isBlank(sellerDTO.getLastName())) {
-            param.add(LAST_NAME);
+            isError = true;
+            throw new SellerParamException(LAST_NAME);
         }
         if (Util.isBlank(sellerDTO.getDocumentNumber())) {
-            param.add(DOCUMENT_NUMBER);
+            isError = true;
+            throw new SellerParamException(DOCUMENT_NUMBER);
         }
         if (Util.isBlank(sellerDTO.getEmail())) {
-            param.add(EMAIL);
+            isError = true;
+            throw new SellerParamException(EMAIL);
         }
         if (Util.isBlank(sellerDTO.getPhone())) {
-            param.add(PHONE);
+            isError = true;
+            throw new SellerParamException(PHONE);
         }
-        if (!param.isEmpty()) {
+        if (isError) {
             createLog(VALIDATE_DATA, Result.ERROR, ERROR_DATA_EMPTY);
-            throw new ProductParamException(INVALID_PRODUCT_FIELD, param);
         }
     }
+
     private void existsDocumentNumber(String documentNumber) {
         if (sellerRepository.findSellerBydocumentNumber(documentNumber) != null) {
             StringBuilder description = new StringBuilder();
@@ -142,7 +144,7 @@ public class SellerServiceImpl implements SellerService {
             description.append(" ");
             description.append(documentNumber);
             createLog(ACTION_SAVE, Result.ERROR, description.toString());
-            throw new ProductNotFoundException();
+            throw new SellerFoundException();
         }
     }
 
@@ -155,22 +157,24 @@ public class SellerServiceImpl implements SellerService {
             description.append(" ");
             description.append(idSeller);
             createLog(ACTION_EMPTY_DATA, Result.ERROR, description.toString());
-            throw new CustomerNotFoundException();
+            throw new SellerNotFoundException();
         }
         return sellerResult;
     }
+
     private List<Purchase> existsRelationSeller(long idSeller) {
-        List<Purchase> purchaseResult = purchaseRepository.findProductByCustomerIdCustomerOrProductIdProductOrSellerIdSeller(null,null, idSeller);
+        List<Purchase> purchaseResult = purchaseRepository.findProductByCustomerIdCustomerOrProductIdProductOrSellerIdSeller(null, null, idSeller);
         if (!purchaseResult.isEmpty()) {
             StringBuilder description = new StringBuilder();
             description.append(ERROR_ID_SELLER);
             description.append(" ");
             description.append(idSeller);
             createLog(ACTION_DELETE, Result.ERROR, description.toString());
-            throw new ProductNotFoundException();
+            throw new SellerInvalidDeleteException();
         }
         return purchaseResult;
     }
+
     private void createLog(String action, Result result, String description) {
         LogTransation logTransation = LogTransation.builder()
                 .module(action)
