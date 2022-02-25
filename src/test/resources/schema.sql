@@ -44,16 +44,16 @@ CREATE TABLE product (
 	stock_quantity int NOT NULL DEFAULT 0,
 	modification_date timestamp NOT NULL DEFAULT now(),
 	creation_date timestamp NOT NULL DEFAULT now(),
-	CONSTRAINT product_pk PRIMARY KEY (id)
+	CONSTRAINT product_pk PRIMARY KEY (id),
+	CONSTRAINT unique_product_sku UNIQUE (sku)
 );
 ALTER TABLE product ADD CONSTRAINT product_seller_fk FOREIGN KEY (seller_id) REFERENCES seller(id);
 
 CREATE TABLE purchase (
 	id INTEGER NOT NULL AUTO_INCREMENT,
-    receipt_number varchar(200) NOT NULL,
+	receipt_number varchar(200) NOT NULL,
 	total_amount decimal NULL,
-	taxes decimal NULL,
-	approve bool NOT NULL,
+	approve bool NOT NULL DEFAULT false,
 	client_id int8 NOT NULL,
 	modification_date timestamp NOT NULL DEFAULT now(),
 	creation_date timestamp NOT NULL DEFAULT now(),

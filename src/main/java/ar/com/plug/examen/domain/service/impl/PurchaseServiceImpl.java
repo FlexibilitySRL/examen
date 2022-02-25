@@ -59,6 +59,7 @@ public class PurchaseServiceImpl implements PurchaseService
 	@Override
 	public PageDto<Purchase> getApprovedPurchasesPageable(int pageNumber, int pageSize)
 	{
+		log.debug("[getApprovedPurchasesPageable] page:{}, size:{}", pageNumber, pageSize);
 		return new PageDto<>(
 			this.purchaseRepository.findAllByApproveTrue(PageRequest.of(pageNumber, pageSize))
 		);
@@ -74,6 +75,7 @@ public class PurchaseServiceImpl implements PurchaseService
 	@Override
 	public PageDto<Purchase> getAllPurchasesPageable(int pageNumber, int pageSize)
 	{
+		log.debug("[getAllPurchasesPageable] page:{}, size:{}", pageNumber, pageSize);
 		return new PageDto<>(
 			this.purchaseRepository.findAll(PageRequest.of(pageNumber, pageSize))
 		);
@@ -91,6 +93,7 @@ public class PurchaseServiceImpl implements PurchaseService
 		if(Objects.isNull(id)) {
 			throw new NoSuchElementException("El id de la compra no puede ser nulo.");
 		}
+		log.debug("[getPurchaseById] id:{}", id);
 		Optional<Purchase> optionalPurchase = this.purchaseRepository.findById(id);
 		if(optionalPurchase.isPresent()) {
 			return optionalPurchase.get();
@@ -111,6 +114,7 @@ public class PurchaseServiceImpl implements PurchaseService
 		if(StringUtils.isBlank(receiptNumber)) {
 			throw new NoSuchElementException("El código de la compra no puede ser nula.");
 		}
+		log.debug("[getPurchaseByReceiptNumber] receipt:{}", receiptNumber);
 		Purchase purchaseFromDatabase = this.purchaseRepository.findByReceiptNumber(receiptNumber);
 		if(Objects.nonNull(purchaseFromDatabase)) {
 			return purchaseFromDatabase;
@@ -136,6 +140,7 @@ public class PurchaseServiceImpl implements PurchaseService
 		if(Objects.isNull(purchaseDto.getClientId())) {
 			throw new ValidationException("El id del cliente no puede ser nulo.");
 		}
+		log.debug("[savePurchase] purchaseDto:{}", purchaseDto);
 		Client client = this.clientRepository.findById(purchaseDto.getClientId())
 			.orElseThrow(
 				() -> new NoSuchElementException("El cliente con el id " + purchaseDto.getClientId() + " no existe.")
@@ -165,6 +170,7 @@ public class PurchaseServiceImpl implements PurchaseService
 		if(Objects.isNull(id) || (Objects.isNull(purchaseDto))) {
 			throw new ValidationException("Los datos para la actualización de una compra no pueden ser nulos.");
 		}
+		log.debug("[updatePurchase] id:{}, purchaseDto:{}", id, purchaseDto);
 		if(this.purchaseRepository.existsById(id)) {
 			Purchase purchaseFromDatabase = this.purchaseRepository.findByReceiptNumber(purchaseDto.getReceiptNumber());
 			if(Objects.nonNull(purchaseFromDatabase) && !purchaseFromDatabase.getId().equals(id)) {
@@ -196,10 +202,10 @@ public class PurchaseServiceImpl implements PurchaseService
 	@Override
 	public Purchase approvePurchase(Long id) throws ValidationException
 	{
-		log.debug("Proceso de aprobación de compra con el id: {}", id);
 		if(Objects.isNull(id)) {
 			throw new ValidationException("Los datos para la actualización de la compra no pueden ser nulos.");
 		}
+		log.debug("[approvePurchase] id: {}", id);
 		Purchase purchaseFromDatabase = this.purchaseRepository.findById(id)
 			.orElseThrow(
 				() -> new NoSuchElementException("La compra con el id " + id + " no existe.")
@@ -237,6 +243,7 @@ public class PurchaseServiceImpl implements PurchaseService
 		if(Objects.isNull(id)) {
 			throw new ValidationException("Los datos para el borrado de la compra no pueden ser nulos.");
 		}
+		log.debug("[deletePurchase] id:{}", id);
 		if (this.purchaseDetailRepository.existsByPurchaseId(id)){
 			throw new ValidationException("Existen detalles de la compra que deben ser borrados previamente.");
 		}

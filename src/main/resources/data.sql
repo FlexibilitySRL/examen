@@ -21,3 +21,36 @@ VALUES ('own-001', 'dbug-001', null, null, 'product-1-description', true, 1, 10,
 INSERT INTO product
 (sku, sku_vendor, cost, sale_price, description, active, seller_id, stock_quantity, modification_date, creation_date)
 VALUES ('own-002', 'wen-001', null, null, 'product-10-description', true, 2, 10, now(), now());
+
+--purchase
+INSERT INTO purchase
+(receipt_number, total_amount, approve, client_id, modification_date, creation_date)
+VALUES ('re-001', 100, true, 1, now(), now());
+INSERT INTO purchase
+(receipt_number, total_amount, approve, client_id, modification_date, creation_date)
+VALUES ('re-002', 200, true, 1, now(), now());
+INSERT INTO purchase
+(receipt_number, total_amount, approve, client_id, modification_date, creation_date)
+VALUES ('re-003', 150, true, 2, now(), now());
+
+--purchase_detail
+INSERT INTO purchase_detail
+(product_id, quantity, purchase_id, unit_sale_price, total_sale_price, modification_date, creation_date)
+VALUES (1, 2, 1, 30, 60, now(), now());
+INSERT INTO purchase_detail
+(product_id, quantity, purchase_id, unit_sale_price, total_sale_price, modification_date, creation_date)
+VALUES (1, 2, 1, 20, 40, now(), now());
+
+INSERT INTO purchase_detail
+(product_id, quantity, purchase_id, unit_sale_price, total_sale_price, modification_date, creation_date)
+VALUES (2, 1, 2, 100, 100, now(), now());
+INSERT INTO purchase_detail
+(product_id, quantity, purchase_id, unit_sale_price, total_sale_price, modification_date, creation_date)
+VALUES (2, 2, 2, 50, 100, now(), now());
+
+INSERT INTO purchase_detail
+(product_id, quantity, purchase_id, unit_sale_price, total_sale_price, modification_date, creation_date)
+VALUES (1, 3, 3, 30, 90, now(), now());
+INSERT INTO purchase_detail
+(product_id, quantity, purchase_id, unit_sale_price, total_sale_price, modification_date, creation_date)
+VALUES (2, 3, 3, 20, 60, now(), now());

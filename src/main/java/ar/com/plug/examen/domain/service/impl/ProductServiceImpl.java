@@ -14,11 +14,13 @@ import ar.com.plug.examen.domain.model.Seller;
 import ar.com.plug.examen.domain.repository.ProductRepository;
 import ar.com.plug.examen.domain.repository.SellerRepository;
 import ar.com.plug.examen.domain.service.ProductService;
+import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+@Log4j2
 @Service
 public class ProductServiceImpl implements ProductService
 {
@@ -43,6 +45,7 @@ public class ProductServiceImpl implements ProductService
 	@Override
 	public PageDto<Product> getActiveProductsPageable(int pageNumber, int pageSize)
 	{
+		log.debug("[getActiveProductsPageable] page:{}, size:{}", pageNumber, pageSize);
 		return new PageDto<>(
 			this.productRepository.findAllByActiveTrue(PageRequest.of(pageNumber, pageSize))
 		);
@@ -58,6 +61,7 @@ public class ProductServiceImpl implements ProductService
 	@Override
 	public PageDto<Product> getAllProductsPageable(int pageNumber, int pageSize)
 	{
+		log.debug("[getAllProductsPageable] page:{}, size:{}", pageNumber, pageSize);
 		return new PageDto<>(
 			this.productRepository.findAll(PageRequest.of(pageNumber, pageSize))
 		);
@@ -75,6 +79,7 @@ public class ProductServiceImpl implements ProductService
 		if(Objects.isNull(id)) {
 			throw new NoSuchElementException("El id del producto no puede ser nulo.");
 		}
+		log.debug("[getProductById] id:{}", id);
 		Optional<Product> optionalProduct = this.productRepository.findById(id);
 		if(optionalProduct.isPresent()) {
 			return optionalProduct.get();
@@ -95,6 +100,7 @@ public class ProductServiceImpl implements ProductService
 		if(StringUtils.isBlank(sku)) {
 			throw new NoSuchElementException("El código del producto no puede ser nulo.");
 		}
+		log.debug("[getProductBySku] sku:{}", sku);
 		Product productFromDatabase = this.productRepository.findBySku(sku);
 		if(Objects.nonNull(productFromDatabase)) {
 			return productFromDatabase;
@@ -120,6 +126,7 @@ public class ProductServiceImpl implements ProductService
 		if(Objects.isNull(productDto.getSellerId())) {
 			throw new ValidationException("El ID del proveedor no puede ser nulo.");
 		}
+		log.debug("[saveProduct] productDto:{}", productDto);
 		Seller seller = this.sellerRepository.findById(productDto.getSellerId())
 			.orElseThrow(
 				() -> new NoSuchElementException("El proveedor con el id " + productDto.getSellerId() + " no existe.")
@@ -153,6 +160,7 @@ public class ProductServiceImpl implements ProductService
 		if(Objects.isNull(id) || (Objects.isNull(productDto))) {
 			throw new ValidationException("Los datos para la actualización de un producto no pueden ser nulos.");
 		}
+		log.debug("[updateProduct] id:{}, productDto:{}", id, productDto);
 		if(this.productRepository.existsById(id)) {
 			Product productFromDatabase = this.productRepository.findBySku(productDto.getSku());
 			if(Objects.nonNull(productFromDatabase) && !productFromDatabase.getId().equals(id)) {
@@ -192,6 +200,7 @@ public class ProductServiceImpl implements ProductService
 		if(Objects.isNull(id)) {
 			throw new ValidationException("Los datos para la actualización del producto no pueden ser nulos.");
 		}
+		log.debug("[inactivateProduct] id:{}", id);
 		Product productFromDatabase = this.productRepository.findById(id)
 			.orElseThrow(
 				() -> new NoSuchElementException("El producto con el id " + id + " no existe.")
@@ -215,6 +224,7 @@ public class ProductServiceImpl implements ProductService
 		if(Objects.isNull(id)) {
 			throw new ValidationException("Los datos para el borrado del producto no pueden ser nulos.");
 		}
+		log.debug("[deleteProduct] id:{}", id);
 		if(this.productRepository.existsById(id)) {
 			this.productRepository.deleteById(id);
 			return id;

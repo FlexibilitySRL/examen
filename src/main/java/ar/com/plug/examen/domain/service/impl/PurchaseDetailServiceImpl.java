@@ -17,10 +17,12 @@ import ar.com.plug.examen.domain.repository.ProductRepository;
 import ar.com.plug.examen.domain.repository.PurchaseDetailRepository;
 import ar.com.plug.examen.domain.repository.PurchaseRepository;
 import ar.com.plug.examen.domain.service.PurchaseDetailService;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+@Log4j2
 @Service
 public class PurchaseDetailServiceImpl implements PurchaseDetailService
 {
@@ -47,6 +49,7 @@ public class PurchaseDetailServiceImpl implements PurchaseDetailService
 	@Override
 	public PageDto<PurchaseDetail> getDetailsByPurchaseIdPageable(Long purchaseId, int pageNumber, int pageSize)
 	{
+		log.debug("[getDetailsByPurchaseIdPageable] purchaseId:{}, page:{}, size:{}", purchaseId, pageNumber, pageSize);
 		return new PageDto<>(
 			this.purchaseDetailRepository.findAllByPurchaseId(purchaseId, PageRequest.of(pageNumber, pageSize))
 		);
@@ -64,6 +67,7 @@ public class PurchaseDetailServiceImpl implements PurchaseDetailService
 	@Override
 	public PageDto<PurchaseDetail> getDetailsByProductIdPageable(Long productId, int pageNumber, int pageSize)
 	{
+		log.debug("[getDetailsByProductIdPageable] productId:{}, page:{}, size:{}", productId, pageNumber, pageSize);
 		return new PageDto<>(
 			this.purchaseDetailRepository.findAllByProductId(productId, PageRequest.of(pageNumber, pageSize))
 		);
@@ -79,6 +83,7 @@ public class PurchaseDetailServiceImpl implements PurchaseDetailService
 	@Override
 	public PageDto<PurchaseDetail> getAllDetailsPageable(int pageNumber, int pageSize)
 	{
+		log.debug("[getAllDetailsPageable] page:{}, size:{}", pageNumber, pageSize);
 		return new PageDto<>(
 			this.purchaseDetailRepository.findAll(PageRequest.of(pageNumber, pageSize))
 		);
@@ -95,6 +100,7 @@ public class PurchaseDetailServiceImpl implements PurchaseDetailService
 		if(Objects.isNull(id)) {
 			throw new NoSuchElementException("El id del detalle no puede ser nulo.");
 		}
+		log.debug("[getPurchaseDetailById] id:{}", id);
 		Optional<PurchaseDetail> optionalPurchase = this.purchaseDetailRepository.findById(id);
 		if(optionalPurchase.isPresent()) {
 			return optionalPurchase.get();
@@ -123,6 +129,7 @@ public class PurchaseDetailServiceImpl implements PurchaseDetailService
 		if(Objects.isNull(detailDto.getProductId())) {
 			throw new ValidationException("El id del producto no puede ser nulo.");
 		}
+		log.debug("[saveDetail] detailDto:{}", detailDto);
 		Purchase purchaseFromDatabase = this.purchaseRepository.findById(detailDto.getPurchaseId())
 			.orElseThrow(
 				() -> new NoSuchElementException("La compra con el id " + detailDto.getPurchaseId() + " no existe.")
@@ -163,6 +170,7 @@ public class PurchaseDetailServiceImpl implements PurchaseDetailService
 		if(Objects.isNull(detailDto.getProductId())) {
 			throw new ValidationException("El id del producto no puede ser nulo.");
 		}
+		log.debug("[updateDetail] id:{}, detailDto:{}", id, detailDto);
 		PurchaseDetail purchaseDetailFromDatabase = this.purchaseDetailRepository.findById(id)
 			.orElseThrow(
 				() -> new NoSuchElementException("El detalle con el id " + id + " no existe.")
@@ -202,6 +210,7 @@ public class PurchaseDetailServiceImpl implements PurchaseDetailService
 		if(Objects.isNull(id)) {
 			throw new ValidationException("Los datos para el borrado de del detalle de la compra no pueden ser nulos.");
 		}
+		log.debug("[deletePurchaseDetail] id:{}", id);
 		if(this.purchaseDetailRepository.existsById(id)) {
 			this.purchaseDetailRepository.deleteById(id);
 			return id;

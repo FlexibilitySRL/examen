@@ -11,11 +11,13 @@ import ar.com.plug.examen.app.api.SellerDto;
 import ar.com.plug.examen.domain.model.Seller;
 import ar.com.plug.examen.domain.repository.SellerRepository;
 import ar.com.plug.examen.domain.service.SellerService;
+import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+@Log4j2
 @Service
 public class SellerServiceImpl implements SellerService
 {
@@ -38,6 +40,7 @@ public class SellerServiceImpl implements SellerService
 	@Override
 	public PageDto<Seller> getActiveSellersPageable(int pageNumber, int pageSize)
 	{
+		log.debug("[getActiveSellersPageable] page:{}, size:{}", pageNumber, pageSize);
 		return new PageDto<>(
 			this.sellerRepository.findAllByActiveTrue(PageRequest.of(pageNumber, pageSize))
 		);
@@ -53,6 +56,7 @@ public class SellerServiceImpl implements SellerService
 	@Override
 	public PageDto<Seller> getAllSellersPageable(int pageNumber, int pageSize)
 	{
+		log.debug("[getAllSellersPageable] page:{}, size:{}", pageNumber, pageSize);
 		return new PageDto<>(
 			this.sellerRepository.findAll(PageRequest.of(pageNumber, pageSize))
 		);
@@ -70,6 +74,7 @@ public class SellerServiceImpl implements SellerService
 		if(Objects.isNull(id)) {
 			throw new NoSuchElementException("El id del proveedor no puede ser nulo.");
 		}
+		log.debug("[getSellerById] id:{}", id);
 		Optional<Seller> optionalSeller = this.sellerRepository.findById(id);
 		if(optionalSeller.isPresent()) {
 			return optionalSeller.get();
@@ -90,6 +95,7 @@ public class SellerServiceImpl implements SellerService
 		if(StringUtils.isBlank(code)) {
 			throw new NoSuchElementException("El código del proveedor no puede ser nulo.");
 		}
+		log.debug("[getSellerByCode] code:{}", code);
 		Seller sellerToReturn = this.sellerRepository.findByCode(code);
 		if(Objects.nonNull(sellerToReturn)) {
 			return sellerToReturn;
@@ -112,6 +118,7 @@ public class SellerServiceImpl implements SellerService
 		if(Objects.isNull(sellerDto)) {
 			throw new ValidationException("Los datos para la creación de un proveedor no pueden ser nulos.");
 		}
+		log.debug("[saveSeller] sellerDto:{}", sellerDto);
 		Seller newSeller = Seller.builder()
 			.code(sellerDto.getCode())
 			.document(sellerDto.getDocument())
@@ -137,6 +144,7 @@ public class SellerServiceImpl implements SellerService
 		if(Objects.isNull(id) || (Objects.isNull(sellerDto))) {
 			throw new ValidationException("Los datos para la actualización de un proveedor no pueden ser nulos.");
 		}
+		log.debug("[updateSeller] id:{}, sellerDto:{}", id, sellerDto);
 		Seller sellerFromDatabase = this.sellerRepository.findById(id)
 			.orElseThrow(
 				() -> new NoSuchElementException("El proveedor con el id " + id + " no existe.")
@@ -163,6 +171,7 @@ public class SellerServiceImpl implements SellerService
 		if(Objects.isNull(id)) {
 			throw new ValidationException("Los datos para la actualización de un proveedor no pueden ser nulos.");
 		}
+		log.debug("[inactivateSeller] id:{}", id);
 		Seller sellerFromDatabase = this.sellerRepository.findById(id)
 			.orElseThrow(
 				() -> new NoSuchElementException("El proveedor con el id " + id + " no existe.")
@@ -185,6 +194,7 @@ public class SellerServiceImpl implements SellerService
 		if(Objects.isNull(id)) {
 			throw new ValidationException("Los datos para el borrado del proveedor no pueden ser nulos.");
 		}
+		log.debug("[deleteSeller] id:{}", id);
 		if(this.sellerRepository.existsById(id)) {
 			this.sellerRepository.deleteById(id);
 			return id;

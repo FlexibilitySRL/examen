@@ -41,7 +41,7 @@ public class Purchase
 	@Column(name = "total_amount")
 	private BigDecimal total;
 
-	@Column(name = "approve")
+	@Column(name = "approve", nullable = false)
 	private Boolean approve;
 
 	@ManyToOne
