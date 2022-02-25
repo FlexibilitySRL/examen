@@ -44,6 +44,11 @@ public class SellerServiceImpl implements SellerService {
     @Autowired
     private PurchaseRepository purchaseRepository;
 
+    /**
+     * Method with logical to save a seller
+     *
+     * @param sellerDTO: Object type dto with information to save
+     */
     @Override
     public void createSeller(SellerDTO sellerDTO) {
         try {
@@ -69,6 +74,10 @@ public class SellerServiceImpl implements SellerService {
         }
     }
 
+    /**
+     * Method with logical to delete a seller
+     * @param idSeller: value to delete in customer table.
+     */
     @Override
     public void deleteSeller(Long idSeller) {
         try {
@@ -86,7 +95,11 @@ public class SellerServiceImpl implements SellerService {
             ex.printStackTrace();
         }
     }
-
+    /**
+     * Method that edit a row with new information of a seller
+     * @param idSeller value of id to edit
+     * @param sellerDTO object with changes to save
+     */
     @Override
     public void editSeller(Long idSeller, SellerDTO sellerDTO) {
         try {
@@ -109,7 +122,10 @@ public class SellerServiceImpl implements SellerService {
             ex.printStackTrace();
         }
     }
-
+    /**
+     * Method that validate empty fields of dto
+     * @param sellerDTO: object seller to validate and conservate good information
+     */
     private void validateInputData(SellerDTO sellerDTO) {
         boolean isError = false;
         if (Util.isBlank(sellerDTO.getName())) {
@@ -136,7 +152,10 @@ public class SellerServiceImpl implements SellerService {
             createLog(VALIDATE_DATA, Result.ERROR, ERROR_DATA_EMPTY);
         }
     }
-
+    /**
+     * Method that validate if exist a documentNumber in seller table
+     * @param documentNumber DNI to validate and find in seller table
+     */
     private void existsDocumentNumber(String documentNumber) {
         if (sellerRepository.findSellerBydocumentNumber(documentNumber) != null) {
             StringBuilder description = new StringBuilder();
@@ -148,7 +167,11 @@ public class SellerServiceImpl implements SellerService {
         }
     }
 
-
+    /**
+     * Method that validate if a seller exist in database
+     * @param idSeller value to find in the database
+     * @return an object optional with or without seller exist
+     */
     private Optional<Seller> existsSeller(long idSeller) {
         Optional<Seller> sellerResult = sellerRepository.findById(idSeller);
         if (!sellerResult.isPresent()) {
@@ -161,7 +184,11 @@ public class SellerServiceImpl implements SellerService {
         }
         return sellerResult;
     }
-
+    /**
+     * Method that validate if a seller exist in pruchase table
+     * @param idSeller value to find in purchase table
+     * @return
+     */
     private List<Purchase> existsRelationSeller(long idSeller) {
         List<Purchase> purchaseResult = purchaseRepository.findProductByCustomerIdCustomerOrProductIdProductOrSellerIdSeller(null, null, idSeller);
         if (!purchaseResult.isEmpty()) {
@@ -174,7 +201,12 @@ public class SellerServiceImpl implements SellerService {
         }
         return purchaseResult;
     }
-
+    /**
+     * method that save information of audit in logtransation table
+     * @param action string with activion or transation  executed
+     * @param result a status with error or success result
+     * @param description it is a short description with result of transation.
+     */
     private void createLog(String action, Result result, String description) {
         LogTransation logTransation = LogTransation.builder()
                 .module(action)

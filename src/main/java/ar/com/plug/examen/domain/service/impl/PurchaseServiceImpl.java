@@ -55,6 +55,11 @@ public class PurchaseServiceImpl implements PurchaseService {
     @Autowired
     private LogTransationRepository logTransationRepository;
 
+    /**
+     * Method with logical to save a purchase
+     *
+     * @param purchaseDTO: Object type dto with information to save
+     */
     @Override
     public void createPurchase(PurchaseDTO purchaseDTO) {
         try {
@@ -90,7 +95,11 @@ public class PurchaseServiceImpl implements PurchaseService {
         }
 
     }
-
+    /**
+     * Method that validate if a customer exist in database
+     * @param idCustomer value to find in the database
+     * @return an object optional with or without customer exist
+     */
     private Optional<Customer> existsCustomer(long idCustomer) {
         Optional<Customer> customerResult = customerRepository.findById(idCustomer);
         if (!customerResult.isPresent()) {
@@ -103,7 +112,11 @@ public class PurchaseServiceImpl implements PurchaseService {
         }
         return customerResult;
     }
-
+    /**
+     * Method that validate if a seller exist in database
+     * @param idSeller value to find in the database
+     * @return an object optional with or without seller exist
+     */
     private Optional<Seller> existsSeller(long idSeller) {
         Optional<Seller> sellerResult = sellerRepository.findById(idSeller);
         if (!sellerResult.isPresent()) {
@@ -116,7 +129,11 @@ public class PurchaseServiceImpl implements PurchaseService {
         }
         return sellerResult;
     }
-
+    /**
+     * Method that validate if a product exist in database
+     * @param idProduct value to find in the database
+     * @return an object optional with or without product exist
+     */
     private Optional<Product> existsProduct(long idProduct) {
         Optional<Product> productResult = productRepository.findById(idProduct);
         if (!productResult.isPresent()) {
@@ -130,6 +147,10 @@ public class PurchaseServiceImpl implements PurchaseService {
         return productResult;
     }
 
+    /**
+     * Method that find a list od purchase
+     * @return list with purchases in table purchase
+     */
     @Override
     public List<PurchaseDTO> listPurchase() {
         createLog(GET_PURCHASE, Result.SUCCESS, GET_PURCHASE_BD);
@@ -139,6 +160,10 @@ public class PurchaseServiceImpl implements PurchaseService {
 
     }
 
+    /**
+     * Method that update state of purchase
+     * @param idPurchase value with id to update with new state.
+     */
     @Override
     public void approvePurchase(long idPurchase) {
         try {
@@ -161,7 +186,10 @@ public class PurchaseServiceImpl implements PurchaseService {
             ex.printStackTrace();
         }
     }
-
+    /**
+     * Method that validate empty fields of dto
+     * @param purchaseDTO: object seller to validate and conservate good information
+     */
     private void validateInputData(PurchaseDTO purchaseDTO) {
         boolean isError = false;
         if (Util.isBlank(purchaseDTO.getVoucher())) {
@@ -194,7 +222,12 @@ public class PurchaseServiceImpl implements PurchaseService {
             createLog(VALIDATE_DATA, Result.ERROR, ERROR_DATA_EMPTY);
         }
     }
-
+    /**
+     * method that save information of audit in logtransation table
+     * @param action string with activion or transation  executed
+     * @param result a status with error or success result
+     * @param description it is a short description with result of transation.
+     */
     private void createLog(String action, Result result, String description) {
         LogTransation logTransation = LogTransation.builder()
                 .module(action)

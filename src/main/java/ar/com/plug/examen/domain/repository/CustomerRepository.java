@@ -6,5 +6,10 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
+    /**
+     * query that find a customer by documentNumber
+     * @param documentNumber value to find in customer table
+     * @return object of customer if exist in database.
+     */
     Customer findCustomerBydocumentNumber(String documentNumber);
 }

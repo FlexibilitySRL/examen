@@ -6,5 +6,10 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SellerRepository extends JpaRepository<Seller, Long> {
+    /**
+     * query that find a seller by documentNumber
+     * @param documentNumber value to find in sller table
+     * @return object of seller if exist in database.
+     */
     Seller findSellerBydocumentNumber(String documentNumber);
 }

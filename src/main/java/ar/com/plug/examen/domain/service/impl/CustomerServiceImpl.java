@@ -78,6 +78,10 @@ public class CustomerServiceImpl implements CustomerService {
         }
     }
 
+    /**
+     * Method with logical to delete a customer
+     * @param idCustomer: value to delete in customer table.
+     */
     @Override
     public void deleteCustomer(Long idCustomer) {
         try {
@@ -96,6 +100,11 @@ public class CustomerServiceImpl implements CustomerService {
         }
     }
 
+    /**
+     * Method that edit a row with new information of a customer
+     * @param idCustomer value of id to edit
+     * @param customerDTO object with changes to save
+     */
     @Override
     public void editCustomer(Long idCustomer, CustomerDTO customerDTO) {
         try {
@@ -120,6 +129,10 @@ public class CustomerServiceImpl implements CustomerService {
         }
     }
 
+    /**
+     * Method that validate empty fields of dto
+     * @param customerDTO: object customer to validate and conservate good information
+     */
     private void validateInputData(CustomerDTO customerDTO) {
         boolean isError = false;
         if (Util.isBlank(customerDTO.getName())) {
@@ -147,6 +160,11 @@ public class CustomerServiceImpl implements CustomerService {
         }
     }
 
+    /**
+     * Method that validate if a customer exist in database
+     * @param idCustomer value to find in the database
+     * @return an object optional with or without customer exist
+     */
     private Optional<Customer> existsCustomer(long idCustomer) {
         Optional<Customer> customerResult = customerRepository.findById(idCustomer);
         if (!customerResult.isPresent()) {
@@ -160,6 +178,10 @@ public class CustomerServiceImpl implements CustomerService {
         return customerResult;
     }
 
+    /**
+     * Method that validate if exist a documentNumber in customer table
+     * @param documentNumber DNI to validate and find in customer table
+     */
     private void existsDocumentNumber(String documentNumber) {
         if (customerRepository.findCustomerBydocumentNumber(documentNumber) != null) {
             StringBuilder description = new StringBuilder();
@@ -171,6 +193,11 @@ public class CustomerServiceImpl implements CustomerService {
         }
     }
 
+    /**
+     * Method that validate if a customer exist in pruchase table
+     * @param idCustomer value to find in purchase table
+     * @return
+     */
     private List<Purchase> existsRelationCustomer(long idCustomer) {
         List<Purchase> purchaseResult = purchaseRepository.findProductByCustomerIdCustomerOrProductIdProductOrSellerIdSeller(idCustomer, null, null);
         if (!purchaseResult.isEmpty()) {
@@ -184,6 +211,12 @@ public class CustomerServiceImpl implements CustomerService {
         return purchaseResult;
     }
 
+    /**
+     * method that save information of audit in logtransation table
+     * @param action string with activion or transation  executed
+     * @param result a status with error or success result
+     * @param description it is a short description with result of transation.
+     */
     private void createLog(String action, Result result, String description) {
         LogTransation logTransation = LogTransation.builder()
                 .module(action)

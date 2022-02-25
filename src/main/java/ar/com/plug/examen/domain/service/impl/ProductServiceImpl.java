@@ -51,7 +51,11 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private PurchaseRepository purchaseRepository;
 
-
+    /**
+     * Method with logical to save a product
+     *
+     * @param productDTO: Object type dto with information to save
+     */
     @Override
     public void createProduct(ProductDTO productDTO) {
         try {
@@ -75,7 +79,10 @@ public class ProductServiceImpl implements ProductService {
             ex.printStackTrace();
         }
     }
-
+    /**
+     * Method with logical to delete a product
+     * @param idProduct: value to delete in product table.
+     */
     @Override
     public void deleteProduct(Long idProduct) {
         try {
@@ -93,7 +100,11 @@ public class ProductServiceImpl implements ProductService {
             ex.printStackTrace();
         }
     }
-
+    /**
+     * Method that edit a row with new information of a product
+     * @param idProduct value of id to edit
+     * @param productDTO object with changes to save
+     */
     @Override
     public void editProduct(Long idProduct, ProductDTO productDTO) {
         try {
@@ -116,7 +127,10 @@ public class ProductServiceImpl implements ProductService {
             ex.printStackTrace();
         }
     }
-
+    /**
+     * Method that validate empty fields of dto
+     * @param productDTO: object product to validate and conservate good information
+     */
     private void validateInputData(ProductDTO productDTO) {
         boolean isError = false;
         if (Util.isBlank(productDTO.getCategory())) {
@@ -140,6 +154,11 @@ public class ProductServiceImpl implements ProductService {
         }
     }
 
+    /**
+     * Method that validate if a product exist in database
+     * @param idProduct value to find in the database
+     * @return an object optional with or without product exist
+     */
     private Optional<Product> existsProduct(long idProduct) {
         Optional<Product> productResult = productRepository.findById(idProduct);
         if (!productResult.isPresent()) {
@@ -153,6 +172,11 @@ public class ProductServiceImpl implements ProductService {
         return productResult;
     }
 
+    /**
+     * Method that validate if exist a category and descriptionProduct in product table
+     * @param category category of product to find
+     * @param descriptionProduct description of product ro find
+     */
     private void existsProductDescription(String category, String descriptionProduct) {
         if (productRepository.findProductByCategoryAndDescriptionProduct(category, descriptionProduct) != null) {
             StringBuilder description = new StringBuilder();
@@ -165,6 +189,11 @@ public class ProductServiceImpl implements ProductService {
             throw new ProductFoundException();
         }
     }
+    /**
+     * Method that validate if a product exist in pruchase table
+     * @param idProduct value to find in purchase table
+     * @return
+     */
 
     private List<Purchase> existsRelationProduct(long idProduct) {
         List<Purchase> purchaseResult = purchaseRepository.findProductByCustomerIdCustomerOrProductIdProductOrSellerIdSeller(null, idProduct, null);
@@ -179,7 +208,12 @@ public class ProductServiceImpl implements ProductService {
         return purchaseResult;
     }
 
-
+    /**
+     * method that save information of audit in logtransation table
+     * @param action string with activion or transation  executed
+     * @param result a status with error or success result
+     * @param description it is a short description with result of transation.
+     */
     private void createLog(String action, Result result, String description) {
         LogTransation logTransation = LogTransation.builder()
                 .module(action)
