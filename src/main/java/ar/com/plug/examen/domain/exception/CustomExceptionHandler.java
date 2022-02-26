@@ -8,6 +8,7 @@ import ar.com.plug.examen.app.api.ApiError;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+@Log4j2
 @RestControllerAdvice
 public class CustomExceptionHandler {
 	private final String BAD_REQUEST_VALUE = "400";
@@ -62,6 +64,8 @@ public class CustomExceptionHandler {
 		String message = ex.getMessage() == null ? ex.getClass().getSimpleName() : ex.getMessage();
 		String debugMessage = ExceptionUtils.getRootCauseMessage(ex);
 
-		return new ApiError(httpStatus.value(), message, debugMessage);
+		ApiError apiError = new ApiError(httpStatus.value(), message, debugMessage);
+		log.error(apiError);
+		return apiError;
 	}
 }
