@@ -5,6 +5,7 @@ import javax.xml.bind.ValidationException;
 
 import ar.com.plug.examen.app.api.PageDto;
 import ar.com.plug.examen.app.api.PurchaseDto;
+import ar.com.plug.examen.aspect.LogController;
 import ar.com.plug.examen.domain.model.Purchase;
 import ar.com.plug.examen.domain.service.PurchaseService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -51,6 +52,7 @@ public class PurchaseController
 			)
 		}
 	)
+	@LogController
 	@GetMapping(value = "/purchases", produces = MediaType.APPLICATION_JSON_VALUE)
 	public PageDto<Purchase> allPurchases(
 		@Parameter(description = "Number of the starting page", example = "0")
@@ -72,6 +74,7 @@ public class PurchaseController
 			)
 		}
 	)
+	@LogController
 	@GetMapping(value = "/purchases/active", produces = MediaType.APPLICATION_JSON_VALUE)
 	public PageDto<Purchase> activePurchases(
 		@Parameter(description = "Number of the starting page", example = "0")
@@ -93,6 +96,7 @@ public class PurchaseController
 			)
 		}
 	)
+	@LogController
 	@GetMapping(value = "/purchase", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Purchase purchaseByReceiptNumber(
 		@Parameter(description = "Purchase's receiptNumber", example = "receiptNumber-231")
@@ -112,6 +116,7 @@ public class PurchaseController
 			)
 		}
 	)
+	@LogController
 	@GetMapping(value = "/purchase/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Purchase purchaseById(
 		@Parameter(description = "Purchase's internal id", example = "2")
@@ -131,6 +136,7 @@ public class PurchaseController
 			)
 		}
 	)
+	@LogController
 	@PostMapping(value = "/purchase", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Purchase createPurchase(@RequestBody @Valid PurchaseDto purchaseDto) throws ValidationException
 	{
@@ -148,6 +154,7 @@ public class PurchaseController
 			)
 		}
 	)
+	@LogController
 	@PutMapping(value = "/purchase/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Purchase updatePurchase(
 		@Parameter(description = "Purchase's internal id", example = "2")
@@ -168,6 +175,7 @@ public class PurchaseController
 			)
 		}
 	)
+	@LogController
 	@PutMapping(value = "/purchase/approve/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Purchase approvePurchase(
 		@Parameter(description = "Purchase's internal id", example = "2")
@@ -187,6 +195,7 @@ public class PurchaseController
 			)
 		}
 	)
+	@LogController
 	@DeleteMapping(value = "/purchase/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Long deletePurchase(
 		@Parameter(description = "Purchase's internal id", example = "2")

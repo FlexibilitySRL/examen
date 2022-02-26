@@ -5,6 +5,7 @@ import javax.xml.bind.ValidationException;
 
 import ar.com.plug.examen.app.api.PageDto;
 import ar.com.plug.examen.app.api.PurchaseDetailDto;
+import ar.com.plug.examen.aspect.LogController;
 import ar.com.plug.examen.domain.model.PurchaseDetail;
 import ar.com.plug.examen.domain.service.PurchaseDetailService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -50,6 +51,7 @@ public class PurchaseDetailController
 			)
 		}
 	)
+	@LogController
 	@GetMapping(value = "/details", produces = MediaType.APPLICATION_JSON_VALUE)
 	public PageDto<PurchaseDetail> allDetails(
 		@Parameter(description = "Number of the starting page", example = "0")
@@ -71,6 +73,7 @@ public class PurchaseDetailController
 			)
 		}
 	)
+	@LogController
 	@GetMapping(value = "/detail/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public PurchaseDetail purchaseById(
 		@Parameter(description = "Purchase's detail internal id", example = "2")
@@ -90,6 +93,7 @@ public class PurchaseDetailController
 			)
 		}
 	)
+	@LogController
 	@GetMapping(value = "/detail", produces = MediaType.APPLICATION_JSON_VALUE)
 	public PageDto<PurchaseDetail> purchaseDetailByPurchaseId(
 		@Parameter(description = "Number of the starting page", example = "0")
@@ -113,6 +117,7 @@ public class PurchaseDetailController
 			)
 		}
 	)
+	@LogController
 	@PostMapping(value = "/detail", produces = MediaType.APPLICATION_JSON_VALUE)
 	public PurchaseDetail createDetail(@RequestBody @Valid PurchaseDetailDto purchaseDetailDto) throws ValidationException
 	{
@@ -130,6 +135,7 @@ public class PurchaseDetailController
 			)
 		}
 	)
+	@LogController
 	@PutMapping(value = "/detail/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public PurchaseDetail updateDetail(
 		@Parameter(description = "Purchase detail internal id", example = "2")
@@ -150,6 +156,7 @@ public class PurchaseDetailController
 			)
 		}
 	)
+	@LogController
 	@DeleteMapping(value = "/detail/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Long deletePurchaseDetail(
 		@Parameter(description = "Purchase detail internal id", example = "2")

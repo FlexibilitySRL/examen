@@ -5,6 +5,7 @@ import javax.xml.bind.ValidationException;
 
 import ar.com.plug.examen.app.api.PageDto;
 import ar.com.plug.examen.app.api.SellerDto;
+import ar.com.plug.examen.aspect.LogController;
 import ar.com.plug.examen.domain.model.Seller;
 import ar.com.plug.examen.domain.service.SellerService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -51,6 +52,7 @@ public class SellerController
 			)
 		}
 	)
+	@LogController
 	@GetMapping(value = "/sellers", produces = MediaType.APPLICATION_JSON_VALUE)
 	public PageDto<Seller> allSellers(
 		@Parameter(description = "Number of the starting page", example = "0")
@@ -72,6 +74,7 @@ public class SellerController
 			)
 		}
 	)
+	@LogController
 	@GetMapping(value = "/sellers/active", produces = MediaType.APPLICATION_JSON_VALUE)
 	public PageDto<Seller> activeSellers(
 		@Parameter(description = "Number of the starting page", example = "0")
@@ -93,6 +96,7 @@ public class SellerController
 			)
 		}
 	)
+	@LogController
 	@GetMapping(value = "/seller", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Seller sellerByCode(
 		@Parameter(description = "Seller's code number", example = "3509091")
@@ -112,6 +116,7 @@ public class SellerController
 			)
 		}
 	)
+	@LogController
 	@GetMapping(value = "/seller/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Seller sellerById(
 		@Parameter(description = "Seller's internal id", example = "2")
@@ -131,6 +136,7 @@ public class SellerController
 			)
 		}
 	)
+	@LogController
 	@PostMapping(value = "/seller", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Seller createSeller(@RequestBody @Valid SellerDto sellerDto) throws ValidationException
 	{
@@ -148,6 +154,7 @@ public class SellerController
 			)
 		}
 	)
+	@LogController
 	@PutMapping(value = "/seller/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Seller updateSeller(
 		@Parameter(description = "Seller's internal id", example = "2")
@@ -168,6 +175,7 @@ public class SellerController
 			)
 		}
 	)
+	@LogController
 	@PutMapping(value = "/seller/inactivate/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Seller inactivateSeller(
 		@Parameter(description = "Seller's internal id", example = "2")
@@ -187,6 +195,7 @@ public class SellerController
 			)
 		}
 	)
+	@LogController
 	@DeleteMapping(value = "/seller/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Long deleteSeller(
 		@Parameter(description = "Seller's internal id", example = "2")

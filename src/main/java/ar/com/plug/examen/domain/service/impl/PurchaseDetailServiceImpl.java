@@ -211,11 +211,14 @@ public class PurchaseDetailServiceImpl implements PurchaseDetailService
 			throw new ValidationException("Los datos para el borrado de del detalle de la compra no pueden ser nulos.");
 		}
 		log.debug("[deletePurchaseDetail] id:{}", id);
-		if(this.purchaseDetailRepository.existsById(id)) {
-			this.purchaseDetailRepository.deleteById(id);
-			return id;
-		} else {
-			throw new NoSuchElementException("El detalle de la compra con el id " + id + " no existe.");
+		PurchaseDetail purchaseDetailFromDatabase = this.purchaseDetailRepository.findById(id)
+			.orElseThrow(
+				() -> new NoSuchElementException("El detalle con el id " + id + " no existe.")
+			);
+		if (purchaseDetailFromDatabase.getPurchase().getApprove()){
+			throw new ValidationException("La compra ya fue aprobada, no pueden borrarse los detalles");
 		}
+		this.purchaseDetailRepository.deleteById(id);
+		return id;
 	}
 }

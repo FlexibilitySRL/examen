@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class CustomExceptionHandler {
 	private final String BAD_REQUEST_VALUE = "400";
 	private final String NOT_FOUND_VALUE = "404";
+	private final String INTERNAL_ERROR_VALUE = "500";
 
 	public CustomExceptionHandler() {
 	}
@@ -50,7 +51,7 @@ public class CustomExceptionHandler {
 		return responseBody(HttpStatus.NOT_FOUND, ex);
 	}
 
-	@ApiResponse(responseCode = NOT_FOUND_VALUE, content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ApiError.class))})
+	@ApiResponse(responseCode = INTERNAL_ERROR_VALUE, content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ApiError.class))})
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 	@ExceptionHandler(value = {Exception.class})
 	public final ApiError handleInternalError(Exception ex) {

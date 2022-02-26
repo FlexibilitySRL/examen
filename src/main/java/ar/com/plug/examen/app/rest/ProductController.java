@@ -5,6 +5,7 @@ import javax.xml.bind.ValidationException;
 
 import ar.com.plug.examen.app.api.PageDto;
 import ar.com.plug.examen.app.api.ProductDto;
+import ar.com.plug.examen.aspect.LogController;
 import ar.com.plug.examen.domain.model.Product;
 import ar.com.plug.examen.domain.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -51,6 +52,7 @@ public class ProductController
 			)
 		}
 	)
+	@LogController
 	@GetMapping(value = "/products", produces = MediaType.APPLICATION_JSON_VALUE)
 	public PageDto<Product> allProducts(
 		@Parameter(description = "Number of the starting page", example = "0")
@@ -72,6 +74,7 @@ public class ProductController
 			)
 		}
 	)
+	@LogController
 	@GetMapping(value = "/products/active", produces = MediaType.APPLICATION_JSON_VALUE)
 	public PageDto<Product> activeProducts(
 		@Parameter(description = "Number of the starting page", example = "0")
@@ -93,6 +96,7 @@ public class ProductController
 			)
 		}
 	)
+	@LogController
 	@GetMapping(value = "/product", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Product productBySku(
 		@Parameter(description = "Product's sku", example = "sku-231")
@@ -112,6 +116,7 @@ public class ProductController
 			)
 		}
 	)
+	@LogController
 	@GetMapping(value = "/product/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Product productById(
 		@Parameter(description = "Product's internal id", example = "2")
@@ -131,6 +136,7 @@ public class ProductController
 			)
 		}
 	)
+	@LogController
 	@PostMapping(value = "/product", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Product createProduct(@RequestBody @Valid ProductDto productDto) throws ValidationException
 	{
@@ -148,6 +154,7 @@ public class ProductController
 			)
 		}
 	)
+	@LogController
 	@PutMapping(value = "/product/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Product updateProduct(
 		@Parameter(description = "Product's internal id", example = "2")
@@ -168,6 +175,7 @@ public class ProductController
 			)
 		}
 	)
+	@LogController
 	@PutMapping(value = "/product/inactivate/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Product inactivateProduct(
 		@Parameter(description = "Product's internal id", example = "2")
@@ -187,6 +195,7 @@ public class ProductController
 			)
 		}
 	)
+	@LogController
 	@DeleteMapping(value = "/product/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Long deleteProduct(
 		@Parameter(description = "Product's internal id", example = "2")
