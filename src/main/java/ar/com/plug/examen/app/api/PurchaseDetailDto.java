@@ -36,8 +36,4 @@ public class PurchaseDetailDto
 	@Schema(description = "Unit price of the item.", example = "10.00")
 	@NotNull
 	private BigDecimal unitSalePrice;
-
-	/*@Schema(description = "Total amount of this product.", example = "100.00")
-	@NotNull
-	private BigDecimal totalSalePrice;*/
 }
