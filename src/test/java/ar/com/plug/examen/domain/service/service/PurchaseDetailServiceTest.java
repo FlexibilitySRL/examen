@@ -93,7 +93,7 @@ public class PurchaseDetailServiceTest
 			.id(1L)
 			.receiptNumber("random-value-1")
 			.total(new BigDecimal(100))
-			.approve(Boolean.TRUE)
+			.approved(Boolean.TRUE)
 			.client(client1)
 			.build();
 		purchaseDetail1 = PurchaseDetail.builder()
@@ -186,9 +186,9 @@ public class PurchaseDetailServiceTest
 	public void savePurchaseDetailTest() throws ValidationException
 	{
 		PurchaseDetailDto dto = new PurchaseDetailDto(purchaseDetail1.getProduct().getId(),
-			purchaseDetail1.getQuantity(), purchaseDetail1.getPurchase().getId(), purchaseDetail1.getUnitSalePrice(),
-			purchaseDetail1.getTotalSalePrice());
+			purchaseDetail1.getQuantity(), purchaseDetail1.getPurchase().getId(), purchaseDetail1.getUnitSalePrice());
 		when(repository.save(any(PurchaseDetail.class))).thenReturn(purchaseDetail1);
+		when(purchaseRepository.save(any(Purchase.class))).thenReturn(purchase1);
 		when(purchaseRepository.findById(any(Long.class))).thenReturn(Optional.ofNullable(purchase1));
 		when(productRepository.findById(any(Long.class))).thenReturn(Optional.ofNullable(product1));
 		PurchaseDetail savedDetail = service.saveDetail(dto);
@@ -199,29 +199,27 @@ public class PurchaseDetailServiceTest
 	@Test
 	public void updatePurchaseDetailTest() throws ValidationException
 	{
-		BigDecimal updatedTotal = new BigDecimal(750);
-		purchase1.setApprove(false);
+		BigDecimal updatedSalePrice = new BigDecimal(750);
+		purchase1.setApproved(false);
 		PurchaseDetailDto dto = new PurchaseDetailDto(purchaseDetail1.getProduct().getId(),
-			purchaseDetail1.getQuantity(), purchaseDetail1.getPurchase().getId(), purchaseDetail1.getUnitSalePrice(),
-			updatedTotal);
+			purchaseDetail1.getQuantity(), purchaseDetail1.getPurchase().getId(), updatedSalePrice);
 		when(purchaseRepository.findById(any(Long.class))).thenReturn(Optional.ofNullable(purchase1));
+		when(purchaseRepository.save(any(Purchase.class))).thenReturn(purchase1);
 		when(repository.findById(any(Long.class))).thenReturn(Optional.ofNullable(purchaseDetail1));
 		when(productRepository.findById(any(Long.class))).thenReturn(Optional.ofNullable(product1));
 		when(repository.save(any(PurchaseDetail.class))).thenReturn(purchaseDetail1);
 
 		PurchaseDetail updatedPurchase = service.updateDetail(1L, dto);
 		assertThat(updatedPurchase).isNotNull();
-		assertThat(updatedPurchase.getTotalSalePrice()).isEqualTo(updatedTotal);
+		assertThat(updatedPurchase.getUnitSalePrice()).isEqualTo(updatedSalePrice);
 	}
 
 	@Test(expected = ValidationException.class)
 	public void updatePurchaseDetailApprovedPurchaseTest() throws ValidationException
 	{
-		BigDecimal updatedTotal = new BigDecimal(750);
-		purchase1.setApprove(true);
+		purchase1.setApproved(true);
 		PurchaseDetailDto dto = new PurchaseDetailDto(purchaseDetail1.getProduct().getId(),
-			purchaseDetail1.getQuantity(), purchaseDetail1.getPurchase().getId(), purchaseDetail1.getUnitSalePrice(),
-			updatedTotal);
+			purchaseDetail1.getQuantity(), purchaseDetail1.getPurchase().getId(), purchaseDetail1.getUnitSalePrice());
 		when(purchaseRepository.findById(any(Long.class))).thenReturn(Optional.ofNullable(purchase1));
 		when(repository.findById(any(Long.class))).thenReturn(Optional.ofNullable(purchaseDetail1));
 		when(productRepository.findById(any(Long.class))).thenReturn(Optional.ofNullable(product1));

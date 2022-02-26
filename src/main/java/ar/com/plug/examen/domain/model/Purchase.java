@@ -47,7 +47,7 @@ public class Purchase
 	private BigDecimal total;
 
 	@Column(name = "approve", nullable = false)
-	private Boolean approve;
+	private Boolean approved;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "client_id", referencedColumnName = "id", nullable = false)

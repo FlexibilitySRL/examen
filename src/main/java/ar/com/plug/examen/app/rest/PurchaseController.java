@@ -75,8 +75,8 @@ public class PurchaseController
 		}
 	)
 	@LogController
-	@GetMapping(value = "/purchases/active", produces = MediaType.APPLICATION_JSON_VALUE)
-	public PageDto<Purchase> activePurchases(
+	@GetMapping(value = "/purchases/approved", produces = MediaType.APPLICATION_JSON_VALUE)
+	public PageDto<Purchase> approvedPurchases(
 		@Parameter(description = "Number of the starting page", example = "0")
 		@RequestParam(defaultValue = "0") int page,
 		@Parameter(description = "Amount of items per page", example = "5")

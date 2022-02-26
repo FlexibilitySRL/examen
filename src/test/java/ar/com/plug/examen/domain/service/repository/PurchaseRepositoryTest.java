@@ -52,37 +52,37 @@ public class PurchaseRepositoryTest
 		purchase1 = Purchase.builder()
 			.receiptNumber("random-value-1")
 			.total(new BigDecimal(100))
-			.approve(Boolean.TRUE)
+			.approved(Boolean.TRUE)
 			.build();
 
 		purchase2 = Purchase.builder()
 			.receiptNumber("random-value-2")
 			.total(new BigDecimal(200))
-			.approve(Boolean.TRUE)
+			.approved(Boolean.TRUE)
 			.build();
 
 		purchase3 = Purchase.builder()
 			.receiptNumber("random-value-3")
 			.total(new BigDecimal(300))
-			.approve(Boolean.TRUE)
+			.approved(Boolean.TRUE)
 			.build();
 
 		purchase4 = Purchase.builder()
 			.receiptNumber("random-value-4")
 			.total(new BigDecimal(400))
-			.approve(Boolean.TRUE)
+			.approved(Boolean.TRUE)
 			.build();
 
 		purchase5 = Purchase.builder()
 			.receiptNumber("random-value-5")
 			.total(new BigDecimal(500))
-			.approve(Boolean.TRUE)
+			.approved(Boolean.TRUE)
 			.build();
 
 		purchase6 = Purchase.builder()
 			.receiptNumber("random-value-6")
 			.total(new BigDecimal(600))
-			.approve(Boolean.TRUE)
+			.approved(Boolean.TRUE)
 			.build();
 	}
 
@@ -100,7 +100,7 @@ public class PurchaseRepositoryTest
 		purchase1.setClient(savedClient);
 		Purchase savedEntity = repository.save(purchase1);
 		assertThat(savedEntity.getId()).isGreaterThan(0);
-		assertThat(savedEntity.getApprove()).isEqualTo(Boolean.TRUE);
+		assertThat(savedEntity.getApproved()).isEqualTo(Boolean.TRUE);
 		assertThat(savedEntity.getTotal()).isEqualTo(new BigDecimal(100));
 		assertThat(savedEntity.getClient().getId()).isEqualTo(savedClient.getId());
 	}

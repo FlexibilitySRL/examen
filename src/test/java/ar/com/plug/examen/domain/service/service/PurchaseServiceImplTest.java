@@ -83,41 +83,41 @@ public class PurchaseServiceImplTest
 		purchase1 = Purchase.builder()
 			.receiptNumber("random-value-1")
 			.total(new BigDecimal(100))
-			.approve(Boolean.TRUE)
+			.approved(Boolean.TRUE)
 			.client(client1)
 			.build();
 
 		purchase2 = Purchase.builder()
 			.receiptNumber("random-value-2")
 			.total(new BigDecimal(200))
-			.approve(Boolean.TRUE)
+			.approved(Boolean.TRUE)
 			.client(client1)
 			.build();
 
 		purchase3 = Purchase.builder()
 			.receiptNumber("random-value-3")
 			.total(new BigDecimal(300))
-			.approve(Boolean.TRUE)
+			.approved(Boolean.TRUE)
 			.build();
 
 		purchase4 = Purchase.builder()
 			.receiptNumber("random-value-4")
 			.total(new BigDecimal(400))
-			.approve(Boolean.TRUE)
+			.approved(Boolean.TRUE)
 			.client(client1)
 			.build();
 
 		purchase5 = Purchase.builder()
 			.receiptNumber("random-value-5")
 			.total(new BigDecimal(500))
-			.approve(Boolean.TRUE)
+			.approved(Boolean.TRUE)
 			.client(client1)
 			.build();
 
 		purchase6 = Purchase.builder()
 			.receiptNumber("random-value-6")
 			.total(new BigDecimal(600))
-			.approve(Boolean.TRUE)
+			.approved(Boolean.TRUE)
 			.client(client1)
 			.build();
 
@@ -229,7 +229,7 @@ public class PurchaseServiceImplTest
 	{
 		purchase1.setId(1L);
 		PurchaseDto dto = new PurchaseDto(purchase1.getReceiptNumber(),
-			purchase1.getApprove(), purchase1.getClient().getId());
+			purchase1.getApproved(), purchase1.getClient().getId());
 		when(repository.save(any(Purchase.class))).thenReturn(purchase1);
 		when(clientRepository.findById(any(Long.class))).thenReturn(Optional.ofNullable(client1));
 		Purchase savedPurchase = service.savePurchase(dto);
@@ -245,7 +245,7 @@ public class PurchaseServiceImplTest
 		purchase1.setReceiptNumber(updatedReceiptNumber);
 
 		PurchaseDto dto = new PurchaseDto(purchase1.getReceiptNumber(),
-			purchase1.getApprove(), purchase1.getClient().getId());
+			purchase1.getApproved(), purchase1.getClient().getId());
 		when(repository.existsById(any(Long.class))).thenReturn(true);
 		when(repository.findByReceiptNumber(any(String.class))).thenReturn(purchase1);
 		when(clientRepository.findById(any(Long.class))).thenReturn(Optional.ofNullable(client1));
@@ -290,7 +290,7 @@ public class PurchaseServiceImplTest
 	public void approvePurchaseExceedStockQtyTest() throws ValidationException
 	{
 		purchase1.setId(1L);
-		purchase1.setApprove(false);
+		purchase1.setApproved(false);
 		when(repository.findById(1L)).thenReturn(Optional.ofNullable(purchase1));
 		when(repository.save(any(Purchase.class))).thenReturn(purchase1);
 		when(purchaseDetailRepository.findAllByPurchaseId(any(Long.class))).thenReturn(
@@ -298,7 +298,7 @@ public class PurchaseServiceImplTest
 		);
 		Purchase approvedPurchase = service.approvePurchase(1L);
 		assertThat(approvedPurchase).isNotNull();
-		assertThat(approvedPurchase.getApprove()).isTrue();
+		assertThat(approvedPurchase.getApproved()).isTrue();
 		assertThat(approvedPurchase.getId()).isEqualTo(purchase1.getId());
 	}
 
@@ -306,7 +306,7 @@ public class PurchaseServiceImplTest
 	public void approvePurchaseTest() throws ValidationException
 	{
 		purchase1.setId(1L);
-		purchase1.setApprove(false);
+		purchase1.setApproved(false);
 		product1.setStockQty(1000000);
 		when(repository.findById(1L)).thenReturn(Optional.ofNullable(purchase1));
 		when(repository.save(any(Purchase.class))).thenReturn(purchase1);
@@ -316,7 +316,7 @@ public class PurchaseServiceImplTest
 		when(productRepository.saveAll(any())).thenReturn(Collections.emptyList());
 		Purchase approvedPurchase = service.approvePurchase(1L);
 		assertThat(approvedPurchase).isNotNull();
-		assertThat(approvedPurchase.getApprove()).isTrue();
+		assertThat(approvedPurchase.getApproved()).isTrue();
 		assertThat(approvedPurchase.getId()).isEqualTo(purchase1.getId());
 	}
 }

@@ -1,5 +1,6 @@
 package ar.com.plug.examen.domain.service.impl;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.NoSuchElementException;
 import java.util.Objects;
@@ -138,14 +139,20 @@ public class PurchaseDetailServiceImpl implements PurchaseDetailService
 			.orElseThrow(
 				() -> new NoSuchElementException("El producto con el id " + detailDto.getProductId() + " no existe.")
 			);
+		if (purchaseFromDatabase.getApproved()){
+			throw new ValidationException("La compra ya fue aprobada, no pueden agregarse detalles");
+		}
 		PurchaseDetail newDetail = PurchaseDetail.builder()
 			.product(productFromDatabase)
 			.quantity(detailDto.getQuantity())
 			.purchase(purchaseFromDatabase)
 			.unitSalePrice(detailDto.getUnitSalePrice())
-			.totalSalePrice(detailDto.getTotalSalePrice())
+			.totalSalePrice(detailDto.getUnitSalePrice().multiply(new BigDecimal(detailDto.getQuantity())))
 			.modificationDate(new Date())
 			.build();
+		BigDecimal totalFromDatabase = purchaseFromDatabase.getTotal();
+		purchaseFromDatabase.setTotal(totalFromDatabase.add(newDetail.getTotalSalePrice()));
+		this.purchaseRepository.save(purchaseFromDatabase);
 		return this.purchaseDetailRepository.save(newDetail);
 	}
 
@@ -183,16 +190,19 @@ public class PurchaseDetailServiceImpl implements PurchaseDetailService
 			.orElseThrow(
 				() -> new NoSuchElementException("El producto con el id " + detailDto.getProductId() + " no existe.")
 			);
-		if (purchaseFromDatabase.getApprove()) {
+		if (purchaseFromDatabase.getApproved()) {
 			throw new ValidationException("La compra ya fue aprobada, no pueden modificarse los detalles.");
 		}
 		purchaseDetailFromDatabase.setProduct(productFromDatabase);
 		purchaseDetailFromDatabase.setQuantity(detailDto.getQuantity());
 		purchaseDetailFromDatabase.setPurchase(purchaseFromDatabase);
 		purchaseDetailFromDatabase.setUnitSalePrice(detailDto.getUnitSalePrice());
-		purchaseDetailFromDatabase.setTotalSalePrice(detailDto.getTotalSalePrice());
+		purchaseDetailFromDatabase.setTotalSalePrice(detailDto.getUnitSalePrice().multiply(new BigDecimal(detailDto.getQuantity())));
 		purchaseDetailFromDatabase.setModificationDate(new Date());
 
+		BigDecimal totalFromDatabase = purchaseFromDatabase.getTotal();
+		purchaseFromDatabase.setTotal(totalFromDatabase.add(purchaseDetailFromDatabase.getTotalSalePrice()));
+		this.purchaseRepository.save(purchaseFromDatabase);
 		return this.purchaseDetailRepository.save(purchaseDetailFromDatabase);
 	}
 
@@ -215,7 +225,7 @@ public class PurchaseDetailServiceImpl implements PurchaseDetailService
 			.orElseThrow(
 				() -> new NoSuchElementException("El detalle con el id " + id + " no existe.")
 			);
-		if (purchaseDetailFromDatabase.getPurchase().getApprove()){
+		if (purchaseDetailFromDatabase.getPurchase().getApproved()){
 			throw new ValidationException("La compra ya fue aprobada, no pueden borrarse los detalles");
 		}
 		this.purchaseDetailRepository.deleteById(id);

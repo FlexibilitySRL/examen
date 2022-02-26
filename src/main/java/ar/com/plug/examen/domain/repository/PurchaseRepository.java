@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PurchaseRepository extends JpaRepository<Purchase, Long>
 {
-	Page<Purchase> findAllByApproveTrue(Pageable pageable);
+	Page<Purchase> findAllByApprovedTrue(Pageable pageable);
 	Purchase findByReceiptNumber(String receiptNumber);
 	Page<Purchase> findAllByClientId(Long clientId, Pageable pageable);
 }

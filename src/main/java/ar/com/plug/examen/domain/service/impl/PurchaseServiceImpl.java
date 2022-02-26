@@ -61,7 +61,7 @@ public class PurchaseServiceImpl implements PurchaseService
 	{
 		log.debug("[getApprovedPurchasesPageable] page:{}, size:{}", pageNumber, pageSize);
 		return new PageDto<>(
-			this.purchaseRepository.findAllByApproveTrue(PageRequest.of(pageNumber, pageSize))
+			this.purchaseRepository.findAllByApprovedTrue(PageRequest.of(pageNumber, pageSize))
 		);
 	}
 
@@ -148,7 +148,7 @@ public class PurchaseServiceImpl implements PurchaseService
 		Purchase newPurchase = Purchase.builder()
 			.receiptNumber(purchaseDto.getReceiptNumber())
 			.total(BigDecimal.ZERO)
-			.approve(Boolean.FALSE)
+			.approved(Boolean.FALSE)
 			.client(client)
 			.modificationDate(new Date())
 			.build();
@@ -225,7 +225,7 @@ public class PurchaseServiceImpl implements PurchaseService
 			}
 		}
 		productRepository.saveAll(productsToUpdate);
-		purchaseFromDatabase.setApprove(Boolean.TRUE);
+		purchaseFromDatabase.setApproved(Boolean.TRUE);
 		return this.purchaseRepository.save(purchaseFromDatabase);
 	}
 
@@ -251,7 +251,7 @@ public class PurchaseServiceImpl implements PurchaseService
 			.orElseThrow(
 				() -> new NoSuchElementException("La compra con el id " + id + " no existe.")
 			);
-		if(purchase.getApprove()) {
+		if(purchase.getApproved()) {
 			throw new ValidationException("La compra ya fue aprobada y no puede ser borrada.");
 		}
 		this.purchaseRepository.deleteById(id);

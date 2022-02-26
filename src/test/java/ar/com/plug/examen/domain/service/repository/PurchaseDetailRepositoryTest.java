@@ -93,7 +93,7 @@ public class PurchaseDetailRepositoryTest
 			Purchase.builder()
 				.receiptNumber("random-value-1")
 				.total(new BigDecimal(100))
-				.approve(Boolean.TRUE)
+				.approved(Boolean.TRUE)
 				.client(client1)
 				.build()
 		);
