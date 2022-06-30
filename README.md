@@ -36,3 +36,5 @@ Bonus
 4) Correr pruebas con base de datos en memoria.
 5) Crear Docker Image.
 6) Hostear la app en un cloud computing libre y enviar la URL para consultar.
+
+Swagger: http://localhost:8080/swagger-ui.html#/
