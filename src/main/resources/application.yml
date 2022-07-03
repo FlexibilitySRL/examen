@@ -8,9 +8,9 @@ spring:
       ddl-auto: update
     show-sql: true
   datasource:
-      url: jdbc:mysql://127.0.0.1:3306/payments?zeroDateTimeBehavior=convertToNull
+      url: jdbc:mysql://mysqldb:3306/challenge?allowPublicKeyRetrieval=true&useSSL=true
       username: root
-      password: password
+      password: toor
 
 server:
   port: 8080

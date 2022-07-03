@@ -1,7 +1,7 @@
 package ar.com.plug.examen.domain.service;
 
-import ar.com.plug.examen.domain.model.Message;
-import ar.com.plug.examen.domain.service.impl.ProcessMessageServiceImpl;
+import ar.com.plug.examen.app.rest.model.Message;
+import ar.com.plug.examen.app.rest.services.impl.ProcessMessageServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
