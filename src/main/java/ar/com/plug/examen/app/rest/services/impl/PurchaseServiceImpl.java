@@ -12,6 +12,8 @@ import ar.com.plug.examen.app.rest.repositories.ProductRepository;
 import ar.com.plug.examen.app.rest.repositories.PurchaseRepository;
 import ar.com.plug.examen.app.rest.repositories.SellerRepository;
 import ar.com.plug.examen.app.rest.services.PurchaseService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -28,6 +30,7 @@ public class PurchaseServiceImpl implements PurchaseService
     private final ClientRepository clientRepository;
     private final ProductRepository productRepository;
     private final SellerRepository sellerRepository;
+    Logger logger = LoggerFactory.getLogger(this.getClass());
 
 
     @Autowired
@@ -61,22 +64,26 @@ public class PurchaseServiceImpl implements PurchaseService
     @Override
     public Purchase getPurchaseById(Long id)
     {
+        logger.info(String.format("getPurchaseById"));
+
         if(Objects.isNull(id)) {
+            logger.error(String.format("getPurchaseById - FAILED"));
             throw new NoSuchElementException("El id de la compra no puede ser nulo.");
         }
-        Optional<Purchase> optionalPurchase = this.purchaseRepository.findById(id);
-        if(optionalPurchase.isPresent()) {
-            return optionalPurchase.get();
-        } else {
-            throw new NoSuchElementException("El id de la compra no se encuentra en la base de datos.");
-        }
+        Purchase purchase = this.purchaseRepository.findById(id).orElseThrow(()->{
+            logger.error(String.format("getPurchaseById %d - FAILED",id));
+            throw new NoSuchElementException("Purchase Was not found.");
+        });
+
+        logger.info(String.format("getPurchaseById %d - SUCCESS",id));
+        return purchase;
     }
 
     @Override
     public Purchase savePurchase(PurchaseDto purchaseDto) throws ValidationException
     {
         if(Objects.isNull(purchaseDto)) {
-            throw new ValidationException("Los datos para la creación de un compra no pueden ser nulos.");
+            throw new ValidationException("data cannot be empty.");
         }
         Purchase purchase = new Purchase();
         Seller seller;

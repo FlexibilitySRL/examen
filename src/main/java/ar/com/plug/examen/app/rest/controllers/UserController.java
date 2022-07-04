@@ -3,8 +3,6 @@ package ar.com.plug.examen.app.rest.controllers;
 import ar.com.plug.examen.app.api.User;
 import ar.com.plug.examen.app.rest.model.Seller;
 import ar.com.plug.examen.app.rest.repositories.SellerRepository;
-import ar.com.plug.examen.app.rest.services.SellerService;
-import javassist.NotFoundException;
 import javassist.tools.web.BadHttpRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +23,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 @RestController
 public class UserController {
     private final SellerRepository sellerRepository;
-    Logger logger = LoggerFactory.getLogger(UserController.class);
+    Logger logger = LoggerFactory.getLogger(this.getClass());
 
     public UserController(SellerRepository sellerRepository) {
         this.sellerRepository = sellerRepository;
@@ -33,15 +31,18 @@ public class UserController {
 
     @PostMapping("user")
     public User login(@RequestParam("user") String username, @RequestParam("password") String pwd) throws BadHttpRequest {
-        logger.info(username + " - " + pwd);
+        logger.info(String.format("User tried to login - %s - %2d", username, pwd));
         Seller seller = this.sellerRepository.findByName(username).orElseThrow(()->new NoSuchElementException("Bad Request"));
         if(pwd.equals(String.valueOf(seller.getName().hashCode()))){
             String token = getJWTToken(username);
             User user = new User();
             user.setUser(username);
             user.setToken(token);
+            logger.info(String.format("User tried to login - %s - %2d -- SUCCESS", username, pwd));
+
             return user;
         }else{
+            logger.error(String.format("User tried to login - %s - %2d -- FAILED", username, pwd));
             throw new BadHttpRequest();
         }
 

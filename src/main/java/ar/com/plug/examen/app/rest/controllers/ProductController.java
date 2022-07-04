@@ -4,6 +4,8 @@ import ar.com.plug.examen.app.api.PageDto;
 import ar.com.plug.examen.app.api.ProductDto;
 import ar.com.plug.examen.app.rest.model.Product;
 import ar.com.plug.examen.app.rest.services.ProductService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -16,6 +18,7 @@ import java.util.List;
 public class ProductController
 {
     private final ProductService productService;
+    Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     public ProductController(ProductService productService)
@@ -29,6 +32,7 @@ public class ProductController
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "5") int size)
     {
+        logger.info(String.format("Request GET /products "));
         return this.productService.getAllProductsPageable(page, size);
     }
 
@@ -37,6 +41,7 @@ public class ProductController
     public Product productById(
             @PathVariable Long id)
     {
+        logger.info(String.format("Request GET /product/ %d ",id));
         return this.productService.getProductById(id);
     }
 
@@ -44,6 +49,7 @@ public class ProductController
     @PostMapping(value = "/product", produces = MediaType.APPLICATION_JSON_VALUE)
     public Product saveProduct(@RequestBody @Valid ProductDto productDto) throws ValidationException
     {
+        logger.info(String.format("Request POST /product"));
         return this.productService.saveProduct(productDto);
     }
 
@@ -52,6 +58,7 @@ public class ProductController
     @PostMapping(value = "/bulk-product", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Product> bulkSaveProduct(@RequestBody @Valid List<ProductDto> productDto) throws ValidationException
     {
+        logger.info(String.format("Request POST /bulk-product"));
         return this.productService.bulkSaveProduct(productDto);
     }
 
@@ -61,6 +68,7 @@ public class ProductController
     public Boolean deleteProduct(
             @PathVariable Long id) throws ValidationException
     {
+        logger.info(String.format("Request DELETE /product/ %d",id));
         return this.productService.inactivateProduct(id);
     }
 }
