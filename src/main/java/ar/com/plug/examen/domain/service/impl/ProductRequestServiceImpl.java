@@ -33,6 +33,13 @@ public class ProductRequestServiceImpl implements IProductRequestService {
         this.productRepository = productRepository;
     }
 
+    /**
+     * Creates a new product from request sent from the user.
+     *
+     * @param dto ProductDTO containing request data to create a new Product.
+     * @return ProductResponseDTO containing the response for the user. Send HTTPStatus, error code and ClientID.
+     * @throws IOException Exception inform in case of error when creating a new Product.
+     */
     @Transactional(readOnly = false)
     public ProductResponseDTO create(ProductDTO dto) throws IOException {
         try {
@@ -66,6 +73,13 @@ public class ProductRequestServiceImpl implements IProductRequestService {
         }
     }
 
+    /**
+     * Updates a product based on the product code that is on request.
+     *
+     * @param dto ProductDTO containing request data to update a Product.
+     * @return ProductResponseDTO containing the response for the user. Send HTTPStatus, error code and ProductID.
+     * @throws IOException Exception inform in case of error when updating a Product.
+     */
     @Transactional(readOnly = false)
     public ProductResponseDTO update(ProductDTO dto) throws IOException {
         try {
@@ -100,6 +114,13 @@ public class ProductRequestServiceImpl implements IProductRequestService {
         }
     }
 
+    /**
+     * Delete a product based on the product code that is on request.
+     *
+     * @param productCode String which will be used to find the product to delete.
+     * @return ProductResponseDTO containing the response for the user. Send HTTPStatus, error code and ProductID.
+     * @throws IOException IOException Exception inform in case of error when deleting a Product.
+     */
     @Transactional(readOnly = false)
     public ProductResponseDTO delete(String productCode) throws IOException {
         try {
@@ -129,6 +150,12 @@ public class ProductRequestServiceImpl implements IProductRequestService {
         }
     }
 
+    /**
+     * List all products.
+     *
+     * @return ListProductResponseDTO containing all product order by id.
+     * @throws IOException Exception inform in case of error when searching on db.
+     */
     public ListProductResponseDTO list() throws IOException {
         try {
             log.info("product - list");

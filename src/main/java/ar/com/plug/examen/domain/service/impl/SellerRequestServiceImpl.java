@@ -33,6 +33,13 @@ public class SellerRequestServiceImpl implements ISellerRequestService {
         this.sellerRepository = sellerRepository;
     }
 
+    /**
+     * Creates a new seller from request sent from the user.
+     *
+     * @param dto SellerDTO containing request data to create a new Seller.
+     * @return SellerResponseDTO containing the response for the user. Send HTTPStatus, error code and SellerID.
+     * @throws IOException Exception inform in case of error when creating a new Seller.
+     */
     @Transactional(readOnly = false)
     public SellerResponseDTO create(SellerDTO dto) throws IOException {
         try {
@@ -67,6 +74,13 @@ public class SellerRequestServiceImpl implements ISellerRequestService {
         }
     }
 
+    /**
+     * Updates a seller based on the document number that is on request.
+     *
+     * @param dto SellerDTO containing request data to update a Seller.
+     * @return SellerResponseDTO containing the response for the user. Send HTTPStatus, error code and SellerID.
+     * @throws IOException Exception inform in case of error when updating a Seller.
+     */
     @Transactional(readOnly = false)
     public SellerResponseDTO update(SellerDTO dto) throws IOException {
         try {
@@ -100,6 +114,13 @@ public class SellerRequestServiceImpl implements ISellerRequestService {
         }
     }
 
+    /**
+     * Delete a Seller based on the document number that is on request.
+     *
+     * @param document Integer which will be used to find the Seller to delete.
+     * @return SellerResponseDTO containing the response for the user. Send HTTPStatus, error code and SellerID.
+     * @throws IOException Exception inform in case of error when deleting a Seller.
+     */
     @Transactional(readOnly = false)
     public SellerResponseDTO delete(Integer document) throws IOException {
         try {
@@ -129,6 +150,12 @@ public class SellerRequestServiceImpl implements ISellerRequestService {
         }
     }
 
+    /**
+     * List all sellers.
+     *
+     * @return ListSellerResponseDTO containing all sellers order by id.
+     * @throws IOException Exception inform in case of error when deleting a Seller.
+     */
     public ListSellerResponseDTO list() throws IOException {
         try {
             log.info("seller - list");

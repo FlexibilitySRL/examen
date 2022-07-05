@@ -52,6 +52,16 @@ public class PurchaseRequestServiceImpl implements IPurchaseRequestService {
         this.sellerRepository = sellerRepository;
     }
 
+    /**
+     * Creates a new purchase from request sent from the user.
+     *
+     * @param dto PurchaseDTO containing request data to create a new Purchase.
+     * @return PurchaseResponseDTO containing the response for the user. Send HTTPStatus, error code and receiptId.
+     * @throws IOException Exception inform in case of error when creating a new Purchase.
+     * @throws ApiException Exception inform in case the client not exist.
+     * @throws ApiException Exception inform in case the seller not exist.
+     * @throws ApiException Exception inform in case the product not exist.
+     */
     @Transactional(readOnly = false)
     public PurchaseResponseDTO create(PurchaseDTO dto) throws IOException {
         ProductEntity product;
@@ -123,6 +133,15 @@ public class PurchaseRequestServiceImpl implements IPurchaseRequestService {
         }
     }
 
+    /**
+     * Change the status of a purchase to approve by the receiptId.
+     *
+     * @param receiptId Long which will be used to find the purchase to approve.
+     * @return PurchaseResponseDTO containing the response for the user. Send HTTPStatus, error code and receiptId.
+     * @throws IOException Exception inform in case of error when updating the status of a purchase.
+     * @throws ApiException Exception inform in case the purchase to change the status, is not on status PENDING.
+     * @throws ApiException Exception inform in case the receiptID is not found.
+     */
     @Transactional(readOnly = false)
     public PurchaseResponseDTO approve(Long receiptId) throws IOException {
         String approved = PurchaseStatusEnumeration.APPROVED.toString();
@@ -136,7 +155,7 @@ public class PurchaseRequestServiceImpl implements IPurchaseRequestService {
             if (updatePurchases != null && !updatePurchases.isEmpty()) {
                 if (!updatePurchases.get(0).getStatus().equalsIgnoreCase(pending)) {
                     log.error("purchase - approve - PURCHASE IS NOT IN PENDING STATUS");
-                    throw new ApiException(ErrorDTO.map(ErrorCodeEnumeration.INVALID_UPDATE));
+                    throw new ApiException(ErrorDTO.map(ErrorCodeEnumeration.INVALID_STATUS));
                 }
 
                 for (PurchaseEntity purchaseEntity : updatePurchases ) {
@@ -167,6 +186,15 @@ public class PurchaseRequestServiceImpl implements IPurchaseRequestService {
         }
     }
 
+    /**
+     * Change the status of a purchase to cancel by the receiptId.
+     *
+     * @param receiptId Long which will be used to find the purchase to cancel.
+     * @return PurchaseResponseDTO containing the response for the user. Send HTTPStatus, error code and receiptId.
+     * @throws IOException Exception inform in case of error when updating the status of a purchase.
+     * @throws ApiException Exception inform in case the purchase to change the status, is not on status PENDING.
+     * @throws ApiException Exception inform in case the receiptID is not found.
+     */
     @Transactional(readOnly = false)
     public PurchaseResponseDTO cancel(Long receiptId) throws IOException {
         String canceled = PurchaseStatusEnumeration.CANCELED.toString();
@@ -180,7 +208,7 @@ public class PurchaseRequestServiceImpl implements IPurchaseRequestService {
             if (updatePurchases != null && !updatePurchases.isEmpty()) {
                 if (!updatePurchases.get(0).getStatus().equalsIgnoreCase(pending)) {
                     log.error("purchase - cancel - PURCHASE IS NOT IN PENDING STATUS");
-                    throw new ApiException(ErrorDTO.map(ErrorCodeEnumeration.INVALID_UPDATE));
+                    throw new ApiException(ErrorDTO.map(ErrorCodeEnumeration.INVALID_STATUS));
                 }
 
                 for (PurchaseEntity purchaseEntity : updatePurchases ) {
@@ -211,6 +239,12 @@ public class PurchaseRequestServiceImpl implements IPurchaseRequestService {
         }
     }
 
+    /**
+     * List all Purchases.
+     *
+     * @return ListPurchaseResponseDTO containing all purchases with all the products order by id.
+     * @throws IOException Exception inform in case of error when searching on db
+     */
     public ListPurchaseResponseDTO list() throws IOException {
         try {
             log.info("purchase - list");

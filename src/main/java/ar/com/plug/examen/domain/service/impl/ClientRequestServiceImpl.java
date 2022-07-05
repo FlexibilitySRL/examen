@@ -34,6 +34,13 @@ public class ClientRequestServiceImpl implements IClientRequestService {
         this.clientRepository = clientRepository;
     }
 
+    /**
+     * Creates a new client from request sent from the user.
+     *
+     * @param dto ClientDTO containing request data to create a new Client.
+     * @return ClientResponseDTO containing the response for the user. Send HTTPStatus, error code and ClientID.
+     * @throws IOException Exception inform in case of error when creating a new Client.
+     */
     @Transactional(readOnly = false)
     public ClientResponseDTO create(ClientDTO dto) throws IOException {
         try {
@@ -69,6 +76,13 @@ public class ClientRequestServiceImpl implements IClientRequestService {
         }
     }
 
+    /**
+     * Updates a client based on the document number that is on request.
+     *
+     * @param dto ClientDTO containing request data to update a Client.
+     * @return ClientResponseDTO containing the response for the user. Send HTTPStatus, error code and ClientID.
+     * @throws IOException Exception inform in case of error when updating a Client.
+     */
     @Transactional(readOnly = false)
     public ClientResponseDTO update(ClientDTO dto) throws IOException {
         try {
@@ -103,6 +117,13 @@ public class ClientRequestServiceImpl implements IClientRequestService {
         }
     }
 
+    /**
+     * Delete a client based on the document number that is on request.
+     *
+     * @param document Integer which will be used to find the client to delete.
+     * @return ClientResponseDTO containing the response for the user. Send HTTPStatus, error code and ClientID.
+     * @throws IOException Exception inform in case of error when deleting a Client.
+     */
     @Transactional(readOnly = false)
     public ClientResponseDTO delete(Integer document) throws IOException {
         try {
@@ -132,6 +153,12 @@ public class ClientRequestServiceImpl implements IClientRequestService {
         }
     }
 
+    /**
+     * List all clients.
+     *
+     * @return ListClientResponseDTO containing all client order by id.
+     * @throws IOException Exception inform in case of error when deleting a Client.
+     */
     public ListClientResponseDTO list() throws IOException {
         try {
             log.info("client - list");

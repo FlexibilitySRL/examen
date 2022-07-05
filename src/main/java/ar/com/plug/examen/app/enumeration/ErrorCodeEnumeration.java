@@ -15,7 +15,7 @@ public enum ErrorCodeEnumeration {
     INVALID_CLIENT("CG-601", "400", "Invalid document number. Client not found."),
     INVALID_SELLER("CG-602", "400", "Invalid seller id. Seller not found."),
     INVALID_RECEIPT("Error code: 603", "400","Invalid receipt id. Receipt id not found."),
-    INVALID_UPDATE("CG-604", "400","Invalid update. The receipt must have a status PENDING.");
+    INVALID_STATUS("CG-604", "400","Invalid update. The receipt must have a status PENDING.");
 
     private String code;
     private String status;
