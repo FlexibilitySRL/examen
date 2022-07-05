@@ -8,12 +8,24 @@ spring:
       ddl-auto: update
     show-sql: true
   datasource:
-      url: jdbc:mysql://127.0.0.1:3306/payments?zeroDateTimeBehavior=convertToNull
+      url: jdbc:mysql://localhost:3306/payments?zeroDateTimeBehavior=convertToNull
       username: root
-      password: password
+      password: toor
 
 server:
   port: 8080
   servlet:
     context-path: '/payments'
+
+logging:
+  level:
+    org.springframework: ERROR
+    ar.com.app.examen.app: DEBUG
+  pattern:
+    console: "%d{dd-yyyy-MM HH:mm:ss.SSS} [%t] %-5level [%c] - %msg%n"
+    file: "%d %p %c{1.} [%t] %m%n"
+  file:
+    name: app.log
+    path: ./
+
 ---
