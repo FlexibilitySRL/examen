@@ -18,14 +18,13 @@ public class EchoController {
     private final ProcessMessageService messageService;
 
     @Autowired
-    public EchoController (ProcessMessageService messageService) {
+    public EchoController(ProcessMessageService messageService) {
         this.messageService = messageService;
     }
 
-    @PostMapping(path = "", produces = {MediaType.APPLICATION_JSON_VALUE },
+    @PostMapping(path = "", produces = {MediaType.APPLICATION_JSON_VALUE},
             consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> echo(@RequestBody MessageApi message)
-    {
+    public ResponseEntity<?> echo(@RequestBody MessageApi message) {
         return new ResponseEntity<>(messageService.processMessage(message.getMessage()), HttpStatus.OK);
     }
 }
