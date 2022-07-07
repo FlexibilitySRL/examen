@@ -36,12 +36,12 @@ public class ClienteController {
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> postCliente(@RequestBody ClienteApi ClienteApi) {
         try {
-            Cliente Cliente = new Cliente();
-            Cliente.setNombre(ClienteApi.getNombre());
-            Cliente.setApellido(ClienteApi.getApellido());
-            Cliente clienteResponse = processClienteService.save(Cliente);
+            Cliente cliente = new Cliente();
+            cliente.setNombre(ClienteApi.getNombre());
+            cliente.setApellido(ClienteApi.getApellido());
+            Cliente personaResponse = processClienteService.save(cliente);
             logger.info("Cliente guardado correctamente");
-            return new ResponseEntity<>(gson.toJson(clienteResponse), HttpStatus.OK);
+            return new ResponseEntity<>(gson.toJson(personaResponse), HttpStatus.OK);
         } catch (Exception exception) {
             logger.error("Error al guardar cliente");
             return new ResponseEntity<>(processMessage.processMessage(exception.getMessage()), HttpStatus.BAD_REQUEST);
@@ -77,14 +77,14 @@ public class ClienteController {
     public ResponseEntity<?> putCliente(@PathVariable("id") Long id, @RequestBody ClienteApi ClienteApi) {
         try {
             Optional<Cliente> optionalCliente = processClienteService.findById(id);
-            Cliente Cliente = optionalCliente.orElse(null);
-            if (Cliente == null)
+            Cliente cliente = optionalCliente.orElse(null);
+            if (cliente == null)
                 return new ResponseEntity<>(processMessage.processMessage("Cliente no existe"), HttpStatus.BAD_REQUEST);
-            Cliente.setNombre(ClienteApi.getNombre());
-            Cliente.setApellido(ClienteApi.getApellido());
-            Cliente clienteResponse = processClienteService.save(Cliente);
+            cliente.setNombre(ClienteApi.getNombre());
+            cliente.setApellido(ClienteApi.getApellido());
+            Cliente personaResponse = processClienteService.save(cliente);
             logger.info("Cliente actualizado correctamente");
-            return new ResponseEntity<>(gson.toJson(clienteResponse), HttpStatus.OK);
+            return new ResponseEntity<>(gson.toJson(personaResponse), HttpStatus.OK);
         } catch (Exception exception) {
             logger.error("Error al actualizar cliente");
             return new ResponseEntity<>(processMessage.processMessage(exception.getMessage()), HttpStatus.BAD_REQUEST);

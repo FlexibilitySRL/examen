@@ -1,7 +1,7 @@
 package ar.com.plug.examen.app.rest;
 
 import ar.com.plug.examen.app.api.TransaccionApi;
-import ar.com.plug.examen.domain.model.Cliente;
+import ar.com.plug.examen.domain.model.Persona;
 import ar.com.plug.examen.domain.model.Producto;
 import ar.com.plug.examen.domain.model.Transaccion;
 import ar.com.plug.examen.domain.service.ProcessClienteService;
@@ -56,10 +56,10 @@ public class TransaccionController {
         try {
             Transaccion transaccion = new Transaccion();
 
-            Cliente cliente = processClienteService.findById(transaccionApi.getCliente_id()).orElse(null);
-            if (cliente == null)
+            Persona persona = processClienteService.findById(transaccionApi.getCliente_id()).orElse(null);
+            if (persona == null)
                 return new ResponseEntity<>(processMessage.processMessage("Cliente no existe"), HttpStatus.BAD_REQUEST);
-            transaccion.setCliente(cliente);
+            transaccion.setCliente(persona);
 
             double totalPrecio = 0.0;
             List<Producto> productos = new ArrayList<>();

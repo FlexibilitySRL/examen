@@ -2,7 +2,6 @@ package ar.com.plug.examen.domain.model;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 public class Transaccion {
@@ -16,7 +15,7 @@ public class Transaccion {
     private String status;
 
     @ManyToOne
-    private Cliente cliente;
+    private Persona persona;
 
     @ManyToMany
     List<Producto> productos;
@@ -37,12 +36,12 @@ public class Transaccion {
         this.precioTotal = precioTotal;
     }
 
-    public Cliente getCliente() {
-        return cliente;
+    public Persona getCliente() {
+        return persona;
     }
 
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
+    public void setCliente(Persona persona) {
+        this.persona = persona;
     }
 
     public List<Producto> getProductos() {
