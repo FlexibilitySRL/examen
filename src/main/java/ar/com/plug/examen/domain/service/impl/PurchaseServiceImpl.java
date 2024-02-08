@@ -92,6 +92,4 @@ public class PurchaseServiceImpl implements PurchaseService {
                 .collect(Collectors.toList());
 
     }
-
-
 }

@@ -110,8 +110,10 @@ public class ProductServiceTest {
         // Arrange
         UUID productId = UUID.randomUUID();
         Product product = new Product(productId, "Test Product", "Description", new BigDecimal("10.99"));
+        ProductDTO productDTO = new ProductDTO(productId, "Test Product", "Description", new BigDecimal("10.99"));
 
         when(productRepository.findById(productId)).thenReturn(Optional.of(product));
+        when(mapper.asDTO(product)).thenReturn(productDTO);
 
         // Act
         Optional<ProductDTO> result = productService.getProductById(productId);

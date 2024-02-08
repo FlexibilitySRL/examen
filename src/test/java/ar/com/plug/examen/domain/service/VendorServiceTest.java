@@ -1,8 +1,10 @@
 package ar.com.plug.examen.domain.service;
 
 
+import ar.com.plug.examen.app.DTO.ProductDTO;
 import ar.com.plug.examen.app.DTO.VendorDTO;
 import ar.com.plug.examen.app.mapper.VendorMapper;
+import ar.com.plug.examen.domain.model.Product;
 import ar.com.plug.examen.domain.model.Vendor;
 import ar.com.plug.examen.domain.repository.VendorRepository;
 import ar.com.plug.examen.domain.service.impl.VendorServiceImpl;
@@ -12,6 +14,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -108,8 +111,10 @@ public class VendorServiceTest {
         // Arrange
         UUID vendorId = UUID.randomUUID();
         Vendor vendor = new Vendor("Test Vendor");
+        VendorDTO vendorDTO = new VendorDTO(vendorId,"Test Vendor");
 
         when(vendorRepository.findById(vendorId)).thenReturn(Optional.of(vendor));
+        when(mapper.asDTO(vendor)).thenReturn(vendorDTO);
 
         // Act
         Optional<VendorDTO> result = vendorService.getVendorById(vendorId);

@@ -1,8 +1,10 @@
 package ar.com.plug.examen.domain.service;
-;
+
 import ar.com.plug.examen.app.DTO.CustomerDTO;
+import ar.com.plug.examen.app.DTO.ProductDTO;
 import ar.com.plug.examen.app.mapper.CustomerMapper;
 import ar.com.plug.examen.domain.model.Customer;
+import ar.com.plug.examen.domain.model.Product;
 import ar.com.plug.examen.domain.repository.CustomerRepository;
 import ar.com.plug.examen.domain.service.impl.CustomerServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,6 +13,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -106,9 +109,11 @@ public class CustomerServiceTest {
     public void testGetCustomerById() {
         // Arrange
         UUID customerId = UUID.randomUUID();
-        Customer customer = new Customer(customerId, "Test Customer");
+        Customer customer = new Customer("Test Customer");
+        CustomerDTO customerDTO = new CustomerDTO(customerId, "Test Customer");
 
         when(customerRepository.findById(customerId)).thenReturn(Optional.of(customer));
+        when(mapper.asDTO(customer)).thenReturn(customerDTO);
 
         // Act
         Optional<CustomerDTO> result = customerService.getCustomerById(customerId);

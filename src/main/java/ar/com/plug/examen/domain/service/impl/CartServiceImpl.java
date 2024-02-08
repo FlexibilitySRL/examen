@@ -71,15 +71,16 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public CartDTO completeCart(UUID id) {
-        Cart cart = cartRepository.findById(id).orElseThrow(PurchaseNotFoundException::new);
+        Cart existinCart = cartRepository.findById(id).orElseThrow(PurchaseNotFoundException::new);
         Vendor assignedVendor = vendorRepository.findFirstByStatus(Vendor.VendorStatus.ACTIVE)
                 .orElseThrow(VendorNotFoundException::new);
 
-        if (cart.getPurchase() == null) {
-            Purchase purchase = new Purchase(cart.getCustomer(), assignedVendor, Purchase.PurchaseStatus.DRAFT, calculateTotalPrice(cart.getItems()));
-            cart.setPurchase(purchaseRepository.save(purchase));
+        if (existinCart.getPurchase() == null) {
+            Purchase purchase = new Purchase(existinCart.getCustomer(), assignedVendor, Purchase.PurchaseStatus.DRAFT, calculateTotalPrice(existinCart.getItems()));
+            existinCart.setPurchase(purchaseRepository.save(purchaseRepository.save(purchase)));
         }
-        return mapper.asDTO(cartRepository.save(cart));
+        Cart cart = cartRepository.save(existinCart);
+        return mapper.asDTO(cart);
     }
 
     @Override
