@@ -42,17 +42,17 @@ public class ClientServiceImpl implements ServiceDomain<Client> {
         log.info("Inicia listado de cliente con filtro:{}", client);
         List<ClientEntity> lista = (List<ClientEntity>) (clientEntityRepository.findAll());
         return lista.stream()
-                .filter(clientEntity -> (client.getName().isEmpty() ? false
+                .filter(clientEntity -> (client.getName().isEmpty() ? true
                         : Objects.equals(client.getName(), clientEntity.getName()))
                         || (client.getLastName().isEmpty()
-                                ? false
+                                ? true
                                 : Objects.equals(client.getLastName(), clientEntity.getLastName()))
                         || (client.getDocNumber().isEmpty()
-                                ? false
+                                ? true
                                 : Objects.equals(client.getDocNumber(),
                                         clientEntity.getDocNumber()))
                         || (client.getEmail().isEmpty()
-                                ? false
+                                ? true
                                 : Objects.equals(client.getEmail(),
                                         clientEntity.getEmail())))
                 .map(ClientEntity::toClient)

@@ -5,7 +5,7 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop
     show-sql: true
   datasource:
       url: jdbc:h2:mem:testdb
@@ -30,6 +30,10 @@ ms:
     P404: No se encontro el producto con id=
     P405: Ya existe un producto con nombre=
     P406: El campo barCode de producto no debe ser null o vacio
-    P407: Error en actualizar, el id del produco no debe estar vacio o ser null o vacio
+    P407: Error en actualizar, el id del producto no debe estar vacio o ser null o vacio
     P408: Ya existe un producto con barCode=
 
+    T401: No se puede procesar la transaccion porque no existe la cantidad requerida del producto=
+    T402: El id del cliente no debe estar vacio o null
+    T403: La lista de item no debe estar vacio o null
+    T404: El campo quantity de producto no debe ser null y debe ser mayor a cero

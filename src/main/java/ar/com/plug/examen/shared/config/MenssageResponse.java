@@ -37,5 +37,9 @@ public class MenssageResponse {
     public static final String P406 = "P406";
     public static final String P407 = "P407";
     public static final String P408 = "P408";
+    public static final String T401 = "T401";
+    public static final String T402 = "T402";
+    public static final String T403 = "T403";
+    public static final String T404 = "T404";
 
 }

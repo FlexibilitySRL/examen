@@ -42,10 +42,10 @@ public class ProductServiceImpl implements ServiceDomain<Product> {
         log.info("Inicia listado de productos con filtro:{}", product);
         List<ProductEntity> lista = (List<ProductEntity>) (productEntityRepository.findAll());
         return lista.stream()
-                .filter(productEntity -> (productEntity.getName().isEmpty() ? false
+                .filter(productEntity -> (productEntity.getName().isEmpty() ? true
                         : Objects.equals(product.getName(), productEntity.getName()))
                         || (product.getDescription().isEmpty()
-                                ? false
+                                ? true
                                 : Objects.equals(product.getDescription(), productEntity.getDescription())))
                 .map(ProductEntity::toProduct)
                 .collect(Collectors.toList());

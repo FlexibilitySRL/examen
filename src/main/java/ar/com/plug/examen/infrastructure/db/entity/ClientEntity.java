@@ -1,7 +1,9 @@
 package ar.com.plug.examen.infrastructure.db.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -49,7 +51,7 @@ public class ClientEntity implements Serializable {
 
     @OneToMany(mappedBy = "client", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
-    private List<InvoiceEntity> invoices;
+    private List<TransactionEntity> transactions;
 
     public Client toClient() {
         return Client.builder()
@@ -70,6 +72,12 @@ public class ClientEntity implements Serializable {
         this.docNumber = client.getDocNumber();
         this.email = client.getEmail();
         return this;
+    }
 
+    public void addTransactions(TransactionEntity transactionEntity) {
+        if (Objects.isNull(transactions)) {
+            transactions = new ArrayList<>();
+        }
+        transactions.add(transactionEntity);
     }
 }
