@@ -1,0 +1,25 @@
+spring:
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  datasource:
+      url: jdbc:h2:mem:testdb
+      username: root
+      password: password
+  h2:
+    console:
+      enabled: true
+ms:
+  messages:
+    OK: respuesta exitosa
+    400: Error en el request
+    C401: El nombre no puede estar vacio o nullo
+    C402: El email no puede estar vacio o nullo y debe poseer formato de email
+    C403: No se encontro el cliente con id=
+    C404: Ya existe un cliente con email=
+

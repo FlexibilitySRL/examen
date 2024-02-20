@@ -1,7 +1,5 @@
-package ar.com.plug.examen.app.rest;
+package ar.com.plug.examen.shared.app.rest;
 
-import ar.com.plug.examen.app.api.MessageApi;
-import ar.com.plug.examen.domain.service.ProcessMessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -10,6 +8,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import ar.com.plug.examen.shared.app.api.MessageApi;
+import ar.com.plug.examen.shared.domain.service.ProcessMessageService;
 
 @RestController
 @RequestMapping(path = "/echo")

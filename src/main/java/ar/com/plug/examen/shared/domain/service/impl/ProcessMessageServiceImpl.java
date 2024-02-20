@@ -1,8 +1,9 @@
-package ar.com.plug.examen.domain.service.impl;
+package ar.com.plug.examen.shared.domain.service.impl;
 
-import ar.com.plug.examen.domain.model.Message;
-import ar.com.plug.examen.domain.service.ProcessMessageService;
 import org.springframework.stereotype.Service;
+
+import ar.com.plug.examen.shared.domain.model.Message;
+import ar.com.plug.examen.shared.domain.service.ProcessMessageService;
 
 @Service
 public class ProcessMessageServiceImpl implements ProcessMessageService {

@@ -1,4 +1,4 @@
-package ar.com.plug.examen.domain.model;
+package ar.com.plug.examen.shared.domain.model;
 
 public class Message {
 
