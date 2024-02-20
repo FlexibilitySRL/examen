@@ -1,6 +1,5 @@
 package ar.com.plug.examen.infrastructure.rest.resource;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -31,7 +30,6 @@ public class TransactionsController {
 	public final static String PATH = "/transacction";
 	public final static String GET_BY_CLIENT_EMAIL = "/client-email";
 	public final static String GET_ALL = "/all";
-	public final static String GET_BY_DATE = "/date";
 	public final static String CREATE = "/create";
 	public final static String APPROVED = "/approved";
 
@@ -60,17 +58,6 @@ public class TransactionsController {
 			@RequestParam(defaultValue = "false") Boolean approved) {
 		return new ResponseEntity<>(
 				transactionsService.findByApproved(approved).stream().map(TransactionResponseDto::new)
-						.collect(Collectors.toList()),
-				HttpStatus.OK);
-	}
-
-	@GetMapping(path = GET_BY_DATE)
-	public ResponseEntity<List<TransactionResponseDto>> findByDate(@RequestParam LocalDateTime fromDate,
-			@RequestParam LocalDateTime toDate,
-			Boolean approved) {
-		return new ResponseEntity<>(
-				transactionsService.findByDate(fromDate, toDate, approved).stream()
-						.map(TransactionResponseDto::new)
 						.collect(Collectors.toList()),
 				HttpStatus.OK);
 	}

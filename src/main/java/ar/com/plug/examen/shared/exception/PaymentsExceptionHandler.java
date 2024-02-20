@@ -17,9 +17,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import ar.com.plug.examen.infrastructure.rest.dto.ResponseDto;
 import ar.com.plug.examen.shared.config.MenssageResponse;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @RequiredArgsConstructor
 @ControllerAdvice
 public class PaymentsExceptionHandler {

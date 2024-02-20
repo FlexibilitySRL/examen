@@ -35,6 +35,8 @@ public class TransactionsServiceImpl implements TransactionsService {
     private final ProductEntityRepository productEntityRepository;
     private final TransactionEntityRepository transactionEntityRepository;
     private final MenssageResponse menssageResponse;
+    public static final String APPROVED = "Approved";
+    public static final String NOT_FOUND = "Not Found";
 
     @Override
     public Transaction createTransaction(Transaction transaction) {
@@ -53,6 +55,7 @@ public class TransactionsServiceImpl implements TransactionsService {
 
     @Override
     public List<Transaction> findByClientEmail(String email, Boolean approved) {
+        log.info("Inicia busqueda de transacciones por email :{}", email);
         ClientEntity clientEntity = clientEntityRepository.findByEmail(email).orElseThrow(() -> {
             log.error("No existe el cliente con email: {}", email);
             return new NotFoundException(ResponseDto.builder()
@@ -67,15 +70,9 @@ public class TransactionsServiceImpl implements TransactionsService {
 
     @Override
     public List<Transaction> findByApproved(Boolean approved) {
+        log.info("Inicia busqueda de transacciones por approved :{}", approved);
         return transactionEntityRepository.findByApproved(approved).stream().map(TransactionEntity::toTransaction)
                 .collect(Collectors.toList());
-
-    }
-
-    @Override
-    public List<Transaction> findByDate(LocalDateTime fromDate, LocalDateTime toDate, Boolean approved) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findByDate'");
     }
 
     @Override
@@ -87,8 +84,8 @@ public class TransactionsServiceImpl implements TransactionsService {
         transactionEntityRepository.saveAll(transactionEntities);
         ids.forEach(id -> {
             response.put(id, transactionEntities.stream().anyMatch(transacction -> transacction.getId().equals(id))
-                    ? "Approved"
-                    : "Not Found");
+                    ? APPROVED
+                    : NOT_FOUND);
         });
         return response;
 
