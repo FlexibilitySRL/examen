@@ -22,7 +22,7 @@ import lombok.ToString;
 @ToString
 public class ClientRequestDto implements Serializable {
     private static final long serialVersionUID = 1L;
-
+    private String id;
     @NotBlank(message = MenssageResponse.C401)
     private String name;
     private String lastName;
@@ -32,6 +32,7 @@ public class ClientRequestDto implements Serializable {
 
     public Client toClient() {
         return Client.builder()
+                .id(id)
                 .name(name)
                 .lastName(lastName)
                 .docNumber(docNumber)

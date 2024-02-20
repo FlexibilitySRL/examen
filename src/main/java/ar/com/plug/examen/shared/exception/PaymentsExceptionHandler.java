@@ -27,10 +27,8 @@ public class PaymentsExceptionHandler {
 
 	@ExceptionHandler({ BadRequestException.class })
 	public ResponseEntity<ResponseDto> badRequest(BadRequestException e) {
-		return new ResponseEntity<>(ResponseDto.builder()
-				.code(MenssageResponse.BR400)
-				.message(menssageResponse.getMessages().get(MenssageResponse.BR400))
-				.build(), HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<>(e.getResponseDto(),
+				HttpStatus.BAD_REQUEST);
 	}
 
 	@ExceptionHandler({ MissingServletRequestParameterException.class })

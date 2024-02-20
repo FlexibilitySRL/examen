@@ -43,8 +43,6 @@ public class ClientEntity implements Serializable {
     private String lastName;
     private String docNumber;
 
-    private Boolean delete;
-
     @Column(unique = true)
     @Email
     private String email;

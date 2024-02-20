@@ -19,4 +19,5 @@ public class Product {
     private String description;
     private Integer inventory;
     private Double price;
+    private String barCode;
 }

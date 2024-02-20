@@ -8,17 +8,17 @@ import javax.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ar.com.plug.examen.domain.Client;
-import ar.com.plug.examen.domain.service.ClientService;
+import ar.com.plug.examen.domain.service.ServiceDomain;
 import ar.com.plug.examen.infrastructure.rest.dto.ClientRequestDto;
 import ar.com.plug.examen.infrastructure.rest.dto.ClientResponseDto;
 import ar.com.plug.examen.infrastructure.rest.dto.ResponseDto;
@@ -31,7 +31,7 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping(path = ClientController.PATH)
 public class ClientController {
 
-    private final ClientService clientService;
+    private final ServiceDomain<Client> clientService;
     private final MenssageResponse menssageResponse;
     public final static String PATH = "/client";
     public final static String CLIENT_BY_FILTER = "all";
@@ -67,7 +67,7 @@ public class ClientController {
                 HttpStatus.OK);
     }
 
-    @PutMapping
+    @DeleteMapping
     public ResponseEntity<ResponseDto> remove(@RequestParam String id) {
         clientService.remove(id);
         return new ResponseEntity<>(ResponseDto.builder()

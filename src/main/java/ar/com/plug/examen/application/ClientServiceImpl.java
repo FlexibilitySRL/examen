@@ -7,11 +7,12 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import ar.com.plug.examen.domain.Client;
-import ar.com.plug.examen.domain.service.ClientService;
+import ar.com.plug.examen.domain.service.ServiceDomain;
 import ar.com.plug.examen.infrastructure.db.entity.ClientEntity;
 import ar.com.plug.examen.infrastructure.db.repository.ClientEntityRepository;
 import ar.com.plug.examen.infrastructure.rest.dto.ResponseDto;
 import ar.com.plug.examen.shared.config.MenssageResponse;
+import ar.com.plug.examen.shared.exception.BadRequestException;
 import ar.com.plug.examen.shared.exception.ConflictException;
 import ar.com.plug.examen.shared.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RequiredArgsConstructor
 @Service
-public class ClientServiceImpl implements ClientService {
+public class ClientServiceImpl implements ServiceDomain<Client> {
     private final ClientEntityRepository clientEntityRepository;
     private final MenssageResponse menssageResponse;
 
@@ -61,19 +62,19 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public Client create(Client client) {
         log.info("Inicia la creacion de cliente:{}", client);
-        if (clientEntityRepository.findByEmail(client.getEmail()).isPresent()) {
-            log.error("Ya existe el cliente: {}", client);
-            throw new ConflictException(ResponseDto.builder()
-                    .code(MenssageResponse.C404)
-                    .message(menssageResponse.getMessages().get(MenssageResponse.C404).concat(client.getEmail()))
-                    .build());
-        }
+        this.validateIfExistsByEmail(client.getEmail());
         return clientEntityRepository.save(new ClientEntity(client)).toClient();
     }
 
     @Override
     public Client upDate(Client client) {
         log.info("Inicia actualizacion de cliente:{}", client);
+        if (Objects.isNull(client.getId()) || client.getId().isEmpty()) {
+            throw new BadRequestException(ResponseDto.builder()
+                    .code(MenssageResponse.C405)
+                    .message(menssageResponse.getMessages().get(MenssageResponse.C405))
+                    .build());
+        }
         ClientEntity clientEntity = clientEntityRepository.findById(client.getId())
                 .orElseThrow(() -> {
                     log.error("No existe el cliente con id: {}", client.getId());
@@ -82,12 +83,15 @@ public class ClientServiceImpl implements ClientService {
                             .message(menssageResponse.getMessages().get(MenssageResponse.C403).concat(client.getId()))
                             .build());
                 });
+        if (!Objects.equals(client.getEmail(), clientEntity.getEmail()))
+            this.validateIfExistsByEmail(client.getEmail());
         return clientEntityRepository.save(clientEntity.upDate(client)).toClient();
+
     }
 
     @Override
     public void remove(String id) {
-        log.info("Inicia eliminacion logica del cliente con id:{}", id);
+        log.info("Inicia eliminacion del cliente con id:{}", id);
         ClientEntity clientEntity = clientEntityRepository.findById(id)
                 .orElseThrow(() -> {
                     log.error("No existe el cliente con id: {}", id);
@@ -96,8 +100,17 @@ public class ClientServiceImpl implements ClientService {
                             .message(menssageResponse.getMessages().get(MenssageResponse.C403).concat(id))
                             .build());
                 });
-        clientEntity.setDelete(true);
-        clientEntityRepository.save(clientEntity);
+        clientEntityRepository.delete(clientEntity);
+    }
+
+    private void validateIfExistsByEmail(String email) {
+        if (clientEntityRepository.findByEmail(email).isPresent()) {
+            log.error("Ya existe el cliente con email: {}", email);
+            throw new ConflictException(ResponseDto.builder()
+                    .code(MenssageResponse.C404)
+                    .message(menssageResponse.getMessages().get(MenssageResponse.C404).concat(email))
+                    .build());
+        }
     }
 
 }
