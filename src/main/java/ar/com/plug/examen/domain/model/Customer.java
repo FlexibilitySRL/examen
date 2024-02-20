@@ -1,0 +1,26 @@
+package ar.com.plug.examen.domain.model;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
+
+import javax.persistence.*;
+import java.util.List;
+
+@Data
+@Entity
+public class Customer {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer cId;
+    private String fName;
+    private String lName;
+    private String mobile;
+    private String email;
+    private String password;
+    @JsonIgnore
+    @OneToOne(cascade = CascadeType.ALL)
+    private Cart cart;
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "customer")
+    private List<Orders> orders;
+}
