@@ -36,3 +36,20 @@ Bonus
 4) Correr pruebas con base de datos en memoria.
 5) Crear Docker Image.
 6) Hostear la app en un cloud computing libre y enviar la URL para consultar.
+
+Solucion By Felix Sirit
+
+Pasos para levantar la aplicacion:
+
+1) Ejecutar el comando: mvn clean package
+2) En local se puede levantar con: `mvn spring-boot:run -Drun.jvmArguments="-Dspring.profiles.active=local`
+3) Para generar la imagen Docker y levantar con: `docker compose up`, toma el perfil dev por defecto
+
+Para dar solucion al examen, se desarrollo con las siguientes caracteristicas:
+1) El servicio se empleo con arquitectura hexagonal, compuesto por la capa de: application, domain, infrastructure y shared.
+2) Se agrego liquibase, para la gestion y versionado de la db.
+3) Se agregaron test Unitarios, y test de integracion, lavantando una base de datos en memoria y precardado los datos con liquibase
+4) El la convertura de test fue de 88%, el reporte generado se encuenta en : **/target/site/jacoco/index.html
+5) Se agregaron servicios en interceptores para logs a nivel de request y response de los servicios REST
+6) Se agrego documentacion de la api, la cual esta disponible al levantar el servicios en http://localhost:8080/payments/swagger-ui/index.html
+7) Se creo la imagen Docker para levantar la aplicacion
