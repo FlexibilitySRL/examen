@@ -23,8 +23,16 @@ import ar.com.plug.examen.infrastructure.rest.dto.ClientRequestDto;
 import ar.com.plug.examen.infrastructure.rest.dto.ClientResponseDto;
 import ar.com.plug.examen.infrastructure.rest.dto.ResponseDto;
 import ar.com.plug.examen.shared.config.MenssageResponse;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
+@Tag(name = "Clients", description = "Catálogo de clientes")
 @Validated
 @RequiredArgsConstructor
 @RestController
@@ -36,11 +44,20 @@ public class ClientController {
     public final static String PATH = "/client";
     public final static String CLIENT_BY_FILTER = "all";
 
+    @Operation(summary = "Obtiene un cliente por id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Cliente por id", content = @Content(array = @ArraySchema(schema = @Schema(implementation = ClientResponseDto.class)))),
+            @ApiResponse(responseCode = "404", description = "No se encontro el cliente", content = @Content(schema = @Schema(implementation = ResponseDto.class)))
+    })
     @GetMapping
     public ResponseEntity<ClientResponseDto> findById(@RequestParam Integer id) {
         return new ResponseEntity<>(new ClientResponseDto(clientService.findById(id)), HttpStatus.OK);
     }
 
+    @Operation(summary = "Obtiene una lista de clientes por filtros")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Lista de clientes", content = @Content(schema = @Schema(implementation = ClientResponseDto.class)))
+    })
     @GetMapping(path = CLIENT_BY_FILTER)
     public ResponseEntity<List<ClientResponseDto>> findAllByFilter(
             @RequestParam(required = false, defaultValue = "") String name,
@@ -55,18 +72,37 @@ public class ClientController {
                 .build()).stream().map(ClientResponseDto::new).collect(Collectors.toList()), HttpStatus.OK);
     }
 
+    @Operation(summary = "Crea un cliente por medio de un json")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Crea el cliente y lo devuelve", content = @Content(array = @ArraySchema(schema = @Schema(implementation = ClientResponseDto.class)))),
+            @ApiResponse(responseCode = "409", description = "Ya el cliente existe", content = @Content(schema = @Schema(implementation = ResponseDto.class))),
+            @ApiResponse(responseCode = "400", description = "Errores en los campos del request", content = @Content(schema = @Schema(implementation = ResponseDto.class)))
+    })
     @PostMapping
     public ResponseEntity<ClientResponseDto> create(@RequestBody @Valid ClientRequestDto clientRequestDto) {
         return new ResponseEntity<>(new ClientResponseDto(clientService.create(clientRequestDto.toClient())),
                 HttpStatus.OK);
     }
 
+    @Operation(summary = "Actualiza un cliente por medio de un json")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Actualiza el cliente y lo devuelve", content = @Content(array = @ArraySchema(schema = @Schema(implementation = ClientResponseDto.class)))),
+            @ApiResponse(responseCode = "404", description = "No se encontro el cliente", content = @Content(schema = @Schema(implementation = ResponseDto.class))),
+            @ApiResponse(responseCode = "409", description = "Ya el cliente existe", content = @Content(schema = @Schema(implementation = ResponseDto.class))),
+            @ApiResponse(responseCode = "400", description = "Errores en los campos del request", content = @Content(schema = @Schema(implementation = ResponseDto.class)))
+    })
     @PatchMapping
     public ResponseEntity<ClientResponseDto> upDate(@RequestBody @Valid ClientRequestDto clientRequestDto) {
         return new ResponseEntity<>(new ClientResponseDto(clientService.upDate(clientRequestDto.toClient())),
                 HttpStatus.OK);
     }
 
+    @Operation(summary = "Elimina un cliente por por id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Elimina el cliente ", content = @Content(array = @ArraySchema(schema = @Schema(implementation = ResponseDto.class)))),
+            @ApiResponse(responseCode = "404", description = "No se encontro el cliente", content = @Content(schema = @Schema(implementation = ResponseDto.class))),
+            @ApiResponse(responseCode = "400", description = "Errores en el request", content = @Content(schema = @Schema(implementation = ResponseDto.class)))
+    })
     @DeleteMapping
     public ResponseEntity<ResponseDto> remove(@RequestParam Integer id) {
         clientService.remove(id);

@@ -4,6 +4,6 @@ import org.springframework.data.repository.CrudRepository;
 
 import ar.com.plug.examen.infrastructure.db.entity.ItemProductEntity;
 
-public interface ItemProductEntityRepository extends CrudRepository<ItemProductEntity, String> {
+public interface ItemProductEntityRepository extends CrudRepository<ItemProductEntity, Integer> {
 
 }
