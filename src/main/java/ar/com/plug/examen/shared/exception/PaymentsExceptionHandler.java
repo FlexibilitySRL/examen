@@ -5,6 +5,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.ConstraintViolationException;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,6 +35,15 @@ public class PaymentsExceptionHandler {
 		return new ResponseEntity<>(ResponseDto.builder()
 				.code(MenssageResponse.BR400)
 				.message(menssageResponse.getMessages().get(MenssageResponse.BR400))
+				.build(), HttpStatus.BAD_REQUEST);
+	}
+
+	@ExceptionHandler({ ConstraintViolationException.class })
+	public ResponseEntity<ResponseDto> badRequest(HttpServletRequest request, ConstraintViolationException e) {
+
+		return new ResponseEntity<>(ResponseDto.builder().code(MenssageResponse.BR400).message(
+				e.getConstraintViolations().stream().map(c -> c.getMessage())
+						.collect(Collectors.joining(MenssageResponse.SP)))
 				.build(), HttpStatus.BAD_REQUEST);
 	}
 

@@ -17,6 +17,13 @@ spring:
   liquibase:
     change-log: classpath:db/changelog/db.changelog-master.xml
     enabled: true
+management:
+  endpoints:
+    web:
+      base-path: /echo
+      exposure:
+        include: "*"
+
 ms:
   messages:
     OK: respuesta exitosa
