@@ -3,21 +3,27 @@ spring:
     serialization:
       write-dates-as-timestamps: false
   jpa:
-    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    database-platform: ${DB_PLATFORM}
     hibernate:
-      ddl-auto: update
-    show-sql: true
+      ddl-auto: none
+    show-sql: false
   datasource:
-      url: jdbc:mysql://localhost:3306/payments?zeroDateTimeBehavior=convertToNull
-      username: root
-      password: password
+      url: ${DB_URL}
+      username: ${DB_USER}
+      password: ${DB_ROOT_PASSWORD}
   h2:
     console:
       enabled: true
   liquibase:
     change-log: classpath:db/changelog/db.changelog-master.xml
-    enabled: false
-    
+    enabled: true
+management:
+  endpoints:
+    web:
+      base-path: /echo
+      exposure:
+        include: "*"
+
 ms:
   messages:
     OK: respuesta exitosa

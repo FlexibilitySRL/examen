@@ -1,0 +1,27 @@
+version: "3.8"
+
+services:
+  app:
+    build: .
+    restart: on-failure
+    ports:
+      - 8080:8080
+    expose:
+      - 8080
+    environment:
+      - DB_PLATFORM=org.hibernate.dialect.H2Dialect
+      - DB_URL=jdbc:h2:mem:testdb
+      - DB_USER=root
+      - DB_ROOT_PASSWORD=password
+      - DATABASE=payments
+      - SPRING_PROFILES_ACTIVE=dev
+    volumes:
+      - .m2:/root/.m2
+    networks:
+      - payments-net
+    stdin_open: true
+    tty: true
+volumes:
+  db:
+networks:
+  payments-net:
