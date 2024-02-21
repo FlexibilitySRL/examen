@@ -53,3 +53,4 @@ Para dar solucion al examen, se desarrollo con las siguientes caracteristicas:
 5) Se agregaron servicios en interceptores para logs a nivel de request y response de los servicios REST
 6) Se agrego documentacion de la api, la cual esta disponible al levantar el servicios en http://localhost:8080/payments/swagger-ui/index.html
 7) Se creo la imagen Docker para levantar la aplicacion
+8) El hosting fue en AWS mediente la ruta para acceder al swagger: http://fsirit-examen-env.eba-ep3zpf5q.us-east-2.elasticbeanstalk.com/payments/swagger-ui/index.html
