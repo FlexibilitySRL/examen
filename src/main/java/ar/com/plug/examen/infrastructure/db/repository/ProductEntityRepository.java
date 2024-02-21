@@ -6,7 +6,7 @@ import org.springframework.data.repository.CrudRepository;
 
 import ar.com.plug.examen.infrastructure.db.entity.ProductEntity;
 
-public interface ProductEntityRepository extends CrudRepository<ProductEntity, String> {
+public interface ProductEntityRepository extends CrudRepository<ProductEntity, Integer> {
     Optional<ProductEntity> findByBarCode(String barCode);
 
 }

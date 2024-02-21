@@ -21,7 +21,7 @@ import lombok.Setter;
 public class MenssageResponse {
     private Map<String, String> messages;
     public static final String SP = ";";
-    public static final String OK = "0";
+    public static final String OK = "OK";
     public static final String BR400 = "400";
     public static final String C401 = "C401";
     public static final String C402 = "C402";

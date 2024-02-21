@@ -63,7 +63,7 @@ public class TransactionsController {
 	}
 
 	@PostMapping(path = APPROVED)
-	public ResponseEntity<Map<String, String>> approvedTransacctions(@RequestBody List<String> ids) {
+	public ResponseEntity<Map<Integer, String>> approvedTransacctions(@RequestBody List<Integer> ids) {
 		return new ResponseEntity<>(
 				transactionsService.approvedTransacctions(ids),
 				HttpStatus.OK);

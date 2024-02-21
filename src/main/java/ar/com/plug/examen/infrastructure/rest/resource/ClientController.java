@@ -37,7 +37,7 @@ public class ClientController {
     public final static String CLIENT_BY_FILTER = "all";
 
     @GetMapping
-    public ResponseEntity<ClientResponseDto> findById(@RequestParam String id) {
+    public ResponseEntity<ClientResponseDto> findById(@RequestParam Integer id) {
         return new ResponseEntity<>(new ClientResponseDto(clientService.findById(id)), HttpStatus.OK);
     }
 
@@ -68,7 +68,7 @@ public class ClientController {
     }
 
     @DeleteMapping
-    public ResponseEntity<ResponseDto> remove(@RequestParam String id) {
+    public ResponseEntity<ResponseDto> remove(@RequestParam Integer id) {
         clientService.remove(id);
         return new ResponseEntity<>(ResponseDto.builder()
                 .code(MenssageResponse.OK)

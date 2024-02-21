@@ -13,6 +13,6 @@ public interface TransactionsService {
 
     public List<Transaction> findByApproved(Boolean approved);
 
-    public Map<String, String> approvedTransacctions(List<String> ids);
+    public Map<Integer, String> approvedTransacctions(List<Integer> ids);
 
 }

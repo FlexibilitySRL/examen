@@ -26,7 +26,7 @@ public class ItemProductRequestDto implements Serializable {
     private String id;
 
     @NotEmpty(message = MenssageResponse.T402)
-    private String productId;
+    private Integer productId;
 
     @Min(value = 0, message = MenssageResponse.T404)
     @NotNull(message = MenssageResponse.T404)

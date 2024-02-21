@@ -26,13 +26,13 @@ public class ProductServiceImpl implements ServiceDomain<Product> {
     private final MenssageResponse menssageResponse;
 
     @Override
-    public Product findById(String id) {
+    public Product findById(Integer id) {
         log.info("Inicia busqueda del producto con id:{}", id);
         return productEntityRepository.findById(id).orElseThrow(() -> {
             log.error("No existe el producto con id: {}", id);
             return new NotFoundException(ResponseDto.builder()
                     .code(MenssageResponse.P404)
-                    .message(menssageResponse.getMessages().get(MenssageResponse.P404).concat(id))
+                    .message(menssageResponse.getMessages().get(MenssageResponse.P404).concat(id.toString()))
                     .build());
         }).toProduct();
     }
@@ -61,7 +61,7 @@ public class ProductServiceImpl implements ServiceDomain<Product> {
     @Override
     public Product upDate(Product product) {
         log.info("Inicia actualizacion del producto:{}", product);
-        if (Objects.isNull(product.getId()) || product.getId().isEmpty()) {
+        if (Objects.isNull(product.getId())) {
             throw new BadRequestException(ResponseDto.builder()
                     .code(MenssageResponse.P407)
                     .message(menssageResponse.getMessages().get(MenssageResponse.P407))
@@ -72,7 +72,8 @@ public class ProductServiceImpl implements ServiceDomain<Product> {
                     log.error("No existe el producto con id: {}", product.getId());
                     return new NotFoundException(ResponseDto.builder()
                             .code(MenssageResponse.P404)
-                            .message(menssageResponse.getMessages().get(MenssageResponse.P404).concat(product.getId()))
+                            .message(menssageResponse.getMessages().get(MenssageResponse.P404)
+                                    .concat(product.getId().toString()))
                             .build());
                 });
         if (!Objects.equals(product.getBarCode(), productEntity.getBarCode()))
@@ -82,14 +83,14 @@ public class ProductServiceImpl implements ServiceDomain<Product> {
     }
 
     @Override
-    public void remove(String id) {
+    public void remove(Integer id) {
         log.info("Inicia eliminacion del producto con id:{}", id);
         ProductEntity productEntity = productEntityRepository.findById(id)
                 .orElseThrow(() -> {
                     log.error("No existe el producto con id: {}", id);
                     return new NotFoundException(ResponseDto.builder()
                             .code(MenssageResponse.P404)
-                            .message(menssageResponse.getMessages().get(MenssageResponse.P404).concat(id))
+                            .message(menssageResponse.getMessages().get(MenssageResponse.P404).concat(id.toString()))
                             .build());
                 });
         productEntityRepository.delete(productEntity);

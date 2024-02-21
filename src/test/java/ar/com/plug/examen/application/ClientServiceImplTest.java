@@ -21,9 +21,7 @@ import ar.com.plug.examen.shared.config.MenssageResponse;
 import ar.com.plug.examen.shared.exception.BadRequestException;
 import ar.com.plug.examen.shared.exception.ConflictException;
 import ar.com.plug.examen.shared.exception.NotFoundException;
-import lombok.extern.log4j.Log4j2;
 
-@Log4j2
 @RunWith(MockitoJUnitRunner.class)
 public class ClientServiceImplTest {
     @Mock

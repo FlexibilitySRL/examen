@@ -36,7 +36,7 @@ public class ProductController {
     public final static String PRODUCT_BY_FILTER = "all";
 
     @GetMapping
-    public ResponseEntity<ProductResponseDto> findById(@RequestParam String id) {
+    public ResponseEntity<ProductResponseDto> findById(@RequestParam Integer id) {
         return new ResponseEntity<>(new ProductResponseDto(productService.findById(id)), HttpStatus.OK);
     }
 
@@ -63,7 +63,7 @@ public class ProductController {
     }
 
     @DeleteMapping
-    public ResponseEntity<ResponseDto> remove(@RequestParam String id) {
+    public ResponseEntity<ResponseDto> remove(@RequestParam Integer id) {
         productService.remove(id);
         return new ResponseEntity<>(ResponseDto.builder()
                 .code(MenssageResponse.OK)

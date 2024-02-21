@@ -18,9 +18,9 @@ import lombok.ToString;
 @ToString
 public class Transaction {
 
-    private String id;
+    private Integer id;
     private Boolean approved;
-    private String clientId;
+    private Integer clientId;
     private Double total;
     private LocalDateTime date;
     private List<ItemProduct> items;

@@ -115,13 +115,13 @@ public class TransactionsServiceImplTest {
 
 	@Test
 	public void approvedTransacctionsOK() {
-		List<String> ids = Arrays.asList("1", "2", "3");
+		List<Integer> ids = Arrays.asList(1, 2, 3);
 		String[] responseStatus = { TransactionsServiceImpl.APPROVED, TransactionsServiceImpl.APPROVED,
 				TransactionsServiceImpl.NOT_FOUND };
 		int nProduct = 2;
 		when(transactionEntityRepository.findAllById(ids))
 				.thenReturn(TestUtil.buildTransactionEntites(TestUtil.ID_1, nProduct, false));
-		Map<String, String> response = transactionsServiceImpl.approvedTransacctions(ids);
+		Map<Integer, String> response = transactionsServiceImpl.approvedTransacctions(ids);
 
 		assertArrayEquals(responseStatus, response.values().toArray());
 	}

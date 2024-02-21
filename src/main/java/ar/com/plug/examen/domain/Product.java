@@ -14,7 +14,7 @@ import lombok.ToString;
 @Builder
 @ToString
 public class Product {
-    private String id;
+    private Integer id;
     private String name;
     private String description;
     private Integer inventory;

@@ -26,13 +26,13 @@ public class ClientServiceImpl implements ServiceDomain<Client> {
     private final MenssageResponse menssageResponse;
 
     @Override
-    public Client findById(String id) {
+    public Client findById(Integer id) {
         log.info("Inicia busqueda de cliente con id:{}", id);
         return clientEntityRepository.findById(id).orElseThrow(() -> {
             log.error("No existe el cliente con id: {}", id);
             return new NotFoundException(ResponseDto.builder()
                     .code(MenssageResponse.C403)
-                    .message(menssageResponse.getMessages().get(MenssageResponse.C403).concat(id))
+                    .message(menssageResponse.getMessages().get(MenssageResponse.C403).concat(id.toString()))
                     .build());
         }).toClient();
     }
@@ -69,7 +69,7 @@ public class ClientServiceImpl implements ServiceDomain<Client> {
     @Override
     public Client upDate(Client client) {
         log.info("Inicia actualizacion de cliente:{}", client);
-        if (Objects.isNull(client.getId()) || client.getId().isEmpty()) {
+        if (Objects.isNull(client.getId())) {
             throw new BadRequestException(ResponseDto.builder()
                     .code(MenssageResponse.C405)
                     .message(menssageResponse.getMessages().get(MenssageResponse.C405))
@@ -80,7 +80,8 @@ public class ClientServiceImpl implements ServiceDomain<Client> {
                     log.error("No existe el cliente con id: {}", client.getId());
                     return new NotFoundException(ResponseDto.builder()
                             .code(MenssageResponse.C403)
-                            .message(menssageResponse.getMessages().get(MenssageResponse.C403).concat(client.getId()))
+                            .message(menssageResponse.getMessages().get(MenssageResponse.C403)
+                                    .concat(client.getId().toString()))
                             .build());
                 });
         if (!Objects.equals(client.getEmail(), clientEntity.getEmail()))
@@ -90,14 +91,14 @@ public class ClientServiceImpl implements ServiceDomain<Client> {
     }
 
     @Override
-    public void remove(String id) {
+    public void remove(Integer id) {
         log.info("Inicia eliminacion del cliente con id:{}", id);
         ClientEntity clientEntity = clientEntityRepository.findById(id)
                 .orElseThrow(() -> {
                     log.error("No existe el cliente con id: {}", id);
                     return new NotFoundException(ResponseDto.builder()
                             .code(MenssageResponse.C403)
-                            .message(menssageResponse.getMessages().get(MenssageResponse.C403).concat(id))
+                            .message(menssageResponse.getMessages().get(MenssageResponse.C403).concat(id.toString()))
                             .build());
                 });
         clientEntityRepository.delete(clientEntity);

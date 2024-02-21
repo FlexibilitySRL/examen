@@ -3,7 +3,7 @@ package ar.com.plug.examen.domain.service;
 import java.util.List;
 
 public interface ServiceDomain<T> {
-    T findById(String id);
+    T findById(Integer id);
 
     List<T> findAllByFilter(T domain);
 
@@ -11,5 +11,5 @@ public interface ServiceDomain<T> {
 
     T upDate(T domain);
 
-    void remove(String id);
+    void remove(Integer id);
 }

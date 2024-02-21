@@ -6,6 +6,6 @@ import org.springframework.data.repository.CrudRepository;
 
 import ar.com.plug.examen.infrastructure.db.entity.TransactionEntity;
 
-public interface TransactionEntityRepository extends CrudRepository<TransactionEntity, String> {
+public interface TransactionEntityRepository extends CrudRepository<TransactionEntity, Integer> {
     List<TransactionEntity> findByApproved(boolean approved);
 }

@@ -24,7 +24,7 @@ import lombok.ToString;
 public class ProductRequestDto implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private String id;
+    private Integer id;
     @NotBlank(message = MenssageResponse.P401)
     private String name;
     private String description;

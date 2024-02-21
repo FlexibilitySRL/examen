@@ -76,8 +76,8 @@ public class TransactionsServiceImpl implements TransactionsService {
     }
 
     @Override
-    public Map<String, String> approvedTransacctions(List<String> ids) {
-        Map<String, String> response = new HashMap<>();
+    public Map<Integer, String> approvedTransacctions(List<Integer> ids) {
+        Map<Integer, String> response = new HashMap<>();
         List<TransactionEntity> transactionEntities = (List<TransactionEntity>) transactionEntityRepository
                 .findAllById(ids);
         transactionEntities.forEach(tansacction -> tansacction.setApproved(true));
@@ -91,12 +91,12 @@ public class TransactionsServiceImpl implements TransactionsService {
 
     }
 
-    private ClientEntity getIfClientExist(String id) {
+    private ClientEntity getIfClientExist(Integer id) {
         return clientEntityRepository.findById(id).orElseThrow(() -> {
             log.error("No existe el cliente con id: {}", id);
             return new NotFoundException(ResponseDto.builder()
                     .code(MenssageResponse.C403)
-                    .message(menssageResponse.getMessages().get(MenssageResponse.C403).concat(id))
+                    .message(menssageResponse.getMessages().get(MenssageResponse.C403).concat(id.toString()))
                     .build());
         });
     }
@@ -108,13 +108,15 @@ public class TransactionsServiceImpl implements TransactionsService {
                 log.error("No existe el producto con id: {}", item.getProductId());
                 return new NotFoundException(ResponseDto.builder()
                         .code(MenssageResponse.P404)
-                        .message(menssageResponse.getMessages().get(MenssageResponse.P404).concat(item.getProductId()))
+                        .message(menssageResponse.getMessages().get(MenssageResponse.P404)
+                                .concat(item.getProductId().toString()))
                         .build());
             });
             if (productEntity.getInventory() < item.getQuantity()) {
                 throw new ConflictException(ResponseDto.builder()
                         .code(MenssageResponse.T401)
-                        .message(menssageResponse.getMessages().get(MenssageResponse.T401).concat(item.getProductId()))
+                        .message(menssageResponse.getMessages().get(MenssageResponse.T401)
+                                .concat(item.getProductId().toString()))
                         .build());
             }
             productEntity.setInventory(productEntity.getInventory() - item.getQuantity());

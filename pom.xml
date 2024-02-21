@@ -40,6 +40,7 @@
         <commons-codec.version>1.14</commons-codec.version>
         <commons-io.version>2.7</commons-io.version>
         <guava.version>29.0-jre</guava.version>
+        <liquibase.version>4.26.0</liquibase.version>
     </properties>
 
     <dependencies>
@@ -102,6 +103,17 @@
             <artifactId>h2</artifactId>
             <scope>runtime</scope>
         </dependency>
+        <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
+            <version>${liquibase.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jacoco</groupId>
+            <artifactId>jacoco-maven-plugin</artifactId>
+            <version>0.8.7</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -117,6 +129,39 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.7</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-maven-plugin</artifactId>
+                <version>${liquibase.version}</version>
+                <configuration>
+                    <driver>org.h2.Driver</driver>
+                    <url>jdbc:h2:file:./db/h2db/db/dbmen</url>
+                    <username>root</username>
+                    <password>password</password>
+                    <outputChangeLogFile>src/main/resources/db/changelog/db.changelog-master.xml</outputChangeLogFile>
+                    <promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>
+                    <verbose>true</verbose>
+                </configuration>
             </plugin>
         </plugins>
     </build>

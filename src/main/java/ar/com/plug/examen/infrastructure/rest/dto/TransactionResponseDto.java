@@ -21,9 +21,9 @@ import lombok.ToString;
 @ToString
 public class TransactionResponseDto implements Serializable {
     private static final long serialVersionUID = 1L;
-    private String id;
+    private Integer id;
     private Boolean approved;
-    private String clientId;
+    private Integer clientId;
     private Double total;
     private LocalDateTime date;
     private List<ItemProductResponseDto> items;

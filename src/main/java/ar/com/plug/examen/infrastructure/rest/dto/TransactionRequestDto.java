@@ -29,7 +29,7 @@ public class TransactionRequestDto implements Serializable {
     private Boolean approved;
 
     @NotEmpty(message = MenssageResponse.T402)
-    private String clientId;
+    private Integer clientId;
 
     private Double total;
     private LocalDateTime date;

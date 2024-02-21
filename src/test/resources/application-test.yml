@@ -13,9 +13,9 @@ spring:
       password: password
   h2:
     console:
-      enabled: true
+      enabled: false
   liquibase:
-    change-log: classpath:db/changelog/db.changelog-master.xml
+    change-log: classpath:db/changelog/db.changelog-test.xml
     enabled: true
 ms:
   messages:
