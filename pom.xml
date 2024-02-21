@@ -123,6 +123,20 @@
             <artifactId>springdoc-openapi-ui</artifactId>
             <version>1.6.12</version>
         </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20180813</version>
+        </dependency>
+        <dependency>
+            <groupId>net.logstash.logback</groupId>
+            <artifactId>logstash-logback-encoder</artifactId>
+            <version>6.4</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -148,6 +162,7 @@
                         <exclude>**/*Dto*.*</exclude>
                         <exclude>**/*PaymentsExceptionHandler*.*</exclude>
                         <exclude>**/*Entity*.*</exclude>
+                        <exclude>**/logs/**</exclude>
                     </excludes>
                 </configuration>
                 <executions>
