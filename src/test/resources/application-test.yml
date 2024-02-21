@@ -1,0 +1,42 @@
+spring:
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+  datasource:
+      url: jdbc:h2:mem:testdb
+      username: root
+      password: password
+  h2:
+    console:
+      enabled: false
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-test.xml
+    enabled: true
+ms:
+  messages:
+    OK: respuesta exitosa
+    400: Error en el request
+    C401: El nombre del cliente no puede estar vacio o nullo
+    C402: El email del cliente no puede estar vacio o nullo y debe poseer formato de email
+    C403: No se encontro el cliente con id=
+    C404: Ya existe un cliente con email=
+    C405: Error en actualizar, el id del cliente no debe estar vacio o ser null o vacio
+
+    P401: El nombre del producto no puede estar vacio o null
+    P402: El campo inventory de producto no debe ser null y debe ser mayor a cero
+    P403: El campo price de producto no debe ser null y debe ser mayor a cero
+    P404: No se encontro el producto con id=
+    P405: Ya existe un producto con nombre=
+    P406: El campo barCode de producto no debe ser null o vacio
+    P407: Error en actualizar, el id del producto no debe estar vacio o ser null o vacio
+    P408: Ya existe un producto con barCode=
+
+    T401: No se puede procesar la transaccion porque no existe la cantidad requerida del producto=
+    T402: El id del cliente no debe estar vacio o null
+    T403: La lista de item no debe estar vacio o null
+    T404: El campo quantity de producto no debe ser null y debe ser mayor a cero
