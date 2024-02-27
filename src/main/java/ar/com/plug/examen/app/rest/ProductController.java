@@ -17,16 +17,34 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @GetMapping(path = "")
+    @GetMapping
     public ResponseEntity<List<Product>> getAll(){
         List<Product> sales = this.productService.getAll();
         return ResponseEntity.ok(sales);
     }
 
-    @PostMapping(path = "")
+    @GetMapping(path = "/{id}")
+    public ResponseEntity<Product> getById(@PathVariable Long id){
+        Product product = this.productService.getById(id);
+        return ResponseEntity.ok(product);
+    }
+
+    @PostMapping
     public ResponseEntity<Product> insert(@RequestBody Product product){
         Product newProduct = this.productService.saveOrUpdate(product);
         return ResponseEntity.ok(newProduct);
+    }
+
+    @PatchMapping
+    public ResponseEntity<Product> update(@RequestBody Product product){
+        Product newProduct = this.productService.saveOrUpdate(product);
+        return ResponseEntity.ok(newProduct);
+    }
+
+
+    @DeleteMapping(path = "/{id}")
+    public void delete(@PathVariable Long id){
+        this.productService.delete(id);
     }
 
 }

@@ -1,14 +1,13 @@
 package ar.com.plug.examen.domain.repository;
 
-import ar.com.plug.examen.domain.service.Filter;
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.List;
 
@@ -20,57 +19,35 @@ public class GenericRepository<T> {
 
     public T saveOrUpdate(T instance){
         Session session = factory.openSession();
-        Transaction tx = null;
-        try {
-            tx = session.beginTransaction();
-            session.save(instance);
-            tx.commit();
-        }
-        // tiene que estar aspectado por un transactional.
-        catch (Exception e) {
-            if (tx!=null) tx.rollback();
-            e.printStackTrace();
-        } finally {
-            session.close();
-        }
+        session.saveOrUpdate(instance);
         return instance;
     }
 
-    public T getById(Long id){
-        return null;
+    public void delete(T instance){
+        Session session = factory.openSession();
+        session.delete(instance);
     }
 
-    public T getAll(Filter filter){
-        return null;
+    public T getById(Long id){
+        Session session = factory.openSession();
+        CriteriaBuilder cb = session.getCriteriaBuilder();
+        CriteriaQuery<T> cq = cb.createQuery(type);
+        Root<T> root = cq.from(type);
+        Predicate idPredicate = cb.equal(root.get("id"), id);
+        cq.where(idPredicate);
+        TypedQuery<T> query = session.createQuery(cq);
+        return query.getSingleResult();
     }
 
     public List<T> getAll() {
-        List objects = null;
-        try {
-            Session session = factory.openSession();
-
-            CriteriaBuilder cb = session.getCriteriaBuilder();
-            CriteriaQuery<T> cr = cb.createQuery(type);
-            Root<T> root = cr.from(type);
-            cr.select(root);
-
-            Query<T> query = session.createQuery(cr);
-            List<T> results = query.getResultList();
-            objects = results;
-
-        } catch (HibernateException e) {
-           throw e;
-        }
-        return objects;
-
+        Session session = factory.openSession();
+        CriteriaBuilder cb = session.getCriteriaBuilder();
+        CriteriaQuery<T> cr = cb.createQuery(type);
+        Root<T> root = cr.from(type);
+        cr.select(root);
+        Query<T> query = session.createQuery(cr);
+        List<T> results = query.getResultList();
+        return results;
     }
-
-    public void delete(T instance){
-
-    }
-
-
-
-
 
 }

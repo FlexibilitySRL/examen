@@ -11,4 +11,5 @@ public class ProductRepository extends GenericRepository<Product>{
         this.type = Product.class;
         this.factory = sessionFactory;
     }
+
 }
