@@ -1,12 +1,10 @@
 package ar.com.plug.examen.app.rest;
 
+import ar.com.plug.examen.domain.model.Product;
 import ar.com.plug.examen.domain.model.Sale;
-import ar.com.plug.examen.domain.service.impl.SaleServiceImpl;
-import org.springframework.http.MediaType;
+import ar.com.plug.examen.domain.service.impl.SaleService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -14,17 +12,40 @@ import java.util.List;
 @RequestMapping(path = "/sales")
 public class SaleController {
 
-    private final SaleServiceImpl saleService;
+    private final SaleService saleService;
 
-    public SaleController(SaleServiceImpl saleService) {
+    public SaleController(SaleService saleService) {
         this.saleService = saleService;
     }
 
-    @GetMapping(path = "")
+    @GetMapping
     public ResponseEntity<List<Sale>> getAll(){
         List<Sale> sales = this.saleService.getAll();
         return ResponseEntity.ok(sales);
     }
 
+    @GetMapping(path = "/{id}")
+    public ResponseEntity<Sale> getById(@PathVariable Long id){
+        Sale sale = this.saleService.getById(id);
+        return ResponseEntity.ok(sale);
+    }
+
+    @PostMapping
+    public ResponseEntity<Sale> insert(@RequestBody Sale sale){
+        Sale newSale = this.saleService.saveOrUpdate(sale);
+        return ResponseEntity.ok(newSale);
+    }
+
+    @PatchMapping
+    public ResponseEntity<Sale> update(@RequestBody Sale sale){
+        Sale updatedSale = this.saleService.saveOrUpdate(sale);
+        return ResponseEntity.ok(updatedSale);
+    }
+
+
+    @DeleteMapping(path = "/{id}")
+    public void delete(@PathVariable Long id){
+        this.saleService.delete(id);
+    }
 
 }

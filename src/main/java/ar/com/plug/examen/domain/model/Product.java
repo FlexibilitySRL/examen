@@ -1,10 +1,8 @@
 package ar.com.plug.examen.domain.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity(name = "products")
 public class Product {
@@ -16,6 +14,10 @@ public class Product {
     private String name;
 
     private BigDecimal value;
+
+
+    @ManyToMany(mappedBy = "products" , fetch = FetchType.LAZY)
+    private List<Sale> sales;
 
     public Long getId() {
         return id;

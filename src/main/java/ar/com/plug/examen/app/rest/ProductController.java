@@ -1,7 +1,7 @@
 package ar.com.plug.examen.app.rest;
 
 import ar.com.plug.examen.domain.model.Product;
-import ar.com.plug.examen.domain.service.impl.ProductServiceImpl;
+import ar.com.plug.examen.domain.service.impl.ProductService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,9 +11,9 @@ import java.util.List;
 @RequestMapping(path = "/products")
 public class ProductController {
 
-    private final ProductServiceImpl productService;
+    private final ProductService productService;
 
-    public ProductController(ProductServiceImpl productService) {
+    public ProductController(ProductService productService) {
         this.productService = productService;
     }
 

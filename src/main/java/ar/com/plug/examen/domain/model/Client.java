@@ -1,12 +1,26 @@
 package ar.com.plug.examen.domain.model;
 
+import org.checkerframework.checker.fenum.qual.Fenum;
+import org.hibernate.annotations.Fetch;
+
+import javax.persistence.*;
+import java.util.List;
+
+@Entity(name = "clients")
 public class Client {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
 
+    @Column(name="last_name")
     private String lastName;
+    @OneToMany
+    @JoinColumn(name = "client_id")
+    @Transient
+    private List<Sale> sales;
 
     public Long getId() {
         return id;
