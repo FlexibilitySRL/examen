@@ -1,5 +1,6 @@
 package ar.com.plug.examen.app.rest;
 
+import ar.com.plug.examen.app.rest.dto.SaleDTO;
 import ar.com.plug.examen.domain.model.Product;
 import ar.com.plug.examen.domain.model.Sale;
 import ar.com.plug.examen.domain.service.impl.SaleService;
@@ -37,7 +38,9 @@ public class SaleController {
     }
 
     @PatchMapping
-    public ResponseEntity<Sale> update(@RequestBody Sale sale){
+    public ResponseEntity<Sale> update(@RequestBody SaleDTO saleDTO){
+        Sale sale = this.saleService.getById(saleDTO.getId());
+        sale.setApproved(saleDTO.getApproved());
         Sale updatedSale = this.saleService.saveOrUpdate(sale);
         return ResponseEntity.ok(updatedSale);
     }
