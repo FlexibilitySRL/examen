@@ -10,11 +10,19 @@ import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import javax.sql.DataSource;
 
 
+/**
+ * Hibernate Configuration
+ */
 @Configuration
 @EnableAutoConfiguration(exclude = {HibernateJpaAutoConfiguration.class})
 public class HibernateConfiguration {
 
 
+    /**
+     * SessionFactory bean
+     * @param dataSource
+     * @return
+     */
     @Bean(name="entityManagerFactory")
     public LocalSessionFactoryBean sessionFactory(DataSource dataSource) {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
@@ -31,6 +39,5 @@ public class HibernateConfiguration {
         transactionManager.setSessionFactory(sessionFactory);
         return transactionManager;
     }
-
 
 }
