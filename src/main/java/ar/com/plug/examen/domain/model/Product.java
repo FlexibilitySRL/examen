@@ -15,7 +15,6 @@ public class Product {
 
     private BigDecimal value;
 
-
     @ManyToMany(mappedBy = "products" , fetch = FetchType.LAZY)
     private List<Sale> sales;
 
@@ -41,5 +40,14 @@ public class Product {
 
     public void setValue(BigDecimal value) {
         this.value = value;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", value=" + value +
+                '}';
     }
 }

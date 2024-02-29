@@ -72,4 +72,15 @@ public class Sale {
     public void setClient(Client client) {
         this.client = client;
     }
+
+    @Override
+    public String toString() {
+        return "Sale{" +
+                "id=" + id +
+                ", products=" + products +
+                ", amount=" + amount +
+                ", approved=" + approved +
+                ", client=" + client +
+                '}';
+    }
 }
