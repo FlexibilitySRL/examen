@@ -6,6 +6,8 @@ spring:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     hibernate:
       ddl-auto: update
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     show-sql: true
   datasource:
       url: jdbc:mysql://127.0.0.1:3306/payments?zeroDateTimeBehavior=convertToNull
@@ -16,4 +18,4 @@ server:
   port: 8080
   servlet:
     context-path: '/payments'
----
+
