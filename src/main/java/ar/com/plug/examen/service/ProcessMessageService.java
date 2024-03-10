@@ -1,4 +1,4 @@
-package ar.com.plug.examen.domain.service;
+package ar.com.plug.examen.service;
 
 import ar.com.plug.examen.domain.model.Message;
 

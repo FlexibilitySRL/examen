@@ -1,7 +1,7 @@
 package ar.com.plug.examen.app.rest;
 
 import ar.com.plug.examen.app.api.MessageApi;
-import ar.com.plug.examen.domain.service.ProcessMessageService;
+import ar.com.plug.examen.service.ProcessMessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
