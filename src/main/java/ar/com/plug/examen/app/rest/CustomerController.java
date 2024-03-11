@@ -9,9 +9,9 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/customers")
-public class CustomerController {
+public class  CustomerController {
 
-    private final CustomerService customerService; // Use service if applicable
+    private CustomerService customerService; // Use service if applicable
 
     public CustomerController(CustomerService customerService) {
         this.customerService = customerService;

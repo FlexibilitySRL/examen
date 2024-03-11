@@ -17,8 +17,5 @@ public class Customer {
     private String lastName;
     private String email;
 
-//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    private List<Order> orders;
-
 }
 

@@ -2,6 +2,8 @@ package ar.com.plug.examen.rest;
 
 import ar.com.plug.examen.app.rest.ProductController;
 import ar.com.plug.examen.domain.model.Product;
+import ar.com.plug.examen.service.CustomerService;
+import ar.com.plug.examen.service.OrderService;
 import ar.com.plug.examen.service.ProductService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -29,6 +31,12 @@ class ProductControllerTest {
 
     @MockBean
     private ProductService productService;
+
+    @MockBean
+    private CustomerService customerService;
+
+    @MockBean
+    private OrderService orderService;
 
     // Test data
     private final Product testProduct = new Product(1L, "Test Product", "Description", new BigDecimal(10));

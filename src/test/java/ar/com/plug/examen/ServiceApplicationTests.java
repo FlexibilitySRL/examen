@@ -1,5 +1,6 @@
 package ar.com.plug.examen;
 
+import ar.com.plug.examen.service.CustomerService;
 import ar.com.plug.examen.service.ProductService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ class ServiceApplicationTests {
 
 	@Test
 	void contextLoads() {
-		assertNotNull(context.getBean(ProductService.class));
+		assertNotNull(context.getBean(CustomerService.class));
 	}
 
 }

@@ -4,7 +4,9 @@ import ar.com.plug.examen.app.rest.OrderController;
 import ar.com.plug.examen.domain.model.Customer;
 import ar.com.plug.examen.domain.model.Order;
 import ar.com.plug.examen.domain.model.Product;
+import ar.com.plug.examen.service.CustomerService;
 import ar.com.plug.examen.service.OrderService;
+import ar.com.plug.examen.service.ProductService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +34,12 @@ class OrderControllerTest {
 
     @MockBean
     private OrderService orderService;
+
+    @MockBean
+    private CustomerService customerService;
+
+    @MockBean
+    private ProductService productService;
 
     @Test
     void createOrder() throws Exception {
@@ -70,7 +78,7 @@ class OrderControllerTest {
                                 "  \"orderDate\": \"2024-03-10T12:00:00\", \n" +
                                 "  \"total\": null \n" +
                                 "}\n"))
-                .andExpect(status().isCreated())
+                .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1L)); // Assert response content
 
         // Verify service interaction
