@@ -1,6 +1,6 @@
 package ar.com.plug.examen.service.impl;
 
-import ar.com.plug.examen.domain.model.Order;
+import ar.com.plug.examen.domain.model.OrderShopping;
 import ar.com.plug.examen.repository.OrderRepository;
 import ar.com.plug.examen.service.OrderService;
 import org.springframework.stereotype.Service;
@@ -18,24 +18,24 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Order createOrder(Order order) {
+    public OrderShopping createOrder(OrderShopping order) {
         order.setOrderDate(LocalDateTime.now()); // Set order creation date
         calculateTotalPrice(order); // Calculate total price before saving
         return orderRepository.save(order);
     }
 
     @Override
-    public Order getOrderById(Long id) {
+    public OrderShopping getOrderById(Long id) {
         return orderRepository.findById(id).orElse(null);
     }
 
     @Override
-    public List<Order> getAllOrders() {
+    public List<OrderShopping> getAllOrders() {
         return orderRepository.findAll();
     }
 
     @Override
-    public Order updateOrder(Order order) {
+    public OrderShopping updateOrder(OrderShopping order) {
         calculateTotalPrice(order); // Recalculate total price before update
         return orderRepository.save(order);
     }
@@ -45,7 +45,7 @@ public class OrderServiceImpl implements OrderService {
         orderRepository.deleteById(id);
     }
 
-    private void calculateTotalPrice(Order order) {
+    private void calculateTotalPrice(OrderShopping order) {
         order.setTotal(order.calculateTotalPrice());
     }
 }

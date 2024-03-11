@@ -1,6 +1,6 @@
 package ar.com.plug.examen.app.rest;
 
-import ar.com.plug.examen.domain.model.Order;
+import ar.com.plug.examen.domain.model.OrderShopping;
 import ar.com.plug.examen.service.OrderService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,27 +18,27 @@ public class OrderController {
     }
 
     @PostMapping
-    public ResponseEntity<Order> createOrder(@RequestBody Order order) {
-        Order savedOrder = orderService.createOrder(order);
+    public ResponseEntity<OrderShopping> createOrder(@RequestBody OrderShopping order) {
+        OrderShopping savedOrder = orderService.createOrder(order);
         return ResponseEntity.ok(savedOrder);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Order> getOrderById(@PathVariable Long id) {
-        Order order = orderService.getOrderById(id);
+    public ResponseEntity<OrderShopping> getOrderById(@PathVariable Long id) {
+        OrderShopping order = orderService.getOrderById(id);
         return ResponseEntity.ok(order);
     }
 
     @GetMapping
-    public ResponseEntity<List<Order>> getAllOrders() {
-        List<Order> orders = orderService.getAllOrders();
+    public ResponseEntity<List<OrderShopping>> getAllOrders() {
+        List<OrderShopping> orders = orderService.getAllOrders();
         return ResponseEntity.ok(orders);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Order> updateOrder(@PathVariable Long id, @RequestBody Order order) {
+    public ResponseEntity<OrderShopping> updateOrder(@PathVariable Long id, @RequestBody OrderShopping order) {
         order.setId(id); // Ensure ID matches path variable
-        Order updatedOrder = orderService.updateOrder(order);
+        OrderShopping updatedOrder = orderService.updateOrder(order);
         return ResponseEntity.ok(updatedOrder);
     }
 

@@ -9,7 +9,7 @@ import java.util.List;
 
 @Entity
 @Data
-public class Order {
+public class OrderShopping {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,7 +18,7 @@ public class Order {
     @ManyToOne(fetch = FetchType.EAGER) // Eager fetching recommended for client details
     private Customer client;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY) // Cascade for saving/deleting products
+    @OneToMany(fetch = FetchType.LAZY) // Cascade for saving/deleting products
     private List<Product> products;
 
     private LocalDateTime orderDate; // Date and time of the order

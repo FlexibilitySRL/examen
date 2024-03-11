@@ -1,18 +1,18 @@
 package ar.com.plug.examen.service;
 
-import ar.com.plug.examen.domain.model.Order;
+import ar.com.plug.examen.domain.model.OrderShopping;
 
 import java.util.List;
 
 public interface OrderService {
 
-    Order createOrder(Order order);
+    OrderShopping createOrder(OrderShopping order);
 
-    Order getOrderById(Long id);
+    OrderShopping getOrderById(Long id);
 
-    List<Order> getAllOrders();
+    List<OrderShopping> getAllOrders();
 
-    Order updateOrder(Order order);
+    OrderShopping updateOrder(OrderShopping order);
 
     void deleteOrder(Long id);
 }

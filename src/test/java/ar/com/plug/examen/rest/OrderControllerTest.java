@@ -2,7 +2,7 @@ package ar.com.plug.examen.rest;
 
 import ar.com.plug.examen.app.rest.OrderController;
 import ar.com.plug.examen.domain.model.Customer;
-import ar.com.plug.examen.domain.model.Order;
+import ar.com.plug.examen.domain.model.OrderShopping;
 import ar.com.plug.examen.domain.model.Product;
 import ar.com.plug.examen.service.CustomerService;
 import ar.com.plug.examen.service.OrderService;
@@ -44,7 +44,7 @@ class OrderControllerTest {
     @Test
     void createOrder() throws Exception {
         // Create a sample Order object
-        Order testOrder = new Order();
+        OrderShopping testOrder = new OrderShopping();
         testOrder.setId(1L);
         testOrder.setClient(new Customer()); // Set required fields
         testOrder.setProducts(Collections.singletonList(new Product()));
