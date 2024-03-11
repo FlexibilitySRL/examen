@@ -3,12 +3,14 @@ package ar.com.plug.examen.service.impl;
 import ar.com.plug.examen.domain.model.OrderShopping;
 import ar.com.plug.examen.repository.OrderRepository;
 import ar.com.plug.examen.service.OrderService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
+@Slf4j
 public class OrderServiceImpl implements OrderService {
 
     private final OrderRepository orderRepository;
@@ -19,6 +21,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderShopping createOrder(OrderShopping order) {
+        log.info("::createOrder:: {}", order.getClient().getFirstName());
         order.setOrderDate(LocalDateTime.now()); // Set order creation date
         calculateTotalPrice(order); // Calculate total price before saving
         return orderRepository.save(order);
@@ -26,6 +29,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderShopping getOrderById(Long id) {
+        log.info("::getOrderById:: {}", id);
         return orderRepository.findById(id).orElse(null);
     }
 

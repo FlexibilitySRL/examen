@@ -3,11 +3,13 @@ package ar.com.plug.examen.service.impl;
 import ar.com.plug.examen.domain.model.Product;
 import ar.com.plug.examen.repository.ProductRepository;
 import ar.com.plug.examen.service.ProductService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@Slf4j
 public class ProductServiceImpl implements ProductService {
 
     private ProductRepository productRepository;
@@ -17,10 +19,12 @@ public class ProductServiceImpl implements ProductService {
     }
 
     public Product createProduct(Product product) {
+        log.info("::createProduct:: {}", product.getName());
         return productRepository.save(product);
     }
 
     public Product getProductById(Long id) {
+        log.info("::getProductById:: {}", id);
         return productRepository.findById(id).orElse(null);
     }
 
